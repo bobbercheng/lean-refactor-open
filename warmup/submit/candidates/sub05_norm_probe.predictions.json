@@ -1,0 +1,95 @@
+{
+ "CallElimCorrect.substOldPostSubset": {
+  "L": 89.78,
+  "H_pred": 54.33,
+  "Z": 100.0,
+  "score": 81.37,
+  "hb_local": 2363
+ },
+ "CallElimCorrect.extractedOldExprInVars": {
+  "L": 1.35,
+  "H_pred": 10.12,
+  "Z": 100.0,
+  "score": 37.16,
+  "hb_local": 2425
+ },
+ "Core.InitsUpdatesComm": {
+  "L": 46.43,
+  "Z": 100.0,
+  "score": 79.41,
+  "hb_local": 352
+ },
+ "fundamental_theorem_of_variational_calculus'": {
+  "L": 34.31,
+  "Z": 100.0,
+  "score": 63.28,
+  "hb_local": 5317
+ },
+ "Electromagnetism.ElectromagneticPotential.time_deriv_time_deriv_electricField_of_isExtrema": {
+  "L": 3.72,
+  "Z": 100.0,
+  "score": 34.61,
+  "hb_local": 27082
+ },
+ "FieldSpecification.WickAlgebra.\u03b9_timeOrderF_superCommuteF_eq_time": {
+  "L": 27.77,
+  "Z": 100.0,
+  "score": 46.57,
+  "hb_local": 37081
+ },
+ "Cslib.LambdaCalculus.LocallyNameless.Fsub.Typing.progress": {
+  "L": 16.18,
+  "Z": 100.0,
+  "score": 71.35,
+  "hb_local": 1281
+ },
+ "Cslib.SKI.parallelReduction_diamond": {
+  "L": 25.55,
+  "Z": 100.0,
+  "score": 66.14,
+  "hb_local": 386
+ },
+ "Cslib.CCS.bisimilarity_congr_choice": {
+  "L": 47.41,
+  "Z": 100.0,
+  "score": 78.97,
+  "hb_local": 407
+ },
+ "Binius.BinaryBasefold.fiberwise_dist_lt_imp_dist_lt_unique_decoding_radius": {
+  "L": 34.04,
+  "Z": 100.0,
+  "score": 63.23,
+  "hb_local": 7101
+ },
+ "Binius.BinaryBasefold.fold_advances_evaluation_poly": {
+  "L": 78.38,
+  "Z": 100.0,
+  "score": 86.98,
+  "hb_local": 8039
+ },
+ "interleaved_affine_gaps_imply_tensor_gaps": {
+  "L": 45.31,
+  "Z": 100.0,
+  "score": 59.37,
+  "hb_local": 6305
+ },
+ "putnam_1964_a4": {
+  "L": 60.66,
+  "Z": 100.0,
+  "score": 85.56,
+  "hb_local": 4448
+ },
+ "putnam_1964_b2": {
+  "L": 78.56,
+  "Z": 100.0,
+  "score": 91.85,
+  "hb_local": 4073
+ },
+ "putnam_1995_a3": {
+  "L": 90.13,
+  "Z": 100.0,
+  "score": 90.75,
+  "hb_local": 2548
+ },
+ "_predicted_combined": 69.11
+}

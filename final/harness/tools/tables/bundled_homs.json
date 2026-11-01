@@ -1,0 +1,432 @@
+{
+ "rule": "With `import Mathlib` on the oldest and the newest Mathlib pin (bundled_homs_query.lean), over declarations of modules under Init or Mathlib: a bundled hom is a structure (not a class) whose flattened fields include one named `map_<x>'`; a generic is a root-namespace theorem named `map_*`, not deprecated; S.g is a variant of g when the theorem S.g exists, is not deprecated, and Lean's `apply` of g closes S.g's conclusion with S.g's binders as hypotheses (g's conclusion unifies with it, instances synthesized). specialize keeps the variants that hold on every pin, ordered by S's namespace size (declarations directly in it) summed over the pins, largest first, ties by name. harness/hb_rewrite.py specialize replaces an occurrence of g by each of the first SPEC_CAP variants.",
+ "query": "python3 harness/tools/tables/gen_bundled_homs.py --pins envs/mathlib-v4.25.0,envs/cslib-v4.33.0-rc2: lean harness/tools/tables/bundled_homs_query.lean (import Mathlib) per pin",
+ "generated_at": "2026-10-22T06:48:17Z",
+ "generator": "harness/tools/tables/gen_bundled_homs.py",
+ "pins": [
+  {
+   "env": "envs/mathlib-v4.25.0",
+   "pin": "leanprover/lean4:v4.25.0",
+   "generics": 223,
+   "structures": 150,
+   "pairs": 181,
+   "specializations": 146,
+   "seconds": 59.1
+  },
+  {
+   "env": "envs/cslib-v4.33.0-rc2",
+   "pin": "leanprover/lean4:v4.33.0-rc2",
+   "generics": 239,
+   "structures": 158,
+   "pairs": 196,
+   "specializations": 158,
+   "seconds": 67.1
+  }
+ ],
+ "specialize": {
+  "map_add": [
+   "LinearMap.map_add",
+   "ContinuousLinearMap.map_add",
+   "LinearEquiv.map_add",
+   "AddMonoidHom.map_add",
+   "RingHom.map_add",
+   "ContinuousLinearEquiv.map_add",
+   "AddEquiv.map_add",
+   "RingEquiv.map_add",
+   "LinearIsometryEquiv.map_add",
+   "LinearIsometry.map_add",
+   "AddHom.map_add",
+   "Derivation.map_add",
+   "NonUnitalAlgHom.map_add",
+   "ContinuousAlgHom.map_add",
+   "LeftInvariantDerivation.map_add",
+   "DistribMulActionHom.map_add",
+   "MulSemiringActionHom.map_add"
+  ],
+  "map_add_neg": [
+   "AddMonoidHom.map_add_neg"
+  ],
+  "map_div": [
+   "MonoidHom.map_div",
+   "MulEquiv.map_div"
+  ],
+  "map_dvd": [
+   "MonoidHom.map_dvd",
+   "MulHom.map_dvd"
+  ],
+  "map_eq_one_iff": [
+   "MulEquiv.map_eq_one_iff",
+   "RingEquiv.map_eq_one_iff"
+  ],
+  "map_eq_zero_iff": [
+   "LinearMap.map_eq_zero_iff",
+   "LinearEquiv.map_eq_zero_iff",
+   "ContinuousLinearEquiv.map_eq_zero_iff",
+   "AddEquiv.map_eq_zero_iff",
+   "RingEquiv.map_eq_zero_iff",
+   "LinearIsometryEquiv.map_eq_zero_iff",
+   "MonoidWithZeroHom.map_eq_zero_iff",
+   "ContinuousAlgEquiv.map_eq_zero_iff",
+   "RingInvo.map_eq_zero_iff"
+  ],
+  "map_inv": [
+   "MonoidHom.map_inv",
+   "MulEquiv.map_inv"
+  ],
+  "map_list_prod": [
+   "MonoidHom.map_list_prod",
+   "RingEquiv.map_list_prod"
+  ],
+  "map_list_sum": [
+   "AddMonoidHom.map_list_sum",
+   "RingEquiv.map_list_sum"
+  ],
+  "map_mul": [
+   "MonoidHom.map_mul",
+   "RingHom.map_mul",
+   "MulEquiv.map_mul",
+   "RingEquiv.map_mul",
+   "Valuation.map_mul",
+   "MonoidWithZeroHom.map_mul",
+   "MulHom.map_mul",
+   "NonUnitalAlgHom.map_mul",
+   "AbsoluteValue.map_mul",
+   "MulSemiringActionHom.map_mul"
+  ],
+  "map_mul_inv": [
+   "MonoidHom.map_mul_inv"
+  ],
+  "map_multiset_ne_zero_prod": [
+   "MulHom.map_multiset_ne_zero_prod"
+  ],
+  "map_multiset_ne_zero_sum": [
+   "AddHom.map_multiset_ne_zero_sum"
+  ],
+  "map_multiset_prod": [
+   "MonoidHom.map_multiset_prod",
+   "RingEquiv.map_multiset_prod"
+  ],
+  "map_multiset_sum": [
+   "AddMonoidHom.map_multiset_sum",
+   "RingEquiv.map_multiset_sum"
+  ],
+  "map_ne_one_iff": [
+   "MulEquiv.map_ne_one_iff",
+   "RingEquiv.map_ne_one_iff"
+  ],
+  "map_ne_zero_iff": [
+   "LinearEquiv.map_ne_zero_iff",
+   "AddEquiv.map_ne_zero_iff",
+   "RingEquiv.map_ne_zero_iff"
+  ],
+  "map_neg": [
+   "LinearMap.map_neg",
+   "ContinuousLinearMap.map_neg",
+   "AddMonoidHom.map_neg",
+   "RingHom.map_neg",
+   "ContinuousLinearEquiv.map_neg",
+   "AddEquiv.map_neg",
+   "RingEquiv.map_neg",
+   "LinearIsometry.map_neg",
+   "Derivation.map_neg",
+   "LieDerivation.map_neg",
+   "ContinuousAlgHom.map_neg",
+   "LeftInvariantDerivation.map_neg",
+   "DistribMulActionHom.map_neg",
+   "MulSemiringActionHom.map_neg"
+  ],
+  "map_nonneg": [
+   "PositiveLinearMap.map_nonneg"
+  ],
+  "map_nsmul": [
+   "AddMonoidHom.map_nsmul"
+  ],
+  "map_one": [
+   "MonoidHom.map_one",
+   "RingHom.map_one",
+   "MulEquiv.map_one",
+   "RingEquiv.map_one",
+   "Valuation.map_one",
+   "MonoidWithZeroHom.map_one",
+   "MulChar.map_one",
+   "AbsoluteValue.map_one",
+   "OneHom.map_one",
+   "MulSemiringActionHom.map_one"
+  ],
+  "map_pow": [
+   "MonoidHom.map_pow",
+   "RingHom.map_pow",
+   "RingEquiv.map_pow",
+   "Valuation.map_pow",
+   "AbsoluteValue.map_pow"
+  ],
+  "map_prod": [
+   "RingEquiv.map_prod",
+   "AbsoluteValue.map_prod"
+  ],
+  "map_smul": [
+   "LinearMap.map_smul",
+   "ContinuousLinearMap.map_smul",
+   "LinearEquiv.map_smul",
+   "ContinuousLinearEquiv.map_smul",
+   "LinearIsometryEquiv.map_smul",
+   "LinearIsometry.map_smul",
+   "ContinuousAlgHom.map_smul",
+   "MulActionHom.map_smul",
+   "LeftInvariantDerivation.map_smul",
+   "MulSemiringActionHom.map_smul"
+  ],
+  "map_sub": [
+   "LinearMap.map_sub",
+   "ContinuousLinearMap.map_sub",
+   "AddMonoidHom.map_sub",
+   "RingHom.map_sub",
+   "ContinuousLinearEquiv.map_sub",
+   "AddEquiv.map_sub",
+   "RingEquiv.map_sub",
+   "LinearIsometryEquiv.map_sub",
+   "LinearIsometry.map_sub",
+   "Derivation.map_sub",
+   "LieDerivation.map_sub",
+   "ContinuousAlgHom.map_sub",
+   "LeftInvariantDerivation.map_sub",
+   "DistribMulActionHom.map_sub",
+   "MulSemiringActionHom.map_sub"
+  ],
+  "map_sum": [
+   "RingEquiv.map_sum",
+   "ContinuousAlgHom.map_sum"
+  ],
+  "map_vadd": [
+   "AddActionHom.map_vadd"
+  ],
+  "map_zero": [
+   "LinearMap.map_zero",
+   "ContinuousLinearMap.map_zero",
+   "LinearEquiv.map_zero",
+   "AddMonoidHom.map_zero",
+   "RingHom.map_zero",
+   "ContinuousLinearEquiv.map_zero",
+   "AddEquiv.map_zero",
+   "RingEquiv.map_zero",
+   "LinearIsometryEquiv.map_zero",
+   "Valuation.map_zero",
+   "LinearIsometry.map_zero",
+   "Derivation.map_zero",
+   "MonoidWithZeroHom.map_zero",
+   "NonUnitalAlgHom.map_zero",
+   "AbsoluteValue.map_zero",
+   "ContinuousAlgHom.map_zero",
+   "ZeroHom.map_zero",
+   "LeftInvariantDerivation.map_zero",
+   "DistribMulActionHom.map_zero",
+   "MulSemiringActionHom.map_zero"
+  ],
+  "map_zpow": [
+   "MonoidHom.map_zpow"
+  ],
+  "map_zpow'": [
+   "MonoidHom.map_zpow'"
+  ],
+  "map_zsmul": [
+   "AddMonoidHom.map_zsmul"
+  ],
+  "map_zsmul'": [
+   "AddMonoidHom.map_zsmul'"
+  ]
+ },
+ "structures": {
+  "AbsoluteValue": {
+   "size": {
+    "envs/mathlib-v4.25.0": 95,
+    "envs/cslib-v4.33.0-rc2": 95
+   }
+  },
+  "AddActionHom": {
+   "size": {
+    "envs/mathlib-v4.25.0": 49,
+    "envs/cslib-v4.33.0-rc2": 51
+   }
+  },
+  "AddEquiv": {
+   "size": {
+    "envs/mathlib-v4.25.0": 325,
+    "envs/cslib-v4.33.0-rc2": 353
+   }
+  },
+  "AddHom": {
+   "size": {
+    "envs/mathlib-v4.25.0": 122,
+    "envs/cslib-v4.33.0-rc2": 130
+   }
+  },
+  "AddMonoidHom": {
+   "size": {
+    "envs/mathlib-v4.25.0": 511,
+    "envs/cslib-v4.33.0-rc2": 546
+   }
+  },
+  "ContinuousAlgEquiv": {
+   "size": {
+    "envs/mathlib-v4.25.0": 67,
+    "envs/cslib-v4.33.0-rc2": 85
+   }
+  },
+  "ContinuousAlgHom": {
+   "size": {
+    "envs/mathlib-v4.25.0": 84,
+    "envs/cslib-v4.33.0-rc2": 87
+   }
+  },
+  "ContinuousLinearEquiv": {
+   "size": {
+    "envs/mathlib-v4.25.0": 311,
+    "envs/cslib-v4.33.0-rc2": 384
+   }
+  },
+  "ContinuousLinearMap": {
+   "size": {
+    "envs/mathlib-v4.25.0": 891,
+    "envs/cslib-v4.33.0-rc2": 1166
+   }
+  },
+  "Derivation": {
+   "size": {
+    "envs/mathlib-v4.25.0": 120,
+    "envs/cslib-v4.33.0-rc2": 126
+   }
+  },
+  "DistribMulActionHom": {
+   "size": {
+    "envs/mathlib-v4.25.0": 49,
+    "envs/cslib-v4.33.0-rc2": 44
+   }
+  },
+  "LeftInvariantDerivation": {
+   "size": {
+    "envs/mathlib-v4.25.0": 56,
+    "envs/cslib-v4.33.0-rc2": 56
+   }
+  },
+  "LieDerivation": {
+   "size": {
+    "envs/mathlib-v4.25.0": 89,
+    "envs/cslib-v4.33.0-rc2": 93
+   }
+  },
+  "LinearEquiv": {
+   "size": {
+    "envs/mathlib-v4.25.0": 496,
+    "envs/cslib-v4.33.0-rc2": 603
+   }
+  },
+  "LinearIsometry": {
+   "size": {
+    "envs/mathlib-v4.25.0": 124,
+    "envs/cslib-v4.33.0-rc2": 132
+   }
+  },
+  "LinearIsometryEquiv": {
+   "size": {
+    "envs/mathlib-v4.25.0": 223,
+    "envs/cslib-v4.33.0-rc2": 272
+   }
+  },
+  "LinearMap": {
+   "size": {
+    "envs/mathlib-v4.25.0": 1567,
+    "envs/cslib-v4.33.0-rc2": 1858
+   }
+  },
+  "MonoidHom": {
+   "size": {
+    "envs/mathlib-v4.25.0": 456,
+    "envs/cslib-v4.33.0-rc2": 503
+   }
+  },
+  "MonoidWithZeroHom": {
+   "size": {
+    "envs/mathlib-v4.25.0": 121,
+    "envs/cslib-v4.33.0-rc2": 123
+   }
+  },
+  "MulActionHom": {
+   "size": {
+    "envs/mathlib-v4.25.0": 72,
+    "envs/cslib-v4.33.0-rc2": 74
+   }
+  },
+  "MulChar": {
+   "size": {
+    "envs/mathlib-v4.25.0": 97,
+    "envs/cslib-v4.33.0-rc2": 126
+   }
+  },
+  "MulEquiv": {
+   "size": {
+    "envs/mathlib-v4.25.0": 316,
+    "envs/cslib-v4.33.0-rc2": 323
+   }
+  },
+  "MulHom": {
+   "size": {
+    "envs/mathlib-v4.25.0": 110,
+    "envs/cslib-v4.33.0-rc2": 118
+   }
+  },
+  "MulSemiringActionHom": {
+   "size": {
+    "envs/mathlib-v4.25.0": 38,
+    "envs/cslib-v4.33.0-rc2": 38
+   }
+  },
+  "NonUnitalAlgHom": {
+   "size": {
+    "envs/mathlib-v4.25.0": 104,
+    "envs/cslib-v4.33.0-rc2": 101
+   }
+  },
+  "OneHom": {
+   "size": {
+    "envs/mathlib-v4.25.0": 65,
+    "envs/cslib-v4.33.0-rc2": 65
+   }
+  },
+  "PositiveLinearMap": {
+   "size": {
+    "envs/mathlib-v4.25.0": 23,
+    "envs/cslib-v4.33.0-rc2": 68
+   }
+  },
+  "RingEquiv": {
+   "size": {
+    "envs/mathlib-v4.25.0": 278,
+    "envs/cslib-v4.33.0-rc2": 318
+   }
+  },
+  "RingHom": {
+   "size": {
+    "envs/mathlib-v4.25.0": 443,
+    "envs/cslib-v4.33.0-rc2": 509
+   }
+  },
+  "RingInvo": {
+   "size": {
+    "envs/mathlib-v4.25.0": 17,
+    "envs/cslib-v4.33.0-rc2": 18
+   }
+  },
+  "Valuation": {
+   "size": {
+    "envs/mathlib-v4.25.0": 188,
+    "envs/cslib-v4.33.0-rc2": 258
+   }
+  },
+  "ZeroHom": {
+   "size": {
+    "envs/mathlib-v4.25.0": 76,
+    "envs/cslib-v4.33.0-rc2": 76
+   }
+  }
+ }
+}

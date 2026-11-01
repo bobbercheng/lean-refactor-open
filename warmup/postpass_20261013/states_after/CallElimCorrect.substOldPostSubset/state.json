@@ -1,0 +1,1966 @@
+{
+ "problem": "CallElimCorrect.substOldPostSubset",
+ "best": {
+  "score": 85.91,
+  "proof": "open OldExpressions in\ntheorem substOldPostSubset:\n  (Imperative.HasVarsPure.getVars (P:=Expression)\n    (substOld h2 (Lambda.LExpr.fvar m h1 ty) post)).Subset\n    (Imperative.HasVarsPure.getVars (P:=Expression) post ++ [h1]) := by\n  intro x\n  simp only [Imperative.HasVarsPure.getVars, List.mem_append]\n  induction post\n  all_goals dsimp only [substOld]\n  all_goals repeat' split\n  all_goals simp only [Lambda.LExpr.LExpr.getVars, List.mem_append]\n  all_goals grind only",
+  "tokens": 32,
+  "heartbeats": 1658,
+  "L": 89.78,
+  "H": 67.96,
+  "Z": 100.0,
+  "compat": {
+   "v4.26.0": true
+  }
+ },
+ "attempts": [
+  {
+   "sha": "dbdbf6e6ea4e",
+   "tokens": 313,
+   "heartbeats": 5173,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:19:13Z",
+   "score": 33.34
+  },
+  {
+   "sha": "6707476e4324",
+   "tokens": 408,
+   "heartbeats": 745,
+   "ok": false,
+   "error": "3107:19: Application type mismatch: The argument hx has type (x ∈ a ∨ x = h1 ∨ x ∈ []) ∨ x ∈ b but is expected to have type x ∈ a ∨ x ∈ b in the application Or.inl hx",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:22:43Z"
+  },
+  {
+   "sha": "574636a773fe",
+   "tokens": 47,
+   "heartbeats": 2928,
+   "ok": false,
+   "error": "3111:12: `grind` failed case grind.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Imperative.HasVarsPure.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) e) → x ∈ Imperative.HasVarsPure.getVars e ++ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 ",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:33:34Z"
+  },
+  {
+   "sha": "d9596ef58796",
+   "tokens": 44,
+   "heartbeats": 2828,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:35:23Z",
+   "score": 77.09
+  },
+  {
+   "sha": "9c7f6f278870",
+   "tokens": 33,
+   "heartbeats": 3091,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:37:17Z"
+  },
+  {
+   "sha": "cd3b8c6f9ea6",
+   "tokens": 40,
+   "heartbeats": 2788,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:38:10Z",
+   "score": 77.78
+  },
+  {
+   "sha": "0acf81c8dd28",
+   "tokens": 64,
+   "heartbeats": 2330,
+   "ok": false,
+   "error": "3113:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) e) → x ∈ Lambda.LExpr.LExpr.getVars e ++ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LE",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:39:56Z"
+  },
+  {
+   "sha": "2e32cdcf8df5",
+   "tokens": 43,
+   "heartbeats": 2665,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:41:35Z",
+   "score": 78.25
+  },
+  {
+   "sha": "258892da26de",
+   "tokens": 38,
+   "heartbeats": 5521,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:42:20Z"
+  },
+  {
+   "sha": "24de77a76463",
+   "tokens": 44,
+   "heartbeats": 5473,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:44:35Z"
+  },
+  {
+   "sha": "94ff032ae76f",
+   "tokens": 42,
+   "heartbeats": 4104,
+   "ok": false,
+   "error": "3102:69: unsolved goals case quant … [hypotheses omitted] ⊢ (x ∈ Lambda.LExpr.LExpr.getVars trigger✝ ∨ x ∈ Lambda.LExpr.LExpr.getVars e✝) ∨ x = h1 ‖ ⊢ (x ∈ Lambda.LExpr.LExpr.getVars fn✝ ∨ x ∈ Lambda.LExpr.LExpr.getVars e✝) ∨ x = h1 ‖ ⊢ ((x ∈ Lambda.LExpr.LExpr.getVars c✝ ∨ x ∈ Lambda.LExpr.LExpr.ge",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:46:19Z"
+  },
+  {
+   "sha": "990f128db186",
+   "tokens": 42,
+   "heartbeats": 2159,
+   "ok": false,
+   "error": "3111:12: Tactic `assumption` failed case fvar … [hypotheses omitted] ⊢ (x = name✝ ∨ False) ∨ x = h1 ∨ False",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:47:27Z"
+  },
+  {
+   "sha": "9db5bb397560",
+   "tokens": 28,
+   "heartbeats": 1685,
+   "ok": false,
+   "error": "3109:12: Tactic `assumption` failed case fvar … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.fvar m✝ name✝ ty✝) ++ [h1]",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:48:25Z"
+  },
+  {
+   "sha": "f307e25b33b4",
+   "tokens": 42,
+   "heartbeats": 2701,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:51:00Z"
+  },
+  {
+   "sha": "ed151d0b8051",
+   "tokens": 51,
+   "heartbeats": 4542,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:52:31Z"
+  },
+  {
+   "sha": "c075f2c24135",
+   "tokens": 39,
+   "heartbeats": 2394,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:53:36Z",
+   "score": 80.42
+  },
+  {
+   "sha": "19d8a1a91471",
+   "tokens": 32,
+   "heartbeats": 1037,
+   "ok": false,
+   "error": "3102:69: unsolved goals case const … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) ++ [h1] ‖ ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.op m✝ o✝ ty✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.op m",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:55:59Z"
+  },
+  {
+   "sha": "1d4f3523a0d7",
+   "tokens": 32,
+   "heartbeats": 2363,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T22:58:22Z",
+   "score": 81.37
+  },
+  {
+   "sha": "52c73d8dcb63",
+   "tokens": 34,
+   "heartbeats": 2362,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T02:16:42Z"
+  },
+  {
+   "sha": "8ea33413b77b",
+   "tokens": 33,
+   "heartbeats": 2156,
+   "ok": false,
+   "error": "3109:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) e) → x ∈ Lambda.LExpr.LExpr.getVars e ++ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LE",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:49:43Z"
+  },
+  {
+   "sha": "d0577de1cd80",
+   "tokens": 29,
+   "heartbeats": 2768,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:49:47Z"
+  },
+  {
+   "sha": "ac632e96a5d6",
+   "tokens": 29,
+   "heartbeats": 3442,
+   "ok": false,
+   "error": "3108:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) (Lambda.LExpr.op m_2 { name := \"old\", metadata := Visibility.unres } ty_1)) → x ∈ Lambda.LExpr.LExpr.getVar",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:49:52Z"
+  },
+  {
+   "sha": "7536b32faa8e",
+   "tokens": 26,
+   "heartbeats": 1993,
+   "ok": false,
+   "error": "3108:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) e) → x ∈ Lambda.LExpr.LExpr.getVars e ++ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LE",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:49:56Z"
+  },
+  {
+   "sha": "0b6cc5d8cc42",
+   "tokens": 31,
+   "heartbeats": null,
+   "ok": false,
+   "error": "3109:13: unknown tactic",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:51:41Z"
+  },
+  {
+   "sha": "93c6d249afeb",
+   "tokens": 29,
+   "heartbeats": 2495,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:51:45Z"
+  },
+  {
+   "sha": "c09ad68e0608",
+   "tokens": 34,
+   "heartbeats": 2469,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:51:49Z"
+  },
+  {
+   "sha": "3ae56b5d94f2",
+   "tokens": 36,
+   "heartbeats": 2717,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:51:54Z"
+  },
+  {
+   "sha": "4ed6da9fc0c8",
+   "tokens": 27,
+   "heartbeats": 3947,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:52:23Z"
+  },
+  {
+   "sha": "d752943ccfa4",
+   "tokens": 29,
+   "heartbeats": 3979,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:52:27Z"
+  },
+  {
+   "sha": "2b35f0bcc538",
+   "tokens": 31,
+   "heartbeats": 619,
+   "ok": false,
+   "error": "3107:12: Tactic `split` failed: Could not split an `if` or `match` expression in … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) ++ [h1]",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:52:31Z"
+  },
+  {
+   "sha": "0ae0974bbef5",
+   "tokens": 34,
+   "heartbeats": 2373,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:52:35Z"
+  },
+  {
+   "sha": "f7728c0fb4d0",
+   "tokens": 33,
+   "heartbeats": 3763,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:52:40Z"
+  },
+  {
+   "sha": "97a5dc1edebf",
+   "tokens": 35,
+   "heartbeats": 2368,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:53:28Z"
+  },
+  {
+   "sha": "b0e60c6a3cfc",
+   "tokens": 32,
+   "heartbeats": 2359,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:53:33Z",
+   "score": 81.39
+  },
+  {
+   "sha": "edd3bab7f691",
+   "tokens": 20,
+   "heartbeats": 3402,
+   "ok": false,
+   "error": "3106:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) fn) → x ∈ Lambda.LExpr.LExpr.getVars fn ++ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:53:37Z"
+  },
+  {
+   "sha": "ed4c08c7fc25",
+   "tokens": 32,
+   "heartbeats": 1598,
+   "ok": false,
+   "error": "3109:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m_1 c) [prop] ¬x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m_1 c) ++ [h1] [eqc] True propositions [prop] x ∈ Lambda.LExpr",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:53:41Z"
+  },
+  {
+   "sha": "6dfa8542d386",
+   "tokens": 36,
+   "heartbeats": 3078,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:53:45Z"
+  },
+  {
+   "sha": "2aed844018f5",
+   "tokens": 32,
+   "heartbeats": 1117,
+   "ok": false,
+   "error": "3102:69: unsolved goals case const … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) ++ [h1] ‖ ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.op m✝ o✝ ty✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.op m",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:54:04Z"
+  },
+  {
+   "sha": "15c858f7a3a6",
+   "tokens": 33,
+   "heartbeats": 622,
+   "ok": false,
+   "error": "3105:46: Tactic `split` failed: Could not split an `if` or `match` expression in … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) ++ [h1]",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:54:08Z"
+  },
+  {
+   "sha": "a54044557466",
+   "tokens": 27,
+   "heartbeats": 1520,
+   "ok": false,
+   "error": "3102:69: unsolved goals case const … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) ++ [h1] ‖ ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.op m✝ o✝ ty✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.op m",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:54:12Z"
+  },
+  {
+   "sha": "ea0eb941a2dc",
+   "tokens": 29,
+   "heartbeats": 2556,
+   "ok": false,
+   "error": "3108:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Imperative.HasVarsPure.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) e) → x ∈ Imperative.HasVarsPure.getVars e ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:55:04Z"
+  },
+  {
+   "sha": "c74eca4abc6a",
+   "tokens": 29,
+   "heartbeats": 2557,
+   "ok": false,
+   "error": "3107:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Imperative.HasVarsPure.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) e) → x ∈ Imperative.HasVarsPure.getVars e ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:55:09Z"
+  },
+  {
+   "sha": "defa55091c83",
+   "tokens": 31,
+   "heartbeats": 1687,
+   "ok": false,
+   "error": "3102:69: unsolved goals case op … [hypotheses omitted] ⊢ x ∈ [] → x ∈ [] ∨ x ∈ [h1] ‖ ⊢ x ∈ [] → x ∈ [] ∨ x ∈ [h1] ‖ ⊢ x ∈ [name✝] → x ∈ [name✝] ∨ x ∈ [h1] ‖ ⊢ x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) e✝) → x ∈ Lambda.LExpr.LExpr.getVars e✝ ∨ x ∈ [h1] ‖ ⊢ x ∈ Lambda.LE",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:55:13Z"
+  },
+  {
+   "sha": "f9dfd745a7a3",
+   "tokens": 32,
+   "heartbeats": 2360,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:55:43Z"
+  },
+  {
+   "sha": "073b76f82216",
+   "tokens": 47,
+   "heartbeats": 1676,
+   "ok": false,
+   "error": "3102:69: unsolved goals case const … [hypotheses omitted] ⊢ x ∈ [] → x ∈ [] ∨ x ∈ [h1] ‖ ⊢ x ∈ [] → x ∈ [] ∨ x ∈ [h1] ‖ ⊢ x ∈ [] → x ∈ [] ∨ x ∈ [h1] ‖ ⊢ x ∈ [name✝] → x ∈ [name✝] ∨ x ∈ [h1] ‖ ⊢ x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) e✝) → x ∈ Lambda.LExpr.LExpr.getVa",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:13:17Z"
+  },
+  {
+   "sha": "8c35b7b637c3",
+   "tokens": 33,
+   "heartbeats": 691,
+   "ok": false,
+   "error": "3107:22: Tactic `split` failed: Could not split an `if` or `match` expression in … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) ++ [h1]",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:13:21Z"
+  },
+  {
+   "sha": "198c8e41cf53",
+   "tokens": 34,
+   "heartbeats": 2357,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:13:37Z"
+  },
+  {
+   "sha": "942764952c4f",
+   "tokens": 34,
+   "heartbeats": null,
+   "ok": false,
+   "error": "3106:49: unexpected identifier; expected ')'",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:13:41Z"
+  },
+  {
+   "sha": "a919ead50b5b",
+   "tokens": 34,
+   "heartbeats": 2359,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:13:46Z"
+  },
+  {
+   "sha": "5c1ea1c8f3e3",
+   "tokens": 36,
+   "heartbeats": 736,
+   "ok": false,
+   "error": "3107:12: Tactic `split` failed: Could not split an `if` or `match` expression in … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) ++ [h1]",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:14:14Z"
+  },
+  {
+   "sha": "678d1bddf5ea",
+   "tokens": 37,
+   "heartbeats": 2380,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:14:19Z"
+  },
+  {
+   "sha": "fa13286c2d28",
+   "tokens": 30,
+   "heartbeats": 2120,
+   "ok": false,
+   "error": "3109:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) e) → x ∈ Lambda.LExpr.LExpr.getVars e ++ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LE",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:16:39Z"
+  },
+  {
+   "sha": "7425fe5aa9ab",
+   "tokens": 33,
+   "heartbeats": 1347,
+   "ok": false,
+   "error": "3102:69: unsolved goals case const … [hypotheses omitted] ⊢ x ∈ [] → x ∈ [] ++ [h1] ‖ ⊢ x ∈ [] → x ∈ [] ++ [h1] ‖ ⊢ x ∈ [] → x ∈ [] ++ [h1] ‖ ⊢ x ∈ [name✝] → x ∈ [name✝] ++ [h1] ‖ ⊢ x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) e✝) → x ∈ Lambda.LExpr.LExpr.getVars e✝ ++ [h1",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:16:43Z"
+  },
+  {
+   "sha": "d0638d82cbd9",
+   "tokens": 32,
+   "heartbeats": 1997,
+   "ok": false,
+   "error": "3109:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) e) → x ∈ Lambda.LExpr.LExpr.getVars e ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.abs m_",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:17:12Z"
+  },
+  {
+   "sha": "f0f2e3079218",
+   "tokens": 29,
+   "heartbeats": 2696,
+   "ok": false,
+   "error": "3109:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) e) → x ∈ Lambda.LExpr.LExpr.getVars e ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.abs m_",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:17:16Z"
+  },
+  {
+   "sha": "99fe54aee0df",
+   "tokens": 35,
+   "heartbeats": 3618,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:17:21Z"
+  },
+  {
+   "sha": "bf44d6fcad0c",
+   "tokens": 34,
+   "heartbeats": 2368,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:17:32Z"
+  },
+  {
+   "sha": "67cd62d5c954",
+   "tokens": 40,
+   "heartbeats": 1356,
+   "ok": false,
+   "error": "3102:69: unsolved goals case const … [hypotheses omitted] ⊢ x ∈ [] → x ∈ [] ++ [h1] ‖ ⊢ x ∈ [] → x ∈ [] ++ [h1] ‖ ⊢ x ∈ [] → x ∈ [] ++ [h1] ‖ ⊢ x ∈ [name✝] → x ∈ [name✝] ++ [h1] ‖ ⊢ x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) e✝) → x ∈ Lambda.LExpr.LExpr.getVars e✝ ++ [h1",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:17:37Z"
+  },
+  {
+   "sha": "1610871151cb",
+   "tokens": 31,
+   "heartbeats": 4566,
+   "ok": false,
+   "error": "3102:69: unsolved goals case quant … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) trigger✝) ∨ x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) e✝) → (x ∈ Lambda.LExpr.LExpr.getVars trigger✝ ∨ x ∈ Lambda.LExpr.LExpr.getVars e✝) ",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:17:53Z"
+  },
+  {
+   "sha": "b06800dc07d1",
+   "tokens": 37,
+   "heartbeats": 2370,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:17:58Z"
+  },
+  {
+   "sha": "16e88a76f67d",
+   "tokens": 21,
+   "heartbeats": 2610,
+   "ok": false,
+   "error": "3108:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) e) → x ∈ Lambda.LExpr.LExpr.getVars e ++ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.abs m_1 t",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:18:49Z"
+  },
+  {
+   "sha": "a2ef68c30b15",
+   "tokens": 34,
+   "heartbeats": 2469,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:18:54Z"
+  },
+  {
+   "sha": "2567ca3794a9",
+   "tokens": 35,
+   "heartbeats": 2720,
+   "ok": false,
+   "error": "3108:12: `simp` made no progress",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:18:58Z"
+  },
+  {
+   "sha": "54795dbdfc91",
+   "tokens": 24,
+   "heartbeats": 3498,
+   "ok": false,
+   "error": "3107:12: `grind` failed case grind.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) fn) → x ∈ Lambda.LExpr.LExpr.getVars fn ∨ x = h1 [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (La",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:19:11Z"
+  },
+  {
+   "sha": "f2acea9cfa88",
+   "tokens": 31,
+   "heartbeats": 3369,
+   "ok": false,
+   "error": "3109:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) e) → x ∈ Lambda.LExpr.LExpr.getVars e ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:19:16Z"
+  },
+  {
+   "sha": "2b0ef12dfec2",
+   "tokens": 23,
+   "heartbeats": 3410,
+   "ok": false,
+   "error": "3107:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) fn) → x ∈ Lambda.LExpr.LExpr.getVars fn ++ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:19:53Z"
+  },
+  {
+   "sha": "06e4aa242e1a",
+   "tokens": 27,
+   "heartbeats": 3944,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:19:58Z"
+  },
+  {
+   "sha": "4b55d9115c35",
+   "tokens": 28,
+   "heartbeats": 1218,
+   "ok": false,
+   "error": "3108:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) (Lambda.LExpr.const m_1 c)) [prop] ¬x ∈ [] [prop] ¬x ∈ [h1] [eqc] True propositions [prop] x ∈ Lambda.LExpr",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:20:43Z"
+  },
+  {
+   "sha": "07e6d19b4b18",
+   "tokens": 42,
+   "heartbeats": 1733,
+   "ok": false,
+   "error": "3109:12: `simp` made no progress",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:20:47Z"
+  },
+  {
+   "sha": "b4aaaaaa1ee7",
+   "tokens": 30,
+   "heartbeats": 2166,
+   "ok": false,
+   "error": "3108:12: `grind` failed case grind.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) fn) → x ∈ Lambda.LExpr.LExpr.getVars fn ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:21:23Z"
+  },
+  {
+   "sha": "3ac4819792d1",
+   "tokens": 33,
+   "heartbeats": 3195,
+   "ok": false,
+   "error": "3109:12: `grind` failed case grind.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) fn) → x ∈ Lambda.LExpr.LExpr.getVars fn ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:21:27Z"
+  },
+  {
+   "sha": "691e0ea1d059",
+   "tokens": 38,
+   "heartbeats": 1686,
+   "ok": false,
+   "error": "3108:12: `simp` made no progress",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:22:44Z"
+  },
+  {
+   "sha": "1e015ec0879a",
+   "tokens": 34,
+   "heartbeats": 2532,
+   "ok": false,
+   "error": "3109:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x_1 = h2 [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) (Lambda.LExpr.op m_2 { name := \"old\", metadata := Visibility.unres } ty_1)) → x ∈ Lambda.LE",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:23:09Z"
+  },
+  {
+   "sha": "6afff1131262",
+   "tokens": 36,
+   "heartbeats": 2657,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:23:13Z"
+  },
+  {
+   "sha": "febb5036aa59",
+   "tokens": 41,
+   "heartbeats": 2587,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:24:36Z"
+  },
+  {
+   "sha": "4bea005f6749",
+   "tokens": 34,
+   "heartbeats": 2111,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:26:34Z",
+   "score": 82.78
+  },
+  {
+   "sha": "32aa849d0be8",
+   "tokens": 32,
+   "heartbeats": 1913,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:26:38Z",
+   "score": 84.27
+  },
+  {
+   "sha": "be94936b9150",
+   "tokens": 27,
+   "heartbeats": 2065,
+   "ok": false,
+   "error": "3108:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) trigger) → x ∈ Lambda.LExpr.LExpr.getVars trigger ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOl",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:27:09Z"
+  },
+  {
+   "sha": "5cf315e9f004",
+   "tokens": 34,
+   "heartbeats": 1922,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:27:13Z"
+  },
+  {
+   "sha": "0ca9d3b75b47",
+   "tokens": 33,
+   "heartbeats": 3232,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:27:17Z"
+  },
+  {
+   "sha": "56372d0a18a8",
+   "tokens": 29,
+   "heartbeats": 3536,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:28:20Z"
+  },
+  {
+   "sha": "76a04465e8bc",
+   "tokens": 39,
+   "heartbeats": 2112,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:28:24Z"
+  },
+  {
+   "sha": "e42deb831ad7",
+   "tokens": 25,
+   "heartbeats": 1872,
+   "ok": false,
+   "error": "3107:12: `grind` failed case grind.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) fn) → x ∈ Lambda.LExpr.LExpr.getVars fn ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:28:54Z"
+  },
+  {
+   "sha": "611a817dc4e0",
+   "tokens": 42,
+   "heartbeats": 613,
+   "ok": false,
+   "error": "3107:12: Tactic `split` failed: Could not split an `if` or `match` expression in … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) ∨ x ∈ [h1]",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:28:58Z"
+  },
+  {
+   "sha": "6a892219578e",
+   "tokens": 32,
+   "heartbeats": 983,
+   "ok": false,
+   "error": "3102:69: unsolved goals case const … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) ∨ x ∈ [h1] ‖ ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.op m✝ o✝ ty✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.o",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:30:13Z"
+  },
+  {
+   "sha": "d0b16b22a697",
+   "tokens": 32,
+   "heartbeats": 1915,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:30:17Z"
+  },
+  {
+   "sha": "937fd8e2cb03",
+   "tokens": 34,
+   "heartbeats": null,
+   "ok": false,
+   "error": "3105:58: unexpected identifier; expected ')'",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:30:55Z"
+  },
+  {
+   "sha": "440ee06dcb91",
+   "tokens": 54,
+   "heartbeats": 1873,
+   "ok": false,
+   "error": "3106:13: unsolved goals … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) ∨ x ∈ [h1]",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:30:59Z"
+  },
+  {
+   "sha": "8fd48717a412",
+   "tokens": 34,
+   "heartbeats": 840,
+   "ok": false,
+   "error": "3102:69: unsolved goals case const … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) ∨ x ∈ [h1] ‖ ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.op m✝ o✝ ty✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.o",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:31:17Z"
+  },
+  {
+   "sha": "b865f388a6b0",
+   "tokens": 34,
+   "heartbeats": 1915,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:31:21Z"
+  },
+  {
+   "sha": "40d1e092470d",
+   "tokens": 37,
+   "heartbeats": 843,
+   "ok": false,
+   "error": "3102:69: unsolved goals case const … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) ∨ x ∈ [h1] ‖ ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.op m✝ o✝ ty✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.o",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:43:05Z"
+  },
+  {
+   "sha": "7f8d7e453692",
+   "tokens": 40,
+   "heartbeats": 2331,
+   "ok": false,
+   "error": "3106:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) trigger) → x ∈ Lambda.LExpr.LExpr.getVars trigger ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOl",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:43:09Z"
+  },
+  {
+   "sha": "99779da2effd",
+   "tokens": 28,
+   "heartbeats": 1879,
+   "ok": false,
+   "error": "3108:12: `grind` failed case grind.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) fn) → x ∈ Lambda.LExpr.LExpr.getVars fn ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:12:28Z"
+  },
+  {
+   "sha": "bdcfadd06f76",
+   "tokens": 32,
+   "heartbeats": 1917,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:12:39Z"
+  },
+  {
+   "sha": "a407a852fc99",
+   "tokens": 39,
+   "heartbeats": 1946,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:14:13Z"
+  },
+  {
+   "sha": "2bece2c5f719",
+   "tokens": 38,
+   "heartbeats": 1941,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:14:17Z"
+  },
+  {
+   "sha": "2cfa288c92d0",
+   "tokens": 42,
+   "heartbeats": 3204,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:14:21Z"
+  },
+  {
+   "sha": "dcd9830432cf",
+   "tokens": 32,
+   "heartbeats": 1658,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:15:34Z",
+   "score": 85.91
+  },
+  {
+   "sha": "3f37058f1a79",
+   "tokens": 36,
+   "heartbeats": 1101,
+   "ok": false,
+   "error": "3109:12: `simp` made no progress",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:15:38Z"
+  },
+  {
+   "sha": "2a9e67f63360",
+   "tokens": 36,
+   "heartbeats": 846,
+   "ok": false,
+   "error": "3109:12: `simp` made no progress",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:15:42Z"
+  },
+  {
+   "sha": "6d31bbb61676",
+   "tokens": 30,
+   "heartbeats": 1461,
+   "ok": false,
+   "error": "3109:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) trigger) → x ∈ Lambda.LExpr.LExpr.getVars trigger ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOl",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:16:14Z"
+  },
+  {
+   "sha": "b0191e69a361",
+   "tokens": 33,
+   "heartbeats": 2889,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:16:18Z"
+  },
+  {
+   "sha": "53ea7ce801bd",
+   "tokens": 36,
+   "heartbeats": 934,
+   "ok": false,
+   "error": "3109:12: `simp` made no progress",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:16:23Z"
+  },
+  {
+   "sha": "41568b4cc7fa",
+   "tokens": 39,
+   "heartbeats": 1689,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:16:49Z"
+  },
+  {
+   "sha": "5f243c6865b4",
+   "tokens": 34,
+   "heartbeats": 1192,
+   "ok": false,
+   "error": "3107:11: unsolved goals case h_1.isTrue … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.fvar m h1 ty) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.app m✝² (Lambda.LExpr.op m✝¹ { name := \"old\", metadata := Visibility.unres } ty✝¹) (Lambda.LExpr.fvar m✝ x✝ ty✝)) ∨ x ∈ [h1] ‖ ⊢ ",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:19:57Z"
+  },
+  {
+   "sha": "406a37f88600",
+   "tokens": 47,
+   "heartbeats": 1394,
+   "ok": false,
+   "error": "3107:11: unsolved goals case h_1.isTrue … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.fvar m h1 ty) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.app m✝² (Lambda.LExpr.op m✝¹ { name := \"old\", metadata := Visibility.unres } ty✝¹) (Lambda.LExpr.fvar m✝ x✝ ty✝)) ∨ x ∈ [h1] ‖ ⊢ ",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:20:01Z"
+  },
+  {
+   "sha": "2ac04bfbe2c8",
+   "tokens": 41,
+   "heartbeats": 1216,
+   "ok": false,
+   "error": "3107:11: unsolved goals case h_1.isTrue … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.fvar m h1 ty) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.app m✝² (Lambda.LExpr.op m✝¹ { name := \"old\", metadata := Visibility.unres } ty✝¹) (Lambda.LExpr.fvar m✝ x✝ ty✝)) ∨ x ∈ [h1] ‖ ⊢ ",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:20:06Z"
+  },
+  {
+   "sha": "4ab575fb016d",
+   "tokens": 45,
+   "heartbeats": 1847,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:21:34Z"
+  },
+  {
+   "sha": "f099006cdb0d",
+   "tokens": 36,
+   "heartbeats": 1847,
+   "ok": false,
+   "error": "3110:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) e) → x ∈ Lambda.LExpr.LExpr.getVars e ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:21:39Z"
+  },
+  {
+   "sha": "9b357f9b75b0",
+   "tokens": 49,
+   "heartbeats": 2004,
+   "ok": false,
+   "error": "3111:12: `grind` failed case grind.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) trigger) → x ∈ Lambda.LExpr.LExpr.getVars trigger ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (subst",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:21:44Z"
+  },
+  {
+   "sha": "c3a7fc575e73",
+   "tokens": 31,
+   "heartbeats": 1718,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:23:14Z"
+  },
+  {
+   "sha": "9b921b81adf9",
+   "tokens": 31,
+   "heartbeats": 1696,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:23:18Z"
+  },
+  {
+   "sha": "bb42fea07f70",
+   "tokens": 30,
+   "heartbeats": 1755,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:23:22Z"
+  },
+  {
+   "sha": "f773eb2ce248",
+   "tokens": 53,
+   "heartbeats": 1329,
+   "ok": false,
+   "error": "3106:19: unsolved goals case h_1.isFalse … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.app m✝² (Lambda.LExpr.op m✝¹ { name := \"old\", metadata := Visibility.unres } ty✝¹) (Lambda.LExpr.fvar m✝ x✝ ty✝)) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.app m✝² (Lambda.LExpr.op m✝¹",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:33:03Z"
+  },
+  {
+   "sha": "b411c5d51e75",
+   "tokens": 34,
+   "heartbeats": null,
+   "ok": false,
+   "error": "3107:42: unexpected identifier; expected ')'",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:33:12Z"
+  },
+  {
+   "sha": "91999ef0b40c",
+   "tokens": 29,
+   "heartbeats": 192,
+   "ok": false,
+   "error": "3102:69: unsolved goals case op … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) (Lambda.LExpr.op m✝ o✝ ty✝)) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.op m✝ o✝ ty✝) ∨ x ∈ [h1] ‖ ⊢ x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:33:21Z"
+  },
+  {
+   "sha": "cc1078e9c7b5",
+   "tokens": 59,
+   "heartbeats": null,
+   "ok": false,
+   "error": "3107:52: unexpected identifier; expected ')'",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:33:39Z"
+  },
+  {
+   "sha": "bf5999b67be8",
+   "tokens": 34,
+   "heartbeats": null,
+   "ok": false,
+   "error": "3106:50: unexpected identifier; expected ')'",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:33:48Z"
+  },
+  {
+   "sha": "3a56f73adb7f",
+   "tokens": 33,
+   "heartbeats": null,
+   "ok": false,
+   "error": "3107:27: unexpected identifier; expected ')'",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:33:55Z"
+  },
+  {
+   "sha": "a212808f8c94",
+   "tokens": 34,
+   "heartbeats": 589,
+   "ok": false,
+   "error": "3102:69: unsolved goals case const … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) ∨ x ∈ [h1] ‖ ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.op m✝ o✝ ty✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.o",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:34:10Z"
+  },
+  {
+   "sha": "2f362a6c9208",
+   "tokens": 33,
+   "heartbeats": 152,
+   "ok": false,
+   "error": "3102:69: unsolved goals case const … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) ∨ x ∈ [h1] ‖ ⊢ x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) (Lambda.LExpr.op m✝ o✝ ty✝)) → x ∈ ",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:34:19Z"
+  },
+  {
+   "sha": "bf76557c9940",
+   "tokens": 38,
+   "heartbeats": 844,
+   "ok": false,
+   "error": "3109:2: Case tag `app` not found. Hint: Available tags: • `const`: a̵p̵p̵c̲o̲n̲s̲t̲ • `op`: a̵p̵p̵o̲p̲ • `bvar`: a̵p̵p̵b̲v̲a̲r̲ • `fvar`: a̵p̵p̵f̲v̲a̲r̲ • `abs`: ap̵p̵b̲s̲ • `quant`: a̵p̵p̵q̲u̲a̲n̲t̲ • `h_1.isTrue`: a̵p̵p̵h̲_̲1̲.̲i̲s̲T̲r̲u̲e̲ • `h_1.isFalse`: a̵p̵p̵h̲_̲1̲.̲i̲s̲F̲a̲l̲s̲e̲ • `h_2`: a̵",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:34:29Z"
+  },
+  {
+   "sha": "90a075f06ba1",
+   "tokens": 34,
+   "heartbeats": 590,
+   "ok": false,
+   "error": "3102:69: unsolved goals case const … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) ∨ x ∈ [h1] ‖ ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.op m✝ o✝ ty✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.o",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:34:47Z"
+  },
+  {
+   "sha": "30c341314995",
+   "tokens": 34,
+   "heartbeats": 1659,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:34:55Z"
+  },
+  {
+   "sha": "3330c4011d8f",
+   "tokens": 36,
+   "heartbeats": 1302,
+   "ok": false,
+   "error": "3110:23: Application type mismatch: The argument h has type x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) e✝) but is expected to have type x ∈ Lambda.LExpr.LExpr.getVars e✝ in the application Or.inl h",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:35:21Z"
+  },
+  {
+   "sha": "80259c577378",
+   "tokens": 35,
+   "heartbeats": 1667,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:35:36Z"
+  },
+  {
+   "sha": "e6dbde9e57b1",
+   "tokens": 33,
+   "heartbeats": 1007,
+   "ok": false,
+   "error": "3109:12: Type mismatch Or.inl id has type (?m.160 → ?m.160) ∨ ?m.159 but is expected to have type x ∈ [] → x ∈ [] ∨ x ∈ [h1]",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:35:43Z"
+  },
+  {
+   "sha": "2d3fdf47b722",
+   "tokens": 29,
+   "heartbeats": 3280,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:36:01Z"
+  },
+  {
+   "sha": "0b221c1dc671",
+   "tokens": 27,
+   "heartbeats": 1809,
+   "ok": false,
+   "error": "3108:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) trigger) → x ∈ Lambda.LExpr.LExpr.getVars trigger ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOl",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:36:08Z"
+  },
+  {
+   "sha": "07d9ab36e015",
+   "tokens": 32,
+   "heartbeats": 1659,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:36:38Z"
+  },
+  {
+   "sha": "02f00c2de5b3",
+   "tokens": 34,
+   "heartbeats": 1657,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:36:48Z"
+  },
+  {
+   "sha": "3b7e30a1879e",
+   "tokens": 34,
+   "heartbeats": 1741,
+   "ok": false,
+   "error": "3109:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) (Lambda.LExpr.op m_2 { name := \"old\", metadata := Visibility.unres } ty_1)) → x ∈ Lambda.LExpr.LExpr.getVar",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:37:48Z"
+  },
+  {
+   "sha": "f95afce2a2d1",
+   "tokens": 41,
+   "heartbeats": 1801,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:37:57Z"
+  },
+  {
+   "sha": "faa9d4785734",
+   "tokens": 37,
+   "heartbeats": 4587,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:38:13Z"
+  },
+  {
+   "sha": "b4827d4cb71b",
+   "tokens": 20,
+   "heartbeats": 1786,
+   "ok": false,
+   "error": "3106:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ [] [prop] ¬x ∈ [] ++ [h1] [eqc] True propositions [prop] x ∈ [] [eqc] False propositions [prop] x ∈ [] ++ [h1] [eqc] Equivalence classes [eqc] {[h1], [] ++ [h1]}",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:38:30Z"
+  },
+  {
+   "sha": "ca63c6140fcf",
+   "tokens": 23,
+   "heartbeats": 2829,
+   "ok": false,
+   "error": "3106:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] ¬[].Subset ([] ++ [h1]) [eqc] False propositions [prop] [].Subset ([] ++ [h1]) [eqc] Equivalence classes [eqc] {[h1], [] ++ [h1]} [ematch] E-matching patterns [thm] List.mem_appen",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:38:45Z"
+  },
+  {
+   "sha": "97a893c766ab",
+   "tokens": 27,
+   "heartbeats": 4132,
+   "ok": false,
+   "error": "3106:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] ¬[].Subset ([] ++ [h1]) [eqc] False propositions [prop] [].Subset ([] ++ [h1]) [eqc] Equivalence classes [eqc] {[h1], [] ++ [h1]} [ematch] E-matching patterns [thm] List.mem_appen",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:38:54Z"
+  },
+  {
+   "sha": "2699c417f560",
+   "tokens": 32,
+   "heartbeats": 732,
+   "ok": false,
+   "error": "3102:69: unsolved goals case const … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.const m✝ c✝) ∨ x ∈ [h1] ‖ ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.op m✝ o✝ ty✝) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.o",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:39:32Z"
+  },
+  {
+   "sha": "5407f0acdaaf",
+   "tokens": 34,
+   "heartbeats": 1662,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:40:01Z"
+  },
+  {
+   "sha": "372d94d6ad9f",
+   "tokens": 34,
+   "heartbeats": 1666,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:40:10Z"
+  },
+  {
+   "sha": "427f0aa59f54",
+   "tokens": 29,
+   "heartbeats": 1750,
+   "ok": false,
+   "error": "3106:64: `grind` failed case grind.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) fn) → x ∈ Lambda.LExpr.LExpr.getVars fn ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:40:27Z"
+  },
+  {
+   "sha": "84e44316e107",
+   "tokens": 33,
+   "heartbeats": 185,
+   "ok": false,
+   "error": "3106:12: `dsimp` made no progress",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:33:54Z"
+  },
+  {
+   "sha": "346328172e36",
+   "tokens": 26,
+   "heartbeats": 1180,
+   "ok": false,
+   "error": "3108:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) e) → x ∈ Lambda.LExpr.LExpr.getVars e ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.abs m_",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:34:03Z"
+  },
+  {
+   "sha": "043136e35a99",
+   "tokens": 32,
+   "heartbeats": 1661,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:34:11Z"
+  },
+  {
+   "sha": "4912825a91d2",
+   "tokens": 27,
+   "heartbeats": 2432,
+   "ok": false,
+   "error": "3108:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) e) → x ∈ Lambda.LExpr.LExpr.getVars e ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.abs m_",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:34:21Z"
+  },
+  {
+   "sha": "cff2f87f310c",
+   "tokens": 28,
+   "heartbeats": 2852,
+   "ok": false,
+   "error": "3107:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] ¬[].Subset ([] ++ [h1]) [eqc] False propositions [prop] [].Subset ([] ++ [h1]) [eqc] Equivalence classes [eqc] {[h1], [] ++ [h1]} [ematch] E-matching patterns [thm] List.mem_appen",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:34:30Z"
+  },
+  {
+   "sha": "fc0d998e9a53",
+   "tokens": 32,
+   "heartbeats": 1819,
+   "ok": false,
+   "error": "3108:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Imperative.HasVarsPure.getVars (Lambda.LExpr.const m_1 c) [prop] ¬x ∈ [] [prop] ¬x ∈ [h1] [eqc] True propositions [prop] x ∈ Imperative.HasVarsPure.getVars (Lambda.LExpr.const",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:36:36Z"
+  },
+  {
+   "sha": "7aabf36ffa44",
+   "tokens": 35,
+   "heartbeats": 1982,
+   "ok": false,
+   "error": "3108:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Imperative.HasVarsPure.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) (Lambda.LExpr.const m_1 c)) [prop] ¬x ∈ [] [prop] ¬x ∈ [h1] [prop] Imperative.HasVarsPure.getVars = Imp",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:36:46Z"
+  },
+  {
+   "sha": "d385c6b37dd5",
+   "tokens": 46,
+   "heartbeats": 1658,
+   "ok": false,
+   "error": "3110:2: Case tag `app` not found. Note: There are no cases to select.",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:36:55Z"
+  },
+  {
+   "sha": "9bb7353ea131",
+   "tokens": 34,
+   "heartbeats": 1880,
+   "ok": false,
+   "error": "3108:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Imperative.HasVarsPure.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) e) → x ∈ Lambda.LExpr.LExpr.getVars e ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (La",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:37:21Z"
+  },
+  {
+   "sha": "d373fc3dd592",
+   "tokens": 31,
+   "heartbeats": 1113,
+   "ok": false,
+   "error": "3108:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) (Lambda.LExpr.const m_1 c)) [prop] ¬x ∈ [] [prop] ¬x ∈ [h1] [eqc] True propositions [prop] x ∈ Lambda.LExpr",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:37:30Z"
+  },
+  {
+   "sha": "1a762ed7438a",
+   "tokens": 53,
+   "heartbeats": 94,
+   "ok": false,
+   "error": "3104:2: 'show' tactic failed, pattern x ∈ Imperative.HasVarsPure.getVars post ∨ x ∈ [h1] is not definitionally equal to target x ∈ Imperative.HasVarsPure.getVars post ++ [h1]",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:37:39Z"
+  },
+  {
+   "sha": "e933edeaa5a9",
+   "tokens": 33,
+   "heartbeats": 2079,
+   "ok": false,
+   "error": "3108:12: `grind` failed case grind.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) fn) → x ∈ Lambda.LExpr.LExpr.getVars fn ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:38:21Z"
+  },
+  {
+   "sha": "ab6464b82f98",
+   "tokens": 44,
+   "heartbeats": 2346,
+   "ok": false,
+   "error": "3109:12: `grind` failed case grind.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) fn) → x ∈ Lambda.LExpr.LExpr.getVars fn ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:38:30Z"
+  },
+  {
+   "sha": "3f17dcfde21c",
+   "tokens": 40,
+   "heartbeats": 2192,
+   "ok": false,
+   "error": "3109:12: `grind` failed case grind.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) fn) → x ∈ Lambda.LExpr.LExpr.getVars fn ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:38:39Z"
+  },
+  {
+   "sha": "ed032f33b02b",
+   "tokens": 32,
+   "heartbeats": 773,
+   "ok": false,
+   "error": "3108:12: `simp` made no progress",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:39:25Z"
+  },
+  {
+   "sha": "3c1a28e9b1e7",
+   "tokens": 28,
+   "heartbeats": 1464,
+   "ok": false,
+   "error": "3108:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) trigger) → x ∈ Lambda.LExpr.LExpr.getVars trigger ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOl",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:39:34Z"
+  },
+  {
+   "sha": "79025a8a7383",
+   "tokens": 36,
+   "heartbeats": 1362,
+   "ok": false,
+   "error": "3102:69: unsolved goals case h_1.isFalse … [hypotheses omitted] ⊢ x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.app m✝² (Lambda.LExpr.op m✝¹ { name := \"old\", metadata := Visibility.unres } ty✝¹) (Lambda.LExpr.fvar m✝ x✝ ty✝)) → x ∈ Lambda.LExpr.LExpr.getVars (Lambda.LExpr.app m✝² (Lambda.LExpr.op m✝¹",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:39:43Z"
+  },
+  {
+   "sha": "25ddc3cf45a3",
+   "tokens": 33,
+   "heartbeats": 1707,
+   "ok": false,
+   "error": "3109:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) (Lambda.LExpr.op m_2 { name := \"old\", metadata := Visibility.unres } ty_1)) → x ∈ Lambda.LExpr.LExpr.getVar",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:40:00Z"
+  },
+  {
+   "sha": "113921d08506",
+   "tokens": 29,
+   "heartbeats": 2872,
+   "ok": false,
+   "error": "3108:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) (Lambda.LExpr.op m_2 { name := \"old\", metadata := Visibility.unres } ty_1)) → x ∈ Lambda.LExpr.LExpr.getVar",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:40:09Z"
+  },
+  {
+   "sha": "b0a14de86512",
+   "tokens": 40,
+   "heartbeats": 1833,
+   "ok": false,
+   "error": "3110:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) (Lambda.LExpr.op m_2 { name := \"old\", metadata := Visibility.unres } ty_1)) → x ∈ Lambda.LExpr.LExpr.getVar",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:40:34Z"
+  },
+  {
+   "sha": "9114480be84a",
+   "tokens": 41,
+   "heartbeats": 713,
+   "ok": false,
+   "error": "3108:12: `dsimp` made no progress",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:40:42Z"
+  },
+  {
+   "sha": "1f9749bc93a9",
+   "tokens": 48,
+   "heartbeats": 4558,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:40:51Z"
+  },
+  {
+   "sha": "91da225e55f3",
+   "tokens": 42,
+   "heartbeats": 1845,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:41:18Z"
+  },
+  {
+   "sha": "5417deaa3d7b",
+   "tokens": 45,
+   "heartbeats": 1844,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:41:26Z"
+  },
+  {
+   "sha": "211e7a308877",
+   "tokens": 34,
+   "heartbeats": 1658,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:37:37Z"
+  },
+  {
+   "sha": "f01b09b181c3",
+   "tokens": 33,
+   "heartbeats": 3268,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:37:46Z"
+  },
+  {
+   "sha": "2add4d87cc23",
+   "tokens": 52,
+   "heartbeats": 976,
+   "ok": false,
+   "error": "3109:12: `simp` made no progress",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:37:54Z"
+  },
+  {
+   "sha": "a83045cb94ce",
+   "tokens": 50,
+   "heartbeats": 1786,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:38:48Z"
+  },
+  {
+   "sha": "678bc412926f",
+   "tokens": 44,
+   "heartbeats": 918,
+   "ok": false,
+   "error": "3109:12: `simp` made no progress",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:38:57Z"
+  },
+  {
+   "sha": "a28da36199eb",
+   "tokens": 42,
+   "heartbeats": 1464,
+   "ok": false,
+   "error": "3109:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOld h2 (Lambda.LExpr.fvar m h1 ty) trigger) → x ∈ Lambda.LExpr.LExpr.getVars trigger ∨ x ∈ [h1] [prop] x ∈ Lambda.LExpr.LExpr.getVars (substOl",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:39:07Z"
+  },
+  {
+   "sha": "9897344c0b01",
+   "tokens": 50,
+   "heartbeats": 1819,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:40:09Z"
+  },
+  {
+   "sha": "83bc134e4be0",
+   "tokens": 41,
+   "heartbeats": 3019,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:40:16Z"
+  },
+  {
+   "sha": "1b4019c894e6",
+   "tokens": 47,
+   "heartbeats": 956,
+   "ok": false,
+   "error": "3109:12: `simp` made no progress",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:40:25Z"
+  }
+ ],
+ "runs": [
+  {
+   "run_id": "fresh-a100-p1",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-06T21:16:23Z"
+  },
+  {
+   "run_id": "fresh-a100-p2",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T02:12:45Z"
+  },
+  {
+   "run_id": "fresh-a100-p3",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T16:49:16Z"
+  },
+  {
+   "run_id": "fresh-a100-p4",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-08T22:12:06Z",
+   "mode": "fresh"
+  },
+  {
+   "run_id": "fresh-a100-p5",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T00:10:27Z",
+   "mode": "structural"
+  },
+  {
+   "run_id": "fresh-a100-p6",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T03:32:31Z"
+  },
+  {
+   "run_id": "fresh-a100-p7",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T12:32:31Z"
+  },
+  {
+   "run_id": "fresh-a100-p8",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T21:34:29Z"
+  }
+ ],
+ "ledger": {
+  "wins": [
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 6,
+    "d_score": 0.69,
+    "d_tokens": -4,
+    "d_heartbeats": -40,
+    "diff": "-  all_goals try split at hx\n-  all_goals try split at hx\n+  all_goals repeat split at hx\n-  all_goals grind\n+  all_goals grind only",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "7aaa8d2fb183"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 8,
+    "d_score": 0.47,
+    "d_tokens": 3,
+    "d_heartbeats": -123,
+    "diff": "+  simp only [Imperative.HasVarsPure.getVars]\n-  all_goals simp only [Imperative.HasVarsPure.getVars, Lambda.LExpr.LExpr.getVars,\n-    List.mem_append, List.mem_cons, List.not_mem_nil] at *\n+  all_goals simp only [Lambda.LExpr.LExpr.getVars, List.mem_append, List.mem_cons,\n+    List.not_mem_nil] at *",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "f8ecb906bbc2"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 16,
+    "d_score": 2.17,
+    "d_tokens": -4,
+    "d_heartbeats": -271,
+    "diff": "-  all_goals simp only [Lambda.LExpr.LExpr.getVars, List.mem_append, List.mem_cons,\n-    List.not_mem_nil] at *\n+  all_goals simp only [Lambda.LExpr.LExpr.getVars, List.mem_append] at *",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "efcef627077b"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 18,
+    "d_score": 0.95,
+    "d_tokens": -7,
+    "d_heartbeats": -31,
+    "diff": "-  all_goals intro hx\n-  all_goals simp only [substOld] at hx\n-  all_goals repeat split at hx\n+  all_goals simp only [substOld]\n+  all_goals repeat split",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "eec2ea94c1bb"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 15,
+    "d_score": 0.02,
+    "d_tokens": 0,
+    "d_heartbeats": -4,
+    "diff": "-  all_goals repeat split\n+  all_goals repeat' split",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "f3b27f53f9e3"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 32,
+    "d_score": 1.39,
+    "d_tokens": 2,
+    "d_heartbeats": -248,
+    "diff": "-  simp only [Imperative.HasVarsPure.getVars]\n+  simp only [Imperative.HasVarsPure.getVars, List.mem_append]"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 33,
+    "d_score": 1.49,
+    "d_tokens": -2,
+    "d_heartbeats": -198,
+    "diff": "-  all_goals simp only [Lambda.LExpr.LExpr.getVars, List.mem_append] at *\n+  all_goals simp only [Lambda.LExpr.LExpr.getVars, List.mem_append]"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 6,
+    "d_score": 1.64,
+    "d_tokens": 0,
+    "d_heartbeats": -255,
+    "diff": "-  all_goals simp only [substOld]\n+  all_goals dsimp only [substOld]"
+   }
+  ],
+  "dead_names": []
+ },
+ "profile_cache": {
+  "dbdbf6e6ea4e": {
+   "ok": true,
+   "total": 5174,
+   "floor": 66,
+   "reference": 5174,
+   "max_heartbeat_score": 32.91,
+   "blocks": [
+    {
+     "lines": "52-71",
+     "depth_indent": 2,
+     "text": "case app ih1 ih2 => split . split . simp [Imperative.HasVarsPure.getVars, Lambda.LExpr.LExpr.getVars",
+     "heartbeats": 1659
+    },
+    {
+     "lines": "6-6",
+     "depth_indent": 2,
+     "text": "induction post <;> simp [substOld]",
+     "heartbeats": 1300
+    },
+    {
+     "lines": "34-51",
+     "depth_indent": 2,
+     "text": "case ite cih tih eih => simp [Imperative.HasVarsPure.getVars, Lambda.LExpr.LExpr.getVars] at * apply",
+     "heartbeats": 987
+    },
+    {
+     "lines": "72-85",
+     "depth_indent": 2,
+     "text": "case quant trih eih => simp [Imperative.HasVarsPure.getVars, Lambda.LExpr.LExpr.getVars] at * apply ",
+     "heartbeats": 519
+    },
+    {
+     "lines": "65-65",
+     "depth_indent": 8,
+     "text": "intros x Hin",
+     "heartbeats": 512
+    },
+    {
+     "lines": "86-97",
+     "depth_indent": 2,
+     "text": "case eq ih1 ih2 => simp [Imperative.HasVarsPure.getVars, Lambda.LExpr.LExpr.getVars] at * apply List",
+     "heartbeats": 415
+    },
+    {
+     "lines": "32-33",
+     "depth_indent": 2,
+     "text": "case abs ih => exact ih",
+     "heartbeats": 53
+    },
+    {
+     "lines": "7-14",
+     "depth_indent": 2,
+     "text": "case fvar => intros x Hin rename_i m name ty2 simp at m simp at name simp at ty2 simp_all",
+     "heartbeats": 46
+    },
+    {
+     "lines": "15-21",
+     "depth_indent": 2,
+     "text": "case op => intros x Hin rename_i m name ty2 simp at m simp at name simp at ty2 simp_all",
+     "heartbeats": 45
+    },
+    {
+     "lines": "22-26",
+     "depth_indent": 2,
+     "text": "case const => intros x Hin rename_i m name simp at m simp_all",
+     "heartbeats": 42
+    },
+    {
+     "lines": "27-31",
+     "depth_indent": 2,
+     "text": "case bvar => intros x Hin rename_i m d simp at m simp_all",
+     "heartbeats": 42
+    },
+    {
+     "lines": "64-64",
+     "depth_indent": 8,
+     "text": "apply ih1 <;> assumption",
+     "heartbeats": 0
+    }
+   ],
+   "points_left_heartbeats": 32.91,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "b0e60c6a3cfc": {
+   "ok": true,
+   "total": 2359,
+   "floor": 66,
+   "reference": 5174,
+   "max_heartbeat_score": 32.91,
+   "blocks": [
+    {
+     "lines": "11-11",
+     "depth_indent": 2,
+     "text": "all_goals simp only [Lambda.LExpr.LExpr.getVars, List.mem_append] at *",
+     "heartbeats": 917
+    },
+    {
+     "lines": "12-12",
+     "depth_indent": 2,
+     "text": "all_goals grind only",
+     "heartbeats": 669
+    },
+    {
+     "lines": "9-9",
+     "depth_indent": 2,
+     "text": "all_goals simp only [substOld]",
+     "heartbeats": 487
+    },
+    {
+     "lines": "10-10",
+     "depth_indent": 2,
+     "text": "all_goals repeat' split",
+     "heartbeats": 164
+    },
+    {
+     "lines": "8-8",
+     "depth_indent": 2,
+     "text": "induction post",
+     "heartbeats": 35
+    },
+    {
+     "lines": "7-7",
+     "depth_indent": 2,
+     "text": "simp only [Imperative.HasVarsPure.getVars]",
+     "heartbeats": 20
+    },
+    {
+     "lines": "6-6",
+     "depth_indent": 2,
+     "text": "intro x",
+     "heartbeats": 1
+    }
+   ],
+   "points_left_heartbeats": 14.77,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "32aa849d0be8": {
+   "ok": true,
+   "total": 1913,
+   "floor": 66,
+   "reference": 5174,
+   "max_heartbeat_score": 32.91,
+   "blocks": [
+    {
+     "lines": "12-12",
+     "depth_indent": 2,
+     "text": "all_goals grind only",
+     "heartbeats": 655
+    },
+    {
+     "lines": "11-11",
+     "depth_indent": 2,
+     "text": "all_goals simp only [Lambda.LExpr.LExpr.getVars, List.mem_append]",
+     "heartbeats": 494
+    },
+    {
+     "lines": "9-9",
+     "depth_indent": 2,
+     "text": "all_goals simp only [substOld]",
+     "heartbeats": 471
+    },
+    {
+     "lines": "10-10",
+     "depth_indent": 2,
+     "text": "all_goals repeat' split",
+     "heartbeats": 159
+    },
+    {
+     "lines": "8-8",
+     "depth_indent": 2,
+     "text": "induction post",
+     "heartbeats": 34
+    },
+    {
+     "lines": "7-7",
+     "depth_indent": 2,
+     "text": "simp only [Imperative.HasVarsPure.getVars, List.mem_append]",
+     "heartbeats": 33
+    },
+    {
+     "lines": "6-6",
+     "depth_indent": 2,
+     "text": "intro x",
+     "heartbeats": 1
+    }
+   ],
+   "points_left_heartbeats": 11.9,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "dcd9830432cf": {
+   "ok": true,
+   "total": 1658,
+   "floor": 66,
+   "reference": 5174,
+   "max_heartbeat_score": 32.91,
+   "blocks": [
+    {
+     "lines": "12-12",
+     "depth_indent": 2,
+     "text": "all_goals grind only",
+     "heartbeats": 655
+    },
+    {
+     "lines": "11-11",
+     "depth_indent": 2,
+     "text": "all_goals simp only [Lambda.LExpr.LExpr.getVars, List.mem_append]",
+     "heartbeats": 495
+    },
+    {
+     "lines": "9-9",
+     "depth_indent": 2,
+     "text": "all_goals dsimp only [substOld]",
+     "heartbeats": 228
+    },
+    {
+     "lines": "10-10",
+     "depth_indent": 2,
+     "text": "all_goals repeat' split",
+     "heartbeats": 146
+    },
+    {
+     "lines": "8-8",
+     "depth_indent": 2,
+     "text": "induction post",
+     "heartbeats": 34
+    },
+    {
+     "lines": "7-7",
+     "depth_indent": 2,
+     "text": "simp only [Imperative.HasVarsPure.getVars, List.mem_append]",
+     "heartbeats": 33
+    },
+    {
+     "lines": "6-6",
+     "depth_indent": 2,
+     "text": "intro x",
+     "heartbeats": 1
+    }
+   ],
+   "points_left_heartbeats": 10.26,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  }
+ },
+ "hb_floor": 66
+}

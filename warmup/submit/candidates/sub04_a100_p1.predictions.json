@@ -1,0 +1,107 @@
+{
+ "CallElimCorrect.substOldPostSubset": {
+  "L": 89.78,
+  "H_pred": 54.33,
+  "Z": 100.0,
+  "score": 81.37,
+  "hb_local": 2363
+ },
+ "CallElimCorrect.extractedOldExprInVars": {
+  "L": 1.35,
+  "H_pred": 10.12,
+  "Z": 100.0,
+  "score": 37.16,
+  "hb_local": 2425
+ },
+ "Core.InitsUpdatesComm": {
+  "L": 44.2,
+  "H_pred": 91.84,
+  "Z": 100.0,
+  "score": 78.68,
+  "hb_local": 351
+ },
+ "fundamental_theorem_of_variational_calculus'": {
+  "L": 31.02,
+  "H_pred": 55.5,
+  "Z": 100.0,
+  "score": 62.18,
+  "hb_local": 5319
+ },
+ "Electromagnetism.ElectromagneticPotential.time_deriv_time_deriv_electricField_of_isExtrema": {
+  "L": 0.29,
+  "H_pred": 0.14,
+  "Z": 100.0,
+  "score": 33.48,
+  "hb_local": 27075
+ },
+ "FieldSpecification.WickAlgebra.\u03b9_timeOrderF_superCommuteF_eq_time": {
+  "L": 26.87,
+  "H_pred": 11.94,
+  "Z": 100.0,
+  "score": 46.27,
+  "hb_local": 37084
+ },
+ "Cslib.LambdaCalculus.LocallyNameless.Fsub.Typing.progress": {
+  "L": 15.69,
+  "H_pred": 97.86,
+  "Z": 100.0,
+  "score": 71.18,
+  "hb_local": 1281
+ },
+ "Cslib.SKI.parallelReduction_diamond": {
+  "L": 25.06,
+  "H_pred": 72.86,
+  "Z": 100.0,
+  "score": 65.97,
+  "hb_local": 386
+ },
+ "Cslib.CCS.bisimilarity_congr_choice": {
+  "L": 45.42,
+  "H_pred": 89.51,
+  "Z": 100.0,
+  "score": 78.31,
+  "hb_local": 407
+ },
+ "Binius.BinaryBasefold.fiberwise_dist_lt_imp_dist_lt_unique_decoding_radius": {
+  "L": 33.01,
+  "H_pred": 55.6,
+  "Z": 100.0,
+  "score": 62.87,
+  "hb_local": 7107
+ },
+ "Binius.BinaryBasefold.fold_advances_evaluation_poly": {
+  "L": 78.28,
+  "H_pred": 82.55,
+  "Z": 100.0,
+  "score": 86.94,
+  "hb_local": 8039
+ },
+ "interleaved_affine_gaps_imply_tensor_gaps": {
+  "L": 44.27,
+  "H_pred": 32.79,
+  "Z": 100.0,
+  "score": 59.02,
+  "hb_local": 6305
+ },
+ "putnam_1964_a4": {
+  "L": 59.36,
+  "H_pred": 96.01,
+  "Z": 100.0,
+  "score": 85.12,
+  "hb_local": 4447
+ },
+ "putnam_1964_b2": {
+  "L": 78.16,
+  "H_pred": 96.97,
+  "Z": 100.0,
+  "score": 91.71,
+  "hb_local": 4074
+ },
+ "putnam_1995_a3": {
+  "L": 89.96,
+  "H_pred": 82.12,
+  "Z": 100.0,
+  "score": 90.69,
+  "hb_local": 2548
+ }
+}

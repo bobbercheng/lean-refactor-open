@@ -1,0 +1,1248 @@
+{
+ "problem": "putnam_1964_a4",
+ "best": {
+  "score": 90.16,
+  "proof": "theorem putnam_1964_a4\n(u : ℕ → ℤ)\n(boundedu : ∃ B T : ℤ, ∀ n : ℕ, B ≤ u n ∧ u n ≤ T)\n(hu : ∀ n ≥ 4, u n = ((u (n - 1) + u (n - 2) + u (n - 3) * u (n - 4)) : ℝ) / (u (n - 1) * u (n - 2) + u (n - 3) + u (n - 4)) ∧ (u (n - 1) * u (n - 2) + u (n - 3) + u (n - 4)) ≠ 0)\n: (∃ N c : ℕ, c > 0 ∧ ∀ n ≥ N, u (n + c) = u n) := by\n  obtain ⟨B, T, hB⟩ := boundedu\n  obtain ⟨i, j, hij, heq4⟩ : ∃ i j : ℕ, i < j ∧ ∀ t : Fin 4, u (i + t) = u (j + t) := by\n    obtain ⟨i, j, heq, hne⟩ := Function.not_injective_iff.mp\n      (((Set.Finite.pi fun _ => Set.finite_Icc B T).subset\n        (Set.range_subset_iff.mpr fun n k _ => hB (n + k)) :\n        (Set.range fun (n : ℕ) (k : Fin 4) => u (n + k)).Finite).not_infinite ∘\n        Set.infinite_range_of_injective)\n    rcases lt_or_gt_of_ne hne with hij | hij\n    · exact ⟨i, j, hij, congrFun heq⟩\n    · exact ⟨j, i, hij, congrFun heq.symm⟩\n  have hrec : ∀ n : ℕ, (u (n + 4) : ℝ) = (u (n + 3) + u (n + 2) + u (n + 1) * u (n + 0)) /\n      (u (n + 3) * u (n + 2) + u (n + 1) + u (n + 0)) :=\n    fun n => (hu (n + 4) (Nat.le_add_left _ n)).1\n  have hstep : ∀ a b : ℕ, (∀ t < 4, u (a + t) = u (b + t)) → u (a + 4) = u (b + 4) := fun a b h =>\n    Int.cast_injective\n      (by rw [hrec a, hrec b, h 0 (by decide), h 1 (by decide), h 2 (by decide), h 3 (by decide)])\n  have key : ∀ m : ℕ, u (i + m) = u (j + m) := fun m =>\n    Nat.strongRecOn m fun m ih => by\n      rcases Nat.lt_or_ge m 4 with hm | hm\n      · exact heq4 ⟨m, hm⟩\n      · obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le' hm\n        exact hstep (i + k) (j + k) fun t ht => by\n          simp only [Nat.add_assoc]\n          exact ih (k + t) (Nat.add_lt_add_left ht k)\n  refine ⟨i, j - i, Nat.sub_pos_of_lt hij, fun n hn => ?_⟩\n  have h9 := key (n - i)\n  rw [Nat.add_sub_cancel' hn, show j + (n - i) = n + (j - i) from by omega] at h9\n  exact h9.symm",
+  "tokens": 483,
+  "heartbeats": 2480,
+  "L": 72.7,
+  "H": 97.78,
+  "Z": 100.0,
+  "compat": {
+   "v4.27.0": true,
+   "v4.26.0": true,
+   "v4.25.0": true
+  }
+ },
+ "attempts": [
+  {
+   "sha": "299d626ccdc5",
+   "tokens": 850,
+   "heartbeats": 6827,
+   "ok": false,
+   "error": "33:18: Invalid `⟨...⟩` notation: The expected type of this term could not be determined",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:47:01Z"
+  },
+  {
+   "sha": "b44145f75475",
+   "tokens": 892,
+   "heartbeats": 7233,
+   "ok": false,
+   "error": "34:18: Invalid `⟨...⟩` notation: The expected type of this term could not be determined",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:48:18Z"
+  },
+  {
+   "sha": "600aff9d3556",
+   "tokens": 885,
+   "heartbeats": 7241,
+   "ok": false,
+   "error": "37:25: Application type mismatch: The argument Eq.symm heq.right.right.right has type u (j + 3) = u (i + 3) but is expected to have type u j = u i in the application And.intro (Eq.symm heq.right.right.right)",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:50:25Z"
+  },
+  {
+   "sha": "56839d7e21e7",
+   "tokens": 885,
+   "heartbeats": 6980,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:51:16Z",
+   "score": 81.24
+  },
+  {
+   "sha": "34ded75442b7",
+   "tokens": 781,
+   "heartbeats": 25756,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:54:04Z"
+  },
+  {
+   "sha": "786882a4dce0",
+   "tokens": 826,
+   "heartbeats": 6159,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:55:19Z",
+   "score": 82.6
+  },
+  {
+   "sha": "c5c233cc5416",
+   "tokens": 769,
+   "heartbeats": 5816,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:00:31Z",
+   "score": 83.77
+  },
+  {
+   "sha": "02c3360f180b",
+   "tokens": 688,
+   "heartbeats": 6775,
+   "ok": false,
+   "error": "55:12: Tactic `rewrite` failed: Did not find an occurrence of the pattern n - 1 + (j - i) in the target expression u (n - 2) = u (n - 2 + (j - i)) case h.inr … [hypotheses omitted] ⊢ u n = u (n + (j - i))",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:04:48Z"
+  },
+  {
+   "sha": "6eb8ad9d3024",
+   "tokens": 601,
+   "heartbeats": 5325,
+   "ok": false,
+   "error": "53:36: omega could not prove the goal: a possible counterexample may satisfy the constraints d ≥ 0 0 ≤ c ≤ 3 c ≤ 0 c + d ≥ 0 b ≥ 0 b - c - d ≤ -4 a ≥ 0 a - b ≥ 1 where a := ↑j b := ↑i c := ↑k d := ↑(n - k)",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:07:22Z"
+  },
+  {
+   "sha": "bf8df214524c",
+   "tokens": 697,
+   "heartbeats": 11463,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:13:01Z"
+  },
+  {
+   "sha": "f99b5eff596c",
+   "tokens": 767,
+   "heartbeats": 5824,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:17:07Z",
+   "score": 83.81
+  },
+  {
+   "sha": "e5753a217df5",
+   "tokens": 759,
+   "heartbeats": 5519,
+   "ok": false,
+   "error": "41:4: Type mismatch h has type ↑(u (n + 4)) = (↑(u (n + 3)) + ↑(u (n + 2)) + ↑(u (n + 1)) * ↑(u (n + 0))) / (↑(u (n + 3)) * ↑(u (n + 2)) + ↑(u (n + 1)) + ↑(u (n + 0))) but is expected to have type ↑(u (n + 4)) = ↑(u (n + 3) + u (n + 2) + u (n + 1) * u (n + 0)) / ↑(u (n + 3) * u (n + 2) + u (n + 1) +",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:20:25Z"
+  },
+  {
+   "sha": "a059d8970963",
+   "tokens": 763,
+   "heartbeats": 5602,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:22:16Z",
+   "score": 83.95
+  },
+  {
+   "sha": "6f77ea9cc301",
+   "tokens": 761,
+   "heartbeats": 4496,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:27:23Z",
+   "score": 84.32
+  },
+  {
+   "sha": "b2124dc31c99",
+   "tokens": 697,
+   "heartbeats": 4281,
+   "ok": false,
+   "error": "51:54: `simp` made no progress",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:32:42Z"
+  },
+  {
+   "sha": "1fb36bc9f694",
+   "tokens": 719,
+   "heartbeats": 4447,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:34:23Z",
+   "score": 85.12
+  },
+  {
+   "sha": "88a8bf46f02c",
+   "tokens": 691,
+   "heartbeats": 3852,
+   "ok": false,
+   "error": "33:6: Application type mismatch: The argument t < 4 has type Prop of sort `Type` but is expected to have type Type ?u.5051 of sort `Type (?u.5051 + 1)` in the application Fintype (t < 4)",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:38:58Z"
+  },
+  {
+   "sha": "2eaf33e2301b",
+   "tokens": 647,
+   "heartbeats": 3459,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:40:02Z",
+   "score": 86.77
+  },
+  {
+   "sha": "3b866e1aeeb6",
+   "tokens": 645,
+   "heartbeats": 2942,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:45:16Z",
+   "score": 86.97
+  },
+  {
+   "sha": "797616ee59ce",
+   "tokens": 545,
+   "heartbeats": 2518,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:50:37Z",
+   "score": 88.98
+  },
+  {
+   "sha": "f7ec67c114e3",
+   "tokens": 568,
+   "heartbeats": 2487,
+   "ok": false,
+   "error": "42:42: Tactic `rewrite` failed: Did not find an occurrence of the pattern u (a + … [hypotheses omitted] ⊢ (↑(u (a + c + 3)) + ↑(u (a + c + 2)) + ↑(u (a + c + 1)) * ↑(u (a + c + 0))) / (↑(u (a + c + 3)) * ↑(u (a + c + 2)) + ↑(u (a + c + 1)) + ↑(u (a + c + 0))) = (↑(u (b + c + 3)) + ↑(u (b + c + 2)) +",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:54:34Z"
+  },
+  {
+   "sha": "b33817fb84a6",
+   "tokens": 578,
+   "heartbeats": 2230,
+   "ok": false,
+   "error": "40:8: Tactic `rewrite` failed: Did not find an occurrence of the pattern ?n + (?m + ?k) in the target expression ∀ t < 4, u (a + (c + t)) = u (b + (c + t)) … [hypotheses omitted] ⊢ u (a + (c + 4)) = u (b + (c + 4))",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:56:44Z"
+  },
+  {
+   "sha": "77ce58f85a1e",
+   "tokens": 571,
+   "heartbeats": 2625,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:59:53Z"
+  },
+  {
+   "sha": "f21f47db58a6",
+   "tokens": 578,
+   "heartbeats": 2230,
+   "ok": false,
+   "error": "40:8: Tactic `rewrite` failed: Did not find an occurrence of the pattern ?n + (?m + ?k) in the target expression ∀ t < 4, u (a + (c + t)) = u (b + (c + t)) … [hypotheses omitted] ⊢ u (a + (c + 4)) = u (b + (c + 4))",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:23:04Z"
+  },
+  {
+   "sha": "791c3eb4c27f",
+   "tokens": 542,
+   "heartbeats": 2693,
+   "ok": false,
+   "error": "49:38: Type mismatch ih (k + t) (Nat.add_lt_add_left ht k) has type u (i + (k + t)) = u (j + (k + t)) but is expected to have type u (i + k + t) = u (j + k + t)",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:23:10Z"
+  },
+  {
+   "sha": "8ee2e0a4ffdb",
+   "tokens": 541,
+   "heartbeats": 2515,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:26:35Z",
+   "score": 89.05
+  },
+  {
+   "sha": "a51e817d84d7",
+   "tokens": 540,
+   "heartbeats": 2522,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:26:44Z",
+   "score": 89.07
+  },
+  {
+   "sha": "7f82fda1836b",
+   "tokens": 535,
+   "heartbeats": 2366,
+   "ok": false,
+   "error": "38:30: Invalid rewrite argument: Expected an equality or iff proof or definition name, but `?m.463` is a value of type ?m.462",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:26:53Z"
+  },
+  {
+   "sha": "90b2d782e433",
+   "tokens": 536,
+   "heartbeats": 2481,
+   "ok": false,
+   "error": "38:7: unsolved goals … [hypotheses omitted] ⊢ (↑(u (b + 3)) + ↑(u (b + 2)) + ↑(u (b + 1)) * ↑(u (b + 0))) / (↑(u (b + 3)) * ↑(u (b + 2)) + ↑(u (b + 1)) + ↑(u (b + 0))) = ↑(u (b + 4))",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:28:04Z"
+  },
+  {
+   "sha": "171d85b9f3a6",
+   "tokens": 536,
+   "heartbeats": 2500,
+   "ok": false,
+   "error": "38:7: unsolved goals … [hypotheses omitted] ⊢ (↑(u (b + 3)) + ↑(u (b + 2)) + ↑(u (b + 1)) * ↑(u (b + 0))) / (↑(u (b + 3)) * ↑(u (b + 2)) + ↑(u (b + 1)) + ↑(u (b + 0))) = ↑(u (b + 4))",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:28:07Z"
+  },
+  {
+   "sha": "0e0b8509208c",
+   "tokens": 537,
+   "heartbeats": 1737,
+   "ok": false,
+   "error": "38:10: `simp` made no progress",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:28:10Z"
+  },
+  {
+   "sha": "aeb759c2d599",
+   "tokens": 534,
+   "heartbeats": 2575,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:31:03Z",
+   "score": 89.17
+  },
+  {
+   "sha": "999973580b7c",
+   "tokens": 533,
+   "heartbeats": 2572,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:31:12Z",
+   "score": 89.19
+  },
+  {
+   "sha": "eff41d445c8d",
+   "tokens": 572,
+   "heartbeats": 2657,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:31:21Z"
+  },
+  {
+   "sha": "f9fb13b234bc",
+   "tokens": 529,
+   "heartbeats": 2409,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:33:15Z",
+   "score": 89.31
+  },
+  {
+   "sha": "1e97702f63c7",
+   "tokens": 505,
+   "heartbeats": 1920,
+   "ok": false,
+   "error": "50:2: Type mismatch Eq.symm (Eq.symm (Eq.trans (Eq.symm (Eq.symm (Eq.symm (key (n - i))))) ?m.621)) has type u (j + (n - i)) = ?m.626 but is expected to have type u (n + (j - i)) = u n",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:33:23Z"
+  },
+  {
+   "sha": "d57d888cf59e",
+   "tokens": 530,
+   "heartbeats": 1583,
+   "ok": false,
+   "error": "38:10: `simp` made no progress",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:34:36Z"
+  },
+  {
+   "sha": "c8ccd9634686",
+   "tokens": 529,
+   "heartbeats": 2428,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:34:40Z"
+  },
+  {
+   "sha": "cb43f512fd54",
+   "tokens": 552,
+   "heartbeats": 2409,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:35:35Z"
+  },
+  {
+   "sha": "76e33057faa0",
+   "tokens": 532,
+   "heartbeats": null,
+   "ok": false,
+   "error": "38:29: unexpected identifier; expected ')', ',' or ':'",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:35:39Z"
+  },
+  {
+   "sha": "79df7990db91",
+   "tokens": 531,
+   "heartbeats": 2381,
+   "ok": false,
+   "error": "52:2: Tactic `assumption` failed … [hypotheses omitted] ⊢ u (n + (j - i)) = u n",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:37:15Z"
+  },
+  {
+   "sha": "4292459d25b7",
+   "tokens": 526,
+   "heartbeats": 2410,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:29:05Z",
+   "score": 89.37
+  },
+  {
+   "sha": "cb8deb2a3be8",
+   "tokens": 526,
+   "heartbeats": 2571,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:29:15Z"
+  },
+  {
+   "sha": "edd46e666a74",
+   "tokens": 529,
+   "heartbeats": 2415,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:29:19Z"
+  },
+  {
+   "sha": "962d444e6af8",
+   "tokens": 523,
+   "heartbeats": 2579,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:29:22Z"
+  },
+  {
+   "sha": "36932b2efbce",
+   "tokens": 547,
+   "heartbeats": 2732,
+   "ok": false,
+   "error": "39:4: Type mismatch Int.cast_injective ?m.478 has type ?m.476 = ?m.477 but is expected to have type u (a + 3) = u (b + 3) → u (a + 4) = u (b + 4)",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:30:10Z"
+  },
+  {
+   "sha": "2af7576ac959",
+   "tokens": 550,
+   "heartbeats": 2763,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:30:55Z"
+  },
+  {
+   "sha": "262e5d0b578f",
+   "tokens": 520,
+   "heartbeats": 2503,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:33:56Z",
+   "score": 89.45
+  },
+  {
+   "sha": "3679d311fdaf",
+   "tokens": 529,
+   "heartbeats": 2407,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:34:05Z"
+  },
+  {
+   "sha": "4b59822dac6b",
+   "tokens": 523,
+   "heartbeats": 2500,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:34:08Z"
+  },
+  {
+   "sha": "2adb3119fa5a",
+   "tokens": 516,
+   "heartbeats": 2511,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:35:22Z",
+   "score": 89.53
+  },
+  {
+   "sha": "c52d041f4873",
+   "tokens": 515,
+   "heartbeats": 2520,
+   "ok": false,
+   "error": "47:10: Type mismatch ih (k + t) (Nat.add_lt_add_left ht k) has type u (i + (k + t)) = u (j + (k + t)) but is expected to have type u (i + (k + t)) = u (j + k + t)",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:36:47Z"
+  },
+  {
+   "sha": "6a0101baa85c",
+   "tokens": 513,
+   "heartbeats": 2515,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:37:54Z",
+   "score": 89.58
+  },
+  {
+   "sha": "e8ac36ca995e",
+   "tokens": 515,
+   "heartbeats": 2608,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:38:04Z"
+  },
+  {
+   "sha": "d24629a8d0c9",
+   "tokens": 522,
+   "heartbeats": 2514,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:39:22Z"
+  },
+  {
+   "sha": "ac0969370c8b",
+   "tokens": 487,
+   "heartbeats": 2214,
+   "ok": false,
+   "error": "44:18: Tactic `rewrite` failed: Did not find an occurrence of the pattern ↑(u (i + k + 4)) in the target expression ↑(u (i + (k + 4))) = ↑(u (j + (k + 4))) … [hypotheses omitted] ⊢ ↑(u (i + (k + 4))) = ↑(u (j + (k + 4)))",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:40:34Z"
+  },
+  {
+   "sha": "8d4bc858faed",
+   "tokens": 513,
+   "heartbeats": null,
+   "ok": false,
+   "error": "44:60: unexpected identifier; expected ')', ',' or ':'",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:41:46Z"
+  },
+  {
+   "sha": "5a25e201a524",
+   "tokens": 514,
+   "heartbeats": 2514,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:41:50Z"
+  },
+  {
+   "sha": "8d929a20d58a",
+   "tokens": 509,
+   "heartbeats": 2515,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:44:50Z",
+   "score": 89.66
+  },
+  {
+   "sha": "4ca451fe0de4",
+   "tokens": 501,
+   "heartbeats": 2004,
+   "ok": false,
+   "error": "47:81: Unknown identifier `this`",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:44:59Z"
+  },
+  {
+   "sha": "fb31d6150423",
+   "tokens": 484,
+   "heartbeats": 2483,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:49:30Z",
+   "score": 90.14
+  },
+  {
+   "sha": "fa1761662c06",
+   "tokens": 484,
+   "heartbeats": 2492,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:51:09Z"
+  },
+  {
+   "sha": "23497e904ada",
+   "tokens": 483,
+   "heartbeats": 2480,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:51:13Z",
+   "score": 90.16
+  },
+  {
+   "sha": "e2541d8d9d53",
+   "tokens": 483,
+   "heartbeats": 2479,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:11:21Z"
+  },
+  {
+   "sha": "611e60d70381",
+   "tokens": 498,
+   "heartbeats": 2509,
+   "ok": false,
+   "error": "44:10: `simp` made no progress",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:11:35Z"
+  },
+  {
+   "sha": "e4fb2da4253b",
+   "tokens": 530,
+   "heartbeats": 2565,
+   "ok": false,
+   "error": "28:6: Application type mismatch: The argument Set.Finite.not_infinite hfin (infinite_range_of_injective fun a b h => ?m.231) has type False but is expected to have type ¬Injective ?m.219 in the application not_injective_iff.mp (Set.Finite.not_infinite hfin (infinite_range_of_injective fun a b h => ?",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:11:51Z"
+  },
+  {
+   "sha": "9ca4575dd859",
+   "tokens": 493,
+   "heartbeats": 973,
+   "ok": false,
+   "error": "27:53: Type mismatch: After simplification, term congrFun h 0 has type u a = u b but is expected to have type a = b",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:14:53Z"
+  },
+  {
+   "sha": "c784c469ffdf",
+   "tokens": 480,
+   "heartbeats": null,
+   "ok": false,
+   "error": "49:0: unexpected end of input; expected '⟩'",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:14:59Z"
+  },
+  {
+   "sha": "c3dca95b6e25",
+   "tokens": 481,
+   "heartbeats": 2445,
+   "ok": false,
+   "error": "48:2: Tactic `assumption` failed … [hypotheses omitted] ⊢ u (n + (j - i)) = u n",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:16:11Z"
+  },
+  {
+   "sha": "35190811576a",
+   "tokens": 484,
+   "heartbeats": 2480,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:16:34Z"
+  },
+  {
+   "sha": "91aef14f40e0",
+   "tokens": 483,
+   "heartbeats": 2486,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:17:44Z"
+  },
+  {
+   "sha": "153234b09dcb",
+   "tokens": 484,
+   "heartbeats": 2479,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:39:10Z"
+  },
+  {
+   "sha": "61796019b6a7",
+   "tokens": 458,
+   "heartbeats": 1632,
+   "ok": false,
+   "error": "36:27: `simp` made no progress",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:41:31Z"
+  },
+  {
+   "sha": "c54a4346be73",
+   "tokens": 482,
+   "heartbeats": 2563,
+   "ok": false,
+   "error": "46:20: Application type mismatch: The argument LT.lt.ne' hij has type j ≠ i but is expected to have type j - i > 0 in the application And.intro (LT.lt.ne' hij)",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T05:37:57Z"
+  },
+  {
+   "sha": "3df32d6af68b",
+   "tokens": 484,
+   "heartbeats": null,
+   "ok": false,
+   "error": "45:32: unknown tactic",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T05:38:11Z"
+  },
+  {
+   "sha": "581fdac7c8f5",
+   "tokens": 478,
+   "heartbeats": 2577,
+   "ok": false,
+   "error": "42:25: Unknown identifier `k`",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T14:15:23Z"
+  },
+  {
+   "sha": "0f91f05df374",
+   "tokens": 482,
+   "heartbeats": 2578,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T14:15:33Z"
+  },
+  {
+   "sha": "7441aac58b8b",
+   "tokens": 478,
+   "heartbeats": 2466,
+   "ok": false,
+   "error": "42:25: Unknown identifier `k`",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T14:15:41Z"
+  },
+  {
+   "sha": "9e79836fe6c1",
+   "tokens": 476,
+   "heartbeats": 2422,
+   "ok": false,
+   "error": "47:54: Tactic `rewrite` failed: Did not find an occurrence of the pattern i + (n - i) in the target expression u (j + (n - i)) = u n … [hypotheses omitted] ⊢ u (j + (n - i)) = u n",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T14:17:51Z"
+  },
+  {
+   "sha": "ec6a2f5317bb",
+   "tokens": 477,
+   "heartbeats": 2404,
+   "ok": false,
+   "error": "48:2: Type mismatch Eq.symm (key ?m.595) has type u (j + ?m.595) = u (i + ?m.595) but is expected to have type u (j + (i + (n - i) - i)) = u (i + (n - i))",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T14:18:06Z"
+  },
+  {
+   "sha": "64a1f498d751",
+   "tokens": 188,
+   "heartbeats": 1235,
+   "ok": false,
+   "error": "29:44: Application type mismatch: The argument hB n has type B ≤ u n ∧ u n ≤ T but is expected to have type (u n, u (n + 1), u (n + 2), u (n + 3)).1 ∈ range u in the application And.intro (hB n)",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T14:18:15Z"
+  },
+  {
+   "sha": "4b118f89f1e5",
+   "tokens": 489,
+   "heartbeats": 2484,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T14:19:25Z"
+  },
+  {
+   "sha": "7432cd39e69c",
+   "tokens": 465,
+   "heartbeats": 2009,
+   "ok": false,
+   "error": "48:26: Tactic `rewrite` failed: Did not find an occurrence of the pattern i.succ + (j - i.succ) in the target expression u (i + (j - i) + (n - i)) = u n … [hypotheses omitted] ⊢ u (i + (j - i) + (n - i)) = u n",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T14:20:06Z"
+  },
+  {
+   "sha": "112c2a30c887",
+   "tokens": 489,
+   "heartbeats": 2488,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T14:20:22Z"
+  },
+  {
+   "sha": "4ba4efd3ea35",
+   "tokens": 476,
+   "heartbeats": 2218,
+   "ok": false,
+   "error": "49:2: Type mismatch Eq.symm (key ?m.591) has type u (j + ?m.591) = u (i + ?m.591) but is expected to have type u (j + (n - i)) = u n",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T14:20:54Z"
+  },
+  {
+   "sha": "004e5d57481c",
+   "tokens": 486,
+   "heartbeats": 2274,
+   "ok": false,
+   "error": "49:2: Type mismatch Eq.symm (key ?m.603) has type u (j + ?m.603) = u (i + ?m.603) but is expected to have type u (j + (n - i)) = u n",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T14:21:02Z"
+  },
+  {
+   "sha": "2445bf46558c",
+   "tokens": 496,
+   "heartbeats": 2319,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T14:21:45Z"
+  }
+ ],
+ "runs": [
+  {
+   "run_id": "fresh-a100-p1",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T00:31:21Z"
+  },
+  {
+   "run_id": "fresh-a100-p2",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T04:36:17Z"
+  },
+  {
+   "run_id": "fresh-a100-p3",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T17:21:54Z"
+  },
+  {
+   "run_id": "fresh-a100-p4",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-08T23:26:33Z"
+  },
+  {
+   "run_id": "fresh-a100-p5",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T02:01:45Z"
+  },
+  {
+   "run_id": "fresh-a100-p6",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T05:36:50Z"
+  },
+  {
+   "run_id": "fresh-a100-p7",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T14:10:33Z"
+  }
+ ],
+ "ledger": {
+  "wins": [
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 8,
+    "d_score": 1.36,
+    "d_tokens": -59,
+    "d_heartbeats": -821,
+    "diff": "-    have e : (u (a + 4) : ℝ) = (u (b + 4) : ℝ) := by\n-      rw [h4, h5, h 0 (by omega), h 1 (by omega), h 2 (by omega), h 3 (by omega)]\n-    exact Int.cast_injective e\n+    exact Int.cast_injective\n+      (by rw [h4, h5, h 0 (by omega), h 1 (by omega), h 2 (by omega), h 3 (by omega)] :\n+        (u (a + 4) : ℝ) = (u (b + 4) : ℝ))\n-        · simpa using heq.1\n+        · simp only [Nat.add_zero]; exact heq.1\n-        rw [show i + (k + 4) = i + k + 4 from by omega, show j + (k + 4) = j + k + 4 from by omega]\n+        simp only [← Nat.add_assoc]\n-        rwa [show i + (k + t) = i + k + t from by omega, show j + (k + t) = j + k + t from by omega] at h6\n+        simp only [← Nat.add_assoc] at h6\n+",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "b91f9116be4a"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 9,
+    "d_score": 1.17,
+    "d_tokens": -57,
+    "d_heartbeats": -343,
+    "diff": "-    have hru : (Set.range u).Finite := by\n-      refine Set.Finite.subset (Set.finite_Icc B T) ?_\n-      rintro y ⟨n, rfl⟩\n+    have hru : (Set.range u).Finite := (Set.finite_Icc B T).subset fun y hy => by\n+      obtain ⟨n, rfl⟩ := hy\n-    have hfin : (Set.range fun n => (⟨u n, u (n + 1), u (n + 2), u (n + 3)⟩ : ℤ × ℤ × ℤ × ℤ)).Finite := by\n-      refine Set.Finite.subset (hru.prod (hru.prod (hru.prod hru))) (Set.range_subset_iff.mpr fun n => ?_)\n-      exact ⟨⟨n, rfl⟩, ⟨n + 1, rfl⟩, ⟨n + 2, rfl⟩, ⟨n + 3, rfl⟩⟩\n-    have hinj : ¬Function.Injective fun n => (⟨u n, u (n + 1), u (n + 2), u (n + 3)⟩ : ℤ × ℤ × ℤ × ℤ) :=\n+    have hfin : (Set.range fun n => (⟨u n, u (n + 1), u (n + 2), u (n + 3)⟩",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "1881ebe0ccfd"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 13,
+    "d_score": 0.04,
+    "d_tokens": -2,
+    "d_heartbeats": 8,
+    "diff": "-    have hru : (Set.range u).Finite := (Set.finite_Icc B T).subset fun y hy => by\n-      obtain ⟨n, rfl⟩ := hy\n-      exact hB n\n-      (hru.prod (hru.prod (hru.prod hru))).subset\n-        (Set.range_subset_iff.mpr fun n => ⟨⟨n, rfl⟩, ⟨n + 1, rfl⟩, ⟨n + 2, rfl⟩, ⟨n + 3, rfl⟩⟩)\n+      ((Set.finite_Icc B T).prod ((Set.finite_Icc B T).prod ((Set.finite_Icc B T).prod\n+        (Set.finite_Icc B T)))).subset\n+        (Set.range_subset_iff.mpr fun n => ⟨hB n, hB (n + 1), hB (n + 2), hB (n + 3)⟩)\n-        apply hstep (i + k) (j + k)\n-        intro t ht\n-        have h6 := ih (k + t) (by omega)\n-        simp only [← Nat.add_assoc] at h6\n-        exact h6\n+        exact hstep (i + k) (j + k) fun t _ ",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "05d30d038969"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 15,
+    "d_score": 0.14,
+    "d_tokens": -4,
+    "d_heartbeats": -222,
+    "diff": "+    have s := Set.finite_Icc B T\n-      ((Set.finite_Icc B T).prod ((Set.finite_Icc B T).prod ((Set.finite_Icc B T).prod\n-        (Set.finite_Icc B T)))).subset\n+      (s.prod (s.prod (s.prod s))).subset\n+  have hrec : ∀ n : ℕ, u (n + 4) = ((u (n + 3) + u (n + 2) + u (n + 1) * u (n + 0)) : ℝ) /\n+      ((u (n + 3) * u (n + 2) + u (n + 1) + u (n + 0)) : ℝ) := by\n+    intro n\n+    have h := (hu (n + 4) (by omega)).1\n+    rw [show (n + 4) - 1 = n + 3 from by omega, show (n + 4) - 2 = n + 2 from by omega,\n+      show (n + 4) - 3 = n + 1 from by omega, show (n + 4) - 4 = n + 0 from by omega] at h\n+    exact h\n-    have h4 := (hu (a + 4) (by omega)).1\n-    have h5 := (hu (b + 4) (by omega)).1\n-   ",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "c3ba4046ac29"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 16,
+    "d_score": 0.37,
+    "d_tokens": -2,
+    "d_heartbeats": -1106,
+    "diff": "-  have h_main : ∃ i j : ℕ, i < j ∧ u i = u j ∧ u (i + 1) = u (j + 1) ∧ u (i + 2) = u (j + 2) ∧ u (i + 3) = u (j + 3) := by\n+  have h_main : ∃ i j : ℕ, i < j ∧ ∀ t < 4, u (i + t) = u (j + t) := by\n+    have heq4 : ∀ t < 4, u (i + t) = u (j + t) := by\n+      intro t ht\n+      rcases (show t = 0 ∨ t = 1 ∨ t = 2 ∨ t = 3 from by omega) with rfl | rfl | rfl | rfl\n+      · simp only [Nat.add_zero]; exact heq.1\n+      · exact heq.2.1\n+      · exact heq.2.2.1\n+      · exact heq.2.2.2\n-    · exact ⟨i, j, hij, heq⟩\n-    · exact ⟨j, i, hij, ⟨heq.1.symm, heq.2.1.symm, heq.2.2.1.symm, heq.2.2.2.symm⟩⟩\n-  obtain ⟨i, j, hij, heq⟩ := h_main\n+    · exact ⟨i, j, hij, heq4⟩\n+    · exact ⟨j, i, hij, fun t ht =>",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "23e8d3840d0c"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 18,
+    "d_score": 0.8,
+    "d_tokens": -42,
+    "d_heartbeats": -49,
+    "diff": "-      (by rw [hrec a, hrec b, h 0 (by omega), h 1 (by omega), h 2 (by omega), h 3 (by omega)] :\n-        (u (a + 4) : ℝ) = (u (b + 4) : ℝ))\n+      (by rw [hrec a, hrec b, h 0 (by omega), h 1 (by omega), h 2 (by omega), h 3 (by omega)])\n-          (by simpa only [← Nat.add_assoc] using ih (k + t) (by omega) :\n-            u (i + k + t) = u (j + k + t))\n+          by simpa only [← Nat.add_assoc] using ih (k + t) (by omega)",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "500072fab5f8"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 1,
+    "d_score": 1.65,
+    "d_tokens": -72,
+    "d_heartbeats": -988,
+    "diff": "-      ((u (n + 3) * u (n + 2) + u (n + 1) + u (n + 0)) : ℝ) := by\n-    intro n\n-    have h := (hu (n + 4) (by omega)).1\n-    rw [show (n + 4) - 1 = n + 3 from by omega, show (n + 4) - 2 = n + 2 from by omega,\n-      show (n + 4) - 3 = n + 1 from by omega, show (n + 4) - 4 = n + 0 from by omega] at h\n-    exact h\n+      ((u (n + 3) * u (n + 2) + u (n + 1) + u (n + 0)) : ℝ) :=\n+    fun n => (hu (n + 4) (Nat.le_add_left 4 n)).1",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "1af6adb659bb"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 2,
+    "d_score": 0.2,
+    "d_tokens": -2,
+    "d_heartbeats": -517,
+    "diff": "-      · simp only [Nat.add_zero]; exact heq.1\n+      · exact heq.1\n-      (by rw [hrec a, hrec b, h 0 (by omega), h 1 (by omega), h 2 (by omega), h 3 (by omega)])\n+      (by rw [hrec a, hrec b, h 0 (by decide), h 1 (by decide), h 2 (by decide), h 3 (by decide)])\n-      · obtain ⟨k, rfl⟩ : ∃ k, m = k + 4 := ⟨m - 4, by omega⟩\n+      · obtain ⟨k, rfl⟩ : ∃ k, m = k + 4 := ⟨m - 4, (Nat.sub_add_cancel hm).symm⟩\n-        exact hstep (i + k) (j + k) fun t _ =>\n-          by simpa only [← Nat.add_assoc] using ih (k + t) (by omega)\n-  refine ⟨i, j - i, by omega, fun n hn => ?_⟩\n+        exact hstep (i + k) (j + k) fun t ht =>\n+          by simpa only [← Nat.add_assoc] using ih (k + t) (Nat.add_lt_add",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "572535e32674"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 3,
+    "d_score": 2.01,
+    "d_tokens": -100,
+    "d_heartbeats": -424,
+    "diff": "-    have hfin : (Set.range fun n => (⟨u n, u (n + 1), u (n + 2), u (n + 3)⟩ : ℤ × ℤ × ℤ × ℤ)).Finite :=\n-      (s.prod (s.prod (s.prod s))).subset\n-        (Set.range_subset_iff.mpr fun n => ⟨hB n, hB (n + 1), hB (n + 2), hB (n + 3)⟩)\n+    have hfin : (Set.range fun (n : ℕ) (k : Fin 4) => u (n + k)).Finite :=\n+      (Set.Finite.pi fun _ => s).subset\n+        (Set.range_subset_iff.mpr fun n k _ => hB (n + k))\n-    simp only [Prod.mk.injEq] at heq\n-    have heq4 : ∀ t < 4, u (i + t) = u (j + t) := by\n-      intro t ht\n-      rcases (show t = 0 ∨ t = 1 ∨ t = 2 ∨ t = 3 from by omega) with rfl | rfl | rfl | rfl\n-      · exact heq.1\n-      · exact heq.2.1\n-      · exact heq.2.2.1\n-      · exact h",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "a35ea6279499"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 3,
+    "d_score": 0.07,
+    "d_tokens": -4,
+    "d_heartbeats": -3,
+    "diff": "-    have s := Set.finite_Icc B T\n-      (Set.Finite.pi fun _ => s).subset\n+      (Set.Finite.pi fun _ => Set.finite_Icc B T).subset",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "696362d6a3eb"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 4,
+    "d_score": 0.02,
+    "d_tokens": -1,
+    "d_heartbeats": 7,
+    "diff": "-  have hstep : ∀ a b : ℕ, (∀ t < 4, u (a + t) = u (b + t)) → u (a + 4) = u (b + 4) := by\n-    intro a b h\n-    exact Int.cast_injective\n+  have hstep : ∀ a b : ℕ, (∀ t < 4, u (a + t) = u (b + t)) → u (a + 4) = u (b + 4) := fun a b h =>\n+    Int.cast_injective",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "963adc15196e"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 9,
+    "d_score": 0.1,
+    "d_tokens": -6,
+    "d_heartbeats": 53,
+    "diff": "-        simp only [← Nat.add_assoc]\n-        exact hstep (i + k) (j + k) fun t ht =>\n-          by simpa only [← Nat.add_assoc] using ih (k + t) (Nat.add_lt_add_left ht k)\n+        exact hstep (i + k) (j + k) fun t ht => by\n+          rw [Nat.add_assoc, Nat.add_assoc]\n+          exact ih (k + t) (Nat.add_lt_add_left ht k)",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "fd5797991a17"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 10,
+    "d_score": 0.02,
+    "d_tokens": -1,
+    "d_heartbeats": -3,
+    "diff": "-          rw [Nat.add_assoc, Nat.add_assoc]\n+          simp only [Nat.add_assoc]",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "2816cba557c5"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 12,
+    "d_score": 0.12,
+    "d_tokens": -4,
+    "d_heartbeats": -163,
+    "diff": "-  have hrec : ∀ n : ℕ, u (n + 4) = ((u (n + 3) + u (n + 2) + u (n + 1) * u (n + 0)) : ℝ) /\n-      ((u (n + 3) * u (n + 2) + u (n + 1) + u (n + 0)) : ℝ) :=\n+  have hrec : ∀ n : ℕ, (u (n + 4) : ℝ) = (u (n + 3) + u (n + 2) + u (n + 1) * u (n + 0)) /\n+      (u (n + 3) * u (n + 2) + u (n + 1) + u (n + 0)) :=",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "80cfbbfc85d1"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 1,
+    "d_score": 0.06,
+    "d_tokens": -3,
+    "d_heartbeats": 1,
+    "diff": "-      fun hinj => hfin.not_infinite (Set.infinite_range_of_injective hinj)\n+      (hfin.not_infinite ∘ Set.infinite_range_of_injective)"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 7,
+    "d_score": 0.08,
+    "d_tokens": -6,
+    "d_heartbeats": 93,
+    "diff": "-  have h_main : ∃ i j : ℕ, i < j ∧ ∀ t < 4, u (i + t) = u (j + t) := by\n+  have h_main : ∃ i j : ℕ, i < j ∧ ∀ t : Fin 4, u (i + t) = u (j + t) := by\n-    · exact ⟨i, j, hij, fun t ht => congrFun heq ⟨t, ht⟩⟩\n-    · exact ⟨j, i, hij, fun t ht => (congrFun heq ⟨t, ht⟩).symm⟩\n+    · exact ⟨i, j, hij, fun t => congrFun heq t⟩\n+    · exact ⟨j, i, hij, fun t => (congrFun heq t).symm⟩\n-      · exact heq4 m hm\n+      · exact heq4 ⟨m, hm⟩"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 10,
+    "d_score": 0.08,
+    "d_tokens": -4,
+    "d_heartbeats": 8,
+    "diff": "-  have h_main : ∃ i j : ℕ, i < j ∧ ∀ t : Fin 4, u (i + t) = u (j + t) := by\n+  obtain ⟨i, j, hij, heq4⟩ : ∃ i j : ℕ, i < j ∧ ∀ t : Fin 4, u (i + t) = u (j + t) := by\n-  obtain ⟨i, j, hij, heq4⟩ := h_main\n-    fun n => (hu (n + 4) (Nat.le_add_left 4 n)).1\n+    fun n => (hu (n + 4) (Nat.le_add_left _ n)).1"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 13,
+    "d_score": 0.05,
+    "d_tokens": -3,
+    "d_heartbeats": 4,
+    "diff": "-  have key : ∀ m : ℕ, u (i + m) = u (j + m) := by\n-    intro m\n-    induction m using Nat.strong_induction_on with\n-    | h m ih =>\n+  have key : ∀ m : ℕ, u (i + m) = u (j + m) := fun m =>\n+    Nat.strongRecOn m fun m ih => by"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 19,
+    "d_score": 0.08,
+    "d_tokens": -4,
+    "d_heartbeats": 0,
+    "diff": "-    · exact ⟨i, j, hij, fun t => congrFun heq t⟩\n+    · exact ⟨i, j, hij, congrFun heq⟩"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 21,
+    "d_score": 0.48,
+    "d_tokens": -25,
+    "d_heartbeats": -32,
+    "diff": "-    · exact ⟨j, i, hij, fun t => (congrFun heq t).symm⟩\n+    · exact ⟨j, i, hij, congrFun heq.symm⟩\n-      · obtain ⟨k, rfl⟩ : ∃ k, m = k + 4 := ⟨m - 4, (Nat.sub_add_cancel hm).symm⟩\n+      · obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le' hm"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 23,
+    "d_score": 0.02,
+    "d_tokens": -1,
+    "d_heartbeats": -3,
+    "diff": "-    have hfin : (Set.range fun (n : ℕ) (k : Fin 4) => u (n + k)).Finite :=\n-      (Set.Finite.pi fun _ => Set.finite_Icc B T).subset\n-        (Set.range_subset_iff.mpr fun n k _ => hB (n + k))\n-      (hfin.not_infinite ∘ Set.infinite_range_of_injective)\n+      (((Set.Finite.pi fun _ => Set.finite_Icc B T).subset\n+        (Set.range_subset_iff.mpr fun n k _ => hB (n + k)) :\n+        (Set.range fun (n : ℕ) (k : Fin 4) => u (n + k)).Finite).not_infinite ∘\n+        Set.infinite_range_of_injective)"
+   }
+  ],
+  "dead_names": [
+   "Set.Infinite.exists_ne_map_eq_of_finite",
+   "Ne.lt_or_lt"
+  ]
+ },
+ "profile_cache": {
+  "8d929a20d58a": {
+   "ok": true,
+   "total": 2515,
+   "floor": 558,
+   "reference": 111553,
+   "max_heartbeat_score": 33.17,
+   "blocks": [
+    {
+     "lines": "7-15",
+     "depth_indent": 2,
+     "text": "obtain ⟨i, j, hij, heq4⟩ : ∃ i j : ℕ, i < j ∧ ∀ t : Fin 4, u (i + t) = u (j + t) := by have hfin : (",
+     "heartbeats": 498
+    },
+    {
+     "lines": "32-32",
+     "depth_indent": 2,
+     "text": "rw [Nat.add_sub_cancel' hn, show j + (n - i) = n + (j - i) from by omega] at h9",
+     "heartbeats": 458
+    },
+    {
+     "lines": "16-18",
+     "depth_indent": 2,
+     "text": "have hrec : ∀ n : ℕ, (u (n + 4) : ℝ) = (u (n + 3) + u (n + 2) + u (n + 1) * u (n + 0)) / (u (n + 3) ",
+     "heartbeats": 434
+    },
+    {
+     "lines": "19-21",
+     "depth_indent": 2,
+     "text": "have hstep : ∀ a b : ℕ, (∀ t < 4, u (a + t) = u (b + t)) → u (a + 4) = u (b + 4) := fun a b h => Int",
+     "heartbeats": 305
+    },
+    {
+     "lines": "8-10",
+     "depth_indent": 4,
+     "text": "have hfin : (Set.range fun (n : ℕ) (k : Fin 4) => u (n + k)).Finite := (Set.Finite.pi fun _ => Set.f",
+     "heartbeats": 257
+    },
+    {
+     "lines": "22-29",
+     "depth_indent": 2,
+     "text": "have key : ∀ m : ℕ, u (i + m) = u (j + m) := fun m => Nat.strongRecOn m fun m ih => by rcases Nat.lt",
+     "heartbeats": 232
+    },
+    {
+     "lines": "11-12",
+     "depth_indent": 4,
+     "text": "obtain ⟨i, j, heq, hne⟩ := Function.not_injective_iff.mp (hfin.not_infinite ∘ Set.infinite_range_of_",
+     "heartbeats": 27
+    },
+    {
+     "lines": "13-13",
+     "depth_indent": 4,
+     "text": "rcases lt_or_gt_of_ne hne with hij | hij",
+     "heartbeats": 26
+    },
+    {
+     "lines": "30-30",
+     "depth_indent": 2,
+     "text": "refine ⟨i, j - i, Nat.sub_pos_of_lt hij, fun n hn => ?_⟩",
+     "heartbeats": 25
+    },
+    {
+     "lines": "31-31",
+     "depth_indent": 2,
+     "text": "have h9 := key (n - i)",
+     "heartbeats": 9
+    },
+    {
+     "lines": "6-6",
+     "depth_indent": 2,
+     "text": "obtain ⟨B, T, hB⟩ := boundedu",
+     "heartbeats": 8
+    },
+    {
+     "lines": "33-33",
+     "depth_indent": 2,
+     "text": "exact h9.symm",
+     "heartbeats": -13
+    }
+   ],
+   "points_left_heartbeats": 0.58,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "23497e904ada": {
+   "ok": true,
+   "total": 2480,
+   "floor": 558,
+   "reference": 111553,
+   "max_heartbeat_score": 33.17,
+   "blocks": [
+    {
+     "lines": "7-15",
+     "depth_indent": 2,
+     "text": "obtain ⟨i, j, hij, heq4⟩ : ∃ i j : ℕ, i < j ∧ ∀ t : Fin 4, u (i + t) = u (j + t) := by obtain ⟨i, j,",
+     "heartbeats": 494
+    },
+    {
+     "lines": "32-32",
+     "depth_indent": 2,
+     "text": "rw [Nat.add_sub_cancel' hn, show j + (n - i) = n + (j - i) from by omega] at h9",
+     "heartbeats": 457
+    },
+    {
+     "lines": "16-18",
+     "depth_indent": 2,
+     "text": "have hrec : ∀ n : ℕ, (u (n + 4) : ℝ) = (u (n + 3) + u (n + 2) + u (n + 1) * u (n + 0)) / (u (n + 3) ",
+     "heartbeats": 435
+    },
+    {
+     "lines": "19-21",
+     "depth_indent": 2,
+     "text": "have hstep : ∀ a b : ℕ, (∀ t < 4, u (a + t) = u (b + t)) → u (a + 4) = u (b + 4) := fun a b h => Int",
+     "heartbeats": 305
+    },
+    {
+     "lines": "8-12",
+     "depth_indent": 4,
+     "text": "obtain ⟨i, j, heq, hne⟩ := Function.not_injective_iff.mp (((Set.Finite.pi fun _ => Set.finite_Icc B ",
+     "heartbeats": 282
+    },
+    {
+     "lines": "22-29",
+     "depth_indent": 2,
+     "text": "have key : ∀ m : ℕ, u (i + m) = u (j + m) := fun m => Nat.strongRecOn m fun m ih => by rcases Nat.lt",
+     "heartbeats": 200
+    },
+    {
+     "lines": "30-30",
+     "depth_indent": 2,
+     "text": "refine ⟨i, j - i, Nat.sub_pos_of_lt hij, fun n hn => ?_⟩",
+     "heartbeats": 25
+    },
+    {
+     "lines": "14-14",
+     "depth_indent": 4,
+     "text": "· exact ⟨i, j, hij, congrFun heq⟩",
+     "heartbeats": 13
+    },
+    {
+     "lines": "13-13",
+     "depth_indent": 4,
+     "text": "rcases lt_or_gt_of_ne hne with hij | hij",
+     "heartbeats": 11
+    },
+    {
+     "lines": "31-31",
+     "depth_indent": 2,
+     "text": "have h9 := key (n - i)",
+     "heartbeats": 10
+    },
+    {
+     "lines": "6-6",
+     "depth_indent": 2,
+     "text": "obtain ⟨B, T, hB⟩ := boundedu",
+     "heartbeats": 8
+    },
+    {
+     "lines": "33-33",
+     "depth_indent": 2,
+     "text": "exact h9.symm",
+     "heartbeats": -13
+    }
+   ],
+   "points_left_heartbeats": 0.57,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  }
+ },
+ "hb_floor": 558
+}

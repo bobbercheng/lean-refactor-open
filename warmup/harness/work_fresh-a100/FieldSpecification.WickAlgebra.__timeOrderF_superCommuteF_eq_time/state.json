@@ -1,0 +1,2149 @@
+{
+ "problem": "FieldSpecification.WickAlgebra.ι_timeOrderF_superCommuteF_eq_time",
+ "best": {
+  "score": 69.55,
+  "proof": "lemma ι_timeOrderF_superCommuteF_eq_time {φ ψ : 𝓕.CrAnFieldOp}\n    (hφψ : crAnTimeOrderRel φ ψ) (hψφ : crAnTimeOrderRel ψ φ) (a b : 𝓕.FieldOpFreeAlgebra) :\n    ι 𝓣ᶠ(a * [ofCrAnOpF φ, ofCrAnOpF ψ]ₛF * b) =\n    ι ([ofCrAnOpF φ, ofCrAnOpF ψ]ₛF * 𝓣ᶠ(a * b)) := by\n  induction (Basis.mem_span ofCrAnListFBasis b) using Submodule.span_induction with\n  | mem x hx =>\n    obtain ⟨φs, rfl⟩ := hx\n    simp only [ofListBasis_eq_ofList]\n    induction (Basis.mem_span ofCrAnListFBasis a) using Submodule.span_induction with\n    | mem y hy =>\n      obtain ⟨φs', rfl⟩ := hy\n      simp only [ofListBasis_eq_ofList]\n      have hmid : ι [ofCrAnOpF φ, ofCrAnOpF ψ]ₛF =\n          ι (ofCrAnListF [φ, ψ]) -\n          𝓢(𝓕.crAnStatistics φ, 𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, φ]) := by\n        rw [superCommuteF_ofCrAnOpF_ofCrAnOpF]\n        simp [← ofCrAnListF_singleton, ← ofCrAnListF_append]\n      let l := List.takeWhile (fun c => ¬crAnTimeOrderRel φ c)\n        (List.insertionSort crAnTimeOrderRel (φs' ++ φs))\n      let l' := List.filter (fun c =>\n        crAnTimeOrderRel φ c ∧ crAnTimeOrderRel c φ) φs'\n      let r := List.filter (fun c => (crAnTimeOrderRel φ c ∧ ¬crAnTimeOrderRel c φ))\n        (List.insertionSort crAnTimeOrderRel (φs' ++ φs))\n      let r' := List.filter (fun c => crAnTimeOrderRel φ c ∧ crAnTimeOrderRel c φ) φs\n      have h1 := insertionSort_of_eq_list crAnTimeOrderRel φ φs' [φ, ψ] φs\n        (by simp [hφψ, hψφ])\n      have h2 := insertionSort_of_eq_list crAnTimeOrderRel φ φs' [ψ, φ] φs\n        (by simp [hφψ, hψφ])\n      have h3 : crAnTimeOrderList (φs' ++ φs) = l ++ (l' ++ (r' ++ r)) := by\n        rw [crAnTimeOrderList, insertionSort_of_takeWhile_filter crAnTimeOrderRel φ φs' φs]\n        simp only [l, l', r, r', List.append_assoc]\n      have e : ∀ χ η, φs' ++ χ :: η :: φs = φs' ++ [χ, η] ++ φs := fun _ _ => by simp\n      calc ι 𝓣ᶠ(ofCrAnListF φs' * [ofCrAnOpF φ, ofCrAnOpF ψ]ₛF * ofCrAnListF φs)\n        _ = crAnTimeOrderSign (φs' ++ φ :: ψ :: φs) •\n          (ι (ofCrAnListF l) * ι (ofCrAnListF l') * ι [ofCrAnOpF φ, ofCrAnOpF ψ]ₛF *\n            ι (ofCrAnListF r') * ι (ofCrAnListF r)) := by\n          conv_lhs =>\n            simp only [← ofCrAnListF_singleton, ← ofCrAnListF_singleton,\n              superCommuteF_ofCrAnListF_ofCrAnListF, mul_sub, sub_mul, smul_mul_assoc,\n              mul_smul_comm, ← ofCrAnListF_append, List.append_assoc, List.cons_append,\n              List.nil_append, ofList_singleton, map_sub, map_smul, timeOrderF_ofCrAnListF,\n              sub_right_inj]\n          rw [smul_comm, ← crAnTimeOrderSign_swap_eq_time hφψ hψφ]\n          simp only [crAnTimeOrderList, e, h1, h2, map_mul, mul_assoc, ofCrAnListF_append,\n            l, l', r, r', hmid, mul_sub, sub_mul, smul_sub, mul_smul_comm,\n            smul_mul_assoc]\n        _ = ι [ofCrAnOpF φ, ofCrAnOpF ψ]ₛF * ι 𝓣ᶠ(ofCrAnListF φs' * ofCrAnListF φs) := by\n          by_cases hq : (𝓕 |>ₛ φ) = (𝓕 |>ₛ ψ)\n          · rw [Subalgebra.mem_center_iff.mp (ι_superCommuteF_ofCrAnOpF_ofCrAnOpF_mem_center φ ψ),\n              mul_assoc, mul_assoc, mul_assoc, ← map_mul, ← map_mul, ← map_mul,\n              ← ofCrAnListF_append, ← ofCrAnListF_append, ← ofCrAnListF_append, ← h3,\n              crAnTimeOrderSign, Wick.koszulSign_eq_rel_eq_stat _ _ hφψ hψφ hq.symm,\n              ← crAnTimeOrderSign, ← ofCrAnListF_append, timeOrderF_ofCrAnListF]\n            simp only [map_smul, mul_smul_comm]\n          · simp only [ι_superCommuteF_of_diff_statistic hq, zero_mul, mul_zero, smul_zero]\n    | zero => simp only [zero_mul, map_zero, mul_zero]\n    | add x y _ _ hpx hpy => simp only [mul_add, add_mul, map_add, hpx, hpy]\n    | smul x hx _ h => simp only [smul_mul_assoc, mul_smul_comm, map_smul, h]\n  | zero => simp only [mul_zero, map_zero]\n  | add x y _ _ hpx hpy => simp only [mul_add, map_add, hpx, hpy]\n  | smul x hx _ h => simp only [mul_smul_comm, map_smul, h]",
+  "tokens": 693,
+  "heartbeats": 14486,
+  "L": 43.06,
+  "H": 65.6,
+  "Z": 100.0,
+  "compat": {
+   "v4.32.0": true
+  }
+ },
+ "attempts": [
+  {
+   "sha": "b0b0bdda4094",
+   "tokens": 1217,
+   "heartbeats": 42075,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:50:44Z",
+   "score": 33.36
+  },
+  {
+   "sha": "9643d6bae424",
+   "tokens": 841,
+   "heartbeats": 31129,
+   "ok": false,
+   "error": "220:54: Tactic `rewrite` failed: Did not find an occurrence of the pattern ?f (? … [hypotheses omitted] ⊢ crAnTimeOrderSign (φs' ++ ψ :: φ :: φs) • ι (ofCrAnListF (crAnTimeOrderList (φs' ++ φ :: ψ :: φs))) - crAnTimeOrderSign (φs' ++ ψ :: φ :: φs) • (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatist",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:54:40Z"
+  },
+  {
+   "sha": "77a874f8c55e",
+   "tokens": 777,
+   "heartbeats": 32196,
+   "ok": false,
+   "error": "222:10: ring failed, ring expressions not equal … [hypotheses omitted] ⊢ -(crAnTimeOrderSign (φs' ++ [φ, ψ] ++ φs) * (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ)) = 0",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T22:02:24Z"
+  },
+  {
+   "sha": "9b2cec4446b9",
+   "tokens": 880,
+   "heartbeats": 37236,
+   "ok": false,
+   "error": "231:10: ring failed, ring expressions not equal … [hypotheses omitted] ⊢ crAnTimeOrderSign (φs' ++ [φ, ψ] ++ φs) = 0",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T22:06:54Z"
+  },
+  {
+   "sha": "9f499af3d249",
+   "tokens": 868,
+   "heartbeats": 34952,
+   "ok": false,
+   "error": "204:8: Type mismatch insertionSort_of_eq_list crAnTimeOrderRel φ φs' [φ, ψ] φs ?m.349 has type List.insertionSort crAnTimeOrderRel (φs' ++ [φ, ψ] ++ φs) = List.takeWhile (fun c => decide ¬crAnTimeOrderRel φ c) (List.insertionSort crAnTimeOrderRel (φs' ++ φs)) ++ List.filter (fun c => decide (crAnTim",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T22:46:59Z"
+  },
+  {
+   "sha": "288bbb958f81",
+   "tokens": 839,
+   "heartbeats": 35719,
+   "ok": false,
+   "error": "228:10: ring failed, ring expressions not equal … [hypotheses omitted] ⊢ crAnTimeOrderSign (φs' ++ [φ, ψ] ++ φs) = 0",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T22:50:28Z"
+  },
+  {
+   "sha": "771438362137",
+   "tokens": 896,
+   "heartbeats": 39587,
+   "ok": false,
+   "error": "232:16: Tactic `rewrite` failed: Did not find an occurrence of the pattern ?x * ?s • ?y in the target expression crAnTimeOrderSign (φs' ++ [φ, ψ] ++ φs) • (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • (ι (ofCrAnListF (List.takeWhile (fun c => decide ¬crAnTimeOrderRel φ c) (List.insertio",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:02:04Z"
+  },
+  {
+   "sha": "b340da1886be",
+   "tokens": 906,
+   "heartbeats": 39339,
+   "ok": false,
+   "error": "233:14: Tactic `rewrite` failed: Did not find an occurrence of the pattern ?r •  … [hypotheses omitted] ⊢ crAnTimeOrderSign (φs' ++ [φ, ψ] ++ φs) • (ι (ofCrAnListF (List.takeWhile (fun c => decide ¬crAnTimeOrderRel φ c) (List.insertionSort crAnTimeOrderRel (φs' ++ φs)))) * (ι (ofCrAnListF (List.filt",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:09:39Z"
+  },
+  {
+   "sha": "13178574b85d",
+   "tokens": 890,
+   "heartbeats": 37084,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:21:59Z",
+   "score": 46.27
+  },
+  {
+   "sha": "033f7ac55c32",
+   "tokens": 940,
+   "heartbeats": 21303,
+   "ok": false,
+   "error": "248:4: unsolved goals case smul … [hypotheses omitted] ⊢ ι (timeOrderF (hx * (superCommuteF (ofCrAnOpF φ)) (ofCrAnOpF ψ) * ofCrAnListF φs)) = ι ((superCommuteF (ofCrAnOpF φ)) (ofCrAnOpF ψ) * timeOrderF (hx * ofCrAnListF φs)) → x • ι (timeOrderF (hx * (superCommuteF (ofCrAnOpF φ)) (ofCrAnOpF ψ) * ofC",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:28:29Z"
+  },
+  {
+   "sha": "84ef5494a824",
+   "tokens": 960,
+   "heartbeats": 22163,
+   "ok": false,
+   "error": "250:40: Application type mismatch: The argument h has type pa hx hpx but is expected to have type timeOrderF (hx * (superCommuteF (ofCrAnOpF φ)) (ofCrAnOpF ψ) * ofCrAnListF φs) = (superCommuteF (ofCrAnOpF φ)) (ofCrAnOpF ψ) * timeOrderF (hx * ofCrAnListF φs) in the application congrArg (fun W => x • ",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:35:18Z"
+  },
+  {
+   "sha": "26ff5e58d593",
+   "tokens": 936,
+   "heartbeats": 21667,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T03:16:07Z",
+   "score": 57.21
+  },
+  {
+   "sha": "64deb83ea0b4",
+   "tokens": 942,
+   "heartbeats": 21551,
+   "ok": false,
+   "error": "209:61: unsolved goals … [hypotheses omitted] ⊢ φs' ++ φ :: ψ :: φs = φs' ++ ([φ, ψ] ++ φs)",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T03:24:29Z"
+  },
+  {
+   "sha": "381b8a08baf5",
+   "tokens": 951,
+   "heartbeats": 21382,
+   "ok": false,
+   "error": "225:10: ring failed, ring expressions not equal … [hypotheses omitted] ⊢ (exchangeSign (ofList 𝓕.crAnStatistics [φ])) (ofList 𝓕.crAnStatistics [ψ]) * crAnTimeOrderSign (φs' ++ ψ :: φ :: φs) = crAnTimeOrderSign (φs' ++ ψ :: φ :: φs) * (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ)",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T03:27:57Z"
+  },
+  {
+   "sha": "612c1d909070",
+   "tokens": 953,
+   "heartbeats": 21258,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T03:31:16Z"
+  },
+  {
+   "sha": "7ded1451ac0d",
+   "tokens": 956,
+   "heartbeats": 21147,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T03:39:34Z"
+  },
+  {
+   "sha": "f8992968a5b4",
+   "tokens": 900,
+   "heartbeats": 731,
+   "ok": false,
+   "error": "177:63: typeclass instance problem is stuck Module ?m.95 𝓕.FieldOpFreeAlgebra Note: Lean will not try to resolve this typeclass instance problem because the first and third type arguments to `Module` are metavariables. These arguments must be fully determined before Lean will try to resolve the type",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T03:44:10Z"
+  },
+  {
+   "sha": "8d735eaed1d5",
+   "tokens": 908,
+   "heartbeats": 664,
+   "ok": false,
+   "error": "178:63: typeclass instance problem is stuck Module ?m.87 𝓕.FieldOpFreeAlgebra Note: Lean will not try to resolve this typeclass instance problem because the first and third type arguments to `Module` are metavariables. These arguments must be fully determined before Lean will try to resolve the type",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T03:45:37Z"
+  },
+  {
+   "sha": "6762a14c98ae",
+   "tokens": 930,
+   "heartbeats": 19637,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T03:47:43Z",
+   "score": 58.98
+  },
+  {
+   "sha": "773d7281a66f",
+   "tokens": 926,
+   "heartbeats": 19633,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T03:51:50Z",
+   "score": 59.1
+  },
+  {
+   "sha": "f2f8b2373a2e",
+   "tokens": 922,
+   "heartbeats": 18872,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T03:56:13Z",
+   "score": 59.81
+  },
+  {
+   "sha": "b9bb6037bf41",
+   "tokens": 920,
+   "heartbeats": 18870,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:00:05Z",
+   "score": 59.86
+  },
+  {
+   "sha": "82917b495011",
+   "tokens": 921,
+   "heartbeats": 17793,
+   "ok": false,
+   "error": "191:44: unsolved goals … [hypotheses omitted] ⊢ ι (ofCrAnListF [φ, ψ]) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, φ]) = ι (ofCrAnListF ([φ] ++ [ψ]) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ofCrAnListF [ψ] * ofCrAnListF [φ])",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:00:16Z"
+  },
+  {
+   "sha": "0de84ba7da19",
+   "tokens": 918,
+   "heartbeats": 21468,
+   "ok": false,
+   "error": "222:10: Tactic `simp` failed with a nested error: maximum recursion depth has been reached use `set_option maxRecDepth <num>` to increase limit use `set_option diagnostics true` to get diagnostic information",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:00:20Z"
+  },
+  {
+   "sha": "8eb782315131",
+   "tokens": 920,
+   "heartbeats": 18621,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:00:24Z",
+   "score": 60.06
+  },
+  {
+   "sha": "1045c6094366",
+   "tokens": 919,
+   "heartbeats": 20141,
+   "ok": false,
+   "error": "191:44: unsolved goals … [hypotheses omitted] ⊢ ι (ofCrAnListF [φ, ψ]) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, φ]) = ι (ofCrAnListF ([φ] ++ [ψ]) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ofCrAnListF [ψ] * ofCrAnListF [φ])",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:00:27Z"
+  },
+  {
+   "sha": "a3815ddcc420",
+   "tokens": 928,
+   "heartbeats": 18538,
+   "ok": false,
+   "error": "191:44: unsolved goals … [hypotheses omitted] ⊢ ι (ofCrAnListF [φ, ψ]) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, φ]) = ι (ofCrAnOpF φ) * ι (ofCrAnOpF ψ) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (ofCrAnOpF ψ) * ι (ofCrAnOpF φ)",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:02:15Z"
+  },
+  {
+   "sha": "d6a4a8a1755d",
+   "tokens": 932,
+   "heartbeats": 17490,
+   "ok": false,
+   "error": "202:9: unsolved goals … [hypotheses omitted] ⊢ crAnTimeOrderRel φ ψ ∧ crAnTimeOrderRel ψ φ",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:02:19Z"
+  },
+  {
+   "sha": "bd0d7b16126e",
+   "tokens": 940,
+   "heartbeats": 17407,
+   "ok": false,
+   "error": "191:44: unsolved goals … [hypotheses omitted] ⊢ ι (ofCrAnListF [φ, ψ]) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, φ]) = ι (ofCrAnOpF φ) * ι (ofCrAnOpF ψ) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (ofCrAnOpF ψ) * ι (ofCrAnOpF φ)",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:02:22Z"
+  },
+  {
+   "sha": "d9759363dda3",
+   "tokens": 1056,
+   "heartbeats": 17948,
+   "ok": false,
+   "error": "203:54: unsolved goals … [hypotheses omitted] ⊢ ι (ofCrAnListF (List.takeWhile (fun c => decide ¬crAnTimeOrderRel φ c) (List.insertionSort crAnTimeOrderRel (φs' ++ φs))) * (ofCrAnListF (List.filter (fun c => decide (crAnTimeOrderRel φ c ∧ crAnTimeOrderRel c φ)) φs') * (ofCrAnListF [φ, ψ] * (ofCrAnLi",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:08:22Z"
+  },
+  {
+   "sha": "2df3a97c32a7",
+   "tokens": 930,
+   "heartbeats": 17601,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:08:26Z",
+   "score": 60.6
+  },
+  {
+   "sha": "3e24e2b7461f",
+   "tokens": 1056,
+   "heartbeats": 17732,
+   "ok": false,
+   "error": "203:54: unsolved goals … [hypotheses omitted] ⊢ ι (ofCrAnListF (List.takeWhile (fun c => decide ¬crAnTimeOrderRel φ c) (List.insertionSort crAnTimeOrderRel (φs' ++ φs))) * (ofCrAnListF (List.filter (fun c => decide (crAnTimeOrderRel φ c ∧ crAnTimeOrderRel c φ)) φs') * (ofCrAnListF [φ, ψ] * (ofCrAnLi",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:10:03Z"
+  },
+  {
+   "sha": "6089c10fe7d1",
+   "tokens": 1060,
+   "heartbeats": 17905,
+   "ok": false,
+   "error": "203:54: unsolved goals … [hypotheses omitted] ⊢ ι (ofCrAnListF (List.takeWhile (fun c => decide ¬crAnTimeOrderRel φ c) (List.insertionSort crAnTimeOrderRel (φs' ++ φs))) * (ofCrAnListF (List.filter (fun c => decide (crAnTimeOrderRel φ c ∧ crAnTimeOrderRel c φ)) φs') * (ofCrAnListF [φ, ψ] * (ofCrAnLi",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:10:07Z"
+  },
+  {
+   "sha": "7ee07e5ca002",
+   "tokens": 942,
+   "heartbeats": 17560,
+   "ok": false,
+   "error": "191:44: unsolved goals … [hypotheses omitted] ⊢ ι (ofCrAnOpF φ) * ι (ofCrAnOpF ψ) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • (ι (ofCrAnOpF ψ) * ι (ofCrAnOpF φ)) = ι (ofCrAnOpF φ) * ι (ofCrAnOpF ψ) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (ofCrAnOpF ψ) * ι (ofC",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:11:59Z"
+  },
+  {
+   "sha": "63a2942f47d5",
+   "tokens": 950,
+   "heartbeats": 17262,
+   "ok": false,
+   "error": "201:77: unsolved goals … [hypotheses omitted] ⊢ crAnTimeOrderRel φ φ ∧ True ∧ ∀ a ∈ [], crAnTimeOrderRel φ a ∧ crAnTimeOrderRel a φ",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:46:41Z"
+  },
+  {
+   "sha": "0c15cc4c7bb7",
+   "tokens": 948,
+   "heartbeats": 17291,
+   "ok": false,
+   "error": "202:9: unsolved goals … [hypotheses omitted] ⊢ crAnTimeOrderRel φ φ ∧ True ∧ ∀ a ∈ [], crAnTimeOrderRel φ a ∧ crAnTimeOrderRel a φ",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:46:44Z"
+  },
+  {
+   "sha": "7aee121aa412",
+   "tokens": 952,
+   "heartbeats": 17270,
+   "ok": false,
+   "error": "201:77: unsolved goals … [hypotheses omitted] ⊢ True ∧ True ∧ ∀ a ∈ [], crAnTimeOrderRel φ a ∧ crAnTimeOrderRel a φ",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:47:26Z"
+  },
+  {
+   "sha": "05ec5414bc5d",
+   "tokens": 956,
+   "heartbeats": 17308,
+   "ok": false,
+   "error": "201:77: unsolved goals … [hypotheses omitted] ⊢ True ∧ True ∧ ∀ (a : 𝓕.CrAnFieldOp), False → crAnTimeOrderRel φ a ∧ crAnTimeOrderRel a φ",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:48:15Z"
+  },
+  {
+   "sha": "f96d302b6658",
+   "tokens": 954,
+   "heartbeats": 17664,
+   "ok": false,
+   "error": "203:79: Unknown identifier `c`",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:48:19Z"
+  },
+  {
+   "sha": "ff45c25b6724",
+   "tokens": 959,
+   "heartbeats": 17453,
+   "ok": false,
+   "error": "205:45: Tactic `rcases` failed: `[φ]` is not a free variable",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:49:56Z"
+  },
+  {
+   "sha": "0cb274626e18",
+   "tokens": 962,
+   "heartbeats": 17453,
+   "ok": false,
+   "error": "205:45: Tactic `rcases` failed: `[φ]` is not a free variable",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:50:36Z"
+  },
+  {
+   "sha": "e7451d4592e4",
+   "tokens": 963,
+   "heartbeats": 17510,
+   "ok": false,
+   "error": "205:27: unsolved goals case inr … [hypotheses omitted] ⊢ c = φ ∨ c = ψ",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:52:46Z"
+  },
+  {
+   "sha": "50c8629dc5d2",
+   "tokens": 988,
+   "heartbeats": 17458,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:55:02Z"
+  },
+  {
+   "sha": "c23555ad945b",
+   "tokens": 1020,
+   "heartbeats": 17446,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:57:40Z"
+  },
+  {
+   "sha": "6d53536f95c4",
+   "tokens": 916,
+   "heartbeats": 15188,
+   "ok": false,
+   "error": "234:14: Tactic `rewrite` failed: Did not find an occurrence of the pattern l ++  … [hypotheses omitted] ⊢ crAnTimeOrderSign (φs' ++ φ :: ψ :: φs) • ι ((superCommuteF (ofCrAnOpF φ)) (ofCrAnOpF ψ) * ofCrAnListF (l ++ l' ++ r' ++ r)) = ι ((superCommuteF (ofCrAnOpF φ)) (ofCrAnOpF ψ) * timeOrderF (ofCrAn",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:00:00Z"
+  },
+  {
+   "sha": "838ec01eaf10",
+   "tokens": 930,
+   "heartbeats": 17655,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:00:07Z"
+  },
+  {
+   "sha": "c9cc3e830474",
+   "tokens": 928,
+   "heartbeats": 17447,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:03:30Z",
+   "score": 60.77
+  },
+  {
+   "sha": "6d77c9fb476d",
+   "tokens": 927,
+   "heartbeats": 17572,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:03:34Z"
+  },
+  {
+   "sha": "3b1d62fe613a",
+   "tokens": 920,
+   "heartbeats": 16567,
+   "ok": false,
+   "error": "191:44: unsolved goals … [hypotheses omitted] ⊢ ι (ofCrAnListF [φ, ψ]) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, φ]) = ι ((superCommuteF (ofCrAnListF [φ])) (ofCrAnListF [ψ]))",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:04:43Z"
+  },
+  {
+   "sha": "08047ebd8cfb",
+   "tokens": 919,
+   "heartbeats": 16720,
+   "ok": false,
+   "error": "191:44: unsolved goals … [hypotheses omitted] ⊢ ι (ofCrAnListF [φ, ψ]) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, φ]) = ι ((superCommuteF (ofCrAnListF [φ])) (ofCrAnListF [ψ]))",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:04:47Z"
+  },
+  {
+   "sha": "7bfaed7eecfc",
+   "tokens": 925,
+   "heartbeats": 17458,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:06:01Z",
+   "score": 60.85
+  },
+  {
+   "sha": "bb82079a04df",
+   "tokens": 925,
+   "heartbeats": 17405,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:06:05Z",
+   "score": 60.89
+  },
+  {
+   "sha": "59d1b1c21e9b",
+   "tokens": 922,
+   "heartbeats": 16628,
+   "ok": false,
+   "error": "238:14: Application type mismatch: The argument fun h => hq ?m.683 has type ∀ (h : ?m.682), False but is expected to have type ?m.676 ψ = ?m.676 φ in the application Wick.koszulSign_eq_rel_eq_stat ?m.676 crAnTimeOrderRel hφψ hψφ fun h => hq ?m.683",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:07:32Z"
+  },
+  {
+   "sha": "6cfa55ebd9b3",
+   "tokens": 921,
+   "heartbeats": 16618,
+   "ok": false,
+   "error": "238:14: Application type mismatch: The argument fun h => hq ?m.684 has type ∀ (h : ?m.683), False but is expected to have type ?m.677 ψ = ?m.677 φ in the application Wick.koszulSign_eq_rel_eq_stat ?m.677 crAnTimeOrderRel hφψ hψφ fun h => hq ?m.684",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:07:40Z"
+  },
+  {
+   "sha": "a8d237c9d6e7",
+   "tokens": 918,
+   "heartbeats": 17647,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:08:35Z"
+  },
+  {
+   "sha": "d83100b54e2a",
+   "tokens": 917,
+   "heartbeats": 17638,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:08:38Z",
+   "score": 60.92
+  },
+  {
+   "sha": "f23e312b9dc3",
+   "tokens": 959,
+   "heartbeats": 17620,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:34:00Z"
+  },
+  {
+   "sha": "531d32be021c",
+   "tokens": 977,
+   "heartbeats": 17505,
+   "ok": false,
+   "error": "204:19: Application type mismatch: The argument rfl has type ?m.335 = ?m.335 but is expected to have type crAnTimeOrderRel c c in the application And.intro rfl",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:34:04Z"
+  },
+  {
+   "sha": "1949b4d4a154",
+   "tokens": 1029,
+   "heartbeats": 17584,
+   "ok": false,
+   "error": "205:19: Application type mismatch: The argument rfl has type ?m.363 = ?m.363 but is expected to have type crAnTimeOrderRel c c in the application And.intro rfl",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:34:10Z"
+  },
+  {
+   "sha": "8ae1d5229bba",
+   "tokens": 909,
+   "heartbeats": 17883,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:34:14Z",
+   "score": 60.95
+  },
+  {
+   "sha": "604493458d6e",
+   "tokens": 977,
+   "heartbeats": 18000,
+   "ok": false,
+   "error": "202:62: Application type mismatch: The argument hm has type ∀ c ∈ m, crAnTimeOrderRel φ c ∧ crAnTimeOrderRel c φ of sort `Prop` but is expected to have type List 𝓕.CrAnFieldOp of sort `Type` in the application insertionSort_of_eq_list crAnTimeOrderRel φ φs' m hm",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:37:29Z"
+  },
+  {
+   "sha": "8aab4dfddee6",
+   "tokens": 965,
+   "heartbeats": 17941,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:38:11Z"
+  },
+  {
+   "sha": "6ec5ffd0816c",
+   "tokens": 973,
+   "heartbeats": 17582,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:40:57Z"
+  },
+  {
+   "sha": "e005892de6cc",
+   "tokens": 984,
+   "heartbeats": 17485,
+   "ok": false,
+   "error": "201:10: Invalid `⟨...⟩` notation: The expected type ∀ x ∈ ?m.318 :: ?m.319, crAnTimeOrderRel φ x ∧ crAnTimeOrderRel x φ is not an inductive type Note: This notation can only be used when the expected type is an inductive type with a single constructor",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:41:00Z"
+  },
+  {
+   "sha": "888bdda22219",
+   "tokens": 835,
+   "heartbeats": 17730,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:44:10Z",
+   "score": 63.1
+  },
+  {
+   "sha": "5ab3f70295fc",
+   "tokens": 833,
+   "heartbeats": 19323,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:47:50Z"
+  },
+  {
+   "sha": "5ab3f70295fc",
+   "tokens": 833,
+   "heartbeats": 19323,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:47:58Z"
+  },
+  {
+   "sha": "be1fc76e032b",
+   "tokens": 828,
+   "heartbeats": 18057,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:51:22Z"
+  },
+  {
+   "sha": "4cec69abb01d",
+   "tokens": 835,
+   "heartbeats": 16949,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:51:26Z",
+   "score": 63.71
+  },
+  {
+   "sha": "f27010659b0c",
+   "tokens": 911,
+   "heartbeats": 17075,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:53:42Z"
+  },
+  {
+   "sha": "b314bc762076",
+   "tokens": 731,
+   "heartbeats": 308,
+   "ok": false,
+   "error": "176:2: Invalid target: b has type 𝓕.FieldOpFreeAlgebra of sort `Type` but is expected to have type ?x ∈ Submodule.span ?m.39 ?m.44 of sort `Prop`",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:55:37Z"
+  },
+  {
+   "sha": "38e53630810b",
+   "tokens": 739,
+   "heartbeats": 331,
+   "ok": false,
+   "error": "176:13: typeclass instance problem is stuck Module ?m.40 𝓕.FieldOpFreeAlgebra Note: Lean will not try to resolve this typeclass instance problem because the first and third type arguments to `Module` are metavariables. These arguments must be fully determined before Lean will try to resolve the type",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:30:44Z"
+  },
+  {
+   "sha": "f5f45fd9bbd7",
+   "tokens": 739,
+   "heartbeats": 15895,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:31:36Z",
+   "score": 67.18
+  },
+  {
+   "sha": "67a62693bf70",
+   "tokens": 731,
+   "heartbeats": 488,
+   "ok": false,
+   "error": "176:2: Alternative `zero` has not been provided",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:34:42Z"
+  },
+  {
+   "sha": "0e24364c4f1d",
+   "tokens": 730,
+   "heartbeats": 16233,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:34:47Z"
+  },
+  {
+   "sha": "72e5381ed782",
+   "tokens": 727,
+   "heartbeats": 15805,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:36:38Z",
+   "score": 67.58
+  },
+  {
+   "sha": "26759a7b05e6",
+   "tokens": 734,
+   "heartbeats": 15810,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:36:44Z"
+  },
+  {
+   "sha": "7e32011f8939",
+   "tokens": 733,
+   "heartbeats": 15696,
+   "ok": false,
+   "error": "204:55: unsolved goals … [hypotheses omitted] ⊢ φs' ++ φ :: ψ :: φs = φs' ++ φ :: ψ :: ([] ++ φs) ∧ φs' ++ ψ :: φ :: φs = φs' ++ ψ :: φ :: ([] ++ φs)",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:40:11Z"
+  },
+  {
+   "sha": "ceda74fe1b68",
+   "tokens": 738,
+   "heartbeats": 14784,
+   "ok": false,
+   "error": "186:44: unsolved goals … [hypotheses omitted] ⊢ ι (ofCrAnListF [φ, ψ]) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, φ]) = ι (ofCrAnListF ([φ] ++ [ψ])) - ι ((exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ofCrAnListF [ψ] * ofCrAnListF [φ])",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:40:17Z"
+  },
+  {
+   "sha": "cd309fee9012",
+   "tokens": 738,
+   "heartbeats": 8026,
+   "ok": false,
+   "error": "186:44: unsolved goals … [hypotheses omitted] ⊢ ι (ofCrAnListF [φ, ψ]) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, φ]) = ι (ofCrAnListF ([φ] ++ [ψ])) - ι ((exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ofCrAnListF [ψ] * ofCrAnListF [φ])",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:40:22Z"
+  },
+  {
+   "sha": "1ea6df1edd88",
+   "tokens": 735,
+   "heartbeats": 15692,
+   "ok": false,
+   "error": "204:55: unsolved goals … [hypotheses omitted] ⊢ True ∧ True",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:41:50Z"
+  },
+  {
+   "sha": "cbcf14c39fbd",
+   "tokens": 742,
+   "heartbeats": 14783,
+   "ok": false,
+   "error": "186:44: unsolved goals … [hypotheses omitted] ⊢ ι (ofCrAnListF [φ, ψ]) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, φ]) = ι (ofCrAnListF ([φ] ++ [ψ])) - ι ((exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ofCrAnListF [ψ] * ofCrAnListF [φ])",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:41:56Z"
+  },
+  {
+   "sha": "c27bc46412ac",
+   "tokens": 737,
+   "heartbeats": 15708,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:43:22Z"
+  },
+  {
+   "sha": "6999d566cd6a",
+   "tokens": 744,
+   "heartbeats": 14798,
+   "ok": false,
+   "error": "186:44: unsolved goals … [hypotheses omitted] ⊢ ι (ofCrAnListF [φ, ψ]) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, φ]) = ι (ofCrAnListF ([φ] ++ [ψ])) - ι ((exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ofCrAnListF [ψ] * ofCrAnListF [φ])",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:43:28Z"
+  },
+  {
+   "sha": "f36669d0f708",
+   "tokens": 736,
+   "heartbeats": 15631,
+   "ok": false,
+   "error": "186:44: unsolved goals … [hypotheses omitted] ⊢ ι (ofCrAnListF [φ, ψ]) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, φ]) = ι (ofCrAnListF ([φ] ++ [ψ])) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (ofCrAnListF ([ψ] ++ [φ]))",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:45:23Z"
+  },
+  {
+   "sha": "ff3c27689c88",
+   "tokens": 740,
+   "heartbeats": 15646,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:46:28Z"
+  },
+  {
+   "sha": "e8120b8f0836",
+   "tokens": 718,
+   "heartbeats": 13340,
+   "ok": false,
+   "error": "214:10: ring failed, ring expressions not equal … [hypotheses omitted] ⊢ 1 = 0",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:52:03Z"
+  },
+  {
+   "sha": "a21894e34517",
+   "tokens": 727,
+   "heartbeats": 15806,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:52:09Z"
+  },
+  {
+   "sha": "ad2619c16075",
+   "tokens": 730,
+   "heartbeats": 15001,
+   "ok": false,
+   "error": "203:61: unsolved goals … [hypotheses omitted] ⊢ φs' ++ φ :: ψ :: φs = φs' ++ ([φ, ψ] ++ φs)",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:44:13Z"
+  },
+  {
+   "sha": "029870132167",
+   "tokens": 736,
+   "heartbeats": 15015,
+   "ok": false,
+   "error": "205:15: unsolved goals … [hypotheses omitted] ⊢ φs' ++ φ :: ψ :: φs = φs' ++ ([φ, ψ] ++ φs)",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:44:21Z"
+  },
+  {
+   "sha": "7cdf1497112a",
+   "tokens": 734,
+   "heartbeats": 14981,
+   "ok": false,
+   "error": "204:31: Tactic `rewrite` failed: Did not find an occurrence of the pattern [?m.3 … [hypotheses omitted] ⊢ φs' ++ φ :: ψ :: φs = φs' ++ ([φ, ψ] ++ φs)",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:47:00Z"
+  },
+  {
+   "sha": "fea7a872cc59",
+   "tokens": 740,
+   "heartbeats": 15011,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:48:32Z",
+   "score": 67.85
+  },
+  {
+   "sha": "ea4ff6a428f6",
+   "tokens": 719,
+   "heartbeats": 14955,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:52:15Z",
+   "score": 68.47
+  },
+  {
+   "sha": "f79fe6ee5ebc",
+   "tokens": 715,
+   "heartbeats": 13995,
+   "ok": false,
+   "error": "186:44: unsolved goals … [hypotheses omitted] ⊢ ι (ofCrAnListF [φ, ψ]) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, φ]) = ι (ofCrAnOpF φ * ofCrAnOpF ψ) - ι ((exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ofCrAnOpF ψ * ofCrAnOpF φ)",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:54:48Z"
+  },
+  {
+   "sha": "538f3b4bedfc",
+   "tokens": 717,
+   "heartbeats": 14952,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:54:56Z",
+   "score": 68.53
+  },
+  {
+   "sha": "f0fd729e263e",
+   "tokens": 713,
+   "heartbeats": 13994,
+   "ok": false,
+   "error": "186:44: unsolved goals … [hypotheses omitted] ⊢ ι (ofCrAnListF [φ, ψ]) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, φ]) = ι (ofCrAnOpF φ * ofCrAnOpF ψ) - ι ((exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ofCrAnOpF ψ * ofCrAnOpF φ)",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:55:04Z"
+  },
+  {
+   "sha": "60f95ecd5a8b",
+   "tokens": 719,
+   "heartbeats": 14890,
+   "ok": false,
+   "error": "186:44: unsolved goals … [hypotheses omitted] ⊢ ι (ofCrAnOpF φ) * (ι (ofCrAnOpF ψ) * ι (ofCrAnListF [])) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • (ι (ofCrAnOpF ψ) * (ι (ofCrAnOpF φ) * ι (ofCrAnListF []))) = ι (ofCrAnOpF φ) * ι (ofCrAnOpF ψ) - (exchangeSign (𝓕.crAnStatistics φ)) (",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:56:45Z"
+  },
+  {
+   "sha": "40b46795ffa6",
+   "tokens": 725,
+   "heartbeats": 14869,
+   "ok": false,
+   "error": "186:44: unsolved goals … [hypotheses omitted] ⊢ ι (ofCrAnOpF φ) * ι (ofCrAnOpF ψ) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • (ι (ofCrAnOpF ψ) * ι (ofCrAnOpF φ)) = ι (ofCrAnOpF φ) * ι (ofCrAnOpF ψ) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (ofCrAnOpF ψ) * ι (ofC",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:57:55Z"
+  },
+  {
+   "sha": "1e9c35d97b7d",
+   "tokens": 725,
+   "heartbeats": 14918,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:58:44Z"
+  },
+  {
+   "sha": "43725abb9862",
+   "tokens": 717,
+   "heartbeats": 14952,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:00:52Z"
+  },
+  {
+   "sha": "b6c36d0b03f6",
+   "tokens": 714,
+   "heartbeats": 14892,
+   "ok": false,
+   "error": "225:10: unsolved goals case inl … [hypotheses omitted] ⊢ crAnTimeOrderSign (φs' ++ φs) • (ι ((superCommuteF (ofCrAnOpF φ)) (ofCrAnOpF ψ)) * ι (ofCrAnListF (List.insertionSort crAnTimeOrderRel (φs' ++ φs)))) = crAnTimeOrderSign (φs' ++ φs) • (ι ((superCommuteF (ofCrAnOpF φ)) (ofCrAnOpF ψ)) * ι (ofCrA",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:02:35Z"
+  },
+  {
+   "sha": "67bc120abd30",
+   "tokens": 715,
+   "heartbeats": 14867,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:02:42Z",
+   "score": 68.65
+  },
+  {
+   "sha": "e60c7f976982",
+   "tokens": 713,
+   "heartbeats": 14813,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:04:26Z",
+   "score": 68.75
+  },
+  {
+   "sha": "b39ed3a6be37",
+   "tokens": 708,
+   "heartbeats": 14596,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:08:56Z",
+   "score": 69.05
+  },
+  {
+   "sha": "35942033f73c",
+   "tokens": 721,
+   "heartbeats": 14824,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:09:04Z"
+  },
+  {
+   "sha": "4fc17281992c",
+   "tokens": 705,
+   "heartbeats": 14473,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:10:20Z",
+   "score": 69.23
+  },
+  {
+   "sha": "80ff58c3223f",
+   "tokens": 703,
+   "heartbeats": 16733,
+   "ok": false,
+   "error": "216:10: Tactic `simp` failed with a nested error: maximum recursion depth has been reached use `set_option maxRecDepth <num>` to increase limit use `set_option diagnostics true` to get diagnostic information",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:11:53Z"
+  },
+  {
+   "sha": "d040c747941f",
+   "tokens": 711,
+   "heartbeats": 14423,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:12:01Z"
+  },
+  {
+   "sha": "edcffe260fb2",
+   "tokens": 698,
+   "heartbeats": 14538,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:14:37Z",
+   "score": 69.37
+  },
+  {
+   "sha": "5d2f85b12c6a",
+   "tokens": 703,
+   "heartbeats": 14423,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:14:45Z"
+  },
+  {
+   "sha": "f8d3021d0807",
+   "tokens": 696,
+   "heartbeats": 14488,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:16:32Z",
+   "score": 69.47
+  },
+  {
+   "sha": "ebe338c38a32",
+   "tokens": 690,
+   "heartbeats": 14992,
+   "ok": false,
+   "error": "186:44: unsolved goals … [hypotheses omitted] ⊢ ι (ofCrAnListF [φ, ψ]) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, φ]) = ι (ofCrAnOpF φ) * ι (ofCrAnOpF ψ) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • (ι (ofCrAnOpF ψ) * ι (ofCrAnOpF φ))",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:16:40Z"
+  },
+  {
+   "sha": "666bcfab5314",
+   "tokens": 688,
+   "heartbeats": 14943,
+   "ok": false,
+   "error": "186:44: unsolved goals … [hypotheses omitted] ⊢ ι (ofCrAnListF [φ, ψ]) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, φ]) = ι (ofCrAnOpF φ) * ι (ofCrAnOpF ψ) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • (ι (ofCrAnOpF ψ) * ι (ofCrAnOpF φ))",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:16:47Z"
+  },
+  {
+   "sha": "7d33c5e7e5ef",
+   "tokens": 693,
+   "heartbeats": 14751,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:19:30Z"
+  },
+  {
+   "sha": "a0a13870a053",
+   "tokens": 694,
+   "heartbeats": 14502,
+   "ok": false,
+   "error": "201:8: Tactic `simp` failed with a nested error: maximum recursion depth has been reached use `set_option maxRecDepth <num>` to increase limit use `set_option diagnostics true` to get diagnostic information",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:21:15Z"
+  },
+  {
+   "sha": "e0340fef9c07",
+   "tokens": 663,
+   "heartbeats": 14035,
+   "ok": false,
+   "error": "206:55: unsolved goals … [hypotheses omitted] ⊢ crAnTimeOrderSign (φs' ++ φ :: ψ :: φs) • ι (ofCrAnListF (List.insertionSort crAnTimeOrderRel (φs' ++ φ :: ψ :: φs))) - crAnTimeOrderSign (φs' ++ φ :: ψ :: φs) • (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (ofCrAnListF (List.insertionS",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:22:43Z"
+  },
+  {
+   "sha": "d826ab3abf19",
+   "tokens": 662,
+   "heartbeats": 14603,
+   "ok": false,
+   "error": "214:10: Tactic `simp` failed with a nested error: maximum recursion depth has been reached use `set_option maxRecDepth <num>` to increase limit use `set_option diagnostics true` to get diagnostic information",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:23:28Z"
+  },
+  {
+   "sha": "ba16bd545f38",
+   "tokens": 690,
+   "heartbeats": 14831,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:24:34Z"
+  },
+  {
+   "sha": "6dc15d87850c",
+   "tokens": 695,
+   "heartbeats": 8152,
+   "ok": false,
+   "error": "203:78: Type mismatch rfl has type ?m.304 = ?m.304 but is expected to have type φs' ++ χ :: η :: φs = φs' ++ [χ, η] ++ φs",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:44:50Z"
+  },
+  {
+   "sha": "c2f28b2ba4f4",
+   "tokens": 704,
+   "heartbeats": 14430,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:45:59Z"
+  },
+  {
+   "sha": "d0af9a6b471f",
+   "tokens": 699,
+   "heartbeats": 14426,
+   "ok": false,
+   "error": "204:19: unsolved goals … [hypotheses omitted] ⊢ φs' ++ χ :: η :: φs = φs' ++ ([χ, η] ++ φs)",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:46:07Z"
+  },
+  {
+   "sha": "c05a3b6fbef3",
+   "tokens": 710,
+   "heartbeats": 14434,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:48:59Z"
+  },
+  {
+   "sha": "7003cf6e9f5c",
+   "tokens": 712,
+   "heartbeats": 13702,
+   "ok": false,
+   "error": "214:85: Type mismatch rfl has type ?m.425 = ?m.425 but is expected to have type φs' ++ φ :: ψ :: φs = φs' ++ [φ, ψ] ++ φs",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:49:08Z"
+  },
+  {
+   "sha": "d2055f7d4eb4",
+   "tokens": 709,
+   "heartbeats": 14327,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:53:16Z"
+  },
+  {
+   "sha": "52ceb667a953",
+   "tokens": 680,
+   "heartbeats": 13565,
+   "ok": false,
+   "error": "207:55: unsolved goals … [hypotheses omitted] ⊢ ι (timeOrderF (ofCrAnListF φs' * (ofCrAnListF [φ, ψ] * ofCrAnListF φs))) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (timeOrderF (ofCrAnListF φs' * (ofCrAnListF [ψ, φ] * ofCrAnListF φs))) = crAnTimeOrderSign (φs' ++ φ :: ψ :: φs) • (",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:53:24Z"
+  },
+  {
+   "sha": "7d57ed59e7c6",
+   "tokens": 712,
+   "heartbeats": 14307,
+   "ok": false,
+   "error": "199:75: Application type mismatch: The argument hp has type ∀ χ ∈ [φ, ψ], crAnTimeOrderRel φ χ ∧ crAnTimeOrderRel χ φ but is expected to have type ∀ b ∈ [ψ, φ], crAnTimeOrderRel φ b ∧ crAnTimeOrderRel b φ in the application insertionSort_of_eq_list crAnTimeOrderRel φ φs' [ψ, φ] φs hp",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:53:31Z"
+  },
+  {
+   "sha": "6a85e4d44a09",
+   "tokens": 683,
+   "heartbeats": 13567,
+   "ok": false,
+   "error": "207:55: unsolved goals … [hypotheses omitted] ⊢ ι (timeOrderF (ofCrAnListF φs' * (ofCrAnListF [φ, ψ] * ofCrAnListF φs))) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (timeOrderF (ofCrAnListF φs' * (ofCrAnListF [ψ, φ] * ofCrAnListF φs))) = crAnTimeOrderSign (φs' ++ φ :: ψ :: φs) • (",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:54:33Z"
+  },
+  {
+   "sha": "2b17cc55ded3",
+   "tokens": 696,
+   "heartbeats": 13405,
+   "ok": false,
+   "error": "208:55: unsolved goals … [hypotheses omitted] ⊢ ι (timeOrderF (ofCrAnListF φs' * (ofCrAnListF [φ, ψ] * ofCrAnListF φs))) - (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (timeOrderF (ofCrAnListF φs' * (ofCrAnListF [ψ, φ] * ofCrAnListF φs))) = crAnTimeOrderSign (φs' ++ φ :: ψ :: φs) • (",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:54:40Z"
+  },
+  {
+   "sha": "ed8628164135",
+   "tokens": 808,
+   "heartbeats": 14702,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:01:17Z"
+  },
+  {
+   "sha": "0c7c8553a108",
+   "tokens": 821,
+   "heartbeats": 14544,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:01:25Z"
+  },
+  {
+   "sha": "81792e31d413",
+   "tokens": 692,
+   "heartbeats": null,
+   "ok": false,
+   "error": "219:96: unexpected token 'repeat'; expected ']'",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:01:32Z"
+  },
+  {
+   "sha": "db164f1c8bab",
+   "tokens": 705,
+   "heartbeats": null,
+   "ok": false,
+   "error": "220:96: unexpected token 'repeat'; expected ']'",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:01:40Z"
+  },
+  {
+   "sha": "09e9b6af311a",
+   "tokens": 695,
+   "heartbeats": 8152,
+   "ok": false,
+   "error": "203:78: Type mismatch rfl has type ?m.304 = ?m.304 but is expected to have type φs' ++ x✝¹ :: x✝ :: φs = φs' ++ [x✝¹, x✝] ++ φs",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:53:18Z"
+  },
+  {
+   "sha": "cfb00bebaa69",
+   "tokens": 702,
+   "heartbeats": 14417,
+   "ok": false,
+   "error": "204:22: `simp` made no progress",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:59:02Z"
+  },
+  {
+   "sha": "83342272c7d6",
+   "tokens": 664,
+   "heartbeats": 14033,
+   "ok": false,
+   "error": "206:55: unsolved goals … [hypotheses omitted] ⊢ crAnTimeOrderSign (φs' ++ φ :: ψ :: φs) • ι (ofCrAnListF (List.insertionSort crAnTimeOrderRel (φs' ++ φ :: ψ :: φs))) - crAnTimeOrderSign (φs' ++ φ :: ψ :: φs) • (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (ofCrAnListF (List.insertionS",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:59:15Z"
+  },
+  {
+   "sha": "de7dc25136a4",
+   "tokens": 728,
+   "heartbeats": 14498,
+   "ok": false,
+   "error": "204:19: Type mismatch Eq.symm (congrArg (fun l => φs' ++ l) rfl) has type φs' ++ ([χ, η] ++ φs) = φs' ++ ([χ, η] ++ φs) but is expected to have type φs' ++ χ :: η :: φs = φs' ++ [χ, η] ++ φs",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:59:29Z"
+  },
+  {
+   "sha": "9bc3385395b5",
+   "tokens": 704,
+   "heartbeats": 14430,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:06:54Z"
+  },
+  {
+   "sha": "d4c1a2e4bcdc",
+   "tokens": 660,
+   "heartbeats": 14544,
+   "ok": false,
+   "error": "214:10: Tactic `simp` failed with a nested error: maximum recursion depth has been reached use `set_option maxRecDepth <num>` to increase limit use `set_option diagnostics true` to get diagnostic information",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:10:14Z"
+  },
+  {
+   "sha": "5f151e35cfec",
+   "tokens": 666,
+   "heartbeats": 14035,
+   "ok": false,
+   "error": "206:55: unsolved goals … [hypotheses omitted] ⊢ crAnTimeOrderSign (φs' ++ φ :: ψ :: φs) • ι (ofCrAnListF (List.insertionSort crAnTimeOrderRel (φs' ++ φ :: ψ :: φs))) - crAnTimeOrderSign (φs' ++ φ :: ψ :: φs) • (exchangeSign (𝓕.crAnStatistics φ)) (𝓕.crAnStatistics ψ) • ι (ofCrAnListF (List.insertionS",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:10:22Z"
+  },
+  {
+   "sha": "6a5ffe32da9e",
+   "tokens": 699,
+   "heartbeats": 16124,
+   "ok": false,
+   "error": "204:22: Tactic `simp` failed with a nested error: maximum recursion depth has been reached use `set_option maxRecDepth <num>` to increase limit use `set_option diagnostics true` to get diagnostic information",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:10:30Z"
+  },
+  {
+   "sha": "5a6ebd4a9788",
+   "tokens": 660,
+   "heartbeats": 14227,
+   "ok": false,
+   "error": "197:21: Application type mismatch: The argument hφψ has type crAnTimeOrderRel φ ψ but is expected to have type crAnTimeOrderRel φ x✝¹ in the application And.intro hφψ",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:10:38Z"
+  },
+  {
+   "sha": "bc0010009fa6",
+   "tokens": 696,
+   "heartbeats": 14488,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:12:46Z"
+  },
+  {
+   "sha": "7606e85b3c5d",
+   "tokens": 693,
+   "heartbeats": 14486,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:18:28Z",
+   "score": 69.55
+  },
+  {
+   "sha": "de0b3071f9aa",
+   "tokens": 661,
+   "heartbeats": 17125,
+   "ok": false,
+   "error": "228:26: unsolved goals case mem.add … [hypotheses omitted] ⊢ ι (timeOrderF ((x + y) * (superCommuteF (ofCrAnOpF φ)) (ofCrAnOpF ψ) * ofCrAnListF φs)) = ι ((superCommuteF (ofCrAnOpF φ)) (ofCrAnOpF ψ)) * ι (timeOrderF ((x + y) * ofCrAnListF φs))",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:18:36Z"
+  },
+  {
+   "sha": "76724f182d92",
+   "tokens": 652,
+   "heartbeats": 12517,
+   "ok": false,
+   "error": "202:55: unsolved goals … [hypotheses omitted] ⊢ crAnTimeOrderSign (φs' ++ [φ, ψ] ++ φs) • ι (ofCrAnListF (List.takeWhile (fun c => decide ¬crAnTimeOrderRel φ c) (List.insertionSort crAnTimeOrderRel (φs' ++ φs)) ++ List.filter (fun c => decide (crAnTimeOrderRel φ c ∧ crAnTimeOrderRel c φ)) φs' ++ [φ,",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:20:58Z"
+  },
+  {
+   "sha": "c7ec74d93833",
+   "tokens": 683,
+   "heartbeats": 15493,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:21:05Z"
+  },
+  {
+   "sha": "f32c1715eabc",
+   "tokens": 642,
+   "heartbeats": 13091,
+   "ok": false,
+   "error": "200:55: unsolved goals … [hypotheses omitted] ⊢ crAnTimeOrderSign (φs' ++ [φ, ψ] ++ φs) • ι (ofCrAnListF (List.takeWhile (fun c => decide ¬crAnTimeOrderRel φ c) (List.insertionSort crAnTimeOrderRel (φs' ++ φs)) ++ List.filter (fun c => decide (crAnTimeOrderRel φ c ∧ crAnTimeOrderRel c φ)) φs' ++ [φ,",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:21:12Z"
+  }
+ ],
+ "runs": [
+  {
+   "run_id": "fresh-a100-p1",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-06T21:50:06Z"
+  },
+  {
+   "run_id": "fresh-a100-p2",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T02:56:02Z"
+  },
+  {
+   "run_id": "fresh-a100-p3",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T16:56:17Z"
+  },
+  {
+   "run_id": "fresh-a100-p4",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-08T22:31:56Z"
+  },
+  {
+   "run_id": "fresh-a100-p5",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T00:24:07Z",
+   "mode": "structural"
+  },
+  {
+   "run_id": "fresh-a100-p6",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T03:42:39Z",
+   "mode": "structural"
+  },
+  {
+   "run_id": "fresh-a100-p7",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T12:42:04Z",
+   "mode": "structural"
+  },
+  {
+   "run_id": "fresh-a100-p8",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T21:48:14Z",
+   "mode": "structural"
+  }
+ ],
+ "ledger": {
+  "wins": [
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 1,
+    "d_score": 10.94,
+    "d_tokens": 46,
+    "d_heartbeats": -15417,
+    "diff": "-      simp_all [pa,mul_add, add_mul]\n+      simp only [pa, mul_add, add_mul, map_add, hpx, hpy]\n-      simp_all [pa]\n+      simp only [pa, smul_mul_assoc, Algebra.mul_smul_comm, map_smul]\n+      intro h\n+      exact congrArg (x • ·) h\n-    simp_all [pb,mul_add]\n+    simp only [pb, mul_add, map_add, hpx, hpy]\n-    simp_all [pb]\n+    simp only [pb, Algebra.mul_smul_comm, map_smul]\n+    intro h\n+    exact congrArg (x • ·) h",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "5e26af3f2eea"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 8,
+    "d_score": 1.77,
+    "d_tokens": -6,
+    "d_heartbeats": -2030,
+    "diff": "-  let pb (b : 𝓕.FieldOpFreeAlgebra) (hc : b ∈ Submodule.span ℂ (Set.range ofCrAnListFBasis)) :\n-    Prop := ι 𝓣ᶠ(a * [ofCrAnOpF φ, ofCrAnOpF ψ]ₛF * b) =\n-    ι ([ofCrAnOpF φ, ofCrAnOpF ψ]ₛF * 𝓣ᶠ(a * b))\n-  change pb b (Basis.mem_span _ b)\n-  apply Submodule.span_induction\n+  refine Submodule.span_induction (p := fun (x : 𝓕.FieldOpFreeAlgebra)\n+    (_ : x ∈ Submodule.span ℂ (Set.range ofCrAnListFBasis)) =>\n+    ι 𝓣ᶠ(a * [ofCrAnOpF φ, ofCrAnOpF ψ]ₛF * x) =\n+    ι ([ofCrAnOpF φ, ofCrAnOpF ψ]ₛF * 𝓣ᶠ(a * x))) ?_ ?_ ?_ ?_ (Basis.mem_span _ b)\n-    simp only [ofListBasis_eq_ofList, map_mul, pb]\n-    let pa (a : 𝓕.FieldOpFreeAlgebra) (hc : a ∈ Submodule.span ℂ (Set.range ofCrAnListFBasis)) :\n-     ",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "0a8e7e35f9a6"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 9,
+    "d_score": 0.12,
+    "d_tokens": -4,
+    "d_heartbeats": -4,
+    "diff": "-      have h1 := insertionSort_of_eq_list 𝓕.crAnTimeOrderRel φ φs' [φ, ψ] φs\n+      have h1 := insertionSort_of_eq_list crAnTimeOrderRel φ φs' [φ, ψ] φs\n-      have h2 := insertionSort_of_eq_list 𝓕.crAnTimeOrderRel φ φs' [ψ, φ] φs\n+      have h2 := insertionSort_of_eq_list crAnTimeOrderRel φ φs' [ψ, φ] φs\n-        rw [insertionSort_of_takeWhile_filter 𝓕.crAnTimeOrderRel φ φs' φs]\n+        rw [insertionSort_of_takeWhile_filter crAnTimeOrderRel φ φs' φs]\n-    · simp only [map_mul, zero_mul, map_zero, mul_zero]\n+    · simp only [zero_mul, map_zero, mul_zero]\n-  · simp only [map_mul, mul_zero, map_zero]\n+  · simp only [mul_zero, map_zero]",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "1b2c74c841d1"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 10,
+    "d_score": 0.71,
+    "d_tokens": -4,
+    "d_heartbeats": -761,
+    "diff": "-              ofList_singleton, map_sub, map_smul]\n-            rw [timeOrderF_ofCrAnListF, timeOrderF_ofCrAnListF]\n+              ofList_singleton, map_sub, map_smul, timeOrderF_ofCrAnListF]",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "03781a2eeff9"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 11,
+    "d_score": 0.05,
+    "d_tokens": -2,
+    "d_heartbeats": -2,
+    "diff": "-          simp only [map_smul, sub_right_inj]\n+          simp only [sub_right_inj]",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "96c966ac65f7"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 4,
+    "d_score": 0.2,
+    "d_tokens": 0,
+    "d_heartbeats": -249,
+    "diff": "-          repeat rw [mul_assoc]\n+          simp only [mul_assoc]",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "2d170c87841a"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 10,
+    "d_score": 0.54,
+    "d_tokens": 10,
+    "d_heartbeats": -1020,
+    "diff": "-        (by simp_all)\n+        (by simp [hφψ, hψφ])\n-        (by simp_all)\n+        (by simp [hφψ, hψφ])",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "d32e73291d5f"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 13,
+    "d_score": 0.17,
+    "d_tokens": -2,
+    "d_heartbeats": -154,
+    "diff": "-          rw [← crAnTimeOrderSign_swap_eq_time hφψ hψφ, crAnTimeOrderList, e1, h1,\n-            crAnTimeOrderList, e2, h2]\n+          rw [← crAnTimeOrderSign_swap_eq_time hφψ hψφ]\n+          simp only [crAnTimeOrderList, e1, h1, e2, h2]\n-          rw [Subalgebra.mem_center_iff.mp (ι_superCommuteF_ofCrAnOpF_ofCrAnOpF_mem_center φ ψ)]\n-          simp only [mul_assoc]\n-          rw [← map_mul, ← map_mul, ← map_mul, ← ofCrAnListF_append, ← ofCrAnListF_append,\n-            ← ofCrAnListF_append]\n-          rw [← h3, ← crAnTimeOrderList]\n+          rw [Subalgebra.mem_center_iff.mp (ι_superCommuteF_ofCrAnOpF_ofCrAnOpF_mem_center φ ψ),\n+            mul_assoc, mul_assoc, mul_assoc, ← map_mul, ← map_m"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 17,
+    "d_score": 0.08,
+    "d_tokens": -3,
+    "d_heartbeats": 11,
+    "diff": "-            simp only [mul_sub, sub_mul, Algebra.smul_mul_assoc, Algebra.mul_smul_comm,\n+            simp only [mul_sub, sub_mul, smul_mul_assoc, mul_smul_comm,\n-              ofList_singleton, map_sub, map_smul, timeOrderF_ofCrAnListF]\n-          simp only [sub_right_inj]\n+              ofList_singleton, map_sub, map_smul, timeOrderF_ofCrAnListF, sub_right_inj]\n-            mul_sub, sub_mul, smul_sub, Algebra.mul_smul_comm, Algebra.smul_mul_assoc]\n+            mul_sub, sub_mul, smul_sub, mul_smul_comm, smul_mul_assoc]\n-            simp only [map_smul, Algebra.mul_smul_comm]\n+            simp only [map_smul, mul_smul_comm]"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 18,
+    "d_score": 0.04,
+    "d_tokens": 0,
+    "d_heartbeats": -53,
+    "diff": "-            simp only [mul_sub, sub_mul, smul_mul_assoc, mul_smul_comm,\n+            simp only [mul_sub, sub_mul, Algebra.smul_mul_assoc, Algebra.mul_smul_comm,\n-            mul_sub, sub_mul, smul_sub, mul_smul_comm, smul_mul_assoc]\n+            mul_sub, sub_mul, smul_sub, Algebra.mul_smul_comm, Algebra.smul_mul_assoc]\n-            simp only [map_smul, mul_smul_comm]\n+            simp only [map_smul, Algebra.mul_smul_comm]"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 22,
+    "d_score": 0.03,
+    "d_tokens": -8,
+    "d_heartbeats": 233,
+    "diff": "-      have e1 : φs' ++ φ :: ψ :: φs = φs' ++ [φ, ψ] ++ φs := by simp\n-      have e2 : φs' ++ ψ :: φ :: φs = φs' ++ [ψ, φ] ++ φs := by simp\n+      have e : (φs' ++ φ :: ψ :: φs = φs' ++ [φ, ψ] ++ φs) ∧\n+        (φs' ++ ψ :: φ :: φs = φs' ++ [ψ, φ] ++ φs) := by simp\n-          rw [← crAnTimeOrderSign_swap_eq_time hφψ hψφ]\n-          simp only [crAnTimeOrderList, e1, h1, e2, h2]\n+          rw [← crAnTimeOrderSign_swap_eq_time hφψ hψφ, crAnTimeOrderList, e.1, h1,\n+            crAnTimeOrderList, e.2, h2]\n-          by_cases hq : (𝓕 |>ₛ φ) ≠ (𝓕 |>ₛ ψ)\n-          · simp only [ι_superCommuteF_of_diff_statistic hq, zero_mul, smul_zero]\n-          · rw [crAnTimeOrderSign, Wick.koszulSign_eq_rel_eq_st"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 4,
+    "d_score": 0.03,
+    "d_tokens": -8,
+    "d_heartbeats": 245,
+    "diff": "-  refine Submodule.span_induction (p := fun (x : 𝓕.FieldOpFreeAlgebra)\n-    (_ : x ∈ Submodule.span ℂ (Set.range ofCrAnListFBasis)) =>\n+  refine Submodule.span_induction (p := fun x (_ : x ∈ Submodule.span ℂ (Set.range ofCrAnListFBasis)) =>\n-    refine Submodule.span_induction (p := fun (y : 𝓕.FieldOpFreeAlgebra)\n-      (_ : y ∈ Submodule.span ℂ (Set.range ofCrAnListFBasis)) =>\n+    refine Submodule.span_induction (p := fun y (_ : y ∈ Submodule.span ℂ (Set.range ofCrAnListFBasis)) =>"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 9,
+    "d_score": 2.15,
+    "d_tokens": -74,
+    "d_heartbeats": -153,
+    "diff": "-          ι (ofCrAnListF (crAnTimeOrderList (φs' ++ φ :: ψ :: φs))) -\n-            crAnTimeOrderSign (φs' ++ ψ :: φ :: φs) •\n-          𝓢(𝓕.crAnStatistics φ, 𝓕.crAnStatistics ψ) •\n-            ι (ofCrAnListF (crAnTimeOrderList (φs' ++ ψ :: φ :: φs))) := by\n+          (ι (ofCrAnListF l) * ι (ofCrAnListF l') * ι [ofCrAnOpF φ, ofCrAnOpF ψ]ₛF *\n+            ι (ofCrAnListF r') * ι (ofCrAnListF r)) := by\n-          rw [smul_comm]\n-        _ = crAnTimeOrderSign (φs' ++ φ :: ψ :: φs) •\n-          (ι (ofCrAnListF l) * ι (ofCrAnListF l') * ι [ofCrAnOpF φ, ofCrAnOpF ψ]ₛF *\n-            ι (ofCrAnListF r') * ι (ofCrAnListF r)) := by\n-          rw [← crAnTimeOrderSign_swap_eq_time hφψ hψφ, crAnTimeOrderL"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 13,
+    "d_score": 0.61,
+    "d_tokens": 0,
+    "d_heartbeats": -781,
+    "diff": "-            simp only [mul_sub, sub_mul, Algebra.smul_mul_assoc, Algebra.mul_smul_comm,\n+            simp only [mul_sub, sub_mul, smul_mul_assoc, mul_smul_comm,\n-            mul_sub, sub_mul, smul_sub, Algebra.mul_smul_comm, Algebra.smul_mul_assoc]\n+            mul_sub, sub_mul, smul_sub, mul_smul_comm, smul_mul_assoc]\n-            simp only [map_smul, Algebra.mul_smul_comm]\n+            simp only [map_smul, mul_smul_comm]\n-      simp only [smul_mul_assoc, Algebra.mul_smul_comm, map_smul]\n+      simp only [smul_mul_assoc, mul_smul_comm, map_smul]\n-    simp only [Algebra.mul_smul_comm, map_smul]\n+    simp only [mul_smul_comm, map_smul]"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 17,
+    "d_score": 3.47,
+    "d_tokens": -96,
+    "d_heartbeats": -1054,
+    "diff": "-  refine Submodule.span_induction (p := fun x (_ : x ∈ Submodule.span ℂ (Set.range ofCrAnListFBasis)) =>\n-    ι 𝓣ᶠ(a * [ofCrAnOpF φ, ofCrAnOpF ψ]ₛF * x) =\n-    ι ([ofCrAnOpF φ, ofCrAnOpF ψ]ₛF * 𝓣ᶠ(a * x))) ?_ ?_ ?_ ?_ (Basis.mem_span _ b)\n-  · rintro x ⟨φs, rfl⟩\n+  induction (Basis.mem_span ofCrAnListFBasis b) using Submodule.span_induction with\n+  | mem x hx =>\n+    obtain ⟨φs, rfl⟩ := hx\n-    refine Submodule.span_induction (p := fun y (_ : y ∈ Submodule.span ℂ (Set.range ofCrAnListFBasis)) =>\n-      ι 𝓣ᶠ(y * [ofCrAnOpF φ, ofCrAnOpF ψ]ₛF * ofCrAnListF φs) =\n-      ι ([ofCrAnOpF φ, ofCrAnOpF ψ]ₛF * 𝓣ᶠ(y * ofCrAnListF φs)))\n-      ?_ ?_ ?_ ?_ (Basis.mem_span _ a)\n-    · rintro y ⟨φs', rfl⟩\n"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 20,
+    "d_score": 0.4,
+    "d_tokens": -12,
+    "d_heartbeats": -90,
+    "diff": "-    | smul x hx _ h =>\n-      simp only [smul_mul_assoc, mul_smul_comm, map_smul]\n-      exact congrArg (x • ·) h\n+    | smul x hx _ h => simp only [smul_mul_assoc, mul_smul_comm, map_smul, h]\n-  | smul x hx _ h =>\n-    simp only [mul_smul_comm, map_smul]\n-    exact congrArg (x • ·) h\n+  | smul x hx _ h => simp only [mul_smul_comm, map_smul, h]"
+   },
+   {
+    "run_id": "fresh-a100-p6",
+    "check": 4,
+    "d_score": 0.27,
+    "d_tokens": 13,
+    "d_heartbeats": -794,
+    "diff": "-    simp only [ofListBasis_eq_ofList, map_mul]\n+    simp only [ofListBasis_eq_ofList]\n-      simp only [ofListBasis_eq_ofList, map_mul]\n+      simp only [ofListBasis_eq_ofList]\n-      have e : (φs' ++ φ :: ψ :: φs = φs' ++ [φ, ψ] ++ φs) ∧\n-        (φs' ++ ψ :: φ :: φs = φs' ++ [ψ, φ] ++ φs) := by simp\n+      have e1 : φs' ++ φ :: ψ :: φs = φs' ++ [φ, ψ] ++ φs := by\n+        simp only [List.append_assoc, List.cons_append, List.nil_append]\n+      have e2 : φs' ++ ψ :: φ :: φs = φs' ++ [ψ, φ] ++ φs := by\n+        simp only [List.append_assoc, List.cons_append, List.nil_append]\n-          rw [smul_comm, ← crAnTimeOrderSign_swap_eq_time hφψ hψφ, crAnTimeOrderList, e.1, h1,\n-            crAnTimeO"
+   },
+   {
+    "run_id": "fresh-a100-p6",
+    "check": 5,
+    "d_score": 0.62,
+    "d_tokens": -21,
+    "d_heartbeats": -56,
+    "diff": "-      have e1 : φs' ++ φ :: ψ :: φs = φs' ++ [φ, ψ] ++ φs := by\n-        simp only [List.append_assoc, List.cons_append, List.nil_append]\n-      have e2 : φs' ++ ψ :: φ :: φs = φs' ++ [ψ, φ] ++ φs := by\n+      have e : ∀ χ η : 𝓕.CrAnFieldOp, φs' ++ χ :: η :: φs = φs' ++ [χ, η] ++ φs := by\n+        intro χ η\n-          rw [smul_comm, ← crAnTimeOrderSign_swap_eq_time hφψ hψφ, crAnTimeOrderList, e1, h1,\n-            crAnTimeOrderList, e2, h2]\n+          rw [smul_comm, ← crAnTimeOrderSign_swap_eq_time hφψ hψφ, crAnTimeOrderList, e φ ψ, h1,\n+            crAnTimeOrderList, e ψ φ, h2]"
+   },
+   {
+    "run_id": "fresh-a100-p6",
+    "check": 7,
+    "d_score": 0.06,
+    "d_tokens": -2,
+    "d_heartbeats": -3,
+    "diff": "-      have e : ∀ χ η : 𝓕.CrAnFieldOp, φs' ++ χ :: η :: φs = φs' ++ [χ, η] ++ φs := by\n+      have e : ∀ χ η, φs' ++ χ :: η :: φs = φs' ++ [χ, η] ++ φs := by"
+   },
+   {
+    "run_id": "fresh-a100-p6",
+    "check": 14,
+    "d_score": 0.12,
+    "d_tokens": -2,
+    "d_heartbeats": -85,
+    "diff": "-            rw [← ofCrAnListF_singleton, ← ofCrAnListF_singleton,\n-              superCommuteF_ofCrAnListF_ofCrAnListF]\n-            simp only [mul_sub, sub_mul, smul_mul_assoc, mul_smul_comm,\n-              ← ofCrAnListF_append, List.append_assoc, List.cons_append, List.nil_append,\n-              ofList_singleton, map_sub, map_smul, timeOrderF_ofCrAnListF, sub_right_inj]\n+            simp only [← ofCrAnListF_singleton, ← ofCrAnListF_singleton,\n+              superCommuteF_ofCrAnListF_ofCrAnListF, mul_sub, sub_mul, smul_mul_assoc,\n+              mul_smul_comm, ← ofCrAnListF_append, List.append_assoc, List.cons_append,\n+              List.nil_append, ofList_singleton, map_sub, map_smul, time"
+   },
+   {
+    "run_id": "fresh-a100-p6",
+    "check": 15,
+    "d_score": 0.1,
+    "d_tokens": -2,
+    "d_heartbeats": -54,
+    "diff": "-      have h3 : List.insertionSort crAnTimeOrderRel (φs' ++ φs) = l ++ (l' ++ (r' ++ r)) := by\n-        rw [insertionSort_of_takeWhile_filter crAnTimeOrderRel φ φs' φs]\n+      have h3 : crAnTimeOrderList (φs' ++ φs) = l ++ (l' ++ (r' ++ r)) := by\n+        rw [crAnTimeOrderList, insertionSort_of_takeWhile_filter crAnTimeOrderRel φ φs' φs]\n-            ← ofCrAnListF_append, ← ofCrAnListF_append, ← ofCrAnListF_append,\n-            ← h3, ← crAnTimeOrderList]\n+            ← ofCrAnListF_append, ← ofCrAnListF_append, ← ofCrAnListF_append, ← h3]"
+   },
+   {
+    "run_id": "fresh-a100-p6",
+    "check": 16,
+    "d_score": 0.3,
+    "d_tokens": -5,
+    "d_heartbeats": -217,
+    "diff": "-          rw [smul_comm, ← crAnTimeOrderSign_swap_eq_time hφψ hψφ, crAnTimeOrderList, e φ ψ, h1,\n-            crAnTimeOrderList, e ψ φ, h2]\n+          rw [smul_comm, ← crAnTimeOrderSign_swap_eq_time hφψ hψφ]\n+          simp only [crAnTimeOrderList, e, h1, h2]"
+   },
+   {
+    "run_id": "fresh-a100-p6",
+    "check": 18,
+    "d_score": 0.18,
+    "d_tokens": -3,
+    "d_heartbeats": -123,
+    "diff": "-          simp only [crAnTimeOrderList, e, h1, h2]\n-          simp only [map_mul, mul_assoc, ofCrAnListF_append, l, l', r, r', hmid.symm,\n-            mul_sub, sub_mul, smul_sub, mul_smul_comm, smul_mul_assoc]\n+          simp only [crAnTimeOrderList, e, h1, h2, map_mul, mul_assoc, ofCrAnListF_append,\n+            l, l', r, r', hmid.symm, mul_sub, sub_mul, smul_sub, mul_smul_comm,\n+            smul_mul_assoc]"
+   },
+   {
+    "run_id": "fresh-a100-p6",
+    "check": 21,
+    "d_score": 0.14,
+    "d_tokens": -7,
+    "d_heartbeats": 65,
+    "diff": "-      have e : ∀ χ η, φs' ++ χ :: η :: φs = φs' ++ [χ, η] ++ φs := by\n-        intro χ η\n-        simp only [List.append_assoc, List.cons_append, List.nil_append]\n+      have e : ∀ χ η, φs' ++ χ :: η :: φs = φs' ++ [χ, η] ++ φs := fun χ η => by simp"
+   },
+   {
+    "run_id": "fresh-a100-p6",
+    "check": 23,
+    "d_score": 0.1,
+    "d_tokens": -2,
+    "d_heartbeats": -50,
+    "diff": "-          rcases eq_or_ne (𝓕 |>ₛ φ) (𝓕 |>ₛ ψ) with hq | hq\n+          by_cases hq : (𝓕 |>ₛ φ) = (𝓕 |>ₛ ψ)"
+   },
+   {
+    "run_id": "fresh-a100-p8",
+    "check": 11,
+    "d_score": 0.08,
+    "d_tokens": -3,
+    "d_heartbeats": -2,
+    "diff": "-      have hmid : ι (ofCrAnListF [φ, ψ]) -\n-          𝓢(𝓕.crAnStatistics φ, 𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, φ]) =\n-          ι [ofCrAnOpF φ, ofCrAnOpF ψ]ₛF := by\n-        rw [superCommuteF_ofCrAnOpF_ofCrAnOpF, ← ofCrAnListF_singleton, ← ofCrAnListF_singleton]\n-        simp [← ofCrAnListF_append]\n+      have hmid : ι [ofCrAnOpF φ, ofCrAnOpF ψ]ₛF =\n+          ι (ofCrAnListF [φ, ψ]) -\n+          𝓢(𝓕.crAnStatistics φ, 𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, φ]) := by\n+        rw [superCommuteF_ofCrAnOpF_ofCrAnOpF]\n+        simp [← ofCrAnListF_singleton, ← ofCrAnListF_append]\n-      have e : ∀ χ η, φs' ++ χ :: η :: φs = φs' ++ [χ, η] ++ φs := fun χ η => by simp\n+      have e : ∀ χ η, φ"
+   }
+  ],
+  "dead_names": []
+ },
+ "profile_cache": {
+  "2df3a97c32a7": {
+   "ok": true,
+   "total": 17602,
+   "floor": 303,
+   "reference": 42111,
+   "max_heartbeat_score": 33.09,
+   "blocks": [
+    {
+     "lines": "9-77",
+     "depth_indent": 2,
+     "text": "· rintro x ⟨φs, rfl⟩ simp only [ofListBasis_eq_ofList, map_mul] refine Submodule.span_induction (p :",
+     "heartbeats": 13835
+    },
+    {
+     "lines": "30-31",
+     "depth_indent": 6,
+     "text": "have h1 := insertionSort_of_eq_list crAnTimeOrderRel φ φs' [φ, ψ] φs (by simp [hφψ, hψφ])",
+     "heartbeats": 7639
+    },
+    {
+     "lines": "18-22",
+     "depth_indent": 6,
+     "text": "have hmid : ι (ofCrAnListF [φ, ψ]) - 𝓢(𝓕.crAnStatistics φ, 𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, ",
+     "heartbeats": 1450
+    },
+    {
+     "lines": "81-83",
+     "depth_indent": 2,
+     "text": "· intro x hx _ h simp only [Algebra.mul_smul_comm, map_smul] exact congrArg (x • ·) h",
+     "heartbeats": 1410
+    },
+    {
+     "lines": "79-80",
+     "depth_indent": 2,
+     "text": "· intro x y _ _ hpx hpy simp only [mul_add, map_add, hpx, hpy]",
+     "heartbeats": 977
+    },
+    {
+     "lines": "78-78",
+     "depth_indent": 2,
+     "text": "· simp only [mul_zero, map_zero]",
+     "heartbeats": 542
+    },
+    {
+     "lines": "5-8",
+     "depth_indent": 2,
+     "text": "refine Submodule.span_induction (p := fun (x : 𝓕.FieldOpFreeAlgebra) (_ : x ∈ Submodule.span ℂ (Set.",
+     "heartbeats": 535
+    },
+    {
+     "lines": "17-17",
+     "depth_indent": 6,
+     "text": "simp only [ofListBasis_eq_ofList, map_mul]",
+     "heartbeats": 514
+    },
+    {
+     "lines": "23-24",
+     "depth_indent": 6,
+     "text": "let l := List.takeWhile (fun c => ¬crAnTimeOrderRel φ c) (List.insertionSort crAnTimeOrderRel (φs' +",
+     "heartbeats": 28
+    },
+    {
+     "lines": "27-28",
+     "depth_indent": 6,
+     "text": "let r := List.filter (fun c => (crAnTimeOrderRel φ c ∧ ¬crAnTimeOrderRel c φ)) (List.insertionSort c",
+     "heartbeats": 28
+    },
+    {
+     "lines": "25-26",
+     "depth_indent": 6,
+     "text": "let l' := List.filter (fun c => crAnTimeOrderRel φ c ∧ crAnTimeOrderRel c φ) φs'",
+     "heartbeats": 17
+    },
+    {
+     "lines": "29-29",
+     "depth_indent": 6,
+     "text": "let r' := List.filter (fun c => crAnTimeOrderRel φ c ∧ crAnTimeOrderRel c φ) φs",
+     "heartbeats": 16
+    }
+   ],
+   "points_left_heartbeats": 13.69,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "d83100b54e2a": {
+   "ok": true,
+   "total": 17637,
+   "floor": 303,
+   "reference": 42111,
+   "max_heartbeat_score": 33.09,
+   "blocks": [
+    {
+     "lines": "9-74",
+     "depth_indent": 2,
+     "text": "· rintro x ⟨φs, rfl⟩ simp only [ofListBasis_eq_ofList, map_mul] refine Submodule.span_induction (p :",
+     "heartbeats": 13871
+    },
+    {
+     "lines": "30-31",
+     "depth_indent": 6,
+     "text": "have h1 := insertionSort_of_eq_list crAnTimeOrderRel φ φs' [φ, ψ] φs (by simp [hφψ, hψφ])",
+     "heartbeats": 7674
+    },
+    {
+     "lines": "18-22",
+     "depth_indent": 6,
+     "text": "have hmid : ι (ofCrAnListF [φ, ψ]) - 𝓢(𝓕.crAnStatistics φ, 𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, ",
+     "heartbeats": 1450
+    },
+    {
+     "lines": "78-80",
+     "depth_indent": 2,
+     "text": "· intro x hx _ h simp only [Algebra.mul_smul_comm, map_smul] exact congrArg (x • ·) h",
+     "heartbeats": 1409
+    },
+    {
+     "lines": "76-77",
+     "depth_indent": 2,
+     "text": "· intro x y _ _ hpx hpy simp only [mul_add, map_add, hpx, hpy]",
+     "heartbeats": 977
+    },
+    {
+     "lines": "75-75",
+     "depth_indent": 2,
+     "text": "· simp only [mul_zero, map_zero]",
+     "heartbeats": 542
+    },
+    {
+     "lines": "5-8",
+     "depth_indent": 2,
+     "text": "refine Submodule.span_induction (p := fun (x : 𝓕.FieldOpFreeAlgebra) (_ : x ∈ Submodule.span ℂ (Set.",
+     "heartbeats": 535
+    },
+    {
+     "lines": "17-17",
+     "depth_indent": 6,
+     "text": "simp only [ofListBasis_eq_ofList, map_mul]",
+     "heartbeats": 514
+    },
+    {
+     "lines": "23-24",
+     "depth_indent": 6,
+     "text": "let l := List.takeWhile (fun c => ¬crAnTimeOrderRel φ c) (List.insertionSort crAnTimeOrderRel (φs' +",
+     "heartbeats": 28
+    },
+    {
+     "lines": "27-28",
+     "depth_indent": 6,
+     "text": "let r := List.filter (fun c => (crAnTimeOrderRel φ c ∧ ¬crAnTimeOrderRel c φ)) (List.insertionSort c",
+     "heartbeats": 28
+    },
+    {
+     "lines": "25-26",
+     "depth_indent": 6,
+     "text": "let l' := List.filter (fun c => crAnTimeOrderRel φ c ∧ crAnTimeOrderRel c φ) φs'",
+     "heartbeats": 17
+    },
+    {
+     "lines": "29-29",
+     "depth_indent": 6,
+     "text": "let r' := List.filter (fun c => crAnTimeOrderRel φ c ∧ crAnTimeOrderRel c φ) φs",
+     "heartbeats": 16
+    }
+   ],
+   "points_left_heartbeats": 13.72,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "72e5381ed782": {
+   "ok": true,
+   "total": 15805,
+   "floor": 303,
+   "reference": 42111,
+   "max_heartbeat_score": 33.09,
+   "blocks": [
+    {
+     "lines": "5-63",
+     "depth_indent": 2,
+     "text": "induction (Basis.mem_span ofCrAnListFBasis b) using Submodule.span_induction with | mem x hx => obta",
+     "heartbeats": 15502
+    },
+    {
+     "lines": "32-33",
+     "depth_indent": 6,
+     "text": "have e : (φs' ++ φ :: ψ :: φs = φs' ++ [φ, ψ] ++ φs) ∧ (φs' ++ ψ :: φ :: φs = φs' ++ [ψ, φ] ++ φs) :",
+     "heartbeats": 6926
+    },
+    {
+     "lines": "13-17",
+     "depth_indent": 6,
+     "text": "have hmid : ι (ofCrAnListF [φ, ψ]) - 𝓢(𝓕.crAnStatistics φ, 𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, ",
+     "heartbeats": 1451
+    },
+    {
+     "lines": "12-12",
+     "depth_indent": 6,
+     "text": "simp only [ofListBasis_eq_ofList, map_mul]",
+     "heartbeats": 418
+    },
+    {
+     "lines": "27-28",
+     "depth_indent": 6,
+     "text": "have h2 := insertionSort_of_eq_list crAnTimeOrderRel φ φs' [ψ, φ] φs (by simp [hφψ, hψφ])",
+     "heartbeats": 271
+    },
+    {
+     "lines": "25-26",
+     "depth_indent": 6,
+     "text": "have h1 := insertionSort_of_eq_list crAnTimeOrderRel φ φs' [φ, ψ] φs (by simp [hφψ, hψφ])",
+     "heartbeats": 268
+    },
+    {
+     "lines": "29-31",
+     "depth_indent": 6,
+     "text": "have h3 : List.insertionSort crAnTimeOrderRel (φs' ++ φs) = l ++ (l' ++ (r' ++ r)) := by rw [inserti",
+     "heartbeats": 101
+    },
+    {
+     "lines": "11-11",
+     "depth_indent": 6,
+     "text": "obtain ⟨φs', rfl⟩ := hy",
+     "heartbeats": 47
+    },
+    {
+     "lines": "18-19",
+     "depth_indent": 6,
+     "text": "let l := List.takeWhile (fun c => ¬crAnTimeOrderRel φ c) (List.insertionSort crAnTimeOrderRel (φs' +",
+     "heartbeats": 27
+    },
+    {
+     "lines": "22-23",
+     "depth_indent": 6,
+     "text": "let r := List.filter (fun c => (crAnTimeOrderRel φ c ∧ ¬crAnTimeOrderRel c φ)) (List.insertionSort c",
+     "heartbeats": 25
+    },
+    {
+     "lines": "20-21",
+     "depth_indent": 6,
+     "text": "let l' := List.filter (fun c => crAnTimeOrderRel φ c ∧ crAnTimeOrderRel c φ) φs'",
+     "heartbeats": 19
+    },
+    {
+     "lines": "24-24",
+     "depth_indent": 6,
+     "text": "let r' := List.filter (fun c => crAnTimeOrderRel φ c ∧ crAnTimeOrderRel c φ) φs",
+     "heartbeats": 18
+    }
+   ],
+   "points_left_heartbeats": 12.27,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "fea7a872cc59": {
+   "ok": true,
+   "total": 15011,
+   "floor": 303,
+   "reference": 42111,
+   "max_heartbeat_score": 33.09,
+   "blocks": [
+    {
+     "lines": "5-65",
+     "depth_indent": 2,
+     "text": "induction (Basis.mem_span ofCrAnListFBasis b) using Submodule.span_induction with | mem x hx => obta",
+     "heartbeats": 14708
+    },
+    {
+     "lines": "32-33",
+     "depth_indent": 6,
+     "text": "have e1 : φs' ++ φ :: ψ :: φs = φs' ++ [φ, ψ] ++ φs := by simp only [List.append_assoc, List.cons_ap",
+     "heartbeats": 6843
+    },
+    {
+     "lines": "13-17",
+     "depth_indent": 6,
+     "text": "have hmid : ι (ofCrAnListF [φ, ψ]) - 𝓢(𝓕.crAnStatistics φ, 𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, ",
+     "heartbeats": 1450
+    },
+    {
+     "lines": "27-28",
+     "depth_indent": 6,
+     "text": "have h2 := insertionSort_of_eq_list crAnTimeOrderRel φ φs' [ψ, φ] φs (by simp [hφψ, hψφ])",
+     "heartbeats": 269
+    },
+    {
+     "lines": "25-26",
+     "depth_indent": 6,
+     "text": "have h1 := insertionSort_of_eq_list crAnTimeOrderRel φ φs' [φ, ψ] φs (by simp [hφψ, hψφ])",
+     "heartbeats": 268
+    },
+    {
+     "lines": "29-31",
+     "depth_indent": 6,
+     "text": "have h3 : List.insertionSort crAnTimeOrderRel (φs' ++ φs) = l ++ (l' ++ (r' ++ r)) := by rw [inserti",
+     "heartbeats": 103
+    },
+    {
+     "lines": "12-12",
+     "depth_indent": 6,
+     "text": "simp only [ofListBasis_eq_ofList]",
+     "heartbeats": 99
+    },
+    {
+     "lines": "11-11",
+     "depth_indent": 6,
+     "text": "obtain ⟨φs', rfl⟩ := hy",
+     "heartbeats": 47
+    },
+    {
+     "lines": "22-23",
+     "depth_indent": 6,
+     "text": "let r := List.filter (fun c => (crAnTimeOrderRel φ c ∧ ¬crAnTimeOrderRel c φ)) (List.insertionSort c",
+     "heartbeats": 27
+    },
+    {
+     "lines": "18-19",
+     "depth_indent": 6,
+     "text": "let l := List.takeWhile (fun c => ¬crAnTimeOrderRel φ c) (List.insertionSort crAnTimeOrderRel (φs' +",
+     "heartbeats": 25
+    },
+    {
+     "lines": "20-21",
+     "depth_indent": 6,
+     "text": "let l' := List.filter (fun c => crAnTimeOrderRel φ c ∧ crAnTimeOrderRel c φ) φs'",
+     "heartbeats": 21
+    },
+    {
+     "lines": "24-24",
+     "depth_indent": 6,
+     "text": "let r' := List.filter (fun c => crAnTimeOrderRel φ c ∧ crAnTimeOrderRel c φ) φs",
+     "heartbeats": 18
+    }
+   ],
+   "points_left_heartbeats": 11.64,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "e60c7f976982": {
+   "ok": true,
+   "total": 14813,
+   "floor": 303,
+   "reference": 42111,
+   "max_heartbeat_score": 33.09,
+   "blocks": [
+    {
+     "lines": "5-63",
+     "depth_indent": 2,
+     "text": "induction (Basis.mem_span ofCrAnListFBasis b) using Submodule.span_induction with | mem x hx => obta",
+     "heartbeats": 14510
+    },
+    {
+     "lines": "32-34",
+     "depth_indent": 6,
+     "text": "have e : ∀ χ η, φs' ++ χ :: η :: φs = φs' ++ [χ, η] ++ φs := by intro χ η simp only [List.append_ass",
+     "heartbeats": 6642
+    },
+    {
+     "lines": "13-17",
+     "depth_indent": 6,
+     "text": "have hmid : ι (ofCrAnListF [φ, ψ]) - 𝓢(𝓕.crAnStatistics φ, 𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, ",
+     "heartbeats": 1450
+    },
+    {
+     "lines": "27-28",
+     "depth_indent": 6,
+     "text": "have h2 := insertionSort_of_eq_list crAnTimeOrderRel φ φs' [ψ, φ] φs (by simp [hφψ, hψφ])",
+     "heartbeats": 269
+    },
+    {
+     "lines": "25-26",
+     "depth_indent": 6,
+     "text": "have h1 := insertionSort_of_eq_list crAnTimeOrderRel φ φs' [φ, ψ] φs (by simp [hφψ, hψφ])",
+     "heartbeats": 268
+    },
+    {
+     "lines": "29-31",
+     "depth_indent": 6,
+     "text": "have h3 : crAnTimeOrderList (φs' ++ φs) = l ++ (l' ++ (r' ++ r)) := by rw [crAnTimeOrderList, insert",
+     "heartbeats": 106
+    },
+    {
+     "lines": "12-12",
+     "depth_indent": 6,
+     "text": "simp only [ofListBasis_eq_ofList]",
+     "heartbeats": 99
+    },
+    {
+     "lines": "11-11",
+     "depth_indent": 6,
+     "text": "obtain ⟨φs', rfl⟩ := hy",
+     "heartbeats": 47
+    },
+    {
+     "lines": "22-23",
+     "depth_indent": 6,
+     "text": "let r := List.filter (fun c => (crAnTimeOrderRel φ c ∧ ¬crAnTimeOrderRel c φ)) (List.insertionSort c",
+     "heartbeats": 27
+    },
+    {
+     "lines": "18-19",
+     "depth_indent": 6,
+     "text": "let l := List.takeWhile (fun c => ¬crAnTimeOrderRel φ c) (List.insertionSort crAnTimeOrderRel (φs' +",
+     "heartbeats": 25
+    },
+    {
+     "lines": "20-21",
+     "depth_indent": 6,
+     "text": "let l' := List.filter (fun c => crAnTimeOrderRel φ c ∧ crAnTimeOrderRel c φ) φs'",
+     "heartbeats": 21
+    },
+    {
+     "lines": "24-24",
+     "depth_indent": 6,
+     "text": "let r' := List.filter (fun c => crAnTimeOrderRel φ c ∧ crAnTimeOrderRel c φ) φs",
+     "heartbeats": 18
+    }
+   ],
+   "points_left_heartbeats": 11.49,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "f8d3021d0807": {
+   "ok": true,
+   "total": 14488,
+   "floor": 303,
+   "reference": 42111,
+   "max_heartbeat_score": 33.09,
+   "blocks": [
+    {
+     "lines": "5-61",
+     "depth_indent": 2,
+     "text": "induction (Basis.mem_span ofCrAnListFBasis b) using Submodule.span_induction with | mem x hx => obta",
+     "heartbeats": 14185
+    },
+    {
+     "lines": "32-32",
+     "depth_indent": 6,
+     "text": "have e : ∀ χ η, φs' ++ χ :: η :: φs = φs' ++ [χ, η] ++ φs := fun χ η => by simp",
+     "heartbeats": 6317
+    },
+    {
+     "lines": "13-17",
+     "depth_indent": 6,
+     "text": "have hmid : ι (ofCrAnListF [φ, ψ]) - 𝓢(𝓕.crAnStatistics φ, 𝓕.crAnStatistics ψ) • ι (ofCrAnListF [ψ, ",
+     "heartbeats": 1450
+    },
+    {
+     "lines": "27-28",
+     "depth_indent": 6,
+     "text": "have h2 := insertionSort_of_eq_list crAnTimeOrderRel φ φs' [ψ, φ] φs (by simp [hφψ, hψφ])",
+     "heartbeats": 269
+    },
+    {
+     "lines": "25-26",
+     "depth_indent": 6,
+     "text": "have h1 := insertionSort_of_eq_list crAnTimeOrderRel φ φs' [φ, ψ] φs (by simp [hφψ, hψφ])",
+     "heartbeats": 268
+    },
+    {
+     "lines": "29-31",
+     "depth_indent": 6,
+     "text": "have h3 : crAnTimeOrderList (φs' ++ φs) = l ++ (l' ++ (r' ++ r)) := by rw [crAnTimeOrderList, insert",
+     "heartbeats": 106
+    },
+    {
+     "lines": "12-12",
+     "depth_indent": 6,
+     "text": "simp only [ofListBasis_eq_ofList]",
+     "heartbeats": 99
+    },
+    {
+     "lines": "11-11",
+     "depth_indent": 6,
+     "text": "obtain ⟨φs', rfl⟩ := hy",
+     "heartbeats": 47
+    },
+    {
+     "lines": "22-23",
+     "depth_indent": 6,
+     "text": "let r := List.filter (fun c => (crAnTimeOrderRel φ c ∧ ¬crAnTimeOrderRel c φ)) (List.insertionSort c",
+     "heartbeats": 27
+    },
+    {
+     "lines": "18-19",
+     "depth_indent": 6,
+     "text": "let l := List.takeWhile (fun c => ¬crAnTimeOrderRel φ c) (List.insertionSort crAnTimeOrderRel (φs' +",
+     "heartbeats": 25
+    },
+    {
+     "lines": "20-21",
+     "depth_indent": 6,
+     "text": "let l' := List.filter (fun c => crAnTimeOrderRel φ c ∧ crAnTimeOrderRel c φ) φs'",
+     "heartbeats": 21
+    },
+    {
+     "lines": "24-24",
+     "depth_indent": 6,
+     "text": "let r' := List.filter (fun c => crAnTimeOrderRel φ c ∧ crAnTimeOrderRel c φ) φs",
+     "heartbeats": 18
+    }
+   ],
+   "points_left_heartbeats": 11.23,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  }
+ },
+ "hb_floor": 303
+}

@@ -1,0 +1,1880 @@
+{
+ "problem": "interleaved_affine_gaps_imply_tensor_gaps",
+ "best": {
+  "score": 78.1,
+  "proof": "theorem interleaved_affine_gaps_imply_tensor_gaps\n    (hC_proximityGapAffineLines : e_ε_correlatedAgreementAffineLinesNat\n      (F := F) (A := A) (ι := ι) (C := MC) (e := e) (ε := ε))\n    (h_interleaved_gaps : ∀ m : ℕ, m ≥ 1 →\n      e_ε_correlatedAgreementAffineLinesNat (F := F)\n        (A := InterleavedSymbol A (Fin m)) (ι := ι) (C := MC ^⋈ (Fin m)) e ε) :\n    ∀ (ϑ : ℕ), (hϑ_gt_0 : ϑ > 0) → δ_ε_multilinearCorrelatedAgreement_Nat (F := F) (A := A)\n      (ι := ι) (C := MC) (ϑ := ϑ) (e := e) (ε := ε) := by\n    intro ϑ\n    induction ϑ with\n    | zero =>\n      intro u\n      contradiction\n    | succ ϑ_sub_1 ih =>\n      cases ϑ_sub_1 with\n      | zero =>\n        intro _ u hprob_gt\n        simp only [multilinearCombine₁_eq_affineLineEvaluation, zero_add,\n          prob_uniform_singleton_finFun_eq (F := F)\n            (P := λr => Δ₀(affineLineEvaluation (u 0) (u 1) r, MC) ≤ e),\n          Nat.cast_one, ENNReal.coe_one, one_mul] at hprob_gt\n        rw [show u = finMapTwoWords (u 0) (u 1) from\n          funext λrowIdx => by fin_cases rowIdx <;> rfl]\n        exact hC_proximityGapAffineLines (u 0) (u 1) hprob_gt\n      | succ ϑ_sub_2 =>\n        intro _ u hP_multilinearCombine_close_gt\n        let n := ϑ_sub_2 + 1\n        let U₀ := (splitHalfRowWiseInterleavedWords u).1\n        let U₁ := (splitHalfRowWiseInterleavedWords u).2\n        let W₀ := ⋈|(show WordStack A (Fin $ 2 ^ n) ι from U₀)\n        let W₁ := ⋈|(show WordStack A (Fin $ 2 ^ n) ι from U₁)\n        let Rs := R_star_tensor MC (e:=e) (ε:=ε) U₀ U₁\n        have lem (r : Fin (n + 1) → F) : multilinearCombine u r =\n            multilinearCombine (affineLineEvaluation U₀ U₁ $ r $ Fin.last n)\n              (λi => r i.castSucc) :=\n          multilinearCombine_recursive_form u r\n        have hP_split := prob_split_last_uniform_sampling_of_finFun\n          (P := multilinearCombine_affineComb_split_last_close MC u e)\n        simp only [lem] at hP_multilinearCombine_close_gt\n        have hPM2 := hP_split ▸ hP_multilinearCombine_close_gt\n        have h_prob_Rstar := prob_R_star_gt_threshold MC u e hPM2\n        have h_prob_line_gt_eps_div_q :=\n          lt_of_lt_of_le h_prob_Rstar $ Pr_le_Pr_of_implies ($ᵖ F)\n            (λr => r ∈ Rs)\n            (λr => Δ₀(affineLineEvaluation W₀ W₁ r, MC ^⋈ (Fin $ 2 ^ n)) ≤ e)\n            (λr hr_in_Rstar => (correlatedAgreement_of_mem_R_star_tensor MC\n              (ih $ Nat.succ_pos _) u) ⟨_, hr_in_Rstar⟩)\n        apply CA_split_rowwise_implies_CA\n        exact h_interleaved_gaps (2^n) (Nat.one_le_two_pow) W₀ W₁\n          h_prob_line_gt_eps_div_q",
+  "tokens": 346,
+  "heartbeats": 3765,
+  "L": 74.43,
+  "H": 59.87,
+  "Z": 100.0,
+  "compat": {
+   "v4.31.0": true,
+   "v4.30.0": true,
+   "v4.29.0": true
+  }
+ },
+ "attempts": [
+  {
+   "sha": "5e8c33db1f14",
+   "tokens": 1353,
+   "heartbeats": 9381,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:07:10Z"
+  },
+  {
+   "sha": "4e8d32ab1ff0",
+   "tokens": 1212,
+   "heartbeats": 8730,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:10:06Z",
+   "score": 39.12
+  },
+  {
+   "sha": "e9af653bc02b",
+   "tokens": 1096,
+   "heartbeats": 7841,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:12:44Z",
+   "score": 45.14
+  },
+  {
+   "sha": "c3d8e988e5d4",
+   "tokens": 758,
+   "heartbeats": 6326,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:20:11Z",
+   "score": 58.85
+  },
+  {
+   "sha": "88e6967f7556",
+   "tokens": 754,
+   "heartbeats": 6305,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:23:43Z",
+   "score": 59.02
+  },
+  {
+   "sha": "cc2ce3cc7275",
+   "tokens": 677,
+   "heartbeats": 5021,
+   "ok": false,
+   "error": "1236:10: `simp` made no progress",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:34:38Z"
+  },
+  {
+   "sha": "ba6349e8ff69",
+   "tokens": 726,
+   "heartbeats": 5786,
+   "ok": false,
+   "error": "1239:26: `simp` made no progress",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:41:07Z"
+  },
+  {
+   "sha": "7adb41929584",
+   "tokens": 692,
+   "heartbeats": 200068,
+   "ok": false,
+   "error": "1239:26: `simp` made no progress",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:22:50Z"
+  },
+  {
+   "sha": "062eb469e586",
+   "tokens": 752,
+   "heartbeats": 6304,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:25:42Z",
+   "score": 59.07
+  },
+  {
+   "sha": "456a8efdde62",
+   "tokens": 739,
+   "heartbeats": 5785,
+   "ok": false,
+   "error": "1240:26: `simp` made no progress",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:27:03Z"
+  },
+  {
+   "sha": "66eb9f93b003",
+   "tokens": 737,
+   "heartbeats": 6176,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:34:56Z",
+   "score": 59.9
+  },
+  {
+   "sha": "e58b5cd55b3f",
+   "tokens": 722,
+   "heartbeats": 6136,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:38:50Z",
+   "score": 60.41
+  },
+  {
+   "sha": "061b915e959b",
+   "tokens": 684,
+   "heartbeats": 5691,
+   "ok": false,
+   "error": "1297:10: Application type mismatch: The argument h_interleaved_gaps (2 ^ n) Nat.one_le_two_pow W₀ W₁ h_prob_line_gt_eps_div_q has type jointProximityNat₂ (↑(CodeInterleavable.interleaveCode MC (Fin (2 ^ n)))) W₀ W₁ e of sort `Prop` but is expected to have type Set (Word ?m.681 ?m.679) of sort `Type ",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:40:58Z"
+  },
+  {
+   "sha": "87d944090d56",
+   "tokens": 690,
+   "heartbeats": 6363,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:43:06Z"
+  },
+  {
+   "sha": "a58d1c53bca5",
+   "tokens": 683,
+   "heartbeats": 5696,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:44:15Z",
+   "score": 62.93
+  },
+  {
+   "sha": "43bcc667abb0",
+   "tokens": 618,
+   "heartbeats": 43213,
+   "ok": false,
+   "error": "1271:19: Application type mismatch: The argument hP_multilinearCombine_close_gt has type (do let r_last ← $ᵖ F let r_init ← $ᵖ (Fin n → F) pure (Δ₀(multilinearCombine (affineLineEvaluation (splitHalfRowWiseInterleavedWords (affineLineEvaluation (splitHalfRowWiseInterleavedWords u).1 (splitHalfRowWis",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:48:40Z"
+  },
+  {
+   "sha": "9c0cc7fefc0e",
+   "tokens": 660,
+   "heartbeats": 5712,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:49:48Z",
+   "score": 63.44
+  },
+  {
+   "sha": "3a81ab32df2b",
+   "tokens": 630,
+   "heartbeats": 200069,
+   "ok": false,
+   "error": "1290:15: Application type mismatch: The argument r has type F but is expected to have type AddSubmonoid (?m.624 → ?m.631) in the application Submodule.mk r",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:53:13Z"
+  },
+  {
+   "sha": "0f6b870407f3",
+   "tokens": 633,
+   "heartbeats": 2800,
+   "ok": false,
+   "error": "1261:17: `simp` made no progress",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:58:12Z"
+  },
+  {
+   "sha": "36c633744a68",
+   "tokens": 674,
+   "heartbeats": 5357,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T05:00:23Z",
+   "score": 64.36
+  },
+  {
+   "sha": "c82764991570",
+   "tokens": 601,
+   "heartbeats": 4862,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T05:02:22Z",
+   "score": 67.92
+  },
+  {
+   "sha": "75eaaa69cf73",
+   "tokens": 548,
+   "heartbeats": 200044,
+   "ok": false,
+   "error": "1281:67: Application type mismatch: The argument r has type F but is expected to have type AddSubmonoid (?m.573 → ?m.580) in the application Submodule.mk r",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:16:05Z"
+  },
+  {
+   "sha": "bfdb18b80afa",
+   "tokens": 556,
+   "heartbeats": 200045,
+   "ok": false,
+   "error": "1283:71: Application type mismatch: The argument r has type F but is expected to have type AddSubmonoid (?m.560 → ?m.567) in the application Submodule.mk r",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:17:24Z"
+  },
+  {
+   "sha": "3a40c568b08f",
+   "tokens": 559,
+   "heartbeats": 2768,
+   "ok": false,
+   "error": "1260:8: `simp` made no progress",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:17:34Z"
+  },
+  {
+   "sha": "48c730136bb2",
+   "tokens": 541,
+   "heartbeats": 2758,
+   "ok": false,
+   "error": "1259:8: `simp` made no progress",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:17:43Z"
+  },
+  {
+   "sha": "549f21909fab",
+   "tokens": 569,
+   "heartbeats": 2816,
+   "ok": false,
+   "error": "1261:17: `simp` made no progress",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:19:27Z"
+  },
+  {
+   "sha": "b3bc60197598",
+   "tokens": 568,
+   "heartbeats": 2814,
+   "ok": false,
+   "error": "1260:17: `simp` made no progress",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:19:36Z"
+  },
+  {
+   "sha": "8e431e0791cc",
+   "tokens": 575,
+   "heartbeats": 2816,
+   "ok": false,
+   "error": "1261:17: `simp` made no progress",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:19:46Z"
+  },
+  {
+   "sha": "78a428ad00df",
+   "tokens": 590,
+   "heartbeats": 4860,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:21:03Z",
+   "score": 68.2
+  },
+  {
+   "sha": "a32c89c91b09",
+   "tokens": 558,
+   "heartbeats": 696,
+   "ok": false,
+   "error": "1230:8: Tactic `introN` failed: There are no additional binders or `let` bindings in the goal to introduce case zero … [hypotheses omitted] ⊢ jointProximityNat (↑MC) u e",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:21:33Z"
+  },
+  {
+   "sha": "df3a6078251f",
+   "tokens": 572,
+   "heartbeats": 4851,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:22:55Z",
+   "score": 68.67
+  },
+  {
+   "sha": "731311234107",
+   "tokens": 582,
+   "heartbeats": 4860,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:23:25Z"
+  },
+  {
+   "sha": "729be884578c",
+   "tokens": 592,
+   "heartbeats": 4764,
+   "ok": false,
+   "error": "1286:15: typeclass instance problem is stuck DecidableEq ?m.634 Note: Lean will not try to resolve this typeclass instance problem because the type argument to `DecidableEq` is a metavariable. This argument must be fully determined before Lean will try to resolve the typeclass. Hint: Adding type ann",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:23:34Z"
+  },
+  {
+   "sha": "c6f38d8df5ea",
+   "tokens": 564,
+   "heartbeats": 4851,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:24:25Z",
+   "score": 68.87
+  },
+  {
+   "sha": "915567084dd8",
+   "tokens": 552,
+   "heartbeats": 4922,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:24:55Z",
+   "score": 68.91
+  },
+  {
+   "sha": "453961fcc256",
+   "tokens": 557,
+   "heartbeats": 4844,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:27:00Z",
+   "score": 69.07
+  },
+  {
+   "sha": "8828ec04de5a",
+   "tokens": 547,
+   "heartbeats": 2527,
+   "ok": false,
+   "error": "1257:15: typeclass instance problem is stuck Module ?m.475 A Note: Lean will not try to resolve this typeclass instance problem because the first and third type arguments to `Module` contain metavariables. These arguments must be fully determined before Lean will try to resolve the typeclass. Hint: ",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:27:30Z"
+  },
+  {
+   "sha": "0ccf6951ea2b",
+   "tokens": 547,
+   "heartbeats": 3614,
+   "ok": false,
+   "error": "1270:10: Application type mismatch: The argument hP_multilinearCombine_close_gt has type (do let r_last ← $ᵖ F let r_init ← $ᵖ (Fin n → F) pure (Δ₀(multilinearCombine (affineLineEvaluation U₀ U₁ r_last) r_init, ↑MC) ≤ ↑e)) True > ↑↑(ϑ_sub_2 + 1 + 1) * ↑ε / ↑↑(Fintype.card F) of sort `Prop` but is ex",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:28:47Z"
+  },
+  {
+   "sha": "8778bde0e8ec",
+   "tokens": 542,
+   "heartbeats": 3692,
+   "ok": false,
+   "error": "1270:10: Application type mismatch: The argument hP_multilinearCombine_close_gt has type (do let r_last ← $ᵖ F let r_init ← $ᵖ (Fin n → F) pure (Δ₀(multilinearCombine (affineLineEvaluation U₀ U₁ r_last) r_init, ↑MC) ≤ ↑e)) True > ↑↑(ϑ_sub_2 + 1 + 1) * ↑ε / ↑↑(Fintype.card F) of sort `Prop` but is ex",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:28:57Z"
+  },
+  {
+   "sha": "e481493720af",
+   "tokens": 545,
+   "heartbeats": 3617,
+   "ok": false,
+   "error": "1269:10: Application type mismatch: The argument hP_multilinearCombine_close_gt has type (do let r_last ← $ᵖ F let r_init ← $ᵖ (Fin n → F) pure (Δ₀(multilinearCombine (affineLineEvaluation U₀ U₁ r_last) r_init, ↑MC) ≤ ↑e)) True > ↑↑(ϑ_sub_2 + 1 + 1) * ↑ε / ↑↑(Fintype.card F) of sort `Prop` but is ex",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:29:07Z"
+  },
+  {
+   "sha": "eb346220afba",
+   "tokens": 552,
+   "heartbeats": 4813,
+   "ok": false,
+   "error": "1270:19: Application type mismatch: The argument hP_multilinearCombine_close_gt has type (do let r_last ← $ᵖ F let r_init ← $ᵖ (Fin n → F) pure (Δ₀(multilinearCombine (affineLineEvaluation U₀ U₁ r_last) r_init, ↑MC) ≤ ↑e)) True > ↑↑(ϑ_sub_2 + 1 + 1) * ↑ε / ↑↑(Fintype.card F) of sort `Prop` but is ex",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:29:56Z"
+  },
+  {
+   "sha": "c5b4493d8a56",
+   "tokens": 555,
+   "heartbeats": 4850,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:30:06Z",
+   "score": 69.09
+  },
+  {
+   "sha": "9fc747a28e34",
+   "tokens": 554,
+   "heartbeats": 4741,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:31:27Z",
+   "score": 69.51
+  },
+  {
+   "sha": "7ec083958197",
+   "tokens": 554,
+   "heartbeats": 4846,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:31:56Z"
+  },
+  {
+   "sha": "5944f2068ede",
+   "tokens": 549,
+   "heartbeats": 4820,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:34:33Z"
+  },
+  {
+   "sha": "dd3acf5c1297",
+   "tokens": 544,
+   "heartbeats": 4731,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:34:49Z",
+   "score": 69.79
+  },
+  {
+   "sha": "f88ac528c4af",
+   "tokens": 539,
+   "heartbeats": 4810,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:35:57Z"
+  },
+  {
+   "sha": "c1d03461fb08",
+   "tokens": 539,
+   "heartbeats": 4733,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:36:09Z",
+   "score": 69.9
+  },
+  {
+   "sha": "313dc9088cf9",
+   "tokens": 534,
+   "heartbeats": 3355,
+   "ok": false,
+   "error": "1268:10: Application type mismatch: The argument hP_multilinearCombine_close_gt has type (do let r_last ← $ᵖ F let r_init ← $ᵖ (Fin n → F) pure (Δ₀(multilinearCombine (affineLineEvaluation U₀ U₁ r_last) r_init, ↑MC) ≤ ↑e)) True > ↑↑(ϑ_sub_2 + 1 + 1) * ↑ε / ↑↑(Fintype.card F) of sort `Prop` but is ex",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:37:13Z"
+  },
+  {
+   "sha": "f6ef122ed899",
+   "tokens": 534,
+   "heartbeats": 4529,
+   "ok": false,
+   "error": "1270:10: type expected, got (jointProximityNat ?m.570 (affineLineEvaluation U₀ U₁ ↑r) : ℕ → Prop)",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:37:25Z"
+  },
+  {
+   "sha": "a06128536575",
+   "tokens": 534,
+   "heartbeats": 4812,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:38:12Z"
+  },
+  {
+   "sha": "45417e6f31dc",
+   "tokens": 532,
+   "heartbeats": 4240,
+   "ok": false,
+   "error": "1279:12: Application type mismatch: The argument fun r hr_in_Rstar => h_line_close_to_C_m ⟨r, hr_in_Rstar⟩ has type ∀ (r : F) (hr_in_Rstar : r ∈ R_star_tensor MC U₀ U₁), jointProximityNat (↑MC) (affineLineEvaluation U₀ U₁ ↑⟨r, hr_in_Rstar⟩) e of sort `Prop` but is expected to have type PMF ?m.610 of",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:38:22Z"
+  },
+  {
+   "sha": "2913df4f98be",
+   "tokens": 533,
+   "heartbeats": 4778,
+   "ok": false,
+   "error": "1262:77: unsolved goals … [hypotheses omitted] ⊢ multilinearCombine (affineLineEvaluation (splitHalfRowWiseInterleavedWords (affineLineEvaluation (splitHalfRowWiseInterleavedWords u).1 (splitHalfRowWiseInterleavedWords u).2 r_last)).1 (splitHalfRowWiseInterleavedWords (affineLineEvaluation (splitHal",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:39:39Z"
+  },
+  {
+   "sha": "4a5e972891ab",
+   "tokens": 536,
+   "heartbeats": 200036,
+   "ok": false,
+   "error": "1263:10: (deterministic) timeout at `whnf`, maximum number of heartbeats (200000) has been reached Note: Use `set_option maxHeartbeats <num>` to set the limit. Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:39:55Z"
+  },
+  {
+   "sha": "14c207844a70",
+   "tokens": 537,
+   "heartbeats": 11605,
+   "ok": false,
+   "error": "1249:19: failed to synthesize instance of type class Interleavable (Fin (2 ^ n) → Word A ι) ?m.438 Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:40:27Z"
+  },
+  {
+   "sha": "4038a96fe94f",
+   "tokens": 449,
+   "heartbeats": 2408,
+   "ok": false,
+   "error": "1256:17: `simp` made no progress",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:24:01Z"
+  },
+  {
+   "sha": "358236a52bce",
+   "tokens": 451,
+   "heartbeats": 2402,
+   "ok": false,
+   "error": "1257:17: `simp` made no progress",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:28:44Z"
+  },
+  {
+   "sha": "23bd6a88a720",
+   "tokens": 403,
+   "heartbeats": 2205,
+   "ok": false,
+   "error": "1249:52: `simp` made no progress",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:29:39Z"
+  },
+  {
+   "sha": "78bf9283086c",
+   "tokens": 501,
+   "heartbeats": 4535,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:34:09Z",
+   "score": 71.54
+  },
+  {
+   "sha": "9975b579f6ba",
+   "tokens": 428,
+   "heartbeats": 200037,
+   "ok": false,
+   "error": "1268:52: Application type mismatch: The argument r has type F but is expected to have type AddSubmonoid (?m.601 → ?m.608) in the application Submodule.mk r",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:38:59Z"
+  },
+  {
+   "sha": "ffca1fca371d",
+   "tokens": 412,
+   "heartbeats": 200037,
+   "ok": false,
+   "error": "1266:52: Application type mismatch: The argument r has type F but is expected to have type AddSubmonoid (?m.577 → ?m.584) in the application Submodule.mk r",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:39:24Z"
+  },
+  {
+   "sha": "9f343eb4f99c",
+   "tokens": 469,
+   "heartbeats": 4489,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:39:57Z",
+   "score": 72.49
+  },
+  {
+   "sha": "2146f26634a3",
+   "tokens": 461,
+   "heartbeats": 4488,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:41:09Z",
+   "score": 72.7
+  },
+  {
+   "sha": "20bb5243549c",
+   "tokens": 437,
+   "heartbeats": 2643,
+   "ok": false,
+   "error": "1254:12: Tactic `rewrite` failed: Did not find an occurrence of the pattern (do  … [hypotheses omitted] ⊢ jointProximityNat (↑MC) u e Note: The target expression is not type-correct under the `instances` transparency level, which may have triggered the failure. This is usually caused by unfolding of",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:42:18Z"
+  },
+  {
+   "sha": "aad54252af26",
+   "tokens": 461,
+   "heartbeats": 4481,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:46:46Z",
+   "score": 72.72
+  },
+  {
+   "sha": "472f93547a6e",
+   "tokens": 465,
+   "heartbeats": 4506,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:47:46Z"
+  },
+  {
+   "sha": "4b094a53e3e7",
+   "tokens": 447,
+   "heartbeats": 4440,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:48:56Z",
+   "score": 73.21
+  },
+  {
+   "sha": "2af4e1dafbb7",
+   "tokens": 454,
+   "heartbeats": 3990,
+   "ok": false,
+   "error": "1268:12: Application type mismatch: The argument fun r hr_in_Rstar => h_line_close_to_C_m ⟨r, hr_in_Rstar⟩ has type ∀ (r : F) (hr_in_Rstar : r ∈ R_star_tensor MC U₀ U₁), jointProximityNat (↑MC) (affineLineEvaluation U₀ U₁ ↑⟨r, hr_in_Rstar⟩) e of sort `Prop` but is expected to have type PMF ?m.581 of",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:49:25Z"
+  },
+  {
+   "sha": "1276f48941b4",
+   "tokens": 428,
+   "heartbeats": 3486,
+   "ok": false,
+   "error": "1259:67: Application type mismatch: The argument hPM2 has type (do let r_last ← $ᵖ F let r_init ← $ᵖ (Fin n → F) pure (Δ₀(multilinearCombine (affineLineEvaluation U₀ U₁ r_last) r_init, ↑MC) ≤ ↑e)) True > ↑↑(ϑ_sub_2 + 1 + 1) * ↑ε / ↑↑(Fintype.card F) of sort `Prop` but is expected to have type ℕ of s",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:50:18Z"
+  },
+  {
+   "sha": "a2b45393f824",
+   "tokens": 424,
+   "heartbeats": 4445,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:51:14Z",
+   "score": 73.76
+  },
+  {
+   "sha": "3d5294b421a6",
+   "tokens": 414,
+   "heartbeats": 2738,
+   "ok": false,
+   "error": "1256:13: typeclass instance problem is stuck Module ?m.497 (ι → A) Note: Lean will not try to resolve this typeclass instance problem because the first and third type arguments to `Module` contain metavariables. These arguments must be fully determined before Lean will try to resolve the typeclass. ",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:52:56Z"
+  },
+  {
+   "sha": "00b88643b5ec",
+   "tokens": 412,
+   "heartbeats": 2738,
+   "ok": false,
+   "error": "1256:13: typeclass instance problem is stuck Module ?m.497 (ι → A) Note: Lean will not try to resolve this typeclass instance problem because the first and third type arguments to `Module` contain metavariables. These arguments must be fully determined before Lean will try to resolve the typeclass. ",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:53:05Z"
+  },
+  {
+   "sha": "7747f16320c9",
+   "tokens": 415,
+   "heartbeats": 2738,
+   "ok": false,
+   "error": "1256:13: typeclass instance problem is stuck Module ?m.497 (ι → A) Note: Lean will not try to resolve this typeclass instance problem because the first and third type arguments to `Module` contain metavariables. These arguments must be fully determined before Lean will try to resolve the typeclass. ",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:54:12Z"
+  },
+  {
+   "sha": "315288571110",
+   "tokens": 419,
+   "heartbeats": 4443,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:54:22Z",
+   "score": 73.89
+  },
+  {
+   "sha": "030a8ab238ec",
+   "tokens": 421,
+   "heartbeats": 5113,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:55:34Z"
+  },
+  {
+   "sha": "f9bec1eac8e7",
+   "tokens": 414,
+   "heartbeats": 4433,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:55:44Z",
+   "score": 74.05
+  },
+  {
+   "sha": "dfcad77cf1a7",
+   "tokens": 415,
+   "heartbeats": 4283,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:56:49Z",
+   "score": 74.56
+  },
+  {
+   "sha": "c9b45c9d14e2",
+   "tokens": 412,
+   "heartbeats": 3986,
+   "ok": false,
+   "error": "1237:10: `simp` made no progress",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:57:29Z"
+  },
+  {
+   "sha": "dfcad77cf1a7",
+   "tokens": 415,
+   "heartbeats": 4283,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-09T00:01:55Z"
+  },
+  {
+   "sha": "024a0bb05fd7",
+   "tokens": 416,
+   "heartbeats": 4259,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-09T00:02:05Z",
+   "score": 74.62
+  },
+  {
+   "sha": "232f59d09123",
+   "tokens": 481,
+   "heartbeats": 3189,
+   "ok": false,
+   "error": "1261:14: Function expected at multilinearCombine_affineComb_split_last_close MC u e (r (Fin.last n)) fun i => r i.castSucc but this term has type Prop Note: Expected a function because this term is being applied to the argument rw",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-09T00:05:24Z"
+  },
+  {
+   "sha": "bacb36136043",
+   "tokens": 566,
+   "heartbeats": 2582,
+   "ok": false,
+   "error": "1255:45: typeclass instance problem is stuck Module ?m.481 (ι → A) Note: Lean will not try to resolve this typeclass instance problem because the first and third type arguments to `Module` contain metavariables. These arguments must be fully determined before Lean will try to resolve the typeclass. ",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-09T00:07:39Z"
+  },
+  {
+   "sha": "55269fc02c03",
+   "tokens": 565,
+   "heartbeats": 2655,
+   "ok": false,
+   "error": "1257:45: typeclass instance problem is stuck Module ?m.503 (ι → A) Note: Lean will not try to resolve this typeclass instance problem because the first and third type arguments to `Module` contain metavariables. These arguments must be fully determined before Lean will try to resolve the typeclass. ",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-09T00:08:13Z"
+  },
+  {
+   "sha": "e4b9838aae2f",
+   "tokens": 567,
+   "heartbeats": 4159,
+   "ok": false,
+   "error": "1266:45: typeclass instance problem is stuck Module ?m.622 (ι → A) Note: Lean will not try to resolve this typeclass instance problem because the first and third type arguments to `Module` contain metavariables. These arguments must be fully determined before Lean will try to resolve the typeclass. ",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-09T00:08:59Z"
+  },
+  {
+   "sha": "519b5098165e",
+   "tokens": 406,
+   "heartbeats": 1956,
+   "ok": false,
+   "error": "1249:18: don't know how to synthesize implicit argument `ε` @R_star_tensor ι ins … [hypotheses omitted] ⊢ ℕ",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:02:03Z"
+  },
+  {
+   "sha": "47255b139c89",
+   "tokens": 411,
+   "heartbeats": 2582,
+   "ok": false,
+   "error": "1256:13: typeclass instance problem is stuck Module ?m.481 (ι → A) Note: Lean will not try to resolve this typeclass instance problem because the first and third type arguments to `Module` contain metavariables. These arguments must be fully determined before Lean will try to resolve the typeclass. ",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:02:18Z"
+  },
+  {
+   "sha": "6c7aceac86af",
+   "tokens": 411,
+   "heartbeats": 1956,
+   "ok": false,
+   "error": "1249:18: don't know how to synthesize implicit argument `e` @R_star_tensor ι ins … [hypotheses omitted] ⊢ ℕ",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:03:31Z"
+  },
+  {
+   "sha": "c509b98bc43a",
+   "tokens": 411,
+   "heartbeats": 1956,
+   "ok": false,
+   "error": "1249:18: don't know how to synthesize implicit argument `ε` @R_star_tensor ι ins … [hypotheses omitted] ⊢ ℕ",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:03:45Z"
+  },
+  {
+   "sha": "68ef29791301",
+   "tokens": 415,
+   "heartbeats": 4283,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:09:05Z"
+  },
+  {
+   "sha": "7ea703820f73",
+   "tokens": 413,
+   "heartbeats": 4258,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:09:18Z",
+   "score": 74.7
+  },
+  {
+   "sha": "f58ac8eba2a1",
+   "tokens": 412,
+   "heartbeats": 4281,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:11:13Z"
+  },
+  {
+   "sha": "1598130fb980",
+   "tokens": 452,
+   "heartbeats": 2925,
+   "ok": false,
+   "error": "1257:30: Application type mismatch: The argument lem r has type Eq.{l + 1} (multilinearCombine u r) (multilinearCombine (affineLineEvaluation U₀ U₁ (r (Fin.last n))) fun i => r i.castSucc) but is expected to have type Eq.{1} (Δ₀(multilinearCombine u r, ↑MC) ≤ ↑e) (Δ₀(multilinearCombine (affineLineEv",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:14:03Z"
+  },
+  {
+   "sha": "0a8c5f7faffe",
+   "tokens": 505,
+   "heartbeats": 5014,
+   "ok": false,
+   "error": "1257:50: Ambiguous term Δ₀(t, MC) Possible interpretations: Δ₀(t, ?m.539) : ℕ∞ Δ₀(t, ?m.540) : ℕ",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:15:17Z"
+  },
+  {
+   "sha": "84e3c0351bf5",
+   "tokens": 510,
+   "heartbeats": 5085,
+   "ok": false,
+   "error": "1257:51: Ambiguous term Δ₀(t, MC) Possible interpretations: Δ₀(t, ?m.539) : ℕ∞ ↑Δ₀(t, ?m.540) : ℕ∞",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:16:01Z"
+  },
+  {
+   "sha": "2a876decea94",
+   "tokens": 511,
+   "heartbeats": 4332,
+   "ok": false,
+   "error": "1257:51: Unknown identifier `Δ₀`",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:16:53Z"
+  },
+  {
+   "sha": "a98fe51a0d01",
+   "tokens": 502,
+   "heartbeats": 4926,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:34:18Z"
+  },
+  {
+   "sha": "cd419bf6f8d4",
+   "tokens": 384,
+   "heartbeats": 4112,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:35:46Z",
+   "score": 75.93
+  },
+  {
+   "sha": "78fdfbd0b260",
+   "tokens": 433,
+   "heartbeats": 4329,
+   "ok": false,
+   "error": "1261:10: Unknown constant `Code.jointProximityNat.mp`",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:37:16Z"
+  },
+  {
+   "sha": "e111d925c783",
+   "tokens": 341,
+   "heartbeats": 9377,
+   "ok": false,
+   "error": "1253:21: invalid `▸` notation, the equality hP_split has type (do let r ← $ᵖ (Fin (n + 1) → F) pure (Δ₀(multilinearCombine (affineLineEvaluation U₀ U₁ (r (Fin.last n))) fun i => r i.castSucc, ↑MC) ≤ ↑e)) True = (do let r_last ← $ᵖ F let r_init ← $ᵖ (Fin n → F) pure (Δ₀(multilinearCombine (affineLine",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:43:09Z"
+  },
+  {
+   "sha": "dea4b3a0874d",
+   "tokens": 368,
+   "heartbeats": 3052,
+   "ok": false,
+   "error": "1254:16: Application type mismatch: The argument multilinearCombine_affineComb_split_last_close ?m.490 ?m.492 has type ℕ → ?m.484 → (Fin ?m.491 → ?m.484) → Prop but is expected to have type F → (Fin n → F) → Prop in the application prob_split_last_uniform_sampling_of_finFun (multilinearCombine_affin",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:43:24Z"
+  },
+  {
+   "sha": "ce53244d4129",
+   "tokens": 376,
+   "heartbeats": 3311,
+   "ok": false,
+   "error": "1254:16: Application type mismatch: The argument fun MC => multilinearCombine_affineComb_split_last_close MC u e has type ModuleCode ι ?m.484 A → ?m.484 → (Fin (ϑ_sub_2 + 1) → ?m.484) → Prop of sort `Type l` but is expected to have type F → (Fin n → F) → Prop of sort `Type` in the application prob_s",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:45:22Z"
+  },
+  {
+   "sha": "318266cedd7e",
+   "tokens": 369,
+   "heartbeats": 3820,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:46:33Z",
+   "score": 77.34
+  },
+  {
+   "sha": "480b01bbd1f2",
+   "tokens": 370,
+   "heartbeats": 2517,
+   "ok": false,
+   "error": "1255:8: `simp` made no progress",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T03:09:05Z"
+  },
+  {
+   "sha": "cc1249fd6ded",
+   "tokens": 371,
+   "heartbeats": 2479,
+   "ok": false,
+   "error": "1255:33: invalid 'by' tactic, expected type has not been provided",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T03:09:20Z"
+  },
+  {
+   "sha": "b7fed8990186",
+   "tokens": 371,
+   "heartbeats": 1498,
+   "ok": false,
+   "error": "1234:12: Tactic `rewrite` failed: Did not find an occurrence of the pattern mult … [hypotheses omitted] ⊢ jointProximityNat (↑MC) u e Note: The target expression is not type-correct under the `instances` transparency level, which may have triggered the failure. This is usually caused by unfolding of",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:41:26Z"
+  },
+  {
+   "sha": "e56c90b4d8c9",
+   "tokens": 368,
+   "heartbeats": 3843,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:44:49Z"
+  },
+  {
+   "sha": "14d89a2c31a2",
+   "tokens": 366,
+   "heartbeats": 3820,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:45:17Z"
+  },
+  {
+   "sha": "c732b4c891ad",
+   "tokens": 351,
+   "heartbeats": 3767,
+   "ok": true,
+   "error": null,
+   "run_id": "a100-postpass-xfer1",
+   "t": "2026-10-13T19:59:31Z",
+   "score": 77.97
+  },
+  {
+   "sha": "36615455e46c",
+   "tokens": 346,
+   "heartbeats": 3767,
+   "ok": true,
+   "error": null,
+   "run_id": "a100-postpass-xfer1",
+   "t": "2026-10-13T20:00:32Z",
+   "score": 78.09
+  },
+  {
+   "sha": "cfb4feb0ecce",
+   "tokens": 346,
+   "heartbeats": 3765,
+   "ok": true,
+   "error": null,
+   "run_id": "a100-postpass-xfer1",
+   "t": "2026-10-13T20:02:24Z",
+   "score": 78.1
+  }
+ ],
+ "runs": [
+  {
+   "run_id": "fresh-a100-p1",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T00:05:20Z"
+  },
+  {
+   "run_id": "fresh-a100-p2",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T04:16:58Z"
+  },
+  {
+   "run_id": "fresh-a100-p3",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T17:14:41Z"
+  },
+  {
+   "run_id": "fresh-a100-p4",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-08T23:18:10Z"
+  },
+  {
+   "run_id": "fresh-a100-p5",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T01:58:00Z"
+  },
+  {
+   "run_id": "fresh-a100-p6",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T04:37:17Z"
+  },
+  {
+   "run_id": "fresh-a100-p7",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T13:36:39Z",
+   "mode": "structural"
+  }
+ ],
+ "ledger": {
+  "wins": [
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 5,
+    "d_score": 0.51,
+    "d_tokens": -15,
+    "d_heartbeats": -40,
+    "diff": "-        have h_correlated_agreement := hC_proximityGapAffineLines (u 0) (u 1) hprob_gt\n-        simp only [jointProximityNat₂, Fin.isValue] at h_correlated_agreement\n-        rw [h_u_eq.symm] at h_correlated_agreement\n-        exact h_correlated_agreement\n+        rw [h_u_eq]\n+        exact hC_proximityGapAffineLines (u 0) (u 1) hprob_gt",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "efaa1f75d176"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 8,
+    "d_score": 2.52,
+    "d_tokens": -39,
+    "d_heartbeats": -440,
+    "diff": "-        -- Show Pr[R*] > ε / q\n-        have h_prob_Rstar_gt_eps_div_q : Pr_{ let r ← $ᵖ F }[ r ∈ R_star_set ]\n-          > (↑ε : ENNReal) / (Fintype.card F : ENNReal) := by\n-          let res := prob_R_star_gt_threshold (MC := MC) (ε := ε) (ϑ := n) (u := u)\n-            (e := e) (hP_multilinearCombine_close_gt)\n-          exact res\n+        have h_prob_Rstar := prob_R_star_gt_threshold (MC := MC) (ε := ε) (ϑ := n) (u := u)\n+          (e := e) (hP_multilinearCombine_close_gt)\n-        have h_C_m_gap := h_interleaved_gaps (2^n) (Nat.one_le_two_pow)\n-          lt_of_lt_of_le h_prob_Rstar_gt_eps_div_q (Pr_le_Pr_of_implies (D := $ᵖ F)\n+          lt_of_lt_of_le h_prob_Rstar (Pr_le_Pr_of_implies ",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "7d4a3ee988c0"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 10,
+    "d_score": 0.51,
+    "d_tokens": -23,
+    "d_heartbeats": 16,
+    "diff": "-        have h_u_eq: u = finMapTwoWords (u 0) (u 1) := by\n-          funext rowIdx\n-          match rowIdx with\n-          | 0 => rfl\n-          | 1 => rfl\n+        have h_u_eq: u = finMapTwoWords (u 0) (u 1) :=\n+          funext fun rowIdx => by\n+            match rowIdx with\n+            | 0 => rfl\n+            | 1 => rfl\n-        let P : F → (Fin n → F) → Prop := fun r_last r_init =>\n-          Δ₀(multilinearCombine (u:=u) (r:=Fin.snoc r_init r_last), MC) ≤ e\n-        let hP_split_r_last := prob_split_last_uniform_sampling_of_finFun\n-          (ϑ := n) (F := F) (P := P)\n-        unfold P at hP_split_r_last\n-        simp_rw [h_finsnoc_eq_r] at hP_split_r_last\n-        rw [hP_split_r_last]",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "38a03641206c"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 13,
+    "d_score": 0.92,
+    "d_tokens": 14,
+    "d_heartbeats": -355,
+    "diff": "-        set U₀ : Fin (2 ^ n) → Word A ι :=\n+        let U₀ : Fin (2 ^ n) → Word A ι :=\n-        set U₁ : Fin (2 ^ n) → Word A ι :=\n+        let U₁ : Fin (2 ^ n) → Word A ι :=\n-        let R_star_set := R_star_tensor MC (m:=n) (e:=e) (ε:=ε) U₀ U₁\n-        have h_line_close_to_C_m : ∀ (r : R_star_set),\n+        have h_line_close_to_C_m : ∀ (r : R_star_tensor MC (m:=n) (e:=e) (ε:=ε) U₀ U₁),\n-            (f := fun r => r ∈ R_star_set)\n+            (f := fun r => r ∈ R_star_tensor MC (m:=n) (e:=e) (ε:=ε) U₀ U₁)",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "22d1e5d48d00"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 14,
+    "d_score": 3.56,
+    "d_tokens": -73,
+    "d_heartbeats": -495,
+    "diff": "-        have h_prob_line_gt_eps_div_q :\n-          Pr_{ let r ← $ᵖ F }[\n-            Δ₀(affineLineEvaluation (u₀ := W₀) (u₁ := W₁) (r := r),\n-              ((MC ^⋈ (Fin (2 ^ n))))) ≤ e\n-          ] > (↑ε : ENNReal) / (Fintype.card F : ENNReal) :=\n+        have h_prob_line_gt_eps_div_q :=\n-        apply CA_split_rowwise_implies_CA (u := u) (e := e)\n+        apply CA_split_rowwise_implies_CA",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "0444cd431d99"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 8,
+    "d_score": 0.28,
+    "d_tokens": -11,
+    "d_heartbeats": -2,
+    "diff": "-        -- `ϑ ≥ 2`\n-        have h_finsnoc_eq_r: ∀ r: Fin (n + 1) → F,\n+        have h_finsnoc_eq_r (r : Fin (n + 1) → F) :\n-          fun r => Fin.snoc_init_self r\n+          Fin.snoc_init_self r\n-        -- Rewrite the probability using this identity\n-        -- Apply Inductive Hypothesis for r_last ∈ R*\n-        -- Pr[line close to C^n] > ε/q, since R* implies it\n-            (g := fun r => Δ₀(affineLineEvaluation (u₀ := W₀) (u₁ := W₁) (r := r),\n-              ((MC ^⋈ (Fin (2 ^ n))))) ≤ e)\n+            (g := fun r => Δ₀(affineLineEvaluation (u₀ := W₀) (u₁ := W₁) r,\n+              MC ^⋈ (Fin (2 ^ n))) ≤ e)",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "1b2f20845ff3"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 10,
+    "d_score": 0.47,
+    "d_tokens": -18,
+    "d_heartbeats": -9,
+    "diff": "-        have toAffineLineEval := multilinearCombine₁_eq_affineLineEvaluation (F := F) (u := u)\n-        have prob_eq := prob_uniform_singleton_finFun_eq (F := F)\n-          (P := fun r => Δ₀(affineLineEvaluation (u 0) (u 1) r, MC) ≤ e)\n-        simp_rw [toAffineLineEval, zero_add, prob_eq, Nat.cast_one, ENNReal.coe_one, one_mul]\n-          at hprob_gt\n+        simp_rw [multilinearCombine₁_eq_affineLineEvaluation, zero_add,\n+          prob_uniform_singleton_finFun_eq (F := F)\n+            (P := fun r => Δ₀(affineLineEvaluation (u 0) (u 1) r, MC) ≤ e),\n+          Nat.cast_one, ENNReal.coe_one, one_mul] at hprob_gt",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "01accfe9f434"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 13,
+    "d_score": 0.2,
+    "d_tokens": -8,
+    "d_heartbeats": 0,
+    "diff": "-            (g := fun r => Δ₀(affineLineEvaluation (u₀ := W₀) (u₁ := W₁) r,\n+            (g := fun r => Δ₀(affineLineEvaluation W₀ W₁ r,",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "2cb1b58eca81"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 14,
+    "d_score": 0.04,
+    "d_tokens": -12,
+    "d_heartbeats": 71,
+    "diff": "-          prob_uniform_singleton_finFun_eq (F := F)\n+          prob_uniform_singleton_finFun_eq\n-          funext fun rowIdx => by\n-            match rowIdx with\n-            | 0 => rfl\n-            | 1 => rfl\n+          funext fun rowIdx => by fin_cases rowIdx <;> rfl",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "ea7ff56b62ed"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 15,
+    "d_score": 0.16,
+    "d_tokens": 5,
+    "d_heartbeats": -78,
+    "diff": "-          prob_uniform_singleton_finFun_eq\n+          prob_uniform_singleton_finFun_eq (F := F)",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "0abec9a5aaf6"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 22,
+    "d_score": 0.02,
+    "d_tokens": -2,
+    "d_heartbeats": 6,
+    "diff": "-          rw [multilinearCombine_recursive_form]\n-          simp only [Fin.snoc_last, Fin.init_snoc]\n+          simp only [multilinearCombine_recursive_form, Fin.snoc_last, Fin.init_snoc]",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "76dd538765eb"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 23,
+    "d_score": 0.42,
+    "d_tokens": -1,
+    "d_heartbeats": -109,
+    "diff": "-    classical\n-            (ih := fun u_prev => ih (by omega) u_prev ) (u := u)\n+            (ih := fun u_prev => ih (Nat.succ_pos _) u_prev ) (u := u)",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "5a29839ff5af"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 26,
+    "d_score": 0.28,
+    "d_tokens": -10,
+    "d_heartbeats": -10,
+    "diff": "-          (splitHalfRowWiseInterleavedWords (ϑ := n) u).1\n+          (splitHalfRowWiseInterleavedWords u).1\n-          (splitHalfRowWiseInterleavedWords (ϑ := n) u).2\n+          (splitHalfRowWiseInterleavedWords u).2",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "201f85454371"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 28,
+    "d_score": 0.11,
+    "d_tokens": -5,
+    "d_heartbeats": 2,
+    "diff": "-        have h_prob_Rstar := prob_R_star_gt_threshold (MC := MC) (ε := ε) (ϑ := n) (u := u)\n+        have h_prob_Rstar := prob_R_star_gt_threshold (MC := MC) (ϑ := n) (u := u)",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "45114c9b6286"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 4,
+    "d_score": 1.64,
+    "d_tokens": -38,
+    "d_heartbeats": -198,
+    "diff": "-        let U₀ : Fin (2 ^ n) → Word A ι :=\n-          (splitHalfRowWiseInterleavedWords u).1\n-        let U₁ : Fin (2 ^ n) → Word A ι :=\n-          (splitHalfRowWiseInterleavedWords u).2\n-        let W₀ := ⋈|(show WordStack A (Fin (2 ^ n)) ι from U₀)\n-        let W₁ := ⋈|(show WordStack A (Fin (2 ^ n)) ι from U₁)\n-        have h_finsnoc_eq_r (r : Fin (n + 1) → F) :\n-          Fin.snoc (fun (i : Fin n) ↦ r i.castSucc) (r (Fin.last n)) = r :=\n-          Fin.snoc_init_self r\n-        have hP_split := prob_split_last_uniform_sampling_of_finFun\n-          (ϑ := n) (F := F)\n-          (P := fun r_last r_init =>\n-            Δ₀(multilinearCombine u (Fin.snoc r_init r_last), MC) ≤ e)\n-        simp_"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 7,
+    "d_score": 0.95,
+    "d_tokens": -32,
+    "d_heartbeats": -46,
+    "diff": "-        let W₀ := ⋈|(show WordStack A (Fin (2 ^ n)) ι from\n-          (splitHalfRowWiseInterleavedWords u).1)\n-        let W₁ := ⋈|(show WordStack A (Fin (2 ^ n)) ι from\n-          (splitHalfRowWiseInterleavedWords u).2)\n+        let U₀ := (splitHalfRowWiseInterleavedWords u).1\n+        let U₁ := (splitHalfRowWiseInterleavedWords u).2\n+        let W₀ := ⋈|(show WordStack A (Fin (2 ^ n)) ι from U₀)\n+        let W₁ := ⋈|(show WordStack A (Fin (2 ^ n)) ι from U₁)\n-            multilinearCombine (affineLineEvaluation (splitHalfRowWiseInterleavedWords u).1\n-              (splitHalfRowWiseInterleavedWords u).2 (r (Fin.last n))) (fun i => r i.castSucc) :=\n+            multilinearCombine (affineLin"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 8,
+    "d_score": 0.21,
+    "d_tokens": -8,
+    "d_heartbeats": -1,
+    "diff": "-          jointProximityNat (u := affineLineEvaluation U₀ U₁ r.val) (e := e) (C := MC) := by\n-          intro r_in_Rstar\n-          apply correlatedAgreement_of_mem_R_star_tensor\n-            (ih := fun u_prev => ih (Nat.succ_pos _) u_prev ) (u := u)\n+          jointProximityNat (u := affineLineEvaluation U₀ U₁ r.val) (e := e) (C := MC) :=\n+          correlatedAgreement_of_mem_R_star_tensor (ih := ih (Nat.succ_pos _)) (u := u)"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 10,
+    "d_score": 0.02,
+    "d_tokens": 0,
+    "d_heartbeats": -7,
+    "diff": "-        rw [hP_split] at hP_multilinearCombine_close_gt\n+        have hPM2 := hP_split ▸ hP_multilinearCombine_close_gt\n-          (e := e) hP_multilinearCombine_close_gt\n+          (e := e) hPM2"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 12,
+    "d_score": 0.49,
+    "d_tokens": -14,
+    "d_heartbeats": -41,
+    "diff": "+        let Rs := R_star_tensor MC (m:=n) (e:=e) (ε:=ε) U₀ U₁\n-        have h_line_close_to_C_m : ∀ (r : R_star_tensor MC (m:=n) (e:=e) (ε:=ε) U₀ U₁),\n+        have h_line_close_to_C_m : ∀ (r : Rs),\n-            (f := fun r => r ∈ R_star_tensor MC (m:=n) (e:=e) (ε:=ε) U₀ U₁)\n+            (f := fun r => r ∈ Rs)"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 15,
+    "d_score": 0.55,
+    "d_tokens": -23,
+    "d_heartbeats": 5,
+    "diff": "-        have h_prob_Rstar := prob_R_star_gt_threshold (MC := MC) (ϑ := n) (u := u)\n-          (e := e) hPM2\n+        have h_prob_Rstar := prob_R_star_gt_threshold MC u e hPM2\n-          lt_of_lt_of_le h_prob_Rstar (Pr_le_Pr_of_implies (D := $ᵖ F)\n-            (f := fun r => r ∈ Rs)\n-            (g := fun r => Δ₀(affineLineEvaluation W₀ W₁ r,\n-              MC ^⋈ (Fin (2 ^ n))) ≤ e)\n+          lt_of_lt_of_le h_prob_Rstar (Pr_le_Pr_of_implies ($ᵖ F)\n+            (fun r => r ∈ Rs)\n+            (fun r => Δ₀(affineLineEvaluation W₀ W₁ r, MC ^⋈ (Fin (2 ^ n))) ≤ e)"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 19,
+    "d_score": 0.13,
+    "d_tokens": -5,
+    "d_heartbeats": -2,
+    "diff": "-          correlatedAgreement_of_mem_R_star_tensor (ih := ih (Nat.succ_pos _)) (u := u)\n+          correlatedAgreement_of_mem_R_star_tensor MC (ih (Nat.succ_pos _)) u"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 21,
+    "d_score": 0.16,
+    "d_tokens": -5,
+    "d_heartbeats": -10,
+    "diff": "-        let Rs := R_star_tensor MC (m:=n) (e:=e) (ε:=ε) U₀ U₁\n+        let Rs := R_star_tensor MC (e:=e) (ε:=ε) U₀ U₁"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 22,
+    "d_score": 0.51,
+    "d_tokens": 1,
+    "d_heartbeats": -150,
+    "diff": "-        simp_rw [multilinearCombine₁_eq_affineLineEvaluation, zero_add,\n+        simp only [multilinearCombine₁_eq_affineLineEvaluation, zero_add,"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 25,
+    "d_score": 0.06,
+    "d_tokens": 1,
+    "d_heartbeats": -24,
+    "diff": "-        simp_rw [lem] at hP_multilinearCombine_close_gt\n+        simp only [lem] at hP_multilinearCombine_close_gt"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 8,
+    "d_score": 0.08,
+    "d_tokens": -3,
+    "d_heartbeats": -1,
+    "diff": "-        have h_u_eq: u = finMapTwoWords (u 0) (u 1) :=\n-          funext fun rowIdx => by fin_cases rowIdx <;> rfl\n-        rw [h_u_eq]\n+        rw [show u = finMapTwoWords (u 0) (u 1) from\n+          funext fun rowIdx => by fin_cases rowIdx <;> rfl]"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 16,
+    "d_score": 1.23,
+    "d_tokens": -29,
+    "d_heartbeats": -146,
+    "diff": "-        intro hϑ_gt_0 u hP_multilinearCombine_close_gt\n+        intro _ u hP_multilinearCombine_close_gt\n-        have h_line_close_to_C_m : ∀ (r : Rs),\n-          jointProximityNat (u := affineLineEvaluation U₀ U₁ r.val) (e := e) (C := MC) :=\n-          correlatedAgreement_of_mem_R_star_tensor MC (ih (Nat.succ_pos _)) u\n-            (fun r hr_in_Rstar => h_line_close_to_C_m ⟨r, hr_in_Rstar⟩))\n+            (fun r hr_in_Rstar => (correlatedAgreement_of_mem_R_star_tensor MC\n+              (ih (Nat.succ_pos _)) u) ⟨r, hr_in_Rstar⟩))"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 21,
+    "d_score": 1.41,
+    "d_tokens": -15,
+    "d_heartbeats": -292,
+    "diff": "-          (P := fun r_last r_init => Δ₀(multilinearCombine\n-            (affineLineEvaluation U₀ U₁ r_last) r_init, MC) ≤ e)\n+          (P := multilinearCombine_affineComb_split_last_close MC u e)"
+   },
+   {
+    "run_id": "a100-postpass-xfer1",
+    "check": 1,
+    "d_score": 0.31,
+    "d_tokens": -5,
+    "d_heartbeats": -53,
+    "diff": "-        have hP_split := prob_split_last_uniform_sampling_of_finFun (ϑ := n) (F := F)\n+        have hP_split := prob_split_last_uniform_sampling_of_finFun (F := F)",
+    "source": "v2-check",
+    "kind": "edit",
+    "sha": "db983e43bdfe"
+   },
+   {
+    "run_id": "a100-postpass-xfer1",
+    "check": 2,
+    "d_score": 0.12,
+    "d_tokens": -5,
+    "d_heartbeats": 0,
+    "diff": "-        have hP_split := prob_split_last_uniform_sampling_of_finFun (F := F)\n+        have hP_split := prob_split_last_uniform_sampling_of_finFun",
+    "source": "v2-check",
+    "kind": "edit",
+    "sha": "e81152fd25df"
+   },
+   {
+    "run_id": "a100-postpass-xfer1",
+    "check": 3,
+    "d_score": 0.01,
+    "d_tokens": 0,
+    "d_heartbeats": -2,
+    "diff": "-              (ih $ Nat.succ_pos _) u) ⟨r, hr_in_Rstar⟩)\n+              (ih $ Nat.succ_pos _) u) ⟨_, hr_in_Rstar⟩)",
+    "source": "v2-check",
+    "kind": "edit",
+    "sha": "a899ba1bd2d7"
+   }
+  ],
+  "dead_names": []
+ },
+ "profile_cache": {
+  "78bf9283086c": {
+   "ok": true,
+   "total": 4535,
+   "floor": 694,
+   "reference": 9381,
+   "max_heartbeat_score": 30.87,
+   "blocks": [
+    {
+     "lines": "10-62",
+     "depth_indent": 4,
+     "text": "induction ϑ with | zero => intro u contradiction | succ ϑ_sub_1 ih => cases ϑ_sub_1 with | zero => i",
+     "heartbeats": 3840
+    },
+    {
+     "lines": "45-52",
+     "depth_indent": 8,
+     "text": "have h_line_close_to_C_m : ∀ (r : R_star_tensor MC (m:=n) (e:=e) (ε:=ε) (splitHalfRowWiseInterleaved",
+     "heartbeats": 1418
+    },
+    {
+     "lines": "37-40",
+     "depth_indent": 8,
+     "text": "have hP_split := prob_split_last_uniform_sampling_of_finFun (ϑ := n) (F := F) (P := fun r_last r_ini",
+     "heartbeats": 630
+    },
+    {
+     "lines": "33-36",
+     "depth_indent": 8,
+     "text": "have lem (r : Fin (n + 1) → F) : multilinearCombine u r = multilinearCombine (affineLineEvaluation (",
+     "heartbeats": 212
+    },
+    {
+     "lines": "43-44",
+     "depth_indent": 8,
+     "text": "have h_prob_Rstar := prob_R_star_gt_threshold (MC := MC) (ϑ := n) (u := u) (e := e) hP_multilinearCo",
+     "heartbeats": 75
+    },
+    {
+     "lines": "41-41",
+     "depth_indent": 8,
+     "text": "simp_rw [lem] at hP_multilinearCombine_close_gt",
+     "heartbeats": 73
+    },
+    {
+     "lines": "42-42",
+     "depth_indent": 8,
+     "text": "rw [hP_split] at hP_multilinearCombine_close_gt",
+     "heartbeats": 47
+    },
+    {
+     "lines": "29-30",
+     "depth_indent": 8,
+     "text": "let W₀ := ⋈|(show WordStack A (Fin (2 ^ n)) ι from (splitHalfRowWiseInterleavedWords u).1)",
+     "heartbeats": 37
+    },
+    {
+     "lines": "31-32",
+     "depth_indent": 8,
+     "text": "let W₁ := ⋈|(show WordStack A (Fin (2 ^ n)) ι from (splitHalfRowWiseInterleavedWords u).2)",
+     "heartbeats": 29
+    },
+    {
+     "lines": "28-28",
+     "depth_indent": 8,
+     "text": "let n := ϑ_sub_2 + 1",
+     "heartbeats": 16
+    },
+    {
+     "lines": "27-27",
+     "depth_indent": 8,
+     "text": "intro hϑ_gt_0 u hP_multilinearCombine_close_gt",
+     "heartbeats": 3
+    },
+    {
+     "lines": "9-9",
+     "depth_indent": 4,
+     "text": "intro ϑ",
+     "heartbeats": 1
+    }
+   ],
+   "points_left_heartbeats": 13.65,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "2146f26634a3": {
+   "ok": true,
+   "total": 4488,
+   "floor": 694,
+   "reference": 9381,
+   "max_heartbeat_score": 30.87,
+   "blocks": [
+    {
+     "lines": "10-55",
+     "depth_indent": 4,
+     "text": "induction ϑ with | zero => intro u contradiction | succ ϑ_sub_1 ih => cases ϑ_sub_1 with | zero => i",
+     "heartbeats": 3793
+    },
+    {
+     "lines": "41-41",
+     "depth_indent": 8,
+     "text": "rw [hP_split] at hP_multilinearCombine_close_gt",
+     "heartbeats": 1515
+    },
+    {
+     "lines": "37-39",
+     "depth_indent": 8,
+     "text": "have hP_split := prob_split_last_uniform_sampling_of_finFun (ϑ := n) (F := F) (P := fun r_last r_ini",
+     "heartbeats": 615
+    },
+    {
+     "lines": "33-36",
+     "depth_indent": 8,
+     "text": "have lem (r : Fin (n + 1) → F) : multilinearCombine u r = multilinearCombine (affineLineEvaluation U",
+     "heartbeats": 205
+    },
+    {
+     "lines": "40-40",
+     "depth_indent": 8,
+     "text": "simp_rw [lem] at hP_multilinearCombine_close_gt",
+     "heartbeats": 69
+    },
+    {
+     "lines": "31-31",
+     "depth_indent": 8,
+     "text": "let W₀ := ⋈|(show WordStack A (Fin (2 ^ n)) ι from U₀)",
+     "heartbeats": 33
+    },
+    {
+     "lines": "32-32",
+     "depth_indent": 8,
+     "text": "let W₁ := ⋈|(show WordStack A (Fin (2 ^ n)) ι from U₁)",
+     "heartbeats": 25
+    },
+    {
+     "lines": "28-28",
+     "depth_indent": 8,
+     "text": "let n := ϑ_sub_2 + 1",
+     "heartbeats": 16
+    },
+    {
+     "lines": "29-29",
+     "depth_indent": 8,
+     "text": "let U₀ := (splitHalfRowWiseInterleavedWords u).1",
+     "heartbeats": 6
+    },
+    {
+     "lines": "30-30",
+     "depth_indent": 8,
+     "text": "let U₁ := (splitHalfRowWiseInterleavedWords u).2",
+     "heartbeats": 6
+    },
+    {
+     "lines": "27-27",
+     "depth_indent": 8,
+     "text": "intro hϑ_gt_0 u hP_multilinearCombine_close_gt",
+     "heartbeats": 3
+    },
+    {
+     "lines": "9-9",
+     "depth_indent": 4,
+     "text": "intro ϑ",
+     "heartbeats": 1
+    }
+   ],
+   "points_left_heartbeats": 13.48,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "dfcad77cf1a7": {
+   "ok": true,
+   "total": 4283,
+   "floor": 694,
+   "reference": 9381,
+   "max_heartbeat_score": 30.87,
+   "blocks": [
+    {
+     "lines": "10-54",
+     "depth_indent": 4,
+     "text": "induction ϑ with | zero => intro u contradiction | succ ϑ_sub_1 ih => cases ϑ_sub_1 with | zero => i",
+     "heartbeats": 3588
+    },
+    {
+     "lines": "41-41",
+     "depth_indent": 8,
+     "text": "simp_rw [lem] at hP_multilinearCombine_close_gt",
+     "heartbeats": 1486
+    },
+    {
+     "lines": "38-40",
+     "depth_indent": 8,
+     "text": "have hP_split := prob_split_last_uniform_sampling_of_finFun (ϑ := n) (F := F) (P := fun r_last r_ini",
+     "heartbeats": 611
+    },
+    {
+     "lines": "34-37",
+     "depth_indent": 8,
+     "text": "have lem (r : Fin (n + 1) → F) : multilinearCombine u r = multilinearCombine (affineLineEvaluation U",
+     "heartbeats": 204
+    },
+    {
+     "lines": "33-33",
+     "depth_indent": 8,
+     "text": "let Rs := R_star_tensor MC (e:=e) (ε:=ε) U₀ U₁",
+     "heartbeats": 47
+    },
+    {
+     "lines": "31-31",
+     "depth_indent": 8,
+     "text": "let W₀ := ⋈|(show WordStack A (Fin (2 ^ n)) ι from U₀)",
+     "heartbeats": 33
+    },
+    {
+     "lines": "32-32",
+     "depth_indent": 8,
+     "text": "let W₁ := ⋈|(show WordStack A (Fin (2 ^ n)) ι from U₁)",
+     "heartbeats": 25
+    },
+    {
+     "lines": "28-28",
+     "depth_indent": 8,
+     "text": "let n := ϑ_sub_2 + 1",
+     "heartbeats": 15
+    },
+    {
+     "lines": "29-29",
+     "depth_indent": 8,
+     "text": "let U₀ := (splitHalfRowWiseInterleavedWords u).1",
+     "heartbeats": 6
+    },
+    {
+     "lines": "30-30",
+     "depth_indent": 8,
+     "text": "let U₁ := (splitHalfRowWiseInterleavedWords u).2",
+     "heartbeats": 6
+    },
+    {
+     "lines": "27-27",
+     "depth_indent": 8,
+     "text": "intro hϑ_gt_0 u hP_multilinearCombine_close_gt",
+     "heartbeats": 4
+    },
+    {
+     "lines": "9-9",
+     "depth_indent": 4,
+     "text": "intro ϑ",
+     "heartbeats": 1
+    }
+   ],
+   "points_left_heartbeats": 12.75,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "024a0bb05fd7": {
+   "ok": true,
+   "total": 4259,
+   "floor": 694,
+   "reference": 9381,
+   "max_heartbeat_score": 30.87,
+   "blocks": [
+    {
+     "lines": "10-54",
+     "depth_indent": 4,
+     "text": "induction ϑ with | zero => intro u contradiction | succ ϑ_sub_1 ih => cases ϑ_sub_1 with | zero => i",
+     "heartbeats": 3564
+    },
+    {
+     "lines": "41-41",
+     "depth_indent": 8,
+     "text": "simp only [lem] at hP_multilinearCombine_close_gt",
+     "heartbeats": 1462
+    },
+    {
+     "lines": "38-40",
+     "depth_indent": 8,
+     "text": "have hP_split := prob_split_last_uniform_sampling_of_finFun (ϑ := n) (F := F) (P := fun r_last r_ini",
+     "heartbeats": 611
+    },
+    {
+     "lines": "34-37",
+     "depth_indent": 8,
+     "text": "have lem (r : Fin (n + 1) → F) : multilinearCombine u r = multilinearCombine (affineLineEvaluation U",
+     "heartbeats": 204
+    },
+    {
+     "lines": "33-33",
+     "depth_indent": 8,
+     "text": "let Rs := R_star_tensor MC (e:=e) (ε:=ε) U₀ U₁",
+     "heartbeats": 47
+    },
+    {
+     "lines": "31-31",
+     "depth_indent": 8,
+     "text": "let W₀ := ⋈|(show WordStack A (Fin (2 ^ n)) ι from U₀)",
+     "heartbeats": 33
+    },
+    {
+     "lines": "32-32",
+     "depth_indent": 8,
+     "text": "let W₁ := ⋈|(show WordStack A (Fin (2 ^ n)) ι from U₁)",
+     "heartbeats": 25
+    },
+    {
+     "lines": "28-28",
+     "depth_indent": 8,
+     "text": "let n := ϑ_sub_2 + 1",
+     "heartbeats": 15
+    },
+    {
+     "lines": "29-29",
+     "depth_indent": 8,
+     "text": "let U₀ := (splitHalfRowWiseInterleavedWords u).1",
+     "heartbeats": 6
+    },
+    {
+     "lines": "30-30",
+     "depth_indent": 8,
+     "text": "let U₁ := (splitHalfRowWiseInterleavedWords u).2",
+     "heartbeats": 6
+    },
+    {
+     "lines": "27-27",
+     "depth_indent": 8,
+     "text": "intro hϑ_gt_0 u hP_multilinearCombine_close_gt",
+     "heartbeats": 4
+    },
+    {
+     "lines": "9-9",
+     "depth_indent": 4,
+     "text": "intro ϑ",
+     "heartbeats": 1
+    }
+   ],
+   "points_left_heartbeats": 12.67,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "cd419bf6f8d4": {
+   "ok": true,
+   "total": 4112,
+   "floor": 694,
+   "reference": 9381,
+   "max_heartbeat_score": 30.87,
+   "blocks": [
+    {
+     "lines": "10-51",
+     "depth_indent": 4,
+     "text": "induction ϑ with | zero => intro u contradiction | succ ϑ_sub_1 ih => cases ϑ_sub_1 with | zero => i",
+     "heartbeats": 3417
+    },
+    {
+     "lines": "40-40",
+     "depth_indent": 8,
+     "text": "simp only [lem] at hP_multilinearCombine_close_gt",
+     "heartbeats": 1317
+    },
+    {
+     "lines": "37-39",
+     "depth_indent": 8,
+     "text": "have hP_split := prob_split_last_uniform_sampling_of_finFun (ϑ := n) (F := F) (P := fun r_last r_ini",
+     "heartbeats": 610
+    },
+    {
+     "lines": "33-36",
+     "depth_indent": 8,
+     "text": "have lem (r : Fin (n + 1) → F) : multilinearCombine u r = multilinearCombine (affineLineEvaluation U",
+     "heartbeats": 205
+    },
+    {
+     "lines": "32-32",
+     "depth_indent": 8,
+     "text": "let Rs := R_star_tensor MC (e:=e) (ε:=ε) U₀ U₁",
+     "heartbeats": 47
+    },
+    {
+     "lines": "30-30",
+     "depth_indent": 8,
+     "text": "let W₀ := ⋈|(show WordStack A (Fin (2 ^ n)) ι from U₀)",
+     "heartbeats": 32
+    },
+    {
+     "lines": "31-31",
+     "depth_indent": 8,
+     "text": "let W₁ := ⋈|(show WordStack A (Fin (2 ^ n)) ι from U₁)",
+     "heartbeats": 25
+    },
+    {
+     "lines": "27-27",
+     "depth_indent": 8,
+     "text": "let n := ϑ_sub_2 + 1",
+     "heartbeats": 15
+    },
+    {
+     "lines": "28-28",
+     "depth_indent": 8,
+     "text": "let U₀ := (splitHalfRowWiseInterleavedWords u).1",
+     "heartbeats": 7
+    },
+    {
+     "lines": "29-29",
+     "depth_indent": 8,
+     "text": "let U₁ := (splitHalfRowWiseInterleavedWords u).2",
+     "heartbeats": 6
+    },
+    {
+     "lines": "26-26",
+     "depth_indent": 8,
+     "text": "intro _ u hP_multilinearCombine_close_gt",
+     "heartbeats": 3
+    },
+    {
+     "lines": "9-9",
+     "depth_indent": 4,
+     "text": "intro ϑ",
+     "heartbeats": 1
+    }
+   ],
+   "points_left_heartbeats": 12.15,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "318266cedd7e": {
+   "ok": true,
+   "total": 3820,
+   "floor": 694,
+   "reference": 9381,
+   "max_heartbeat_score": 30.87,
+   "blocks": [
+    {
+     "lines": "10-50",
+     "depth_indent": 4,
+     "text": "induction ϑ with | zero => intro u contradiction | succ ϑ_sub_1 ih => cases ϑ_sub_1 with | zero => i",
+     "heartbeats": 3125
+    },
+    {
+     "lines": "39-39",
+     "depth_indent": 8,
+     "text": "simp only [lem] at hP_multilinearCombine_close_gt",
+     "heartbeats": 1313
+    },
+    {
+     "lines": "37-38",
+     "depth_indent": 8,
+     "text": "have hP_split := prob_split_last_uniform_sampling_of_finFun (ϑ := n) (F := F) (P := multilinearCombi",
+     "heartbeats": 322
+    },
+    {
+     "lines": "33-36",
+     "depth_indent": 8,
+     "text": "have lem (r : Fin (n + 1) → F) : multilinearCombine u r = multilinearCombine (affineLineEvaluation U",
+     "heartbeats": 205
+    },
+    {
+     "lines": "32-32",
+     "depth_indent": 8,
+     "text": "let Rs := R_star_tensor MC (e:=e) (ε:=ε) U₀ U₁",
+     "heartbeats": 47
+    },
+    {
+     "lines": "30-30",
+     "depth_indent": 8,
+     "text": "let W₀ := ⋈|(show WordStack A (Fin (2 ^ n)) ι from U₀)",
+     "heartbeats": 32
+    },
+    {
+     "lines": "31-31",
+     "depth_indent": 8,
+     "text": "let W₁ := ⋈|(show WordStack A (Fin (2 ^ n)) ι from U₁)",
+     "heartbeats": 25
+    },
+    {
+     "lines": "27-27",
+     "depth_indent": 8,
+     "text": "let n := ϑ_sub_2 + 1",
+     "heartbeats": 15
+    },
+    {
+     "lines": "28-28",
+     "depth_indent": 8,
+     "text": "let U₀ := (splitHalfRowWiseInterleavedWords u).1",
+     "heartbeats": 7
+    },
+    {
+     "lines": "29-29",
+     "depth_indent": 8,
+     "text": "let U₁ := (splitHalfRowWiseInterleavedWords u).2",
+     "heartbeats": 6
+    },
+    {
+     "lines": "26-26",
+     "depth_indent": 8,
+     "text": "intro _ u hP_multilinearCombine_close_gt",
+     "heartbeats": 3
+    },
+    {
+     "lines": "9-9",
+     "depth_indent": 4,
+     "text": "intro ϑ",
+     "heartbeats": 1
+    }
+   ],
+   "points_left_heartbeats": 11.11,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  }
+ },
+ "hb_floor": 694
+}

@@ -1,0 +1,11 @@
+Binius.BinaryBasefold.fiberwise_dist_lt_imp_ ok=True tok 619 hb 4628 Z None score 75.85 -> 76.26  RECORDED
+Binius.BinaryBasefold.fold_advances_evaluati ok=True tok 351 hb 7369 Z None score 88.5 -> 88.53  RECORDED
+Core.InitsUpdatesComm                        ok=True tok 95 hb 209 Z None score 83.66 -> 84.24  RECORDED
+Cslib.CCS.bisimilarity_congr_choice          ok=True tok 102 hb 388 Z None score 82.32 -> 83.12  RECORDED
+Electromagnetism.ElectromagneticPotential.ti ok=True tok 676 hb 11426 Z None score 68.94 -> 69.53  RECORDED
+FieldSpecification.WickAlgebra.ι_timeOrderF_ ok=True tok 685 hb 14488 Z None score 69.55 -> 69.77  RECORDED
+fundamental_theorem_of_variational_calculus' ok=True tok 192 hb 1817 Z None score 87.02 -> 87.41  RECORDED
+interleaved_affine_gaps_imply_tensor_gaps    ok=True tok 356 hb 3820 Z None score 77.34 -> 77.66  RECORDED
+putnam_1964_a4                               ok=True tok 466 hb 2480 Z None score 90.16 -> 90.48  RECORDED
+putnam_1964_b2                               ok=True tok 211 hb 918 Z None score 95.52 -> 95.76  RECORDED
+putnam_1995_a3                               ok=True tok 312 hb 1629 Z None score 93.6 -> 93.64  RECORDED

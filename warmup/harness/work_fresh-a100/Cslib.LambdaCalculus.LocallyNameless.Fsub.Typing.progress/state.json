@@ -1,0 +1,2501 @@
+{
+ "problem": "Cslib.LambdaCalculus.LocallyNameless.Fsub.Typing.progress",
+ "best": {
+  "score": 85.07,
+  "proof": "lemma Typing.progress (der : Typing [] t τ) : t.Value ∨ ∃ t', t ⭢βᵛ t' := by\n  generalize eq : [] = Γ at der\n  have der' := der\n  induction der <;> subst eq\n  case app l r ih_l ih_r =>\n    obtain val_l | ⟨_, h⟩ := ih_l rfl l\n    · grind only [→ canonical_form_abs, → Red.abs, → Red.appᵣ]\n    · grind [→ Red.appₗ]\n  case let' => grind only [→ Red.let_bind, → Red.let_body, body_let.mp der'.wf.2.1]\n  case case der _ _ ih _ _ =>\n    obtain val | ⟨_, h⟩ := ih rfl der\n    · grind only [→ canonical_form_sum, → Red.case_inl, → Red.case_inr, body_case.mp der'.wf.2.1]\n    · grind [→ Red.case, body_case.mp der'.wf.2.1]\n  all_goals grind [→ Red.inl, → Red.inr, → Red.tabs, → Red.tapp, → canonical_form_tabs]",
+  "tokens": 136,
+  "heartbeats": 6860,
+  "L": 66.67,
+  "H": 88.54,
+  "Z": 100.0,
+  "compat": {
+   "v4.33.0-rc2": true,
+   "v4.32.0": true,
+   "v4.31.0": true
+  }
+ },
+ "attempts": [
+  {
+   "sha": "31159c40efa9",
+   "tokens": 321,
+   "heartbeats": 876,
+   "ok": false,
+   "error": "124:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Env.Wf [] [prop] Binding.ty σ ∈ dlookup x [] [prop] Typing [] (Term.fvar x) σ [prop] ¬(Term.fvar x).Value [prop] ∀ (a : Term Var), ¬Term.fvar x ⭢βᵛ a [prop] (Typing [] (Term.fvar x",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:13:30Z"
+  },
+  {
+   "sha": "bcf793bae0c6",
+   "tokens": 262,
+   "heartbeats": 2125,
+   "ok": false,
+   "error": "90:14: `grind` failed case grind.1.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.arrow τ_1) [prop] Typing [] t₂ σ [prop] Typing [] t₁ (σ.arrow τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₂ σ → t₂.Value ∨ Exists t₂.Red [prop] Typing ",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:51:31Z"
+  },
+  {
+   "sha": "6d0fb872c40c",
+   "tokens": 281,
+   "heartbeats": 2116,
+   "ok": false,
+   "error": "98:15: `grind` failed case grind.1.2 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.all τ_1) [prop] Sub [] σ' σ [prop] Typing [] t₁ (σ.all τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] (t₁.tapp σ') (τ_1 ^ᵞ σ') [prop] ¬(t₁.tapp σ').Value [prop",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:51:35Z"
+  },
+  {
+   "sha": "d598656af87d",
+   "tokens": 280,
+   "heartbeats": 3784,
+   "ok": false,
+   "error": "104:15: `grind` failed case grind.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ σ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) τ_1 [prop] Typing [] t₁ σ → t₁.Value ∨ Exists t₁.Red [prop] ∀ (x : Var), True [prop] Typing [] (t",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:51:39Z"
+  },
+  {
+   "sha": "659f82941d29",
+   "tokens": 287,
+   "heartbeats": 3000,
+   "ok": false,
+   "error": "110:14: `grind` failed case grind.1.1.1.1.1.1.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ σ [prop] Wf [] τ_1 [prop] Typing [] t₁ σ → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₁.inl (σ.sum τ_1) [prop] ¬t₁.inl.Value [prop] ∀ (a : Term Var),",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:51:43Z"
+  },
+  {
+   "sha": "308ee59cacce",
+   "tokens": 246,
+   "heartbeats": 10903,
+   "ok": false,
+   "error": "114:15: `grind` failed case grind.1.3.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.sum τ_1) [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) δ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty τ_1⟩] (t₃ ^ᵗᵗ Term.fvar x) δ [prop] Typing",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:51:49Z"
+  },
+  {
+   "sha": "65ca0dbc628d",
+   "tokens": 321,
+   "heartbeats": 1377,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:51:52Z"
+  },
+  {
+   "sha": "aa6728556e38",
+   "tokens": 307,
+   "heartbeats": 1052,
+   "ok": false,
+   "error": "111:37: Invalid `⟨...⟩` notation: The expected type `?m.438 → ∃ t', t₁✝.inl ⭢βᵛ t'` is not an inductive type Note: This notation can only be used when the expected type is an inductive type with a single constructor",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:57:29Z"
+  },
+  {
+   "sha": "53ca7ba47bee",
+   "tokens": 317,
+   "heartbeats": 1073,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:57:32Z"
+  },
+  {
+   "sha": "477622893291",
+   "tokens": 309,
+   "heartbeats": 1258,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:57:35Z",
+   "score": 74.05
+  },
+  {
+   "sha": "b44829070461",
+   "tokens": 304,
+   "heartbeats": 1212,
+   "ok": false,
+   "error": "118:4: unsolved goals case inl.inr … [hypotheses omitted] ⊢ ∃ t', u.inr.case t₂✝ t₃✝ ⭢βᵛ t'",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:01:06Z"
+  },
+  {
+   "sha": "2e273c4ebe7b",
+   "tokens": 307,
+   "heartbeats": 1281,
+   "ok": false,
+   "error": "120:31: Unknown identifier `v`",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:01:10Z"
+  },
+  {
+   "sha": "b56b38fbcf45",
+   "tokens": 309,
+   "heartbeats": 1188,
+   "ok": false,
+   "error": "92:11: Unknown identifier `ih_l`",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:01:13Z"
+  },
+  {
+   "sha": "8ac12177ef41",
+   "tokens": 309,
+   "heartbeats": 1258,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:05:07Z"
+  },
+  {
+   "sha": "eb9ef3c7646c",
+   "tokens": 309,
+   "heartbeats": 1304,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:05:11Z"
+  },
+  {
+   "sha": "f2a24aa55d88",
+   "tokens": 309,
+   "heartbeats": 1258,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:07:02Z"
+  },
+  {
+   "sha": "538462029b44",
+   "tokens": 303,
+   "heartbeats": 2216,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:09:05Z"
+  },
+  {
+   "sha": "e804112d5caa",
+   "tokens": 302,
+   "heartbeats": 2584,
+   "ok": false,
+   "error": "110:23: `grind` failed case grind.1.1.1.1.1.1.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ σ [prop] Wf [] τ_1 [prop] Typing [] t₁ σ → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₁.inl (σ.sum τ_1) [prop] ¬t₁.inl.Value [prop] ∀ (a : Term Var),",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:09:09Z"
+  },
+  {
+   "sha": "be670f36a9d4",
+   "tokens": 308,
+   "heartbeats": 1258,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:09:12Z",
+   "score": 74.14
+  },
+  {
+   "sha": "1d692505d393",
+   "tokens": 265,
+   "heartbeats": 4619,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:10:41Z",
+   "score": 75.78
+  },
+  {
+   "sha": "691931e614df",
+   "tokens": 241,
+   "heartbeats": 5991,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:10:52Z",
+   "score": 76.98
+  },
+  {
+   "sha": "18810f7bc1cb",
+   "tokens": 185,
+   "heartbeats": 33416,
+   "ok": false,
+   "error": "102:15: `grind` failed case grind.1.3.1.1.10.11.11.10.10.8.10 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.sum τ_1) [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) δ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty τ_1⟩] (t₃ ^ᵗᵗ Term.fva",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:11:07Z"
+  },
+  {
+   "sha": "a36d2daec86d",
+   "tokens": 145,
+   "heartbeats": 67336,
+   "ok": false,
+   "error": "90:14: `grind` failed case grind.2.1.1.1.1.1.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.arrow τ_1) [prop] Typing [] t₂ σ [prop] Typing [] t₁ (σ.arrow τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₂ σ → t₂.Value ∨ Exists t₂.Red [pro",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:11:19Z"
+  },
+  {
+   "sha": "a9e35288c411",
+   "tokens": 221,
+   "heartbeats": 34766,
+   "ok": false,
+   "error": "109:6: `grind` failed case grind.1.1.1.1.1.1.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.sum τ_1) [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) δ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty τ_1⟩] (t₃ ^ᵗᵗ Term.fvar x) δ [pro",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:12:23Z"
+  },
+  {
+   "sha": "8c77d266a1fa",
+   "tokens": 208,
+   "heartbeats": 33142,
+   "ok": false,
+   "error": "107:6: `grind` failed case grind.1.1.1.1.10.10.10.10.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.sum τ_1) [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) δ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty τ_1⟩] (t₃ ^ᵗᵗ Term.fvar x) δ ",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:12:30Z"
+  },
+  {
+   "sha": "a787d7783bb3",
+   "tokens": 214,
+   "heartbeats": 26979,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:13:59Z"
+  },
+  {
+   "sha": "62e18211b57d",
+   "tokens": 208,
+   "heartbeats": 35180,
+   "ok": false,
+   "error": "105:6: `grind` failed case grind.3.1.10.10.1.3.3.8.1.8.8 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.sum τ_1) [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) δ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty τ_1⟩] (t₃ ^ᵗᵗ Term.fvar x) ",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:14:08Z"
+  },
+  {
+   "sha": "b31705c126b6",
+   "tokens": 230,
+   "heartbeats": 9749,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:17:23Z"
+  },
+  {
+   "sha": "10c322af245d",
+   "tokens": 216,
+   "heartbeats": 10201,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:17:26Z"
+  },
+  {
+   "sha": "32c4a8c3cbd4",
+   "tokens": 224,
+   "heartbeats": 14623,
+   "ok": false,
+   "error": "96:6: `grind` failed case grind.1.3.1.1.1.1.1.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.arrow τ_1) [prop] Typing [] t₂ σ [prop] Typing [] t₁ (σ.arrow τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₂ σ → t₂.Value ∨ Exists t₂.Red [pr",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:17:36Z"
+  },
+  {
+   "sha": "d3d8bf9bc05a",
+   "tokens": 218,
+   "heartbeats": 15469,
+   "ok": false,
+   "error": "96:6: `grind` failed case grind.1.3.1.1.1.1.1.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.arrow τ_1) [prop] Typing [] t₂ σ [prop] Typing [] t₁ (σ.arrow τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₂ σ → t₂.Value ∨ Exists t₂.Red [pr",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:17:45Z"
+  },
+  {
+   "sha": "4e1fbbd5d06e",
+   "tokens": 218,
+   "heartbeats": 8387,
+   "ok": false,
+   "error": "99:14: `grind` failed case grind.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ σ [prop] Wf [] τ_1 [prop] Typing [] t₁ σ → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₁.inl (σ.sum τ_1) [prop] ¬t₁.inl.Value [prop] ∀ (a : Term Var), ¬t₁.inl ⭢βᵛ a ",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:19:00Z"
+  },
+  {
+   "sha": "ba9d5d3f5408",
+   "tokens": 220,
+   "heartbeats": 5697,
+   "ok": false,
+   "error": "97:15: `grind` failed case grind.1.2 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.all τ_1) [prop] Sub [] σ' σ [prop] Typing [] t₁ (σ.all τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] (t₁.tapp σ') (τ_1 ^ᵞ σ') [prop] ¬(t₁.tapp σ').Value [prop",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:19:03Z"
+  },
+  {
+   "sha": "5fca518c09fb",
+   "tokens": 223,
+   "heartbeats": 15836,
+   "ok": false,
+   "error": "96:6: `grind` failed case grind.1.3.1.1.1.1.1.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.arrow τ_1) [prop] Typing [] t₂ σ [prop] Typing [] t₁ (σ.arrow τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₂ σ → t₂.Value ∨ Exists t₂.Red [pr",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:19:13Z"
+  },
+  {
+   "sha": "902cfac43547",
+   "tokens": 227,
+   "heartbeats": 8511,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:20:07Z"
+  },
+  {
+   "sha": "ddc8a4d2028f",
+   "tokens": 231,
+   "heartbeats": 7212,
+   "ok": false,
+   "error": "98:15: `grind` failed case grind.1.2 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.all τ_1) [prop] Sub [] σ' σ [prop] Typing [] t₁ (σ.all τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] (t₁.tapp σ') (τ_1 ^ᵞ σ') [prop] ¬(t₁.tapp σ').Value [prop",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:20:10Z"
+  },
+  {
+   "sha": "b9ce9e72b40d",
+   "tokens": 234,
+   "heartbeats": 6105,
+   "ok": false,
+   "error": "98:15: `grind` failed case grind.1.2 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.all τ_1) [prop] Sub [] σ' σ [prop] Typing [] t₁ (σ.all τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] (t₁.tapp σ') (τ_1 ^ᵞ σ') [prop] ¬(t₁.tapp σ').Value [prop",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:20:14Z"
+  },
+  {
+   "sha": "8c07c4e6cdc8",
+   "tokens": 190,
+   "heartbeats": 17715,
+   "ok": false,
+   "error": "107:12: `grind` failed case grind.1.9.8.3.3.6.1.1.1.9 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ σ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) τ_1 [prop] Typing [] t₁ σ → t₁.Value ∨ Exists t₁.Red [prop] ∀ (x : Var), True [pr",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:21:31Z"
+  },
+  {
+   "sha": "10433a7c2c5e",
+   "tokens": 179,
+   "heartbeats": 19415,
+   "ok": false,
+   "error": "106:12: `grind` failed case grind.1.9.8.3.3.6.1.1.1.9 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ σ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) τ_1 [prop] Typing [] t₁ σ → t₁.Value ∨ Exists t₁.Red [prop] ∀ (x : Var), True [pr",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:21:38Z"
+  },
+  {
+   "sha": "9998cb598007",
+   "tokens": 187,
+   "heartbeats": 17673,
+   "ok": false,
+   "error": "106:16: unsolved goals … [hypotheses omitted] ⊢ (Term.abs σ✝ t₁✝).LC",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:21:45Z"
+  },
+  {
+   "sha": "cead436fb069",
+   "tokens": 212,
+   "heartbeats": 8599,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:22:35Z",
+   "score": 77.89
+  },
+  {
+   "sha": "a926385ce4ca",
+   "tokens": 206,
+   "heartbeats": 8598,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:22:45Z",
+   "score": 78.38
+  },
+  {
+   "sha": "918fb80d1d46",
+   "tokens": 218,
+   "heartbeats": 8997,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:22:55Z"
+  },
+  {
+   "sha": "ea95810e7d52",
+   "tokens": 198,
+   "heartbeats": 9198,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:23:51Z",
+   "score": 78.7
+  },
+  {
+   "sha": "b00024017f65",
+   "tokens": 198,
+   "heartbeats": 9893,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:24:03Z"
+  },
+  {
+   "sha": "3135a956feb7",
+   "tokens": 200,
+   "heartbeats": 8586,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:24:06Z",
+   "score": 78.88
+  },
+  {
+   "sha": "16daf35b27bc",
+   "tokens": 200,
+   "heartbeats": 8596,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:24:17Z"
+  },
+  {
+   "sha": "979ac7dd6946",
+   "tokens": 194,
+   "heartbeats": 8584,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:25:11Z",
+   "score": 79.37
+  },
+  {
+   "sha": "7e88aafe9362",
+   "tokens": 172,
+   "heartbeats": 9791,
+   "ok": false,
+   "error": "107:12: `grind` failed case grind.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ σ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) τ_1 [prop] Typing [] t₁ σ → t₁.Value ∨ Exists t₁.Red [prop] ∀ (x : Var), True [prop] Typing [] (t",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:25:22Z"
+  },
+  {
+   "sha": "2c7aa16ec223",
+   "tokens": 192,
+   "heartbeats": 9271,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:25:25Z"
+  },
+  {
+   "sha": "9520e69367c7",
+   "tokens": 188,
+   "heartbeats": 8582,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:27:04Z",
+   "score": 79.86
+  },
+  {
+   "sha": "a912bc0d0add",
+   "tokens": 181,
+   "heartbeats": 17708,
+   "ok": false,
+   "error": "107:12: `grind` failed case grind.1.9.8.3.3.6.1.1.1.9 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ σ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) τ_1 [prop] Typing [] t₁ σ → t₁.Value ∨ Exists t₁.Red [prop] ∀ (x : Var), True [pr",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:27:18Z"
+  },
+  {
+   "sha": "3e4178cb0769",
+   "tokens": 189,
+   "heartbeats": 9190,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:27:22Z"
+  },
+  {
+   "sha": "91b13b0f3d11",
+   "tokens": 189,
+   "heartbeats": 9885,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:27:25Z"
+  },
+  {
+   "sha": "9bee9b8d4cad",
+   "tokens": 176,
+   "heartbeats": 8487,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:28:44Z",
+   "score": 80.9
+  },
+  {
+   "sha": "e0e6d83c3a15",
+   "tokens": 181,
+   "heartbeats": 8720,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:28:54Z"
+  },
+  {
+   "sha": "103503d869ec",
+   "tokens": 180,
+   "heartbeats": 7674,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:28:57Z",
+   "score": 81.02
+  },
+  {
+   "sha": "0664453e6197",
+   "tokens": 180,
+   "heartbeats": 7674,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:30:49Z"
+  },
+  {
+   "sha": "e227267ce172",
+   "tokens": 173,
+   "heartbeats": 8180,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:30:53Z",
+   "score": 81.31
+  },
+  {
+   "sha": "c720a92963ab",
+   "tokens": 177,
+   "heartbeats": 7614,
+   "ok": false,
+   "error": "106:16: unsolved goals … [hypotheses omitted] ⊢ (Term.abs σ✝ t₁✝).LC",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:31:03Z"
+  },
+  {
+   "sha": "434e212950b6",
+   "tokens": 170,
+   "heartbeats": 8120,
+   "ok": false,
+   "error": "105:16: unsolved goals … [hypotheses omitted] ⊢ (Term.abs σ✝ t₁✝).LC",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:31:06Z"
+  },
+  {
+   "sha": "fb415d39c4ab",
+   "tokens": 146,
+   "heartbeats": 36289,
+   "ok": false,
+   "error": "90:14: `grind` failed case grind.2.1.1.1.1.1.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.arrow τ_1) [prop] Typing [] t₂ σ [prop] Typing [] t₁ (σ.arrow τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₂ σ → t₂.Value ∨ Exists t₂.Red [pro",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:32:18Z"
+  },
+  {
+   "sha": "113f915697f0",
+   "tokens": 144,
+   "heartbeats": 7943,
+   "ok": false,
+   "error": "99:15: `grind` failed case grind.1.3.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.sum τ_1) [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) δ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty τ_1⟩] (t₃ ^ᵗᵗ Term.fvar x) δ [prop] Typing ",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:32:22Z"
+  },
+  {
+   "sha": "efb904ba9d71",
+   "tokens": 117,
+   "heartbeats": 36049,
+   "ok": false,
+   "error": "90:14: `grind` failed case grind.2.1.1.1.1.1.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.arrow τ_1) [prop] Typing [] t₂ σ [prop] Typing [] t₁ (σ.arrow τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₂ σ → t₂.Value ∨ Exists t₂.Red [pro",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:32:29Z"
+  },
+  {
+   "sha": "8d399231283a",
+   "tokens": 169,
+   "heartbeats": 8762,
+   "ok": false,
+   "error": "106:12: `grind` failed case grind.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ σ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) τ_1 [prop] Typing [] t₁ σ → t₁.Value ∨ Exists t₁.Red [prop] ∀ (x : Var), True [prop] Typing [] (t",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:35:50Z"
+  },
+  {
+   "sha": "a35565773086",
+   "tokens": 166,
+   "heartbeats": 8760,
+   "ok": false,
+   "error": "106:12: `grind` failed case grind.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ σ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) τ_1 [prop] Typing [] t₁ σ → t₁.Value ∨ Exists t₁.Red [prop] ∀ (x : Var), True [prop] Typing [] (t",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:35:54Z"
+  },
+  {
+   "sha": "8635fa514904",
+   "tokens": 173,
+   "heartbeats": 7905,
+   "ok": false,
+   "error": "106:12: `grind` failed case grind.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ σ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) τ_1 [prop] Typing [] t₁ σ → t₁.Value ∨ Exists t₁.Red [prop] ∀ (x : Var), True [prop] Typing [] (t",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:35:58Z"
+  },
+  {
+   "sha": "2ad965070a7f",
+   "tokens": 177,
+   "heartbeats": 7325,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:36:59Z",
+   "score": 81.46
+  },
+  {
+   "sha": "89deb3019277",
+   "tokens": 170,
+   "heartbeats": 8179,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:37:09Z",
+   "score": 81.56
+  },
+  {
+   "sha": "ee24cddacc19",
+   "tokens": 174,
+   "heartbeats": 7322,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:37:59Z",
+   "score": 81.71
+  },
+  {
+   "sha": "b83c7ee17e89",
+   "tokens": 180,
+   "heartbeats": 7318,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:38:09Z"
+  },
+  {
+   "sha": "0223cc51c3ad",
+   "tokens": 173,
+   "heartbeats": 7292,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:39:40Z",
+   "score": 81.81
+  },
+  {
+   "sha": "46907beccc1c",
+   "tokens": 169,
+   "heartbeats": 8616,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:39:51Z"
+  },
+  {
+   "sha": "f2e63e58ffb1",
+   "tokens": 166,
+   "heartbeats": 9403,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:41:09Z"
+  },
+  {
+   "sha": "8a07ac953f9c",
+   "tokens": 170,
+   "heartbeats": 8928,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:41:12Z"
+  },
+  {
+   "sha": "6b5fbb4237be",
+   "tokens": 183,
+   "heartbeats": 4880,
+   "ok": false,
+   "error": "97:15: `grind` failed case grind.1.2 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.all τ_1) [prop] Sub [] σ' σ [prop] Typing [] t₁ (σ.all τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] (t₁.tapp σ') (τ_1 ^ᵞ σ') [prop] ¬(t₁.tapp σ').Value [prop",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:42:09Z"
+  },
+  {
+   "sha": "0fe5d1609b15",
+   "tokens": 188,
+   "heartbeats": 4717,
+   "ok": false,
+   "error": "97:15: `grind` failed case grind.1.2 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.all τ_1) [prop] Sub [] σ' σ [prop] Typing [] t₁ (σ.all τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] (t₁.tapp σ') (τ_1 ^ᵞ σ') [prop] ¬(t₁.tapp σ').Value [prop",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:42:12Z"
+  },
+  {
+   "sha": "a903d658c432",
+   "tokens": 169,
+   "heartbeats": 35952,
+   "ok": false,
+   "error": "102:6: `grind` failed case grind.3.1.1.10.10.11.10.8.10.10 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.sum τ_1) [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) δ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty τ_1⟩] (t₃ ^ᵗᵗ Term.fvar x",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:33:48Z"
+  },
+  {
+   "sha": "5b11512b1c10",
+   "tokens": 169,
+   "heartbeats": 98,
+   "ok": false,
+   "error": "87:21: Unknown identifier `Γ`",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:33:51Z"
+  },
+  {
+   "sha": "b8b15792f49d",
+   "tokens": 159,
+   "heartbeats": 36015,
+   "ok": false,
+   "error": "102:6: `grind` failed case grind.3.1.1.10.10.11.10.8.10.10 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.sum τ_1) [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) δ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty τ_1⟩] (t₃ ^ᵗᵗ Term.fvar x",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:34:02Z"
+  },
+  {
+   "sha": "35206bd02c50",
+   "tokens": 156,
+   "heartbeats": 35993,
+   "ok": false,
+   "error": "102:6: `grind` failed case grind.3.1.1.10.10.11.10.8.10.10 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.sum τ_1) [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) δ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty τ_1⟩] (t₃ ^ᵗᵗ Term.fvar x",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:34:12Z"
+  },
+  {
+   "sha": "8506abb53451",
+   "tokens": 178,
+   "heartbeats": 7304,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:34:40Z"
+  },
+  {
+   "sha": "92a46f012988",
+   "tokens": 164,
+   "heartbeats": 58,
+   "ok": false,
+   "error": "88:2: Invalid target: Index in target's type is not a variable (consider using the `cases` tactic instead) []",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:34:44Z"
+  },
+  {
+   "sha": "d015d2caea65",
+   "tokens": 168,
+   "heartbeats": 7364,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:34:47Z",
+   "score": 82.17
+  },
+  {
+   "sha": "66c4f217067b",
+   "tokens": 175,
+   "heartbeats": 6101,
+   "ok": false,
+   "error": "97:15: `grind` failed case grind.1.2 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.all τ_1) [prop] Sub [] σ' σ [prop] Typing [] t₁ (σ.all τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] (t₁.tapp σ') (τ_1 ^ᵞ σ') [prop] ¬(t₁.tapp σ').Value [prop",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:36:22Z"
+  },
+  {
+   "sha": "701991bcb115",
+   "tokens": 174,
+   "heartbeats": 6250,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:36:26Z",
+   "score": 82.3
+  },
+  {
+   "sha": "664b893a7606",
+   "tokens": 182,
+   "heartbeats": 7243,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:36:36Z"
+  },
+  {
+   "sha": "098927446d25",
+   "tokens": 175,
+   "heartbeats": 5175,
+   "ok": false,
+   "error": "105:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Env.Wf [] [prop] Binding.ty σ ∈ dlookup x [] [prop] Typing [] (Term.fvar x) σ [prop] ¬(Term.fvar x).Value [prop] ∀ (a : Term Var), ¬Term.fvar x ⭢βᵛ a [prop] (Typing [] (Term.fvar x",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:36:39Z"
+  },
+  {
+   "sha": "f2d8a9eaeb50",
+   "tokens": 181,
+   "heartbeats": 4123,
+   "ok": false,
+   "error": "105:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₁ ^ᵗᵗ Term.fvar x) τ_1 [prop] ∀ (x : Var), True [prop] Typing [] (Term.abs σ t₁) (σ.arrow τ_1) [prop] ¬(Term.abs σ t₁).Value [prop] ∀ (a : Ter",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:38:57Z"
+  },
+  {
+   "sha": "7d25dc875e3f",
+   "tokens": 190,
+   "heartbeats": 4144,
+   "ok": false,
+   "error": "105:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₁ ^ᵗᵗ Term.fvar x) τ_1 [prop] ∀ (x : Var), True [prop] Typing [] (Term.abs σ t₁) (σ.arrow τ_1) [prop] ¬(Term.abs σ t₁).Value [prop] ∀ (a : Ter",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:39:00Z"
+  },
+  {
+   "sha": "cbfda66e7c59",
+   "tokens": 202,
+   "heartbeats": 5069,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:39:04Z"
+  },
+  {
+   "sha": "5ee3355518f1",
+   "tokens": 167,
+   "heartbeats": 7805,
+   "ok": false,
+   "error": "102:6: `grind` failed case grind.3.1.2.1.2.1.1.1.10.10.10.10.1.9 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.sum τ_1) [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) δ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty τ_1⟩] (t₃ ^ᵗᵗ Term.",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:42:00Z"
+  },
+  {
+   "sha": "3e58996d8649",
+   "tokens": 169,
+   "heartbeats": 7827,
+   "ok": false,
+   "error": "97:69: Unknown constant `Cslib.LambdaCalculus.LocallyNameless.Fsub.Typing.sub.wf`",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:42:03Z"
+  },
+  {
+   "sha": "aa5f73141dd1",
+   "tokens": 177,
+   "heartbeats": 6148,
+   "ok": false,
+   "error": "102:6: `grind` failed case grind.3.1.2.1.2.1.1.1.10.10.10.10.1.9 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.sum τ_1) [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) δ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty τ_1⟩] (t₃ ^ᵗᵗ Term.",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:42:07Z"
+  },
+  {
+   "sha": "1c93c7e5dcb1",
+   "tokens": 170,
+   "heartbeats": 7075,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:42:40Z"
+  },
+  {
+   "sha": "857c5e2316be",
+   "tokens": 170,
+   "heartbeats": 6889,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:42:43Z"
+  },
+  {
+   "sha": "86b3c8a804dc",
+   "tokens": 169,
+   "heartbeats": 6242,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:45:03Z",
+   "score": 82.72
+  },
+  {
+   "sha": "d201a2c92486",
+   "tokens": 167,
+   "heartbeats": 6082,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:45:13Z",
+   "score": 82.97
+  },
+  {
+   "sha": "2a7a34b0a097",
+   "tokens": 163,
+   "heartbeats": 6719,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:45:23Z"
+  },
+  {
+   "sha": "ca505c4f59cf",
+   "tokens": 191,
+   "heartbeats": 3930,
+   "ok": false,
+   "error": "106:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] ∀ X ∉ L, Typing [⟨X, Binding.sub σ⟩] (t₁ ^ᵗᵞ Ty.fvar X) (τ_1 ^ᵞ Ty.fvar X) [prop] ∀ (X : Var), True [prop] Typing [] (Term.tabs σ t₁) (σ.all τ_1) [prop] ¬(Term.tabs σ t₁).Value [pr",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:45:26Z"
+  },
+  {
+   "sha": "034cd4d49362",
+   "tokens": 164,
+   "heartbeats": 5499,
+   "ok": false,
+   "error": "92:34: Application type mismatch: The argument rfl has type ?m.105 = ?m.105 but is expected to have type [] = Γ✝ in the application ih_l rfl",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:48:37Z"
+  },
+  {
+   "sha": "6911b70a9007",
+   "tokens": 253,
+   "heartbeats": 6546,
+   "ok": false,
+   "error": "106:29: Application type mismatch: The argument L has type ∀ x ∉ L✝, Typing [⟨x, Binding.ty σ✝⟩] (t₁✝ ^ᵗᵗ Term.fvar x) τ✝ of sort `Prop` but is expected to have type Finset Var of sort `Type u_1` in the application LC.abs L",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:52:18Z"
+  },
+  {
+   "sha": "f8a43af1e792",
+   "tokens": 209,
+   "heartbeats": 4742,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:52:40Z"
+  },
+  {
+   "sha": "bd26fffd2db3",
+   "tokens": 295,
+   "heartbeats": 5209,
+   "ok": false,
+   "error": "112:29: Application type mismatch: The argument L has type ∀ x ∉ L✝, Typing [⟨x, Binding.ty σ✝⟩] (t₁✝ ^ᵗᵗ Term.fvar x) τ✝ of sort `Prop` but is expected to have type Finset Var of sort `Type u_1` in the application LC.abs L",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:52:47Z"
+  },
+  {
+   "sha": "6375be9623a5",
+   "tokens": 129,
+   "heartbeats": 42839,
+   "ok": false,
+   "error": "90:21: `grind` failed case grind.2.1.1.1.1.1.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.arrow τ_1) [prop] Typing [] t₂ σ [prop] Typing [] t₁ (σ.arrow τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₂ σ → t₂.Value ∨ Exists t₂.Red [pro",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:54:34Z"
+  },
+  {
+   "sha": "ef331d3afd86",
+   "tokens": 127,
+   "heartbeats": 38719,
+   "ok": false,
+   "error": "90:14: `grind` failed case grind.2.1.1.1.1.1.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.arrow τ_1) [prop] Typing [] t₂ σ [prop] Typing [] t₁ (σ.arrow τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₂ σ → t₂.Value ∨ Exists t₂.Red [pro",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:54:50Z"
+  },
+  {
+   "sha": "c21643a412cf",
+   "tokens": 132,
+   "heartbeats": 50152,
+   "ok": false,
+   "error": "90:90: Unknown identifier `val_l.lc`",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:55:12Z"
+  },
+  {
+   "sha": "891b2572267a",
+   "tokens": 188,
+   "heartbeats": 6126,
+   "ok": false,
+   "error": "106:21: `grind` failed case grind.2 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₁ ^ᵗᵗ Term.fvar x) τ_1 [prop] ∀ (x : Var), True [prop] Typing [] (Term.abs σ t₁) (σ.arrow τ_1) [prop] ¬(Term.abs σ t₁).Value [prop] ∀ (a : T",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:55:19Z"
+  },
+  {
+   "sha": "d0fa035b2711",
+   "tokens": 166,
+   "heartbeats": 6164,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:57:17Z",
+   "score": 83.01
+  },
+  {
+   "sha": "6a348cf8375f",
+   "tokens": 157,
+   "heartbeats": 5681,
+   "ok": false,
+   "error": "97:15: `grind` failed case grind.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.all τ_1) [prop] Sub [] σ' σ [prop] Typing [] t₁ (σ.all τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] (t₁.tapp σ') (τ_1 ^ᵞ σ') [prop] ¬(t₁.tapp σ').Value [prop",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:57:39Z"
+  },
+  {
+   "sha": "40d9d0fcfccf",
+   "tokens": 160,
+   "heartbeats": 11837,
+   "ok": false,
+   "error": "98:15: `grind` failed case grind.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ σ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) τ_1 [prop] Typing [] t₁ σ → t₁.Value ∨ Exists t₁.Red [prop] ∀ (x : Var), True [prop] Typing [] (t₁",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:57:50Z"
+  },
+  {
+   "sha": "7aefd952f0f2",
+   "tokens": 133,
+   "heartbeats": 35365,
+   "ok": false,
+   "error": "93:8: `grind` failed case grind.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.arrow τ_1) [prop] Typing [] t₂ σ [prop] Typing [] t₁ (σ.arrow τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₂ σ → t₂.Value ∨ Exists t₂.Red [prop] Typing [] (t",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:58:11Z"
+  },
+  {
+   "sha": "25106a4e8a50",
+   "tokens": 165,
+   "heartbeats": 26446,
+   "ok": false,
+   "error": "102:6: `grind` failed case grind.3.1.10.10.12.1.3.1.8.8.8 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.sum τ_1) [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) δ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty τ_1⟩] (t₃ ^ᵗᵗ Term.fvar x)",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:58:25Z"
+  },
+  {
+   "sha": "bfc52195e130",
+   "tokens": 158,
+   "heartbeats": 10506,
+   "ok": false,
+   "error": "94:8: `grind` failed case grind.1.3.1.8.3.8.3.8.3.8 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.arrow τ_1) [prop] Typing [] t₂ σ [prop] Typing [] t₁ (σ.arrow τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₂ σ → t₂.Value ∨ Exists t₂.Red [pr",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:59:18Z"
+  },
+  {
+   "sha": "e57c0ea7cd0e",
+   "tokens": 164,
+   "heartbeats": 6157,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:59:26Z",
+   "score": 83.17
+  },
+  {
+   "sha": "8865ea1242d1",
+   "tokens": 163,
+   "heartbeats": 5731,
+   "ok": false,
+   "error": "93:8: `grind` failed case grind.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.arrow τ_1) [prop] Typing [] t₂ σ [prop] Typing [] t₁ (σ.arrow τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₂ σ → t₂.Value ∨ Exists t₂.Red [prop] Typing [] (t",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:59:48Z"
+  },
+  {
+   "sha": "2e59128646bb",
+   "tokens": 163,
+   "heartbeats": 5780,
+   "ok": false,
+   "error": "96:15: `grind` failed case grind.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.all τ_1) [prop] Sub [] σ' σ [prop] Typing [] t₁ (σ.all τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] (t₁.tapp σ') (τ_1 ^ᵞ σ') [prop] ¬(t₁.tapp σ').Value [prop",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:59:56Z"
+  },
+  {
+   "sha": "fb1fec92dc26",
+   "tokens": 163,
+   "heartbeats": 6195,
+   "ok": false,
+   "error": "96:15: `grind` failed case grind.2.1.1.1.1.1.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.all τ_1) [prop] Sub [] σ' σ [prop] Typing [] t₁ (σ.all τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] (t₁.tapp σ') (τ_1 ^ᵞ σ') [prop] ¬(t₁.tapp σ",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:00:04Z"
+  },
+  {
+   "sha": "80abfb2e36e2",
+   "tokens": 160,
+   "heartbeats": 6022,
+   "ok": false,
+   "error": "104:12: `grind` failed case grind.1.1.1.1.1.1.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ σ [prop] Wf [] τ_1 [prop] Typing [] t₁ σ → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₁.inl (σ.sum τ_1) [prop] ¬t₁.inl.Value [prop] ∀ (a : Term Var),",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:00:12Z"
+  },
+  {
+   "sha": "7dc1da4c8574",
+   "tokens": 161,
+   "heartbeats": 6258,
+   "ok": false,
+   "error": "97:15: `grind` failed case grind.1.1.1.1.1.1.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ σ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) τ_1 [prop] Typing [] t₁ σ → t₁.Value ∨ Exists t₁.Red [prop] ∀ (x : Var), True [prop]",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:02:21Z"
+  },
+  {
+   "sha": "3d7238e67aa0",
+   "tokens": 161,
+   "heartbeats": 6062,
+   "ok": false,
+   "error": "97:15: `grind` failed case grind.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ σ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) τ_1 [prop] Typing [] t₁ σ → t₁.Value ∨ Exists t₁.Red [prop] ∀ (x : Var), True [prop] Typing [] (t₁",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:02:28Z"
+  },
+  {
+   "sha": "b9c9e0a57a09",
+   "tokens": 164,
+   "heartbeats": 17022,
+   "ok": false,
+   "error": "89:33: `grind` failed case grind.1.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.arrow τ_1) [prop] Typing [] t₂ σ [prop] Typing [] t₁ (σ.arrow τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₂ σ → t₂.Value ∨ Exists t₂.Red [prop] Typing ",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:02:43Z"
+  },
+  {
+   "sha": "df68e65cc84b",
+   "tokens": 158,
+   "heartbeats": 6386,
+   "ok": false,
+   "error": "101:6: `grind` failed case grind.3.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.sum τ_1) [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) δ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty τ_1⟩] (t₃ ^ᵗᵗ Term.fvar x) δ [prop] Typing []",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:04:18Z"
+  },
+  {
+   "sha": "ba924cfbff4a",
+   "tokens": 162,
+   "heartbeats": 5764,
+   "ok": false,
+   "error": "101:30: Application type mismatch: The argument rfl has type ?m.257 = ?m.257 of sort `Prop` but is expected to have type Var of sort `Type u_1` in the application ih rfl",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:04:25Z"
+  },
+  {
+   "sha": "eb34afc833c8",
+   "tokens": 158,
+   "heartbeats": 16354,
+   "ok": false,
+   "error": "104:16: Application type mismatch: The argument (wf der').right.left has type (Term.fvar x✝).LC but is expected to have type (Term.let' ?m.296 ?m.297).LC in the application body_let.mp (wf der').right.left",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:04:41Z"
+  },
+  {
+   "sha": "f786b598a560",
+   "tokens": 165,
+   "heartbeats": 3955,
+   "ok": false,
+   "error": "104:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Env.Wf [] [prop] Binding.ty σ ∈ dlookup x [] [prop] Typing [] (Term.fvar x) σ [prop] ¬(Term.fvar x).Value [prop] ∀ (a : Term Var), ¬Term.fvar x ⭢βᵛ a [prop] (Typing [] (Term.fvar x",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:07:02Z"
+  },
+  {
+   "sha": "8865e21d7d27",
+   "tokens": 166,
+   "heartbeats": 22269,
+   "ok": false,
+   "error": "95:6: `grind` failed case grind.1.1.3.3.8.3.1.8.3.8.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.arrow τ_1) [prop] Typing [] t₂ σ [prop] Typing [] t₁ (σ.arrow τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₂ σ → t₂.Value ∨ Exists t₂.Red [",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:07:14Z"
+  },
+  {
+   "sha": "8959b5226fef",
+   "tokens": 167,
+   "heartbeats": 20072,
+   "ok": false,
+   "error": "95:6: `grind` failed case grind.1.1.3.3.8.3.1.8.3.8.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.arrow τ_1) [prop] Typing [] t₂ σ [prop] Typing [] t₁ (σ.arrow τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₂ σ → t₂.Value ∨ Exists t₂.Red [",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:07:26Z"
+  },
+  {
+   "sha": "3b8c111a4805",
+   "tokens": 156,
+   "heartbeats": 7829,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:08:44Z"
+  },
+  {
+   "sha": "9b6bd63a4b25",
+   "tokens": 160,
+   "heartbeats": 7014,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:08:51Z"
+  },
+  {
+   "sha": "5618efccaaa3",
+   "tokens": 160,
+   "heartbeats": 7015,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:08:59Z"
+  },
+  {
+   "sha": "b27c0fec3538",
+   "tokens": 161,
+   "heartbeats": 6124,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:10:33Z",
+   "score": 83.44
+  },
+  {
+   "sha": "bb77f39f1469",
+   "tokens": 183,
+   "heartbeats": 6319,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:10:54Z"
+  },
+  {
+   "sha": "4335abb6b864",
+   "tokens": 157,
+   "heartbeats": 6761,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:12:52Z"
+  },
+  {
+   "sha": "bac73e520388",
+   "tokens": 156,
+   "heartbeats": 8872,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:13:00Z"
+  },
+  {
+   "sha": "2cca47213a1d",
+   "tokens": 154,
+   "heartbeats": 30451,
+   "ok": false,
+   "error": "102:6: `grind` failed case grind.3.1.10.10.12.1.3.1.8.8.8 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.sum τ_1) [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) δ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty τ_1⟩] (t₃ ^ᵗᵗ Term.fvar x)",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:13:15Z"
+  },
+  {
+   "sha": "edace5adc35a",
+   "tokens": 145,
+   "heartbeats": 5692,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:16:27Z",
+   "score": 84.98
+  },
+  {
+   "sha": "62553fd73e5f",
+   "tokens": 140,
+   "heartbeats": 6420,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:16:49Z",
+   "score": 84.99
+  },
+  {
+   "sha": "2f37bf7ee75b",
+   "tokens": 125,
+   "heartbeats": 66652,
+   "ok": false,
+   "error": "90:14: `grind` failed case grind.1.2.1.1.1.2.4.1.2.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.arrow τ_1) [prop] Typing [] t₂ σ [prop] Typing [] t₁ (σ.arrow τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₂ σ → t₂.Value ∨ Exists t₂.Red [p",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:17:27Z"
+  },
+  {
+   "sha": "262946c38a98",
+   "tokens": 145,
+   "heartbeats": 5776,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:19:19Z"
+  },
+  {
+   "sha": "5b451559d3c7",
+   "tokens": 142,
+   "heartbeats": 6338,
+   "ok": false,
+   "error": "99:6: `grind` failed case grind.4.2.1.10.10.8.10.8.9 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.sum τ_1) [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) δ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty τ_1⟩] (t₃ ^ᵗᵗ Term.fvar x) δ [p",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:19:27Z"
+  },
+  {
+   "sha": "70f6f15a781b",
+   "tokens": 141,
+   "heartbeats": 4109,
+   "ok": false,
+   "error": "101:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Env.Wf [] [prop] Binding.ty σ ∈ dlookup x [] [prop] Typing [] (Term.fvar x) σ [prop] ¬(Term.fvar x).Value [prop] ∀ (a : Term Var), ¬Term.fvar x ⭢βᵛ a [eqc] True propositions [prop]",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:50:26Z"
+  },
+  {
+   "sha": "8284eb235a61",
+   "tokens": 144,
+   "heartbeats": 18639,
+   "ok": false,
+   "error": "93:6: `grind` failed case grind.1.1.3.3.8.3.1.8.3.8.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.arrow τ_1) [prop] Typing [] t₂ σ [prop] Typing [] t₁ (σ.arrow τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₂ σ → t₂.Value ∨ Exists t₂.Red [",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:50:38Z"
+  },
+  {
+   "sha": "645c265b6514",
+   "tokens": 67,
+   "heartbeats": 86610,
+   "ok": false,
+   "error": "90:12: `grind` failed case grind.2.1.1.1.1.8.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.arrow τ_1) [prop] Typing [] t₂ σ [prop] Typing [] t₁ (σ.arrow τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₂ σ → t₂.Value ∨ Exists t₂.Red [pro",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:51:24Z"
+  },
+  {
+   "sha": "937a1575935d",
+   "tokens": 154,
+   "heartbeats": 6355,
+   "ok": false,
+   "error": "101:21: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₁ ^ᵗᵗ Term.fvar x) τ_1 [prop] ∀ (x : Var), True [prop] Typing [] (Term.abs σ t₁) (σ.arrow τ_1) [prop] ¬(Term.abs σ t₁).Value [prop] ∀ (a : Ter",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:51:31Z"
+  },
+  {
+   "sha": "852e1eab4781",
+   "tokens": 147,
+   "heartbeats": 4756,
+   "ok": false,
+   "error": "101:12: `grind` failed case grind.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Env.Wf [] [prop] Binding.ty σ ∈ dlookup x [] [prop] Typing [] (Term.fvar x) σ [prop] ¬(Term.fvar x).Value [prop] ∀ (a : Term Var), ¬Term.fvar x ⭢βᵛ a [prop] (Typing [] (Term.fvar",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:52:42Z"
+  },
+  {
+   "sha": "ed380664b827",
+   "tokens": 152,
+   "heartbeats": 4735,
+   "ok": false,
+   "error": "94:15: `grind` failed case grind.1.2 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.all τ_1) [prop] Sub [] σ' σ [prop] Typing [] t₁ (σ.all τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] (t₁.tapp σ') (τ_1 ^ᵞ σ') [prop] ¬(t₁.tapp σ').Value [prop",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:52:49Z"
+  },
+  {
+   "sha": "7f1fbb350937",
+   "tokens": 144,
+   "heartbeats": 5141,
+   "ok": false,
+   "error": "94:15: `grind` failed case grind.1.2 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.all τ_1) [prop] Sub [] σ' σ [prop] Typing [] t₁ (σ.all τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] (t₁.tapp σ') (τ_1 ^ᵞ σ') [prop] ¬(t₁.tapp σ').Value [prop",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:52:56Z"
+  },
+  {
+   "sha": "bdea670a8d10",
+   "tokens": 169,
+   "heartbeats": 3968,
+   "ok": false,
+   "error": "102:54: invalid `grind` theorem, failed to find an usable pattern using different modifiers",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:56:09Z"
+  },
+  {
+   "sha": "33b1dd72234c",
+   "tokens": 144,
+   "heartbeats": 6334,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:57:32Z"
+  },
+  {
+   "sha": "5706ee5101aa",
+   "tokens": 144,
+   "heartbeats": 6106,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:57:39Z"
+  },
+  {
+   "sha": "4cc7cb2ab51a",
+   "tokens": 149,
+   "heartbeats": 5201,
+   "ok": false,
+   "error": "94:15: `grind` failed case grind.1.2 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.all τ_1) [prop] Sub [] σ' σ [prop] Typing [] t₁ (σ.all τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] (t₁.tapp σ') (τ_1 ^ᵞ σ') [prop] ¬(t₁.tapp σ').Value [prop",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:57:46Z"
+  },
+  {
+   "sha": "e27a6861eba4",
+   "tokens": 136,
+   "heartbeats": 7693,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:59:25Z"
+  },
+  {
+   "sha": "07b6998cefa4",
+   "tokens": 135,
+   "heartbeats": 6048,
+   "ok": false,
+   "error": "98:6: `grind` failed case grind.3.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.sum τ_1) [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) δ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty τ_1⟩] (t₃ ^ᵗᵗ Term.fvar x) δ [prop] Typing [] ",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:59:33Z"
+  },
+  {
+   "sha": "656f5c96d2fa",
+   "tokens": 131,
+   "heartbeats": 7322,
+   "ok": false,
+   "error": "98:6: `grind` failed case grind.3.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.sum τ_1) [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) δ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty τ_1⟩] (t₃ ^ᵗᵗ Term.fvar x) δ [prop] Typing [] ",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:59:40Z"
+  },
+  {
+   "sha": "c0701564aed4",
+   "tokens": 124,
+   "heartbeats": 7179,
+   "ok": false,
+   "error": "98:6: `grind` failed case grind.3.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.sum τ_1) [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) δ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty τ_1⟩] (t₃ ^ᵗᵗ Term.fvar x) δ [prop] Typing [] ",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:59:48Z"
+  },
+  {
+   "sha": "f1b5fda3d7e1",
+   "tokens": 134,
+   "heartbeats": 6081,
+   "ok": false,
+   "error": "94:15: `grind` failed case grind.1.2 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.all τ_1) [prop] Sub [] σ' σ [prop] Typing [] t₁ (σ.all τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] (t₁.tapp σ') (τ_1 ^ᵞ σ') [prop] ¬(t₁.tapp σ').Value [prop",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:00:36Z"
+  },
+  {
+   "sha": "1aa0cec2b13d",
+   "tokens": 133,
+   "heartbeats": 6276,
+   "ok": false,
+   "error": "101:12: `grind` failed case grind.1.1.1.1.1.1.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ σ [prop] Wf [] τ_1 [prop] Typing [] t₁ σ → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₁.inl (σ.sum τ_1) [prop] ¬t₁.inl.Value [prop] ∀ (a : Term Var),",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:00:44Z"
+  },
+  {
+   "sha": "1dbae2f17002",
+   "tokens": 133,
+   "heartbeats": 7212,
+   "ok": false,
+   "error": "92:6: `grind` failed case grind.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.arrow τ_1) [prop] Typing [] t₂ σ [prop] Typing [] t₁ (σ.arrow τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₂ σ → t₂.Value ∨ Exists t₂.Red [prop] Typing [] ",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:00:52Z"
+  },
+  {
+   "sha": "504f999fd2b4",
+   "tokens": 125,
+   "heartbeats": 6549,
+   "ok": false,
+   "error": "90:25: unsolved goals case inr … [hypotheses omitted] ⊢ (t₁✝.app t₂✝).Value ∨ ∃ t', t₁✝.app t₂✝ ⭢βᵛ t'",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:03:02Z"
+  },
+  {
+   "sha": "587adff56488",
+   "tokens": 129,
+   "heartbeats": 6839,
+   "ok": false,
+   "error": "90:25: unsolved goals case inr … [hypotheses omitted] ⊢ (t₁✝.app t₂✝).Value ∨ ∃ t', t₁✝.app t₂✝ ⭢βᵛ t'",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:03:09Z"
+  },
+  {
+   "sha": "042d125c2463",
+   "tokens": 128,
+   "heartbeats": 6167,
+   "ok": false,
+   "error": "95:27: unsolved goals case inl … [hypotheses omitted] ⊢ (t₁✝.case t₂✝ t₃✝).Value ∨ ∃ t', t₁✝.case t₂✝ t₃✝ ⭢βᵛ t' ‖ ⊢ (t₁✝.case t₂✝ t₃✝).Value ∨ ∃ t', t₁✝.case t₂✝ t₃✝ ⭢βᵛ t'",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:04:11Z"
+  },
+  {
+   "sha": "f8b8bc0ec468",
+   "tokens": 129,
+   "heartbeats": 6381,
+   "ok": false,
+   "error": "95:27: unsolved goals case inr … [hypotheses omitted] ⊢ (t₁✝.case t₂✝ t₃✝).Value ∨ ∃ t', t₁✝.case t₂✝ t₃✝ ⭢βᵛ t'",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:04:19Z"
+  },
+  {
+   "sha": "42a88353b652",
+   "tokens": 131,
+   "heartbeats": 6814,
+   "ok": false,
+   "error": "95:27: unsolved goals case inl … [hypotheses omitted] ⊢ (t₁✝.case t₂✝ t₃✝).Value ∨ ∃ t', t₁✝.case t₂✝ t₃✝ ⭢βᵛ t' ‖ ⊢ (t₁✝.case t₂✝ t₃✝).Value ∨ ∃ t', t₁✝.case t₂✝ t₃✝ ⭢βᵛ t'",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:04:26Z"
+  },
+  {
+   "sha": "8f457a7be135",
+   "tokens": 132,
+   "heartbeats": 6456,
+   "ok": false,
+   "error": "95:27: unsolved goals case inr … [hypotheses omitted] ⊢ (t₁✝.case t₂✝ t₃✝).Value ∨ ∃ t', t₁✝.case t₂✝ t₃✝ ⭢βᵛ t'",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:04:57Z"
+  },
+  {
+   "sha": "4a237bd8617e",
+   "tokens": 135,
+   "heartbeats": 7046,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:05:30Z",
+   "score": 85.05
+  },
+  {
+   "sha": "db3c2970f6f7",
+   "tokens": 144,
+   "heartbeats": 5764,
+   "ok": false,
+   "error": "100:12: Invalid `⟨...⟩` notation: The expected type (t₁✝.case t₂✝ t₃✝).Value ∨ ∃ t', t₁✝.case t₂✝ t₃✝ ⭢βᵛ t' has more than one constructor Note: This notation can only be used when the expected type is an inductive type with a single constructor",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:05:52Z"
+  },
+  {
+   "sha": "ab7624636670",
+   "tokens": 140,
+   "heartbeats": 6397,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:07:25Z"
+  },
+  {
+   "sha": "9114a48ab61e",
+   "tokens": 130,
+   "heartbeats": 6802,
+   "ok": false,
+   "error": "97:6: `grind` failed case grind.3.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.sum τ_1) [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) δ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty τ_1⟩] (t₃ ^ᵗᵗ Term.fvar x) δ [prop] Typing [] ",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:07:33Z"
+  },
+  {
+   "sha": "e54fa144f30d",
+   "tokens": 142,
+   "heartbeats": 2984,
+   "ok": false,
+   "error": "100:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Env.Wf [] [prop] Binding.ty σ ∈ dlookup x [] [prop] Typing [] (Term.fvar x) σ [prop] ¬(Term.fvar x).Value [prop] ∀ (a : Term Var), ¬Term.fvar x ⭢βᵛ a [eqc] True propositions [prop]",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:02:46Z"
+  },
+  {
+   "sha": "a46343764601",
+   "tokens": 160,
+   "heartbeats": 6840,
+   "ok": false,
+   "error": "96:27: Unknown identifier `ih`",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:02:58Z"
+  },
+  {
+   "sha": "68e5a6f03792",
+   "tokens": 139,
+   "heartbeats": 6821,
+   "ok": false,
+   "error": "93:30: Application type mismatch: The argument (wf l).right.left has type t₁✝.LC but is expected to have type t₂✝.LC in the application Red.appₗ (wf l).right.left",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:03:19Z"
+  },
+  {
+   "sha": "ca43b01da23a",
+   "tokens": 144,
+   "heartbeats": 6145,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:04:03Z"
+  },
+  {
+   "sha": "18494351e48e",
+   "tokens": 174,
+   "heartbeats": 6229,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:04:23Z"
+  },
+  {
+   "sha": "4dd7d5706996",
+   "tokens": 188,
+   "heartbeats": 4488,
+   "ok": false,
+   "error": "92:13: Tactic `rcases` failed: `x✝ : Typing [] t₁✝ (arrow ?m.206 ?m.207) → ∃ δ t', t₁✝ = Term.abs δ t'` is not an inductive datatype",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:08:05Z"
+  },
+  {
+   "sha": "24486d96ccdf",
+   "tokens": 339,
+   "heartbeats": 1100,
+   "ok": false,
+   "error": "93:13: Tactic `rcases` failed: `x✝ : Typing [] t₁✝ (arrow ?m.207 ?m.208) → ∃ δ t', t₁✝ = Term.abs δ t'` is not an inductive datatype",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:08:15Z"
+  },
+  {
+   "sha": "e1c0e6aac03c",
+   "tokens": 194,
+   "heartbeats": 4515,
+   "ok": false,
+   "error": "93:38: Application type mismatch: The argument val_l has type (Term.abs w✝ u).Value but is expected to have type t₂.Value in the application Red.abs (wf l).right.left val_l",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:09:16Z"
+  },
+  {
+   "sha": "98a8cb30d511",
+   "tokens": 346,
+   "heartbeats": 1237,
+   "ok": false,
+   "error": "94:38: Application type mismatch: The argument val_l has type (Term.abs w✝ u).Value but is expected to have type t₂.Value in the application Red.abs (wf l).right.left val_l",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:09:40Z"
+  },
+  {
+   "sha": "df6e5a92fda2",
+   "tokens": 217,
+   "heartbeats": 4510,
+   "ok": false,
+   "error": "99:28: Function expected at canonical_form_tabs val der but this term has type ∃ δ t', t₁✝ = Term.tabs δ t' Note: Expected a function because this term is being applied to the argument sub",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:10:15Z"
+  },
+  {
+   "sha": "e2145cbfa0b2",
+   "tokens": 369,
+   "heartbeats": 1229,
+   "ok": false,
+   "error": "100:28: Function expected at canonical_form_tabs val der but this term has type ∃ δ t', t₁✝ = Term.tabs δ t' Note: Expected a function because this term is being applied to the argument sub",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:10:28Z"
+  },
+  {
+   "sha": "81d5ad267297",
+   "tokens": 216,
+   "heartbeats": 4505,
+   "ok": false,
+   "error": "99:13: Tactic `rcases` failed: `x✝ : Typing [] t₁✝ (Ty.all ?m.330 ?m.331) → ∃ δ t', t₁✝ = Term.tabs δ t'` is not an inductive datatype",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:11:06Z"
+  },
+  {
+   "sha": "bf2648deae69",
+   "tokens": 367,
+   "heartbeats": 1116,
+   "ok": false,
+   "error": "100:13: Tactic `rcases` failed: `x✝ : Typing [] t₁✝ (Ty.all ?m.331 ?m.332) → ∃ δ t', t₁✝ = Term.tabs δ t'` is not an inductive datatype",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:11:25Z"
+  },
+  {
+   "sha": "558d124ea6c1",
+   "tokens": 217,
+   "heartbeats": 4597,
+   "ok": false,
+   "error": "99:48: Application type mismatch: The argument sub has type Sub [] σ' σ✝ but is expected to have type Value ?m.332 in the application canonical_form_tabs sub",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:11:56Z"
+  },
+  {
+   "sha": "e7e0fdd7cd81",
+   "tokens": 368,
+   "heartbeats": 1207,
+   "ok": false,
+   "error": "100:48: Application type mismatch: The argument sub has type Sub [] σ' σ✝ but is expected to have type Value ?m.333 in the application canonical_form_tabs sub",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:12:05Z"
+  },
+  {
+   "sha": "6111e5804571",
+   "tokens": 217,
+   "heartbeats": 4510,
+   "ok": false,
+   "error": "99:52: Application type mismatch: The argument sub has type Sub [] σ' σ✝ but is expected to have type Typing [] t₁✝ (Ty.all ?m.330 ?m.331) in the application canonical_form_tabs val sub",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:12:51Z"
+  },
+  {
+   "sha": "803b5a4e36c7",
+   "tokens": 368,
+   "heartbeats": 1120,
+   "ok": false,
+   "error": "100:52: Application type mismatch: The argument sub has type Sub [] σ' σ✝ but is expected to have type Typing [] t₁✝ (Ty.all ?m.331 ?m.332) in the application canonical_form_tabs val sub",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:12:58Z"
+  },
+  {
+   "sha": "4fecf80dc858",
+   "tokens": 217,
+   "heartbeats": 4539,
+   "ok": false,
+   "error": "100:32: Invalid field `wf`: The environment does not contain `Cslib.LambdaCalculus.LocallyNameless.Fsub.Term.wf`, so it is not possible to project the field `wf` from an expression u of type `Term Var`",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:13:27Z"
+  },
+  {
+   "sha": "f8911e619749",
+   "tokens": 368,
+   "heartbeats": 1146,
+   "ok": false,
+   "error": "101:32: Invalid field `wf`: The environment does not contain `Cslib.LambdaCalculus.LocallyNameless.Fsub.Term.wf`, so it is not possible to project the field `wf` from an expression u of type `Term Var`",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:13:40Z"
+  },
+  {
+   "sha": "41ff0299cd4e",
+   "tokens": 217,
+   "heartbeats": 4540,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:14:14Z"
+  },
+  {
+   "sha": "e93eb23b085a",
+   "tokens": 368,
+   "heartbeats": 1149,
+   "ok": false,
+   "error": "115:13: Tactic `rcases` failed: `x✝ : Typing [] t₁✝ (Ty.sum ?m.565 ?m.566) → ∃ t', t₁✝ = t'.inl ∨ t₁✝ = t'.inr` is not an inductive datatype",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:14:21Z"
+  },
+  {
+   "sha": "8ef8d20f86ab",
+   "tokens": 133,
+   "heartbeats": 6093,
+   "ok": false,
+   "error": "94:15: `grind` failed case grind.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.all τ_1) [prop] Sub [] σ' σ [prop] Typing [] t₁ (σ.all τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] (t₁.tapp σ') (τ_1 ^ᵞ σ') [prop] ¬(t₁.tapp σ').Value [prop",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:15:13Z"
+  },
+  {
+   "sha": "15ef70a91dd0",
+   "tokens": 130,
+   "heartbeats": 21297,
+   "ok": false,
+   "error": "98:4: `grind` failed case grind.3.1.10.10.10.10.10.10.10.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.sum τ_1) [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₂ ^ᵗᵗ Term.fvar x) δ [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty τ_1⟩] (t₃ ^ᵗᵗ Term.fvar",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:15:49Z"
+  },
+  {
+   "sha": "13cc5db4af7f",
+   "tokens": 114,
+   "heartbeats": 40051,
+   "ok": false,
+   "error": "90:14: `grind` failed case grind.2.1.1.1.1.1.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.arrow τ_1) [prop] Typing [] t₂ σ [prop] Typing [] t₁ (σ.arrow τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₂ σ → t₂.Value ∨ Exists t₂.Red [pro",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:16:05Z"
+  },
+  {
+   "sha": "43f911c26fae",
+   "tokens": 109,
+   "heartbeats": 54304,
+   "ok": false,
+   "error": "90:14: `grind` failed case grind.2.1.1.1.1.1.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.arrow τ_1) [prop] Typing [] t₂ σ [prop] Typing [] t₁ (σ.arrow τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] t₂ σ → t₂.Value ∨ Exists t₂.Red [pro",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:16:31Z"
+  },
+  {
+   "sha": "e4af06becfe1",
+   "tokens": 136,
+   "heartbeats": 6860,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:16:54Z",
+   "score": 85.07
+  },
+  {
+   "sha": "03ca7089debd",
+   "tokens": 140,
+   "heartbeats": 6828,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:17:14Z"
+  },
+  {
+   "sha": "a2c8a1c1fe75",
+   "tokens": 146,
+   "heartbeats": 3110,
+   "ok": false,
+   "error": "100:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₁ ^ᵗᵗ Term.fvar x) τ_1 [prop] ∀ (x : Var), True [prop] Typing [] (Term.abs σ t₁) (σ.arrow τ_1) [prop] ¬(Term.abs σ t₁).Value [prop] ∀ (a : Ter",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:17:41Z"
+  },
+  {
+   "sha": "44449ee05e68",
+   "tokens": 150,
+   "heartbeats": 3097,
+   "ok": false,
+   "error": "100:12: `grind` failed case grind.1.2 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] Typing [] t₁ (σ.all τ_1) [prop] Sub [] σ' σ [prop] Typing [] t₁ (σ.all τ_1) → t₁.Value ∨ Exists t₁.Red [prop] Typing [] (t₁.tapp σ') (τ_1 ^ᵞ σ') [prop] ¬(t₁.tapp σ').Value [pro",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:17:55Z"
+  },
+  {
+   "sha": "ba3788adacc2",
+   "tokens": 149,
+   "heartbeats": 3238,
+   "ok": false,
+   "error": "100:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₁ ^ᵗᵗ Term.fvar x) τ_1 [prop] ∀ (x : Var), True [prop] Typing [] (Term.abs σ t₁) (σ.arrow τ_1) [prop] ¬(Term.abs σ t₁).Value [prop] ∀ (a : Ter",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:18:20Z"
+  },
+  {
+   "sha": "e007bc7e0b11",
+   "tokens": 146,
+   "heartbeats": 3233,
+   "ok": false,
+   "error": "100:12: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] ∀ x ∉ L, Typing [⟨x, Binding.ty σ⟩] (t₁ ^ᵗᵗ Term.fvar x) τ_1 [prop] ∀ (x : Var), True [prop] Typing [] (Term.abs σ t₁) (σ.arrow τ_1) [prop] ¬(Term.abs σ t₁).Value [prop] ∀ (a : Ter",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:18:28Z"
+  }
+ ],
+ "runs": [
+  {
+   "run_id": "fresh-a100-p1",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-06T22:54:36Z"
+  },
+  {
+   "run_id": "fresh-a100-p2",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T02:57:04Z"
+  },
+  {
+   "run_id": "fresh-a100-p3",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T17:01:16Z"
+  },
+  {
+   "run_id": "fresh-a100-p4",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-08T22:44:03Z",
+   "mode": "structural"
+  },
+  {
+   "run_id": "fresh-a100-p5",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T00:27:54Z",
+   "mode": "structural"
+  },
+  {
+   "run_id": "fresh-a100-p6",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T03:47:27Z",
+   "mode": "structural"
+  },
+  {
+   "run_id": "fresh-a100-p7",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T12:48:26Z",
+   "mode": "structural"
+  },
+  {
+   "run_id": "fresh-a100-p8",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T22:00:09Z"
+  }
+ ],
+ "ledger": {
+  "wins": [
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 7,
+    "d_score": 2.08,
+    "d_tokens": -24,
+    "d_heartbeats": -197,
+    "diff": "-    have hb := (Term.body_let.mp der'.wf.2.1).2\n+    have hb := (body_let.mp der'.wf.2.1).2\n-    have hb := Term.body_case.mp der'.wf.2.1\n+    have hb := body_case.mp der'.wf.2.1\n-  case abs L _ _ =>\n-    left\n-    constructor\n-    grind only [LC.abs L, → wf, cases Term.LC]\n-  case tabs L _ _ =>\n-    left\n-    constructor\n-    grind only [LC.tabs L, → wf, cases Term.LC]\n+  case abs => left; exact Value.abs der'.wf.2.1\n+  case tabs => left; exact Value.tabs der'.wf.2.1",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "25b228ace616"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 5,
+    "d_score": 0.16,
+    "d_tokens": -2,
+    "d_heartbeats": -8,
+    "diff": "-      · obtain ⟨σ, t₁, rfl⟩ := l.canonical_form_abs val_l\n+      · obtain ⟨_, _, rfl⟩ := l.canonical_form_abs val_l\n-    · obtain ⟨δ, t, rfl⟩ := der.canonical_form_tabs val\n+    · obtain ⟨_, _, rfl⟩ := der.canonical_form_tabs val\n-    exact (ih rfl der).imp Value.inl fun r => ⟨.inl r.choose, Red.inl r.choose_spec⟩\n+    exact (ih rfl der).imp Value.inl fun r => ⟨_, Red.inl r.choose_spec⟩\n-    exact (ih rfl der).imp Value.inr fun r => ⟨.inr r.choose, Red.inr r.choose_spec⟩\n+    exact (ih rfl der).imp Value.inr fun r => ⟨_, Red.inr r.choose_spec⟩\n-    · obtain ⟨u, rfl | rfl⟩ := der.canonical_form_sum val\n-      · cases val with\n-        | inl v => exact ⟨_, Red.case_inl v hb.2.1 hb.2.2⟩\n-     ",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "b0172f067b7b"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 9,
+    "d_score": 0.06,
+    "d_tokens": -2,
+    "d_heartbeats": 183,
+    "diff": "-    · obtain ⟨_, rfl | rfl⟩ := der.canonical_form_sum val\n+    · obtain ⟨u, rfl | rfl⟩ := der.canonical_form_sum val\n-  case abs => left; exact Value.abs der'.wf.2.1\n-  case tabs => left; exact Value.tabs der'.wf.2.1\n+  case abs tabs => left; constructor; all_goals grind [→ wf]"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 18,
+    "d_score": 0.09,
+    "d_tokens": -1,
+    "d_heartbeats": 0,
+    "diff": "-    rcases ih_l rfl l with val_l | red_l\n-    · rcases ih_r rfl r with val_r | red_r\n+    obtain val_l | red_l := ih_l rfl l\n+    · obtain val_r | red_r := ih_r rfl r\n-    rcases ih rfl der with val | red\n+    obtain val | red := ih rfl der\n-    rcases ih rfl der with val | red\n+    obtain val | red := ih rfl der\n-    rcases ih rfl der with val | red\n+    obtain val | red := ih rfl der\n-  case abs tabs => left; constructor; all_goals grind [→ wf]\n+  case abs tabs => left; constructor; grind [→ wf]"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 19,
+    "d_score": 1.64,
+    "d_tokens": -43,
+    "d_heartbeats": 3361,
+    "diff": "-  case let' der _ ih _ =>\n-    right\n-    have hb := (body_let.mp der'.wf.2.1).2\n-    obtain val | red := ih rfl der\n-    · exact ⟨_, Red.let_body val hb⟩\n-    · exact ⟨_, Red.let_bind red.choose_spec hb⟩\n-  case inl der _ ih =>\n-    exact (ih rfl der).imp Value.inl fun r => ⟨_, Red.inl r.choose_spec⟩\n-  case inr der _ ih =>\n-    exact (ih rfl der).imp Value.inr fun r => ⟨_, Red.inr r.choose_spec⟩\n+  case let' => grind [cases Value, cases Red, → Red.let_bind, → Red.let_body]\n+  case inl => grind [cases Value, cases Red, → Red.inl]\n+  case inr => grind [cases Value, cases Red, → Red.inr]"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 20,
+    "d_score": 1.2,
+    "d_tokens": -24,
+    "d_heartbeats": 1372,
+    "diff": "-  case tapp der sub ih =>\n-    right\n-    obtain val | red := ih rfl der\n-    · obtain ⟨_, _, rfl⟩ := der.canonical_form_tabs val\n-      exact ⟨_, Red.tabs val.lc sub.wf.2.1.lc⟩\n-    · exact ⟨_, Red.tapp sub.wf.2.1.lc red.choose_spec⟩\n+  case tapp => grind [cases Value, cases Red, → Red.tabs, → Red.tapp, → canonical_form_tabs]"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 40,
+    "d_score": 0.91,
+    "d_tokens": -29,
+    "d_heartbeats": 2608,
+    "diff": "-      · exact ⟨_, Red.appᵣ val_l red_r.choose_spec⟩\n-    · exact ⟨_, Red.appₗ r.wf.2.1 red_l.choose_spec⟩\n+      · grind [cases Red, → Red.appᵣ]\n+    · grind [cases Red, → Red.appₗ]\n-  case inl => grind [cases Value, cases Red, → Red.inl]\n-  case inr => grind [cases Value, cases Red, → Red.inr]\n-      · cases val with | inl v => exact ⟨_, Red.case_inl v hb.2.1 hb.2.2⟩\n-      · cases val with | inr v => exact ⟨_, Red.case_inr v hb.2.1 hb.2.2⟩\n+      · grind only [cases Value, → Red.case_inl]\n+      · grind only [cases Value, → Red.case_inr]\n-  all_goals grind\n+  all_goals grind [cases Value, cases Red, → Red.inl, → Red.inr]"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 41,
+    "d_score": 0.49,
+    "d_tokens": -6,
+    "d_heartbeats": -1,
+    "diff": "-  case tapp => grind [cases Value, cases Red, → Red.tabs, → Red.tapp, → canonical_form_tabs]\n-  case let' => grind [cases Value, cases Red, → Red.let_bind, → Red.let_body]\n+  case tapp => grind [cases Red, → Red.tabs, → Red.tapp, → canonical_form_tabs]\n+  case let' => grind [cases Red, → Red.let_bind, → Red.let_body]"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 43,
+    "d_score": 0.32,
+    "d_tokens": -8,
+    "d_heartbeats": 600,
+    "diff": "-  case tapp => grind [cases Red, → Red.tabs, → Red.tapp, → canonical_form_tabs]\n-  all_goals grind [cases Value, cases Red, → Red.inl, → Red.inr]\n+  all_goals grind [cases Value, cases Red, → Red.inl, → Red.inr, → Red.tabs, → Red.tapp, →\n+    canonical_form_tabs]"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 45,
+    "d_score": 0.18,
+    "d_tokens": 2,
+    "d_heartbeats": -612,
+    "diff": "+  case tapp => grind [cases Red, → Red.tabs, → Red.tapp, → canonical_form_tabs]\n-  all_goals grind [cases Value, cases Red, → Red.inl, → Red.inr, → Red.tabs, → Red.tapp, →\n-    canonical_form_tabs]\n+  all_goals grind [→ Red.inl, → Red.inr]"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 47,
+    "d_score": 0.49,
+    "d_tokens": -6,
+    "d_heartbeats": -2,
+    "diff": "-      · grind [cases Red, → Red.appᵣ]\n-    · grind [cases Red, → Red.appₗ]\n+      · grind [→ Red.appᵣ]\n+    · grind [→ Red.appₗ]"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 50,
+    "d_score": 0.49,
+    "d_tokens": -6,
+    "d_heartbeats": -2,
+    "diff": "-  case tapp => grind [cases Red, → Red.tabs, → Red.tapp, → canonical_form_tabs]\n-  case let' => grind [cases Red, → Red.let_bind, → Red.let_body]\n+  case tapp => grind [→ Red.tabs, → Red.tapp, → canonical_form_tabs]\n+  case let' => grind [→ Red.let_bind, → Red.let_body]"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 54,
+    "d_score": 1.04,
+    "d_tokens": -12,
+    "d_heartbeats": -95,
+    "diff": "-    obtain val | red := ih rfl der\n-    · obtain ⟨u, rfl | rfl⟩ := der.canonical_form_sum val\n-      · grind only [cases Value, → Red.case_inl]\n-      · grind only [cases Value, → Red.case_inr]\n-    · exact ⟨_, Red.case red.choose_spec hb.2.1 hb.2.2⟩\n+    obtain val | ⟨t, h⟩ := ih rfl der\n+    · grind only [→ canonical_form_sum, cases Value, → Red.case_inl, → Red.case_inr]\n+    · exact ⟨_, Red.case h hb.2.1 hb.2.2⟩"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 56,
+    "d_score": 0.12,
+    "d_tokens": 4,
+    "d_heartbeats": -813,
+    "diff": "-    obtain val_l | red_l := ih_l rfl l\n+    obtain val_l | ⟨t₁', h⟩ := ih_l rfl l"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 58,
+    "d_score": 0.29,
+    "d_tokens": -7,
+    "d_heartbeats": 506,
+    "diff": "-    obtain val_l | ⟨t₁', h⟩ := ih_l rfl l\n+    obtain val_l | ⟨_, h⟩ := ih_l rfl l\n-      · obtain ⟨_, _, rfl⟩ := l.canonical_form_abs val_l\n-        exact ⟨_, Red.abs val_l.lc val_r⟩\n+      · grind only [→ canonical_form_abs, → Red.abs, → Value.lc]\n-    obtain val | ⟨t, h⟩ := ih rfl der\n+    obtain val | ⟨_, h⟩ := ih rfl der"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 67,
+    "d_score": 0.15,
+    "d_tokens": 4,
+    "d_heartbeats": -855,
+    "diff": "-    · obtain val_r | red_r := ih_r rfl r\n+    · obtain val_r | ⟨_, h₂⟩ := ih_r rfl r"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 68,
+    "d_score": 0.1,
+    "d_tokens": -7,
+    "d_heartbeats": 854,
+    "diff": "-    · obtain val_r | ⟨_, h₂⟩ := ih_r rfl r\n+    · obtain val_r | red_r := ih_r rfl r\n-    · grind only [→ canonical_form_sum, cases Value, → Red.case_inl, → Red.case_inr]\n+    · grind only [→ canonical_form_sum, → Red.case_inl, → Red.case_inr]"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 69,
+    "d_score": 0.15,
+    "d_tokens": 4,
+    "d_heartbeats": -857,
+    "diff": "-    · obtain val_r | red_r := ih_r rfl r\n+    · obtain val_r | ⟨_, h₂⟩ := ih_r rfl r"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 71,
+    "d_score": 0.1,
+    "d_tokens": -1,
+    "d_heartbeats": -30,
+    "diff": "-      · grind only [→ canonical_form_abs, → Red.abs, → Value.lc]\n+      · grind only [→ canonical_form_abs, → Red.abs, val_l.lc]"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 7,
+    "d_score": 0.36,
+    "d_tokens": -5,
+    "d_heartbeats": 72,
+    "diff": "-  have der' := der\n+  have der' : Typing Γ t τ := der\n-  case abs tabs => left; constructor; grind [→ wf]\n-  all_goals grind [→ Red.inl, → Red.inr]\n+  all_goals grind [→ Red.inl, → Red.inr, → wf]"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 9,
+    "d_score": 0.13,
+    "d_tokens": 6,
+    "d_heartbeats": -1114,
+    "diff": "-  case let' => grind [→ Red.let_bind, → Red.let_body]\n+  case let' => grind only [→ Red.let_bind, → Red.let_body, → wf, body_let]"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 20,
+    "d_score": 0.42,
+    "d_tokens": -5,
+    "d_heartbeats": -8,
+    "diff": "-  have der' : Typing Γ t τ := der\n+  have der' := der"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 21,
+    "d_score": 0.25,
+    "d_tokens": -2,
+    "d_heartbeats": -160,
+    "diff": "-  case let' => grind only [→ Red.let_bind, → Red.let_body, → wf, body_let]\n+  case let' => grind only [→ Red.let_bind, → Red.let_body, body_let.mp der'.wf.2.1]"
+   },
+   {
+    "run_id": "fresh-a100-p6",
+    "check": 8,
+    "d_score": 0.04,
+    "d_tokens": -1,
+    "d_heartbeats": 82,
+    "diff": "-    right"
+   },
+   {
+    "run_id": "fresh-a100-p6",
+    "check": 14,
+    "d_score": 0.16,
+    "d_tokens": -2,
+    "d_heartbeats": -7,
+    "diff": "-      · grind only [→ canonical_form_abs, → Red.abs, val_l.lc]\n+      · grind only [→ canonical_form_abs, → Red.abs]"
+   },
+   {
+    "run_id": "fresh-a100-p6",
+    "check": 31,
+    "d_score": 0.27,
+    "d_tokens": -3,
+    "d_heartbeats": -33,
+    "diff": "-  all_goals grind [→ Red.inl, → Red.inr, → wf]\n+  all_goals grind [→ Red.inl, → Red.inr]"
+   },
+   {
+    "run_id": "fresh-a100-p6",
+    "check": 36,
+    "d_score": 1.54,
+    "d_tokens": -16,
+    "d_heartbeats": -432,
+    "diff": "-    · obtain val_r | ⟨_, h₂⟩ := ih_r rfl r\n-      · grind only [→ canonical_form_abs, → Red.abs]\n-      · grind [→ Red.appᵣ]\n+    · grind only [→ canonical_form_abs, → Red.abs, → Red.appᵣ]"
+   },
+   {
+    "run_id": "fresh-a100-p6",
+    "check": 37,
+    "d_score": 0.01,
+    "d_tokens": -5,
+    "d_heartbeats": 728,
+    "diff": "-    right\n-    · exact ⟨_, Red.case h hb.2.1 hb.2.2⟩\n+    · grind [→ Red.case]"
+   },
+   {
+    "run_id": "fresh-a100-p7",
+    "check": 25,
+    "d_score": 0.06,
+    "d_tokens": -5,
+    "d_heartbeats": 626,
+    "diff": "-  case tapp => grind [→ Red.tabs, → Red.tapp, → canonical_form_tabs]\n-  all_goals grind [→ Red.inl, → Red.inr]\n+  all_goals grind [→ Red.inl, → Red.inr, → Red.tabs, → Red.tapp, → canonical_form_tabs]"
+   },
+   {
+    "run_id": "fresh-a100-p8",
+    "check": 26,
+    "d_score": 0.02,
+    "d_tokens": 1,
+    "d_heartbeats": -186,
+    "diff": "-    have hb := body_case.mp der'.wf.2.1\n-    · grind only [→ canonical_form_sum, → Red.case_inl, → Red.case_inr]\n-    · grind [→ Red.case]\n+    · grind only [→ canonical_form_sum, → Red.case_inl, → Red.case_inr, body_case.mp der'.wf.2.1]\n+    · grind [→ Red.case, body_case.mp der'.wf.2.1]"
+   }
+  ],
+  "dead_names": []
+ },
+ "profile_cache": {
+  "0223cc51c3ad": {
+   "ok": true,
+   "total": 7292,
+   "floor": 50,
+   "reference": 59873,
+   "max_heartbeat_score": 33.31,
+   "blocks": [
+    {
+     "lines": "21-21",
+     "depth_indent": 2,
+     "text": "all_goals grind [→ Red.inl, → Red.inr]",
+     "heartbeats": 2572
+    },
+    {
+     "lines": "13-13",
+     "depth_indent": 2,
+     "text": "case let' => grind [→ Red.let_bind, → Red.let_body]",
+     "heartbeats": 1498
+    },
+    {
+     "lines": "12-12",
+     "depth_indent": 2,
+     "text": "case tapp => grind [→ Red.tabs, → Red.tapp, → canonical_form_tabs]",
+     "heartbeats": 1437
+    },
+    {
+     "lines": "5-11",
+     "depth_indent": 2,
+     "text": "case app l r ih_l ih_r => right obtain val_l | ⟨_, h⟩ := ih_l rfl l · obtain val_r | ⟨_, h₂⟩ := ih_r",
+     "heartbeats": 953
+    },
+    {
+     "lines": "14-19",
+     "depth_indent": 2,
+     "text": "case case der _ _ ih _ _ => right have hb := body_case.mp der'.wf.2.1 obtain val | ⟨_, h⟩ := ih rfl ",
+     "heartbeats": 510
+    },
+    {
+     "lines": "4-4",
+     "depth_indent": 2,
+     "text": "induction der <;> subst eq",
+     "heartbeats": 173
+    },
+    {
+     "lines": "20-20",
+     "depth_indent": 2,
+     "text": "case abs tabs => left; constructor; grind [→ wf]",
+     "heartbeats": 90
+    },
+    {
+     "lines": "2-2",
+     "depth_indent": 2,
+     "text": "generalize eq : [] = Γ at der",
+     "heartbeats": 7
+    },
+    {
+     "lines": "3-3",
+     "depth_indent": 2,
+     "text": "have der' := der",
+     "heartbeats": 2
+    }
+   ],
+   "points_left_heartbeats": 4.03,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "701991bcb115": {
+   "ok": true,
+   "total": 6251,
+   "floor": 50,
+   "reference": 59873,
+   "max_heartbeat_score": 33.31,
+   "blocks": [
+    {
+     "lines": "20-20",
+     "depth_indent": 2,
+     "text": "all_goals grind [→ Red.inl, → Red.inr, → wf]",
+     "heartbeats": 2723
+    },
+    {
+     "lines": "12-12",
+     "depth_indent": 2,
+     "text": "case tapp => grind [→ Red.tabs, → Red.tapp, → canonical_form_tabs]",
+     "heartbeats": 1439
+    },
+    {
+     "lines": "5-11",
+     "depth_indent": 2,
+     "text": "case app l r ih_l ih_r => right obtain val_l | ⟨_, h⟩ := ih_l rfl l · obtain val_r | ⟨_, h₂⟩ := ih_r",
+     "heartbeats": 953
+    },
+    {
+     "lines": "14-19",
+     "depth_indent": 2,
+     "text": "case case der _ _ ih _ _ => right have hb := body_case.mp der'.wf.2.1 obtain val | ⟨_, h⟩ := ih rfl ",
+     "heartbeats": 509
+    },
+    {
+     "lines": "13-13",
+     "depth_indent": 2,
+     "text": "case let' => grind only [→ Red.let_bind, → Red.let_body, → wf, body_let]",
+     "heartbeats": 387
+    },
+    {
+     "lines": "4-4",
+     "depth_indent": 2,
+     "text": "induction der <;> subst eq",
+     "heartbeats": 172
+    },
+    {
+     "lines": "3-3",
+     "depth_indent": 2,
+     "text": "have der' : Typing Γ t τ := der",
+     "heartbeats": 11
+    },
+    {
+     "lines": "2-2",
+     "depth_indent": 2,
+     "text": "generalize eq : [] = Γ at der",
+     "heartbeats": 7
+    }
+   ],
+   "points_left_heartbeats": 3.45,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "d201a2c92486": {
+   "ok": true,
+   "total": 6081,
+   "floor": 50,
+   "reference": 59873,
+   "max_heartbeat_score": 33.31,
+   "blocks": [
+    {
+     "lines": "20-20",
+     "depth_indent": 2,
+     "text": "all_goals grind [→ Red.inl, → Red.inr, → wf]",
+     "heartbeats": 2724
+    },
+    {
+     "lines": "12-12",
+     "depth_indent": 2,
+     "text": "case tapp => grind [→ Red.tabs, → Red.tapp, → canonical_form_tabs]",
+     "heartbeats": 1438
+    },
+    {
+     "lines": "5-11",
+     "depth_indent": 2,
+     "text": "case app l r ih_l ih_r => right obtain val_l | ⟨_, h⟩ := ih_l rfl l · obtain val_r | ⟨_, h₂⟩ := ih_r",
+     "heartbeats": 953
+    },
+    {
+     "lines": "14-19",
+     "depth_indent": 2,
+     "text": "case case der _ _ ih _ _ => right have hb := body_case.mp der'.wf.2.1 obtain val | ⟨_, h⟩ := ih rfl ",
+     "heartbeats": 510
+    },
+    {
+     "lines": "13-13",
+     "depth_indent": 2,
+     "text": "case let' => grind only [→ Red.let_bind, → Red.let_body, body_let.mp der'.wf.2.1]",
+     "heartbeats": 224
+    },
+    {
+     "lines": "4-4",
+     "depth_indent": 2,
+     "text": "induction der <;> subst eq",
+     "heartbeats": 173
+    },
+    {
+     "lines": "2-2",
+     "depth_indent": 2,
+     "text": "generalize eq : [] = Γ at der",
+     "heartbeats": 7
+    },
+    {
+     "lines": "3-3",
+     "depth_indent": 2,
+     "text": "have der' := der",
+     "heartbeats": 2
+    }
+   ],
+   "points_left_heartbeats": 3.36,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "b27c0fec3538": {
+   "ok": true,
+   "total": 6124,
+   "floor": 50,
+   "reference": 59873,
+   "max_heartbeat_score": 33.31,
+   "blocks": [
+    {
+     "lines": "19-19",
+     "depth_indent": 2,
+     "text": "all_goals grind [→ Red.inl, → Red.inr]",
+     "heartbeats": 2690
+    },
+    {
+     "lines": "11-11",
+     "depth_indent": 2,
+     "text": "case tapp => grind [→ Red.tabs, → Red.tapp, → canonical_form_tabs]",
+     "heartbeats": 1438
+    },
+    {
+     "lines": "5-10",
+     "depth_indent": 2,
+     "text": "case app l r ih_l ih_r => obtain val_l | ⟨_, h⟩ := ih_l rfl l · obtain val_r | ⟨_, h₂⟩ := ih_r rfl r",
+     "heartbeats": 1029
+    },
+    {
+     "lines": "13-18",
+     "depth_indent": 2,
+     "text": "case case der _ _ ih _ _ => right have hb := body_case.mp der'.wf.2.1 obtain val | ⟨_, h⟩ := ih rfl ",
+     "heartbeats": 510
+    },
+    {
+     "lines": "12-12",
+     "depth_indent": 2,
+     "text": "case let' => grind only [→ Red.let_bind, → Red.let_body, body_let.mp der'.wf.2.1]",
+     "heartbeats": 225
+    },
+    {
+     "lines": "4-4",
+     "depth_indent": 2,
+     "text": "induction der <;> subst eq",
+     "heartbeats": 173
+    },
+    {
+     "lines": "2-2",
+     "depth_indent": 2,
+     "text": "generalize eq : [] = Γ at der",
+     "heartbeats": 7
+    },
+    {
+     "lines": "3-3",
+     "depth_indent": 2,
+     "text": "have der' := der",
+     "heartbeats": 2
+    }
+   ],
+   "points_left_heartbeats": 3.38,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "62553fd73e5f": {
+   "ok": true,
+   "total": 6420,
+   "floor": 50,
+   "reference": 59873,
+   "max_heartbeat_score": 33.31,
+   "blocks": [
+    {
+     "lines": "16-16",
+     "depth_indent": 2,
+     "text": "all_goals grind [→ Red.inl, → Red.inr]",
+     "heartbeats": 2689
+    },
+    {
+     "lines": "9-9",
+     "depth_indent": 2,
+     "text": "case tapp => grind [→ Red.tabs, → Red.tapp, → canonical_form_tabs]",
+     "heartbeats": 1439
+    },
+    {
+     "lines": "11-15",
+     "depth_indent": 2,
+     "text": "case case der _ _ ih _ _ => have hb := body_case.mp der'.wf.2.1 obtain val | ⟨_, h⟩ := ih rfl der · ",
+     "heartbeats": 1238
+    },
+    {
+     "lines": "5-8",
+     "depth_indent": 2,
+     "text": "case app l r ih_l ih_r => obtain val_l | ⟨_, h⟩ := ih_l rfl l · grind only [→ canonical_form_abs, → ",
+     "heartbeats": 598
+    },
+    {
+     "lines": "10-10",
+     "depth_indent": 2,
+     "text": "case let' => grind only [→ Red.let_bind, → Red.let_body, body_let.mp der'.wf.2.1]",
+     "heartbeats": 224
+    },
+    {
+     "lines": "4-4",
+     "depth_indent": 2,
+     "text": "induction der <;> subst eq",
+     "heartbeats": 173
+    },
+    {
+     "lines": "2-2",
+     "depth_indent": 2,
+     "text": "generalize eq : [] = Γ at der",
+     "heartbeats": 7
+    },
+    {
+     "lines": "3-3",
+     "depth_indent": 2,
+     "text": "have der' := der",
+     "heartbeats": 2
+    }
+   ],
+   "points_left_heartbeats": 3.55,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "4a237bd8617e": {
+   "ok": true,
+   "total": 7046,
+   "floor": 50,
+   "reference": 59873,
+   "max_heartbeat_score": 33.31,
+   "blocks": [
+    {
+     "lines": "15-15",
+     "depth_indent": 2,
+     "text": "all_goals grind [→ Red.inl, → Red.inr, → Red.tabs, → Red.tapp, → canonical_form_tabs]",
+     "heartbeats": 4748
+    },
+    {
+     "lines": "10-14",
+     "depth_indent": 2,
+     "text": "case case der _ _ ih _ _ => have hb := body_case.mp der'.wf.2.1 obtain val | ⟨_, h⟩ := ih rfl der · ",
+     "heartbeats": 1244
+    },
+    {
+     "lines": "5-8",
+     "depth_indent": 2,
+     "text": "case app l r ih_l ih_r => obtain val_l | ⟨_, h⟩ := ih_l rfl l · grind only [→ canonical_form_abs, → ",
+     "heartbeats": 598
+    },
+    {
+     "lines": "9-9",
+     "depth_indent": 2,
+     "text": "case let' => grind only [→ Red.let_bind, → Red.let_body, body_let.mp der'.wf.2.1]",
+     "heartbeats": 224
+    },
+    {
+     "lines": "4-4",
+     "depth_indent": 2,
+     "text": "induction der <;> subst eq",
+     "heartbeats": 173
+    },
+    {
+     "lines": "2-2",
+     "depth_indent": 2,
+     "text": "generalize eq : [] = Γ at der",
+     "heartbeats": 7
+    },
+    {
+     "lines": "3-3",
+     "depth_indent": 2,
+     "text": "have der' := der",
+     "heartbeats": 2
+    }
+   ],
+   "points_left_heartbeats": 3.89,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  }
+ },
+ "hb_floor": 50
+}

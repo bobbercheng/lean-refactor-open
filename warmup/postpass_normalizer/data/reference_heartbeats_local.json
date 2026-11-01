@@ -1,0 +1,108 @@
+{
+ "CallElimCorrect.substOldPostSubset": {
+  "toolchain": "v4.26.0",
+  "heartbeats_local": 5174,
+  "heartbeats_official": 5175,
+  "ok": true,
+  "compile_seconds": 6.3
+ },
+ "CallElimCorrect.extractedOldExprInVars": {
+  "toolchain": "v4.26.0",
+  "heartbeats_local": 2698,
+  "heartbeats_official": 2696,
+  "ok": true,
+  "compile_seconds": 6.2
+ },
+ "Core.InitsUpdatesComm": {
+  "toolchain": "v4.29.1",
+  "heartbeats_local": 4300,
+  "heartbeats_official": 4251,
+  "ok": true,
+  "compile_seconds": 1.3
+ },
+ "fundamental_theorem_of_variational_calculus'": {
+  "toolchain": "v4.32.0",
+  "heartbeats_local": 11954,
+  "heartbeats_official": 11947,
+  "ok": true,
+  "compile_seconds": 3.3
+ },
+ "Electromagnetism.ElectromagneticPotential.time_deriv_time_deriv_electricField_of_isExtrema": {
+  "toolchain": "v4.32.0",
+  "heartbeats_local": 27112,
+  "heartbeats_official": 26970,
+  "ok": true,
+  "compile_seconds": 8.6
+ },
+ "FieldSpecification.WickAlgebra.\u03b9_timeOrderF_superCommuteF_eq_time": {
+  "toolchain": "v4.32.0",
+  "heartbeats_local": 42111,
+  "heartbeats_official": 42225,
+  "ok": true,
+  "compile_seconds": 6.0
+ },
+ "Cslib.LambdaCalculus.LocallyNameless.Fsub.Typing.progress": {
+  "toolchain": "v4.33.0-rc2",
+  "heartbeats_local": 59873,
+  "heartbeats_official": 59830,
+  "ok": true,
+  "compile_seconds": 6.7
+ },
+ "Cslib.SKI.parallelReduction_diamond": {
+  "toolchain": "v4.33.0-rc2",
+  "heartbeats_local": 1422,
+  "heartbeats_official": 1383,
+  "ok": true,
+  "compile_seconds": 1.8
+ },
+ "Cslib.CCS.bisimilarity_congr_choice": {
+  "toolchain": "v4.33.0-rc2",
+  "heartbeats_local": 3879,
+  "heartbeats_official": 3858,
+  "ok": true,
+  "compile_seconds": 3.3
+ },
+ "Binius.BinaryBasefold.fiberwise_dist_lt_imp_dist_lt_unique_decoding_radius": {
+  "toolchain": "v4.31.0",
+  "heartbeats_local": 16006,
+  "heartbeats_official": 15645,
+  "ok": true,
+  "compile_seconds": 8.0
+ },
+ "Binius.BinaryBasefold.fold_advances_evaluation_poly": {
+  "toolchain": "v4.31.0",
+  "heartbeats_local": 46076,
+  "heartbeats_official": 45273,
+  "ok": true,
+  "compile_seconds": 6.6
+ },
+ "interleaved_affine_gaps_imply_tensor_gaps": {
+  "toolchain": "v4.31.0",
+  "heartbeats_local": 9381,
+  "heartbeats_official": 9198,
+  "ok": true,
+  "compile_seconds": 10.4
+ },
+ "putnam_1964_a4": {
+  "toolchain": "v4.27.0",
+  "heartbeats_local": 111553,
+  "heartbeats_official": 111476,
+  "ok": true,
+  "compile_seconds": 7.2
+ },
+ "putnam_1964_b2": {
+  "toolchain": "v4.26.0",
+  "heartbeats_local": 134548,
+  "heartbeats_official": 134499,
+  "ok": true,
+  "compile_seconds": 25.2
+ },
+ "putnam_1995_a3": {
+  "toolchain": "v4.27.0",
+  "heartbeats_local": 14248,
+  "heartbeats_official": 14130,
+  "ok": true,
+  "compile_seconds": 3.7
+ },
+ "_measured_at": "2026-10-06T03:44:57Z"
+}

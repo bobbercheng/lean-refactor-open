@@ -1,0 +1,1778 @@
+{
+ "problem": "Cslib.SKI.parallelReduction_diamond",
+ "best": {
+  "score": 68.7,
+  "proof": "theorem parallelReduction_diamond : Diamond ParallelReduction := by\n  intro a a₁ a₂ h₁ h₂\n  have : Std.Refl _ := ⟨ParallelReduction.refl⟩\n  induction h₁ generalizing a₂\n  · use a₂, h₂, .refl _\n  · cases h₂\n    · exact ⟨_, .refl _, .red_I ..⟩\n    · apply Std.Refl.refl\n    · rename_i hc ha\n      cases hc\n      exact ⟨_, ha, .red_I ..⟩\n  · cases h₂\n    · exact ⟨_, .refl _, .red_K ..⟩\n    · apply Std.Refl.refl\n    · obtain ⟨a₁', h, rfl⟩ := Ka_irreducible _ _ ‹_›\n      use a₁', h, .red_K ..\n  · cases h₂\n    · exact ⟨_, .refl _, .red_S ..⟩\n    · apply Std.Refl.refl\n    · obtain ⟨a', b', h1, h2, rfl⟩ := Sab_irreducible _ _ _ ‹_›\n      refine ⟨_, ?_, .red_S ..⟩\n      apply ParallelReduction.par <;> apply ParallelReduction.par <;> assumption\n  · rename_i ha' hb' iha ihb\n    cases h₂\n    · exact ⟨_, .refl _, .par ha' hb'⟩\n    · cases ha'\n      exact ⟨_, .red_I .., hb'⟩\n    · obtain ⟨a₂', h, rfl⟩ := Ka_irreducible _ _ ha'\n      use a₂', .red_K .., h\n    · obtain ⟨a'', c', h1, h2, rfl⟩ := Sab_irreducible _ _ _ ha'\n      refine ⟨_, .red_S .., ?_⟩\n      apply ParallelReduction.par <;> apply ParallelReduction.par <;> assumption\n    · rename_i ha'' hb''\n      have J := iha ha''\n      exact ⟨_, .par J.choose_spec.1 (ihb hb'').choose_spec.1,\n        .par J.choose_spec.2 (ihb hb'').choose_spec.2⟩",
+  "tokens": 270,
+  "heartbeats": 392,
+  "L": 33.66,
+  "H": 72.43,
+  "Z": 100.0,
+  "compat": {
+   "v4.33.0-rc2": true,
+   "v4.32.0": true,
+   "v4.31.0": true,
+   "v4.30.0": true
+  }
+ },
+ "attempts": [
+  {
+   "sha": "35f528e8e77d",
+   "tokens": 407,
+   "heartbeats": 1422,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T22:59:56Z"
+  },
+  {
+   "sha": "111ecc67ca3a",
+   "tokens": 402,
+   "heartbeats": 1186,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:02:00Z",
+   "score": 39.27
+  },
+  {
+   "sha": "1056d13676ea",
+   "tokens": 395,
+   "heartbeats": 801,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:08:24Z",
+   "score": 48.87
+  },
+  {
+   "sha": "35b82d2a261c",
+   "tokens": 389,
+   "heartbeats": 823,
+   "ok": false,
+   "error": "157:42: Application type mismatch: The argument ParallelReduction.par has type ∀ ⦃a a' b b' : SKI⦄, a ⭢ₚ a' → b ⭢ₚ b' → (a ⬝ b) ⭢ₚ a' ⬝ b' but is expected to have type (a ⬝ b) ⭢ₚ a' ⬝ b' in the application ⟨ParallelReduction.refl (a' ⬝ b'), ParallelReduction.par⟩",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:11:13Z"
+  },
+  {
+   "sha": "b0f73a368678",
+   "tokens": 390,
+   "heartbeats": 803,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:16:14Z",
+   "score": 49.24
+  },
+  {
+   "sha": "bf83dd352727",
+   "tokens": 354,
+   "heartbeats": 783,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:22:10Z",
+   "score": 52.65
+  },
+  {
+   "sha": "cc442be52af8",
+   "tokens": 354,
+   "heartbeats": 751,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:23:36Z",
+   "score": 53.4
+  },
+  {
+   "sha": "e5da7ba3480d",
+   "tokens": 318,
+   "heartbeats": 843,
+   "ok": false,
+   "error": "171:54: Unknown identifier `a`",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:29:55Z"
+  },
+  {
+   "sha": "362db862d5f8",
+   "tokens": 319,
+   "heartbeats": 843,
+   "ok": false,
+   "error": "171:54: Unknown identifier `a`",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:31:34Z"
+  },
+  {
+   "sha": "367284d882be",
+   "tokens": 324,
+   "heartbeats": 751,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:33:57Z",
+   "score": 55.86
+  },
+  {
+   "sha": "7a82ffe81c64",
+   "tokens": 326,
+   "heartbeats": 433,
+   "ok": false,
+   "error": "165:51: Application type mismatch: The argument ha has type (K ⬝ a✝) ⭢ₚ a' but is expected to have type (K ⬝ a₁) ⭢ₚ a' in the application Ka_irreducible a₁ a' ha",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:37:28Z"
+  },
+  {
+   "sha": "e83d9157f038",
+   "tokens": 330,
+   "heartbeats": 386,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:38:24Z",
+   "score": 63.92
+  },
+  {
+   "sha": "9a0317344806",
+   "tokens": 305,
+   "heartbeats": 386,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:43:07Z",
+   "score": 65.97
+  },
+  {
+   "sha": "97bde2803fe8",
+   "tokens": 303,
+   "heartbeats": 471,
+   "ok": false,
+   "error": "183:28: Application type mismatch: The argument ha'' has type a✝ ⭢ₚ a'✝ but is expected to have type a✝ ⭢ₚ a'✝ ⬝ b'✝ in the application iha ha''",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:48:07Z"
+  },
+  {
+   "sha": "999e1d21ca5b",
+   "tokens": 305,
+   "heartbeats": 386,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:48:53Z"
+  },
+  {
+   "sha": "48d48825ff10",
+   "tokens": 305,
+   "heartbeats": 386,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:51:03Z"
+  },
+  {
+   "sha": "65c43da958c6",
+   "tokens": 302,
+   "heartbeats": 386,
+   "ok": false,
+   "error": "156:25: Unknown identifier `h₂`",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T03:41:20Z"
+  },
+  {
+   "sha": "ad17d34eada4",
+   "tokens": 309,
+   "heartbeats": 387,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T03:56:42Z"
+  },
+  {
+   "sha": "49b56a0c010a",
+   "tokens": 295,
+   "heartbeats": 371,
+   "ok": false,
+   "error": "172:16: don't know how to synthesize placeholder for argument `left` context: a a₁ a✝ b✝ c✝ b'✝ : SKI hc : c✝ ⭢ₚ b'✝ a' b' : SKI h1 : a✝ ⭢ₚ a' h2 : b✝ ⭢ₚ b' hd : (S ⬝ a✝ ⬝ b✝) ⭢ₚ S ⬝ a' ⬝ b' ⊢ (a✝ ⬝ c✝ ⬝ (b✝ ⬝ c✝)) ⭢ₚ a' ⬝ b'✝ ⬝ (b' ⬝ b'✝)",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:10:15Z"
+  },
+  {
+   "sha": "7437a7eb3a60",
+   "tokens": 295,
+   "heartbeats": 413,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:13:03Z",
+   "score": 66.16
+  },
+  {
+   "sha": "b02196c36de8",
+   "tokens": 299,
+   "heartbeats": 394,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:17:59Z",
+   "score": 66.28
+  },
+  {
+   "sha": "4285ca9a81d5",
+   "tokens": 303,
+   "heartbeats": 376,
+   "ok": false,
+   "error": "185:43: Invalid `⟨...⟩` notation: The expected type of this term could not be determined",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:27:47Z"
+  },
+  {
+   "sha": "8f459ca528e1",
+   "tokens": 303,
+   "heartbeats": 395,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:28:31Z"
+  },
+  {
+   "sha": "732ac1825ab7",
+   "tokens": 299,
+   "heartbeats": 394,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:37:04Z"
+  },
+  {
+   "sha": "cf91f60c5b0d",
+   "tokens": 302,
+   "heartbeats": 390,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:06:12Z"
+  },
+  {
+   "sha": "4f8864b4c0e5",
+   "tokens": 291,
+   "heartbeats": 442,
+   "ok": false,
+   "error": "187:21: Invalid projection: Cannot project a value of non-propositional type SKI from the expression ha which has propositional type Join ParallelReduction a'✝¹ a'✝",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:07:11Z"
+  },
+  {
+   "sha": "fe7e938c694d",
+   "tokens": 297,
+   "heartbeats": 442,
+   "ok": false,
+   "error": "185:21: Invalid projection: Cannot project a value of non-propositional type SKI from the expression iha ha'' which has propositional type Join ParallelReduction a'✝¹ a'✝",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:07:13Z"
+  },
+  {
+   "sha": "40cd7911b267",
+   "tokens": 299,
+   "heartbeats": 426,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:08:21Z"
+  },
+  {
+   "sha": "72a20039b957",
+   "tokens": 299,
+   "heartbeats": 494,
+   "ok": false,
+   "error": "165:20: Application type mismatch: The argument rfl has type ?m.484 = ?m.484 but is expected to have type a'✝ = K ⬝ a₁' in the application ⟨h, rfl⟩",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:08:22Z"
+  },
+  {
+   "sha": "ef4f6f1ccf64",
+   "tokens": 300,
+   "heartbeats": 142,
+   "ok": false,
+   "error": "155:10: Invalid `⟨...⟩` notation: The expected type a ⭢ₚ S → Join ParallelReduction a₁ S is not an inductive type Note: This notation can only be used when the expected type is an inductive type with a single constructor",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:12:57Z"
+  },
+  {
+   "sha": "0874a914083c",
+   "tokens": 301,
+   "heartbeats": 142,
+   "ok": false,
+   "error": "155:10: Invalid `⟨...⟩` notation: The expected type a ⭢ₚ S → Join ParallelReduction a₁ S is not an inductive type Note: This notation can only be used when the expected type is an inductive type with a single constructor",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:14:01Z"
+  },
+  {
+   "sha": "450b5116a290",
+   "tokens": 299,
+   "heartbeats": 394,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:22:31Z"
+  },
+  {
+   "sha": "b5f7a3c33500",
+   "tokens": 299,
+   "heartbeats": 394,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:23:22Z"
+  },
+  {
+   "sha": "9823e801c0f5",
+   "tokens": 303,
+   "heartbeats": 395,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:24:30Z"
+  },
+  {
+   "sha": "cb8ec6042720",
+   "tokens": 302,
+   "heartbeats": 391,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:25:39Z"
+  },
+  {
+   "sha": "2af810793ffa",
+   "tokens": 302,
+   "heartbeats": 390,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:25:40Z"
+  },
+  {
+   "sha": "effde8cb44a9",
+   "tokens": 304,
+   "heartbeats": 386,
+   "ok": false,
+   "error": "172:16: Invalid `⟨...⟩` notation: The expected type (a✝ ⬝ c✝ ⬝ (b✝ ⬝ c✝)) ⭢ₚ ?m.746 has more than one constructor Note: This notation can only be used when the expected type is an inductive type with a single constructor",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:26:07Z"
+  },
+  {
+   "sha": "d3cfe582c6ff",
+   "tokens": 304,
+   "heartbeats": 384,
+   "ok": false,
+   "error": "182:27: Invalid `⟨...⟩` notation: The expected type (a✝ ⬝ b✝¹ ⬝ (b✝ ⬝ b✝¹)) ⭢ₚ w✝¹ ⬝ b'✝ ⬝ (w✝ ⬝ b'✝) has more than one constructor Note: This notation can only be used when the expected type is an inductive type with a single constructor",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:26:08Z"
+  },
+  {
+   "sha": "5c60a4ae7881",
+   "tokens": 337,
+   "heartbeats": 351,
+   "ok": false,
+   "error": "158:4: Too many variable names provided at alternative `par`: 4 provided, but 2 expected",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:48:27Z"
+  },
+  {
+   "sha": "fd3e4e328d1e",
+   "tokens": 324,
+   "heartbeats": 348,
+   "ok": false,
+   "error": "158:4: Too many variable names provided at alternative `par`: 4 provided, but 2 expected",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:48:51Z"
+  },
+  {
+   "sha": "e5c6dbd2c8e5",
+   "tokens": 329,
+   "heartbeats": 394,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:49:16Z"
+  },
+  {
+   "sha": "dc0238a1e717",
+   "tokens": 303,
+   "heartbeats": 395,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:52:09Z"
+  },
+  {
+   "sha": "e0adeebd31d2",
+   "tokens": 259,
+   "heartbeats": 400,
+   "ok": false,
+   "error": "157:12: typeclass instance problem is stuck Std.Refl ?m.214 Note: Lean will not try to resolve this typeclass instance problem because the first and second type arguments to `Std.Refl` are metavariables. These arguments must be fully determined before Lean will try to resolve the typeclass. Hint: Ad",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:54:08Z"
+  },
+  {
+   "sha": "69dd80ec300f",
+   "tokens": 265,
+   "heartbeats": 392,
+   "ok": false,
+   "error": "157:12: typeclass instance problem is stuck Std.Refl ?m.214 Note: Lean will not try to resolve this typeclass instance problem because the first and second type arguments to `Std.Refl` are metavariables. These arguments must be fully determined before Lean will try to resolve the typeclass. Hint: Ad",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:54:59Z"
+  },
+  {
+   "sha": "3d60041c596b",
+   "tokens": 286,
+   "heartbeats": 391,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:57:27Z",
+   "score": 67.41
+  },
+  {
+   "sha": "adc7a36651bf",
+   "tokens": 286,
+   "heartbeats": 391,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:58:36Z"
+  },
+  {
+   "sha": "cbbae728eae7",
+   "tokens": 286,
+   "heartbeats": 391,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:58:37Z"
+  },
+  {
+   "sha": "9873e0807d7a",
+   "tokens": 280,
+   "heartbeats": 384,
+   "ok": false,
+   "error": "171:4: unsolved goals case red_S.par a a₁ : SKI this : Std.Refl ParallelReduction a✝ b✝ c✝ b'✝ : SKI hc : c✝ ⭢ₚ b'✝ a' b' : SKI h1 : a✝ ⭢ₚ a' h2 : b✝ ⭢ₚ b' hd : (S ⬝ a✝ ⬝ b✝) ⭢ₚ S ⬝ a' ⬝ b' ⊢ (a✝ ⬝ c✝ ⬝ (b✝ ⬝ c✝)) ⭢ₚ a' ⬝ b'✝ ⬝ (b' ⬝ b'✝)",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:00:06Z"
+  },
+  {
+   "sha": "d107934b9fb8",
+   "tokens": 253,
+   "heartbeats": 384,
+   "ok": false,
+   "error": "157:4: too many variable names provided",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:02:51Z"
+  },
+  {
+   "sha": "50bc40635566",
+   "tokens": 282,
+   "heartbeats": 410,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:02:54Z"
+  },
+  {
+   "sha": "ee62a157e0c7",
+   "tokens": 286,
+   "heartbeats": 391,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:04:07Z"
+  },
+  {
+   "sha": "8aef5ce7ec5e",
+   "tokens": 286,
+   "heartbeats": 341,
+   "ok": false,
+   "error": "187:25: don't know how to synthesize implicit argument `h₂` @ihb b'✝ ?m.1195 context: a … [hypotheses omitted] ⊢ b✝ ⭢ₚ b'✝",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:04:09Z"
+  },
+  {
+   "sha": "d50eec31cf87",
+   "tokens": 286,
+   "heartbeats": 339,
+   "ok": false,
+   "error": "186:25: don't know how to synthesize implicit argument `h₂` @iha a'✝ ?m.1183 context: a … [hypotheses omitted] ⊢ a✝ ⭢ₚ a'✝",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:04:26Z"
+  },
+  {
+   "sha": "a992c673305d",
+   "tokens": 292,
+   "heartbeats": 453,
+   "ok": false,
+   "error": "182:27: Application type mismatch: The argument h1 has type a✝ ⭢ₚ a'' but is expected to have type (S ⬝ a'') ⭢ₚ ?m.1157 in the application ParallelReduction.par h1",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:36:55Z"
+  },
+  {
+   "sha": "145a2c43a73b",
+   "tokens": 289,
+   "heartbeats": 457,
+   "ok": false,
+   "error": "183:27: Application type mismatch: The argument h1 has type a✝ ⭢ₚ a'' but is expected to have type (S ⬝ a'') ⭢ₚ ?m.1164 in the application ParallelReduction.par h1",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:36:58Z"
+  },
+  {
+   "sha": "247801d53740",
+   "tokens": 289,
+   "heartbeats": 388,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:36:59Z"
+  },
+  {
+   "sha": "d252d498d760",
+   "tokens": 289,
+   "heartbeats": 388,
+   "ok": false,
+   "error": "183:41: Unknown identifier `hc`",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:37:46Z"
+  },
+  {
+   "sha": "fb088a01f5be",
+   "tokens": 289,
+   "heartbeats": 386,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:38:56Z"
+  },
+  {
+   "sha": "5640586fe23e",
+   "tokens": 287,
+   "heartbeats": 390,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:43:21Z"
+  },
+  {
+   "sha": "19fa624a2f18",
+   "tokens": 302,
+   "heartbeats": 389,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:43:23Z"
+  },
+  {
+   "sha": "0d394ab703ea",
+   "tokens": 300,
+   "heartbeats": 392,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:43:24Z"
+  },
+  {
+   "sha": "07b36d928fc1",
+   "tokens": 289,
+   "heartbeats": 368,
+   "ok": false,
+   "error": "185:33: Invalid `⟨...⟩` notation: The expected type of this term could not be determined",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:47:43Z"
+  },
+  {
+   "sha": "3886fe9183d5",
+   "tokens": 267,
+   "heartbeats": 457,
+   "ok": false,
+   "error": "155:8: don't know how to synthesize placeholder context: a a₁ : SKI this : Std.Refl ParallelReduction a✝ a₂ : SKI h₂ : a✝ ⭢ₚ a₂ ⊢ SKI",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:49:57Z"
+  },
+  {
+   "sha": "387bceaac93e",
+   "tokens": 269,
+   "heartbeats": 433,
+   "ok": false,
+   "error": "157:10: don't know how to synthesize placeholder context: a a₁ : SKI this : Std.Refl ParallelReduction a✝ : SKI ⊢ SKI",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:49:58Z"
+  },
+  {
+   "sha": "fc437f470be2",
+   "tokens": 283,
+   "heartbeats": 382,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:51:17Z",
+   "score": 67.87
+  },
+  {
+   "sha": "37fa0e13d6eb",
+   "tokens": 281,
+   "heartbeats": 385,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:57:20Z",
+   "score": 67.96
+  },
+  {
+   "sha": "5116ac7b2abd",
+   "tokens": 285,
+   "heartbeats": 421,
+   "ok": false,
+   "error": "186:10: Application type mismatch: The argument a₃ has type Join ParallelReduction a'✝¹ a'✝ of sort `Prop` but is expected to have type SKI of sort `Type` in the application app a₃",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:57:25Z"
+  },
+  {
+   "sha": "2012fe021313",
+   "tokens": 278,
+   "heartbeats": 390,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:31:41Z",
+   "score": 68.09
+  },
+  {
+   "sha": "e8e3af6d96dc",
+   "tokens": 278,
+   "heartbeats": 391,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:37:31Z"
+  },
+  {
+   "sha": "c67dabb8f316",
+   "tokens": 275,
+   "heartbeats": 393,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:37:33Z",
+   "score": 68.27
+  },
+  {
+   "sha": "db8b18f6b939",
+   "tokens": 272,
+   "heartbeats": 395,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:39:15Z",
+   "score": 68.46
+  },
+  {
+   "sha": "1f25eb2e14ce",
+   "tokens": 272,
+   "heartbeats": 390,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:39:35Z",
+   "score": 68.58
+  },
+  {
+   "sha": "2adb50b98273",
+   "tokens": 276,
+   "heartbeats": 393,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:43:22Z"
+  },
+  {
+   "sha": "0e733e48e7de",
+   "tokens": 268,
+   "heartbeats": 408,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:46:31Z"
+  },
+  {
+   "sha": "14c6ac3235e9",
+   "tokens": 270,
+   "heartbeats": 392,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:49:26Z",
+   "score": 68.7
+  },
+  {
+   "sha": "5101b2ab5244",
+   "tokens": 273,
+   "heartbeats": 396,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:49:44Z"
+  },
+  {
+   "sha": "6ab84b7202af",
+   "tokens": 273,
+   "heartbeats": 389,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:00:51Z"
+  },
+  {
+   "sha": "7bfa516aba9d",
+   "tokens": 272,
+   "heartbeats": 14,
+   "ok": false,
+   "error": "153:2: too many variable names provided",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:01:39Z"
+  },
+  {
+   "sha": "84a5aae2ad6e",
+   "tokens": 285,
+   "heartbeats": 7,
+   "ok": false,
+   "error": "153:2: too many variable names provided",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:01:41Z"
+  },
+  {
+   "sha": "c2d46a3ab7ad",
+   "tokens": 288,
+   "heartbeats": 7,
+   "ok": false,
+   "error": "153:2: too many variable names provided",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:01:44Z"
+  },
+  {
+   "sha": "521681515c9f",
+   "tokens": 286,
+   "heartbeats": 482,
+   "ok": false,
+   "error": "157:16: Application type mismatch: The argument ParallelReduction.red_I ?m.228 has type (I ⬝ ?m.228) ⭢ₚ ?m.228 but is expected to have type a✝ ⭢ₚ ?m.225 in the application And.intro (ParallelReduction.red_I ?m.228)",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:05:14Z"
+  },
+  {
+   "sha": "bc47cc3ac79a",
+   "tokens": 277,
+   "heartbeats": 392,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:05:19Z"
+  },
+  {
+   "sha": "31735679d1ef",
+   "tokens": 273,
+   "heartbeats": 389,
+   "ok": false,
+   "error": "181:41: Unknown identifier `h2'`",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:05:22Z"
+  },
+  {
+   "sha": "5b32a95ffeeb",
+   "tokens": 296,
+   "heartbeats": 479,
+   "ok": false,
+   "error": "157:16: Application type mismatch: The argument ParallelReduction.red_I ?m.228 has type (I ⬝ ?m.228) ⭢ₚ ?m.228 but is expected to have type a✝ ⭢ₚ ?m.225 in the application And.intro (ParallelReduction.red_I ?m.228)",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:05:25Z"
+  },
+  {
+   "sha": "fa5c320c9010",
+   "tokens": 270,
+   "heartbeats": 392,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:18:20Z"
+  },
+  {
+   "sha": "895b123bf443",
+   "tokens": 280,
+   "heartbeats": 392,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:18:22Z"
+  },
+  {
+   "sha": "7d59695d2787",
+   "tokens": 286,
+   "heartbeats": 397,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:19:25Z"
+  },
+  {
+   "sha": "70963f1345f3",
+   "tokens": 272,
+   "heartbeats": 392,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:19:27Z"
+  },
+  {
+   "sha": "ee8c21f1c3c3",
+   "tokens": 268,
+   "heartbeats": 391,
+   "ok": false,
+   "error": "175:25: Unknown identifier `h₁`",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:25:02Z"
+  },
+  {
+   "sha": "6d56124dd393",
+   "tokens": 266,
+   "heartbeats": 409,
+   "ok": false,
+   "error": "171:10: don't know how to synthesize placeholder context: a a₁ : SKI this : Std.Refl ParallelReduction a✝² b✝ c✝ b'✝ : SKI a✝¹ : c✝ ⭢ₚ b'✝ a' b' : SKI h1 : a✝² ⭢ₚ a' h2 : b✝ ⭢ₚ b' a✝ : (S ⬝ a✝² ⬝ b✝) ⭢ₚ S ⬝ a' ⬝ b' ⊢ SKI",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:28:23Z"
+  },
+  {
+   "sha": "62a8e25cce41",
+   "tokens": 272,
+   "heartbeats": 393,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:29:29Z"
+  },
+  {
+   "sha": "bb2aa15d9e9e",
+   "tokens": 274,
+   "heartbeats": 395,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:33:57Z"
+  },
+  {
+   "sha": "06acec34dc4b",
+   "tokens": 275,
+   "heartbeats": 292,
+   "ok": false,
+   "error": "174:30: Unknown identifier `ha'`",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:35:08Z"
+  },
+  {
+   "sha": "e6fb1fec6929",
+   "tokens": 272,
+   "heartbeats": 21,
+   "ok": false,
+   "error": "151:65: unsolved goals case refl a … [hypotheses omitted] ⊢ Join ParallelReduction a✝ a₂ ‖ ⊢ Join ParallelReduction a✝ a₂ ‖ ⊢ Join ParallelReduction a✝ a₂ ‖ ⊢ Join ParallelReduction (a✝ ⬝ c✝ ⬝ (b✝ ⬝ c✝)) a₂ ‖ ⊢ Join ParallelReduction (a'✝ ⬝ b'✝) a₂",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:36:26Z"
+  },
+  {
+   "sha": "d8b5fccf1522",
+   "tokens": 275,
+   "heartbeats": 384,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:37:45Z"
+  },
+  {
+   "sha": "33ec6236272e",
+   "tokens": 270,
+   "heartbeats": 384,
+   "ok": false,
+   "error": "151:8: (kernel) invalid projection J.1",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:39:38Z"
+  },
+  {
+   "sha": "8fa249d9095a",
+   "tokens": 279,
+   "heartbeats": 387,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:59:06Z"
+  },
+  {
+   "sha": "22549bae31d6",
+   "tokens": 278,
+   "heartbeats": 454,
+   "ok": false,
+   "error": "181:27: Application type mismatch: The argument h1 has type a✝ ⭢ₚ a'' but is expected to have type (S ⬝ a'') ⭢ₚ ?m.1185 in the application ParallelReduction.par h1",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:59:08Z"
+  },
+  {
+   "sha": "7de583d9cc46",
+   "tokens": 280,
+   "heartbeats": 12,
+   "ok": false,
+   "error": "153:24: Invalid dotted identifier notation: The expected type of `.refl` ∀ (a : ?m.15), ?m.16 a a is not of the form `C ...` or `... → C ...` where C is a constant",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:02:22Z"
+  },
+  {
+   "sha": "1410bace2f8f",
+   "tokens": 289,
+   "heartbeats": 12,
+   "ok": false,
+   "error": "153:24: Invalid dotted identifier notation: The expected type of `.refl` ∀ (a : ?m.15), ?m.16 a a is not of the form `C ...` or `... → C ...` where C is a constant",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:02:24Z"
+  },
+  {
+   "sha": "70a291c987a8",
+   "tokens": 278,
+   "heartbeats": 12,
+   "ok": false,
+   "error": "153:24: Invalid dotted identifier notation: The expected type of `.refl` ∀ (a : ?m.15), ?m.16 a a is not of the form `C ...` or `... → C ...` where C is a constant",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:02:26Z"
+  },
+  {
+   "sha": "346359d97081",
+   "tokens": 280,
+   "heartbeats": 387,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:02:50Z"
+  },
+  {
+   "sha": "66c571e4a366",
+   "tokens": 289,
+   "heartbeats": 383,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:02:52Z"
+  },
+  {
+   "sha": "342c5c976d7c",
+   "tokens": 278,
+   "heartbeats": 383,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:02:55Z"
+  },
+  {
+   "sha": "50cfc18055dd",
+   "tokens": 273,
+   "heartbeats": 395,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:11:55Z"
+  },
+  {
+   "sha": "5750d8bc4fbd",
+   "tokens": 275,
+   "heartbeats": 386,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:12:04Z"
+  },
+  {
+   "sha": "01bc5eb31c78",
+   "tokens": 274,
+   "heartbeats": 408,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:12:07Z"
+  },
+  {
+   "sha": "dcc7775458d7",
+   "tokens": 294,
+   "heartbeats": 427,
+   "ok": false,
+   "error": "172:26: Application type mismatch: The argument h2 has type b✝ ⭢ₚ b' but is expected to have type c✝ ⭢ₚ b'✝ in the application ParallelReduction.par h1 h2",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:12:18Z"
+  },
+  {
+   "sha": "06198c86fe0f",
+   "tokens": 275,
+   "heartbeats": 386,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:12:51Z"
+  },
+  {
+   "sha": "5ee0be6b0d70",
+   "tokens": 262,
+   "heartbeats": 388,
+   "ok": false,
+   "error": "157:6: failed to synthesize Std.Refl (Join ParallelReduction) Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:16:15Z"
+  },
+  {
+   "sha": "a4a9eb80c6f0",
+   "tokens": 270,
+   "heartbeats": 12,
+   "ok": false,
+   "error": "153:24: Invalid dotted identifier notation: The expected type of `.refl` ∀ (a : ?m.15), ?m.16 a a is not of the form `C ...` or `... → C ...` where C is a constant",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:16:27Z"
+  },
+  {
+   "sha": "83946815c7a6",
+   "tokens": 272,
+   "heartbeats": 398,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:17:56Z"
+  },
+  {
+   "sha": "722080dfe6b8",
+   "tokens": 280,
+   "heartbeats": 366,
+   "ok": false,
+   "error": "171:43: don't know how to synthesize placeholder context: a a₁ : SKI this : Std.Refl ParallelReduction a✝² b✝ c✝ b'✝ : SKI a✝¹ : c✝ ⭢ₚ b'✝ a' b' : SKI h1 : a✝² ⭢ₚ a' h2 : b✝ ⭢ₚ b' a✝ : (S ⬝ a✝² ⬝ b✝) ⭢ₚ S ⬝ a' ⬝ b' ⊢ c✝ ⭢ₚ b'✝",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:18:05Z"
+  },
+  {
+   "sha": "bf2833dab432",
+   "tokens": 274,
+   "heartbeats": 394,
+   "ok": false,
+   "error": "158:6: Type mismatch Std.Refl.refl ?m.231 has type ?m.231 ⭢ₚ ?m.231 but is expected to have type Join ParallelReduction a✝ a✝",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:19:28Z"
+  },
+  {
+   "sha": "b63ca1a22064",
+   "tokens": 283,
+   "heartbeats": 394,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:19:31Z"
+  }
+ ],
+ "runs": [
+  {
+   "run_id": "fresh-a100-p1",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-06T22:59:27Z"
+  },
+  {
+   "run_id": "fresh-a100-p2",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T03:37:56Z"
+  },
+  {
+   "run_id": "fresh-a100-p3",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T17:04:23Z"
+  },
+  {
+   "run_id": "fresh-a100-p4",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-08T22:46:40Z",
+   "mode": "fresh"
+  },
+  {
+   "run_id": "fresh-a100-p5",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T00:31:51Z",
+   "mode": "structural"
+  },
+  {
+   "run_id": "fresh-a100-p6",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T03:54:56Z",
+   "mode": "structural"
+  },
+  {
+   "run_id": "fresh-a100-p7",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T12:51:48Z",
+   "mode": "structural"
+  },
+  {
+   "run_id": "fresh-a100-p8",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T22:09:44Z",
+   "mode": "fresh"
+  }
+ ],
+ "ledger": {
+  "wins": [
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 3,
+    "d_score": 9.6,
+    "d_tokens": -7,
+    "d_heartbeats": -385,
+    "diff": "-      rw [I_irreducible a' ha']\n-      use b', .red_I b'\n+      cases ha'\n+      exact ⟨b', .red_I b', hb'⟩\n-      let ⟨a₂', ha₂'⟩ := Ka_irreducible a₂ a' ha'\n-      rw [ha₂'.2]\n-      use a₂', .red_K a₂' b', ha₂'.1\n+      obtain ⟨a₂', h, rfl⟩ := Ka_irreducible a₂ a' ha'\n+      exact ⟨a₂', .red_K a₂' b', h⟩\n-      let ⟨a'', c', h⟩ := Sab_irreducible a c a' ha'\n-      rw [h.2.2]\n-      use a'' ⬝ b' ⬝ (c' ⬝ b'), .red_S a'' c' b'\n-      exact .par (.par h.1 hb') (.par h.2.1 hb')\n+      obtain ⟨a'', c', h1, h2, rfl⟩ := Sab_irreducible a c a' ha'\n+      exact ⟨a'' ⬝ b' ⬝ (c' ⬝ b'), .red_S a'' c' b', .par (.par h1 hb') (.par h2 hb')⟩\n-    case refl => use a₁; exact ⟨.refl a₁, .red_I a₁⟩\n+    case",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "369bc2dfc8ec"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 5,
+    "d_score": 0.37,
+    "d_tokens": -5,
+    "d_heartbeats": 2,
+    "diff": "-  case refl => exact ⟨a₂, h₂, .refl a₂⟩\n+  case refl => exact ⟨a₂, h₂, .refl _⟩\n-      exact ⟨b', .red_I b', hb'⟩\n+      exact ⟨b', .red_I .., hb'⟩\n-      exact ⟨a₂', .red_K a₂' b', h⟩\n+      exact ⟨a₂', .red_K .., h⟩\n-      exact ⟨a'' ⬝ b' ⬝ (c' ⬝ b'), .red_S a'' c' b', .par (.par h1 hb') (.par h2 hb')⟩\n+      exact ⟨a'' ⬝ b' ⬝ (c' ⬝ b'), .red_S .., .par (.par h1 hb') (.par h2 hb')⟩\n-    case refl => exact ⟨a₁, .refl a₁, .red_I a₁⟩\n+    case refl => exact ⟨a₁, .refl a₁, .red_I ..⟩\n-      exact ⟨a₁', ha, .red_I a₁'⟩\n+      exact ⟨a₁', ha, .red_I ..⟩\n-    case refl => exact ⟨a₁, .refl a₁, .red_K a₁ c⟩\n+    case refl => exact ⟨a₁, .refl a₁, .red_K ..⟩\n-      exact ⟨a₁', h, .red_K a₁' c'⟩\n+   ",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "a1708be4bb17"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 6,
+    "d_score": 3.41,
+    "d_tokens": -36,
+    "d_heartbeats": -20,
+    "diff": "-  case refl => exact ⟨a₂, h₂, .refl _⟩\n+  case refl => exact ⟨_, h₂, .refl _⟩\n-    case refl => exact ⟨a' ⬝ b', .refl _, .par ha' hb'⟩\n+    case refl => exact ⟨_, .refl _, .par ha' hb'⟩\n-      exact ⟨a₃ ⬝ b₃, .par ha.1 hb.1, .par ha.2 hb.2⟩\n+      exact ⟨_, .par ha.1 hb.1, .par ha.2 hb.2⟩\n-      exact ⟨b', .red_I .., hb'⟩\n+      exact ⟨_, .red_I .., hb'⟩\n-      exact ⟨a₂', .red_K .., h⟩\n+      exact ⟨_, .red_K .., h⟩\n-      exact ⟨a'' ⬝ b' ⬝ (c' ⬝ b'), .red_S .., .par (.par h1 hb') (.par h2 hb')⟩\n+      exact ⟨_, .red_S .., .par (.par h1 hb') (.par h2 hb')⟩\n-    case refl => exact ⟨a₁, .refl a₁, .red_I ..⟩\n+    case refl => exact ⟨_, .refl _, .red_I ..⟩\n-      exact ⟨a₁', ha, .red_I ..⟩\n-  ",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "11972b94a4fc"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 7,
+    "d_score": 0.75,
+    "d_tokens": 0,
+    "d_heartbeats": -32,
+    "diff": "-      let ⟨a₃, ha⟩ := parallelReduction_diamond ha' ha''\n-      let ⟨b₃, hb⟩ := parallelReduction_diamond hb' hb''\n+      obtain ⟨a₃, ha⟩ := parallelReduction_diamond ha' ha''\n+      obtain ⟨b₃, hb⟩ := parallelReduction_diamond hb' hb''",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "87b32cf7387c"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 12,
+    "d_score": 8.06,
+    "d_tokens": 6,
+    "d_heartbeats": -365,
+    "diff": "-  cases h₁\n+  induction h₁ generalizing a₂\n-  · cases h₂\n+  case red_K a₁ c =>\n+    cases h₂\n-  next a a' b b' ha' hb' =>\n+  next a a' b b' ha' hb' iha ihb =>\n-      obtain ⟨a₃, ha⟩ := parallelReduction_diamond ha' ha''\n-      obtain ⟨b₃, hb⟩ := parallelReduction_diamond hb' hb''\n+      obtain ⟨a₃, ha⟩ := iha ha''\n+      obtain ⟨b₃, hb⟩ := ihb hb''",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "e6c6b4655646"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 13,
+    "d_score": 2.05,
+    "d_tokens": -25,
+    "d_heartbeats": 0,
+    "diff": "-    next c a₁' hc ha =>\n+    · rename_i hc ha\n-  case red_K a₁ c =>\n-    cases h₂\n+  · cases h₂\n-    next a' c' ha hc =>\n-      obtain ⟨a₁', h, rfl⟩ := Ka_irreducible a₁ a' ha\n+    · rename_i ha hc\n+      obtain ⟨a₁', h, rfl⟩ := Ka_irreducible _ _ ha\n-  case red_S a b c =>\n-    cases h₂\n+  · cases h₂\n-    next d c' hd hc =>\n-      obtain ⟨a', b', h1, h2, rfl⟩ := Sab_irreducible a b d hd\n+    · rename_i hd hc\n+      obtain ⟨a', b', h1, h2, rfl⟩ := Sab_irreducible _ _ _ hd\n-  next a a' b b' ha' hb' iha ihb =>\n+  · rename_i ha' hb' iha ihb\n-    · obtain ⟨a₂', h, rfl⟩ := Ka_irreducible a₂ a' ha'\n+    · obtain ⟨a₂', h, rfl⟩ := Ka_irreducible _ _ ha'\n-    case red_S a c =>\n-      obtain ⟨a'', c',",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "bd0a1929d2d5"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 4,
+    "d_score": 0.19,
+    "d_tokens": -10,
+    "d_heartbeats": 27,
+    "diff": "-      exact ⟨_, .par (.par h1 hc) (.par h2 hc), .red_S ..⟩\n+      refine ⟨_, ?_, .red_S ..⟩\n+      constructor <;> constructor <;> assumption\n-      exact ⟨_, .red_S .., .par (.par h1 hb') (.par h2 hb')⟩\n+      refine ⟨_, .red_S .., ?_⟩\n+      constructor <;> constructor <;> assumption",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "357a0d368e18"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 5,
+    "d_score": 0.12,
+    "d_tokens": 4,
+    "d_heartbeats": -19,
+    "diff": "-      constructor <;> constructor <;> assumption\n+      apply ParallelReduction.par <;> apply ParallelReduction.par <;> assumption\n-      constructor <;> constructor <;> assumption\n+      apply ParallelReduction.par <;> apply ParallelReduction.par <;> assumption",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "9c6cf24f0cf1"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 7,
+    "d_score": 1.13,
+    "d_tokens": -13,
+    "d_heartbeats": -3,
+    "diff": "+  have : Std.Refl ParallelReduction := ⟨ParallelReduction.refl⟩\n-    · exact ⟨_, .refl _, .refl _⟩\n+    · exact Std.Refl.refl _\n-    · exact ⟨_, .refl _, .refl _⟩\n+    · exact Std.Refl.refl _\n-    · exact ⟨_, .refl _, .refl _⟩\n+    · exact Std.Refl.refl _"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 12,
+    "d_score": 0.46,
+    "d_tokens": -3,
+    "d_heartbeats": -9,
+    "diff": "-  · exact ⟨_, h₂, .refl _⟩\n+  · use a₂, h₂, .refl _\n-      exact ⟨_, h, .red_K ..⟩\n+      use a₁', h, .red_K ..\n-      exact ⟨_, .red_K .., h⟩\n+      use a₂', .red_K .., h\n-      refine ⟨_, .red_S .., ?_⟩\n-      apply ParallelReduction.par <;> apply ParallelReduction.par <;> assumption\n+      exact ⟨_, .red_S .., .par (.par h1 hb') (.par h2 hb')⟩\n-      exact ⟨_, .par ha.1 hb.1, .par ha.2 hb.2⟩\n+      use a₃ ⬝ b₃, .par ha.1 hb.1, .par ha.2 hb.2"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 13,
+    "d_score": 0.09,
+    "d_tokens": -2,
+    "d_heartbeats": 3,
+    "diff": "-      obtain ⟨a₃, ha⟩ := iha ha''\n-      obtain ⟨b₃, hb⟩ := ihb hb''\n-      use a₃ ⬝ b₃, .par ha.1 hb.1, .par ha.2 hb.2\n+      exact ⟨_, .par (iha ha'').choose_spec.1 (ihb hb'').choose_spec.1,\n+        .par (iha ha'').choose_spec.2 (ihb hb'').choose_spec.2⟩"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 15,
+    "d_score": 0.13,
+    "d_tokens": -3,
+    "d_heartbeats": 5,
+    "diff": "-      exact ⟨_, .red_S .., .par (.par h1 hb') (.par h2 hb')⟩\n+      refine ⟨_, .red_S .., ?_⟩\n+      apply ParallelReduction.par <;> apply ParallelReduction.par <;> assumption"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 17,
+    "d_score": 0.18,
+    "d_tokens": -3,
+    "d_heartbeats": 3,
+    "diff": "-  have : Std.Refl ParallelReduction := ⟨ParallelReduction.refl⟩\n+  have : Std.Refl _ := ⟨ParallelReduction.refl⟩\n-      exact ⟨_, .par (iha ha'').choose_spec.1 (ihb hb'').choose_spec.1,\n-        .par (iha ha'').choose_spec.2 (ihb hb'').choose_spec.2⟩\n+      have J := iha ha''\n+      exact ⟨_, .par J.choose_spec.1 (ihb hb'').choose_spec.1,\n+        .par J.choose_spec.2 (ihb hb'').choose_spec.2⟩"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 18,
+    "d_score": 0.19,
+    "d_tokens": -3,
+    "d_heartbeats": 2,
+    "diff": "-      exact ⟨_, .par J.choose_spec.1 (ihb hb'').choose_spec.1,\n-        .par J.choose_spec.2 (ihb hb'').choose_spec.2⟩\n+      have K := ihb hb''\n+      exact ⟨_, .par J.choose_spec.1 K.choose_spec.1,\n+        .par J.choose_spec.2 K.choose_spec.2⟩"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 19,
+    "d_score": 0.12,
+    "d_tokens": 0,
+    "d_heartbeats": -5,
+    "diff": "-    · exact Std.Refl.refl _\n+    · apply Std.Refl.refl\n-    · exact Std.Refl.refl _\n+    · apply Std.Refl.refl\n-    · exact Std.Refl.refl _\n+    · apply Std.Refl.refl\n-      have K := ihb hb''\n-      exact ⟨_, .par J.choose_spec.1 K.choose_spec.1,\n-        .par J.choose_spec.2 K.choose_spec.2⟩\n+      exact ⟨_, .par J.choose_spec.1 (ihb hb'').choose_spec.1,\n+        .par J.choose_spec.2 (ihb hb'').choose_spec.2⟩"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 22,
+    "d_score": 0.12,
+    "d_tokens": -2,
+    "d_heartbeats": 2,
+    "diff": "-    · rename_i ha hc\n-      obtain ⟨a₁', h, rfl⟩ := Ka_irreducible _ _ ha\n+    · obtain ⟨a₁', h, rfl⟩ := Ka_irreducible _ _ ‹_›\n-    · rename_i hd hc\n-      obtain ⟨a', b', h1, h2, rfl⟩ := Sab_irreducible _ _ _ hd\n+    · obtain ⟨a', b', h1, h2, rfl⟩ := Sab_irreducible _ _ _ ‹_›"
+   }
+  ],
+  "dead_names": []
+ },
+ "profile_cache": {
+  "35f528e8e77d": {
+   "ok": true,
+   "total": 1422,
+   "floor": 4,
+   "reference": 1422,
+   "max_heartbeat_score": 33.24,
+   "blocks": [
+    {
+     "lines": "5-31",
+     "depth_indent": 2,
+     "text": "case par a a' b b' ha' hb' => cases h₂ case refl => use a' ⬝ b' exact ⟨.refl (a' ⬝ b'), .par ha' hb'",
+     "heartbeats": 639
+    },
+    {
+     "lines": "10-16",
+     "depth_indent": 4,
+     "text": "case par a'' b'' ha'' hb'' => let ⟨a₃, ha⟩ := parallelReduction_diamond ha' ha'' let ⟨b₃, hb⟩ := par",
+     "heartbeats": 403
+    },
+    {
+     "lines": "40-49",
+     "depth_indent": 2,
+     "text": "case red_K c => cases h₂ case refl => use a₁; exact ⟨.refl a₁, .red_K a₁ c⟩ case par a' c' ha hc => ",
+     "heartbeats": 262
+    },
+    {
+     "lines": "50-64",
+     "depth_indent": 2,
+     "text": "case red_S a b c => cases h₂ case refl => use a ⬝ c ⬝ (b ⬝ c) exact ⟨.refl _, .red_S ..⟩ case par d ",
+     "heartbeats": 245
+    },
+    {
+     "lines": "32-39",
+     "depth_indent": 2,
+     "text": "case red_I => cases h₂ case refl => use a₁; exact ⟨.refl a₁, .red_I a₁⟩ case par c a₁' hc ha => rw [",
+     "heartbeats": 223
+    },
+    {
+     "lines": "20-24",
+     "depth_indent": 4,
+     "text": "case red_K => let ⟨a₂', ha₂'⟩ := Ka_irreducible a₂ a' ha' rw [ha₂'.2] use a₂' exact ⟨.red_K a₂' b', ",
+     "heartbeats": 204
+    },
+    {
+     "lines": "6-6",
+     "depth_indent": 4,
+     "text": "cases h₂",
+     "heartbeats": 58
+    },
+    {
+     "lines": "7-9",
+     "depth_indent": 4,
+     "text": "case refl => use a' ⬝ b' exact ⟨.refl (a' ⬝ b'), .par ha' hb'⟩",
+     "heartbeats": 53
+    },
+    {
+     "lines": "3-3",
+     "depth_indent": 2,
+     "text": "cases h₁",
+     "heartbeats": 41
+    },
+    {
+     "lines": "17-19",
+     "depth_indent": 4,
+     "text": "case red_I => rw [I_irreducible a' ha'] use b', .red_I b'",
+     "heartbeats": 20
+    },
+    {
+     "lines": "4-4",
+     "depth_indent": 2,
+     "text": "case refl => exact ⟨a₂, h₂, .refl a₂⟩",
+     "heartbeats": 7
+    },
+    {
+     "lines": "2-2",
+     "depth_indent": 2,
+     "text": "intro a a₁ a₂ h₁ h₂",
+     "heartbeats": 0
+    }
+   ],
+   "points_left_heartbeats": 33.24,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "b02196c36de8": {
+   "ok": true,
+   "total": 394,
+   "floor": 4,
+   "reference": 1422,
+   "max_heartbeat_score": 33.24,
+   "blocks": [
+    {
+     "lines": "24-37",
+     "depth_indent": 2,
+     "text": "· rename_i ha' hb' iha ihb cases h₂ · exact ⟨_, .refl _, .par ha' hb'⟩ · cases ha' exact ⟨_, .red_I ",
+     "heartbeats": 130
+    },
+    {
+     "lines": "17-23",
+     "depth_indent": 2,
+     "text": "· cases h₂ · exact ⟨_, .refl _, .red_S ..⟩ · exact ⟨_, .refl _, .refl _⟩ · rename_i hd hc obtain ⟨a'",
+     "heartbeats": 97
+    },
+    {
+     "lines": "5-10",
+     "depth_indent": 2,
+     "text": "· cases h₂ · exact ⟨_, .refl _, .red_I ..⟩ · exact ⟨_, .refl _, .refl _⟩ · rename_i hc ha cases hc e",
+     "heartbeats": 72
+    },
+    {
+     "lines": "11-16",
+     "depth_indent": 2,
+     "text": "· cases h₂ · exact ⟨_, .refl _, .red_K ..⟩ · exact ⟨_, .refl _, .refl _⟩ · rename_i ha hc obtain ⟨a₁",
+     "heartbeats": 71
+    },
+    {
+     "lines": "25-25",
+     "depth_indent": 4,
+     "text": "cases h₂",
+     "heartbeats": 65
+    },
+    {
+     "lines": "27-28",
+     "depth_indent": 4,
+     "text": "· cases ha' exact ⟨_, .red_I .., hb'⟩",
+     "heartbeats": 23
+    },
+    {
+     "lines": "31-33",
+     "depth_indent": 4,
+     "text": "· obtain ⟨a'', c', h1, h2, rfl⟩ := Sab_irreducible _ _ _ ha' refine ⟨_, .red_S .., ?_⟩ apply Paralle",
+     "heartbeats": 18
+    },
+    {
+     "lines": "29-30",
+     "depth_indent": 4,
+     "text": "· obtain ⟨a₂', h, rfl⟩ := Ka_irreducible _ _ ha' exact ⟨_, .red_K .., h⟩",
+     "heartbeats": 16
+    },
+    {
+     "lines": "3-3",
+     "depth_indent": 2,
+     "text": "induction h₁ generalizing a₂",
+     "heartbeats": 13
+    },
+    {
+     "lines": "26-26",
+     "depth_indent": 4,
+     "text": "· exact ⟨_, .refl _, .par ha' hb'⟩",
+     "heartbeats": 8
+    },
+    {
+     "lines": "4-4",
+     "depth_indent": 2,
+     "text": "· exact ⟨_, h₂, .refl _⟩",
+     "heartbeats": 6
+    },
+    {
+     "lines": "2-2",
+     "depth_indent": 2,
+     "text": "intro a a₁ a₂ h₁ h₂",
+     "heartbeats": 0
+    }
+   ],
+   "points_left_heartbeats": 9.14,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "3d60041c596b": {
+   "ok": true,
+   "total": 391,
+   "floor": 4,
+   "reference": 1422,
+   "max_heartbeat_score": 33.24,
+   "blocks": [
+    {
+     "lines": "25-38",
+     "depth_indent": 2,
+     "text": "· rename_i ha' hb' iha ihb cases h₂ · exact ⟨_, .refl _, .par ha' hb'⟩ · cases ha' exact ⟨_, .red_I ",
+     "heartbeats": 132
+    },
+    {
+     "lines": "18-24",
+     "depth_indent": 2,
+     "text": "· cases h₂ · exact ⟨_, .refl _, .red_S ..⟩ · exact Std.Refl.refl _ · rename_i hd hc obtain ⟨a', b', ",
+     "heartbeats": 91
+    },
+    {
+     "lines": "6-11",
+     "depth_indent": 2,
+     "text": "· cases h₂ · exact ⟨_, .refl _, .red_I ..⟩ · exact Std.Refl.refl _ · rename_i hc ha cases hc exact ⟨",
+     "heartbeats": 70
+    },
+    {
+     "lines": "12-17",
+     "depth_indent": 2,
+     "text": "· cases h₂ · exact ⟨_, .refl _, .red_K ..⟩ · exact Std.Refl.refl _ · rename_i ha hc obtain ⟨a₁', h, ",
+     "heartbeats": 67
+    },
+    {
+     "lines": "26-26",
+     "depth_indent": 4,
+     "text": "cases h₂",
+     "heartbeats": 66
+    },
+    {
+     "lines": "30-31",
+     "depth_indent": 4,
+     "text": "· obtain ⟨a₂', h, rfl⟩ := Ka_irreducible _ _ ha' exact ⟨_, .red_K .., h⟩",
+     "heartbeats": 34
+    },
+    {
+     "lines": "28-29",
+     "depth_indent": 4,
+     "text": "· cases ha' exact ⟨_, .red_I .., hb'⟩",
+     "heartbeats": 23
+    },
+    {
+     "lines": "4-4",
+     "depth_indent": 2,
+     "text": "induction h₁ generalizing a₂",
+     "heartbeats": 12
+    },
+    {
+     "lines": "27-27",
+     "depth_indent": 4,
+     "text": "· exact ⟨_, .refl _, .par ha' hb'⟩",
+     "heartbeats": 8
+    },
+    {
+     "lines": "3-3",
+     "depth_indent": 2,
+     "text": "have : Std.Refl ParallelReduction := ⟨ParallelReduction.refl⟩",
+     "heartbeats": 7
+    },
+    {
+     "lines": "5-5",
+     "depth_indent": 2,
+     "text": "· exact ⟨_, h₂, .refl _⟩",
+     "heartbeats": 7
+    },
+    {
+     "lines": "2-2",
+     "depth_indent": 2,
+     "text": "intro a a₁ a₂ h₁ h₂",
+     "heartbeats": 0
+    }
+   ],
+   "points_left_heartbeats": 9.07,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "fc437f470be2": {
+   "ok": true,
+   "total": 382,
+   "floor": 4,
+   "reference": 1422,
+   "max_heartbeat_score": 33.24,
+   "blocks": [
+    {
+     "lines": "25-37",
+     "depth_indent": 2,
+     "text": "· rename_i ha' hb' iha ihb cases h₂ · exact ⟨_, .refl _, .par ha' hb'⟩ · cases ha' exact ⟨_, .red_I ",
+     "heartbeats": 126
+    },
+    {
+     "lines": "18-24",
+     "depth_indent": 2,
+     "text": "· cases h₂ · exact ⟨_, .refl _, .red_S ..⟩ · exact Std.Refl.refl _ · rename_i hd hc obtain ⟨a', b', ",
+     "heartbeats": 91
+    },
+    {
+     "lines": "6-11",
+     "depth_indent": 2,
+     "text": "· cases h₂ · exact ⟨_, .refl _, .red_I ..⟩ · exact Std.Refl.refl _ · rename_i hc ha cases hc exact ⟨",
+     "heartbeats": 69
+    },
+    {
+     "lines": "12-17",
+     "depth_indent": 2,
+     "text": "· cases h₂ · exact ⟨_, .refl _, .red_K ..⟩ · exact Std.Refl.refl _ · rename_i ha hc obtain ⟨a₁', h, ",
+     "heartbeats": 66
+    },
+    {
+     "lines": "26-26",
+     "depth_indent": 4,
+     "text": "cases h₂",
+     "heartbeats": 66
+    },
+    {
+     "lines": "30-31",
+     "depth_indent": 4,
+     "text": "· obtain ⟨a₂', h, rfl⟩ := Ka_irreducible _ _ ha' use a₂', .red_K .., h",
+     "heartbeats": 28
+    },
+    {
+     "lines": "28-29",
+     "depth_indent": 4,
+     "text": "· cases ha' exact ⟨_, .red_I .., hb'⟩",
+     "heartbeats": 23
+    },
+    {
+     "lines": "4-4",
+     "depth_indent": 2,
+     "text": "induction h₁ generalizing a₂",
+     "heartbeats": 12
+    },
+    {
+     "lines": "27-27",
+     "depth_indent": 4,
+     "text": "· exact ⟨_, .refl _, .par ha' hb'⟩",
+     "heartbeats": 8
+    },
+    {
+     "lines": "3-3",
+     "depth_indent": 2,
+     "text": "have : Std.Refl ParallelReduction := ⟨ParallelReduction.refl⟩",
+     "heartbeats": 7
+    },
+    {
+     "lines": "5-5",
+     "depth_indent": 2,
+     "text": "· use a₂, h₂, .refl _",
+     "heartbeats": 6
+    },
+    {
+     "lines": "2-2",
+     "depth_indent": 2,
+     "text": "intro a a₁ a₂ h₁ h₂",
+     "heartbeats": 0
+    }
+   ],
+   "points_left_heartbeats": 8.86,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "1f25eb2e14ce": {
+   "ok": true,
+   "total": 390,
+   "floor": 4,
+   "reference": 1422,
+   "max_heartbeat_score": 33.24,
+   "blocks": [
+    {
+     "lines": "25-38",
+     "depth_indent": 2,
+     "text": "· rename_i ha' hb' iha ihb cases h₂ · exact ⟨_, .refl _, .par ha' hb'⟩ · cases ha' exact ⟨_, .red_I ",
+     "heartbeats": 136
+    },
+    {
+     "lines": "18-24",
+     "depth_indent": 2,
+     "text": "· cases h₂ · exact ⟨_, .refl _, .red_S ..⟩ · apply Std.Refl.refl · rename_i hd hc obtain ⟨a', b', h1",
+     "heartbeats": 91
+    },
+    {
+     "lines": "6-11",
+     "depth_indent": 2,
+     "text": "· cases h₂ · exact ⟨_, .refl _, .red_I ..⟩ · apply Std.Refl.refl · rename_i hc ha cases hc exact ⟨_,",
+     "heartbeats": 68
+    },
+    {
+     "lines": "26-26",
+     "depth_indent": 4,
+     "text": "cases h₂",
+     "heartbeats": 66
+    },
+    {
+     "lines": "12-17",
+     "depth_indent": 2,
+     "text": "· cases h₂ · exact ⟨_, .refl _, .red_K ..⟩ · apply Std.Refl.refl · rename_i ha hc obtain ⟨a₁', h, rf",
+     "heartbeats": 65
+    },
+    {
+     "lines": "30-31",
+     "depth_indent": 4,
+     "text": "· obtain ⟨a₂', h, rfl⟩ := Ka_irreducible _ _ ha' use a₂', .red_K .., h",
+     "heartbeats": 38
+    },
+    {
+     "lines": "28-29",
+     "depth_indent": 4,
+     "text": "· cases ha' exact ⟨_, .red_I .., hb'⟩",
+     "heartbeats": 23
+    },
+    {
+     "lines": "4-4",
+     "depth_indent": 2,
+     "text": "induction h₁ generalizing a₂",
+     "heartbeats": 12
+    },
+    {
+     "lines": "27-27",
+     "depth_indent": 4,
+     "text": "· exact ⟨_, .refl _, .par ha' hb'⟩",
+     "heartbeats": 9
+    },
+    {
+     "lines": "3-3",
+     "depth_indent": 2,
+     "text": "have : Std.Refl _ := ⟨ParallelReduction.refl⟩",
+     "heartbeats": 7
+    },
+    {
+     "lines": "5-5",
+     "depth_indent": 2,
+     "text": "· use a₂, h₂, .refl _",
+     "heartbeats": 6
+    },
+    {
+     "lines": "2-2",
+     "depth_indent": 2,
+     "text": "intro a a₁ a₂ h₁ h₂",
+     "heartbeats": 0
+    }
+   ],
+   "points_left_heartbeats": 9.05,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "14c6ac3235e9": {
+   "ok": true,
+   "total": 392,
+   "floor": 4,
+   "reference": 1422,
+   "max_heartbeat_score": 33.24,
+   "blocks": [
+    {
+     "lines": "23-36",
+     "depth_indent": 2,
+     "text": "· rename_i ha' hb' iha ihb cases h₂ · exact ⟨_, .refl _, .par ha' hb'⟩ · cases ha' exact ⟨_, .red_I ",
+     "heartbeats": 136
+    },
+    {
+     "lines": "17-22",
+     "depth_indent": 2,
+     "text": "· cases h₂ · exact ⟨_, .refl _, .red_S ..⟩ · apply Std.Refl.refl · obtain ⟨a', b', h1, h2, rfl⟩ := S",
+     "heartbeats": 92
+    },
+    {
+     "lines": "6-11",
+     "depth_indent": 2,
+     "text": "· cases h₂ · exact ⟨_, .refl _, .red_I ..⟩ · apply Std.Refl.refl · rename_i hc ha cases hc exact ⟨_,",
+     "heartbeats": 68
+    },
+    {
+     "lines": "12-16",
+     "depth_indent": 2,
+     "text": "· cases h₂ · exact ⟨_, .refl _, .red_K ..⟩ · apply Std.Refl.refl · obtain ⟨a₁', h, rfl⟩ := Ka_irredu",
+     "heartbeats": 66
+    },
+    {
+     "lines": "24-24",
+     "depth_indent": 4,
+     "text": "cases h₂",
+     "heartbeats": 66
+    },
+    {
+     "lines": "28-29",
+     "depth_indent": 4,
+     "text": "· obtain ⟨a₂', h, rfl⟩ := Ka_irreducible _ _ ha' use a₂', .red_K .., h",
+     "heartbeats": 38
+    },
+    {
+     "lines": "26-27",
+     "depth_indent": 4,
+     "text": "· cases ha' exact ⟨_, .red_I .., hb'⟩",
+     "heartbeats": 23
+    },
+    {
+     "lines": "4-4",
+     "depth_indent": 2,
+     "text": "induction h₁ generalizing a₂",
+     "heartbeats": 12
+    },
+    {
+     "lines": "25-25",
+     "depth_indent": 4,
+     "text": "· exact ⟨_, .refl _, .par ha' hb'⟩",
+     "heartbeats": 9
+    },
+    {
+     "lines": "3-3",
+     "depth_indent": 2,
+     "text": "have : Std.Refl _ := ⟨ParallelReduction.refl⟩",
+     "heartbeats": 7
+    },
+    {
+     "lines": "5-5",
+     "depth_indent": 2,
+     "text": "· use a₂, h₂, .refl _",
+     "heartbeats": 6
+    },
+    {
+     "lines": "2-2",
+     "depth_indent": 2,
+     "text": "intro a a₁ a₂ h₁ h₂",
+     "heartbeats": 0
+    }
+   ],
+   "points_left_heartbeats": 9.1,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  }
+ },
+ "hb_floor": 4
+}

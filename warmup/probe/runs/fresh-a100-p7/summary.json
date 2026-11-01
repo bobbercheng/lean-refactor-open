@@ -1,0 +1,29 @@
+[
+ {
+  "problem": "putnam_1964_a4",
+  "best_score": 90.16,
+  "checks": 12,
+  "tool_calls": 7,
+  "turns": 6,
+  "out_tokens": 23949,
+  "seconds": 477
+ },
+ {
+  "problem": "putnam_1964_b2",
+  "best_score": 95.52,
+  "checks": 10,
+  "tool_calls": 7,
+  "turns": 6,
+  "out_tokens": 15293,
+  "seconds": 311
+ },
+ {
+  "problem": "putnam_1995_a3",
+  "best_score": 93.6,
+  "checks": 7,
+  "tool_calls": 4,
+  "turns": 4,
+  "out_tokens": 9264,
+  "seconds": 180
+ }
+]

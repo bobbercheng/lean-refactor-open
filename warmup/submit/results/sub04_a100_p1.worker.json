@@ -1,0 +1,167 @@
+[
+[
+"CallElimCorrect.substOldPostSubset",
+"Compiled",
+"81.37%",
+"32 of 313",
+"89.78%",
+"2,363 of 5,175",
+"54.34%",
+"1/1",
+"\u2014"
+],
+[
+"CallElimCorrect.extractedOldExprInVars",
+"Compiled",
+"37.16%",
+"219 of 222",
+"1.35%",
+"2,423 of 2,696",
+"10.13%",
+"1/1",
+"\u2014"
+],
+[
+"Core.InitsUpdatesComm",
+"Compiled",
+"78.67%",
+"125 of 224",
+"44.2%",
+"348 of 4,251",
+"91.81%",
+"3/3",
+"\u2014"
+],
+[
+"fundamental_theorem_of_variational_calculus'",
+"Compiled",
+"62.08%",
+"587 of 851",
+"31.02%",
+"5,350 of 11,947",
+"55.22%",
+"1/1",
+"\u2014"
+],
+[
+"Electromagnetism.ElectromagneticPotential.time_deriv_time_deriv_electricField_of_isExtrema",
+"Compiled",
+"33.47%",
+"1,368 of 1,372",
+"0.29%",
+"26,939 of 26,970",
+"0.11%",
+"1/1",
+"\u2014"
+],
+[
+"FieldSpecification.WickAlgebra.\u03b9_timeOrderF_superCommuteF_eq_time",
+"Compiled",
+"46.37%",
+"890 of 1,217",
+"26.87%",
+"37,059 of 42,225",
+"12.23%",
+"1/1",
+"\u2014"
+],
+[
+"Cslib.LambdaCalculus.LocallyNameless.Fsub.Typing.progress",
+"Compiled",
+"71.18%",
+"344 of 408",
+"15.69%",
+"1,280 of 59,830",
+"97.86%",
+"3/3",
+"\u2014"
+],
+[
+"Cslib.SKI.parallelReduction_diamond",
+"Compiled",
+"65.72%",
+"305 of 407",
+"25.06%",
+"386 of 1,383",
+"72.09%",
+"4/4",
+"\u2014"
+],
+[
+"Cslib.CCS.bisimilarity_congr_choice",
+"Compiled",
+"78.28%",
+"137 of 251",
+"45.42%",
+"408 of 3,858",
+"89.42%",
+"3/3",
+"\u2014"
+],
+[
+"Binius.BinaryBasefold.fiberwise_dist_lt_imp_dist_lt_unique_decoding_radius",
+"Compiled",
+"62.75%",
+"980 of 1,463",
+"33.01%",
+"7,002 of 15,645",
+"55.24%",
+"4/4",
+"\u2014"
+],
+[
+"Binius.BinaryBasefold.fold_advances_evaluation_poly",
+"Compiled",
+"86.9%",
+"414 of 1,906",
+"78.28%",
+"7,962 of 45,273",
+"82.41%",
+"3/3",
+"\u2014"
+],
+[
+"interleaved_affine_gaps_imply_tensor_gaps",
+"Compiled",
+"59.06%",
+"754 of 1,353",
+"44.27%",
+"6,170 of 9,198",
+"32.92%",
+"3/3",
+"\u2014"
+],
+[
+"putnam_1964_a4",
+"Compiled",
+"85.13%",
+"719 of 1,769",
+"59.36%",
+"4,435 of 111,476",
+"96.02%",
+"3/3",
+"\u2014"
+],
+[
+"putnam_1964_b2",
+"Compiled",
+"91.71%",
+"383 of 1,754",
+"78.16%",
+"4,061 of 134,499",
+"96.98%",
+"2/2",
+"\u2014"
+],
+[
+"putnam_1995_a3",
+"Compiled",
+"90.66%",
+"410 of 4,085",
+"89.96%",
+"2,540 of 14,130",
+"82.02%",
+"3/3",
+"\u2014"
+]
+]

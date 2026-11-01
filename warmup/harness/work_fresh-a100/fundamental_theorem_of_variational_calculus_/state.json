@@ -1,0 +1,1514 @@
+{
+ "problem": "fundamental_theorem_of_variational_calculus'",
+ "best": {
+  "score": 87.02,
+  "proof": "lemma fundamental_theorem_of_variational_calculus' {f : Y → V}\n    (μ : Measure Y) [IsFiniteMeasureOnCompacts μ] [μ.IsOpenPosMeasure]\n    [OpensMeasurableSpace Y]\n    (hf : Continuous f) (hg : ∀ g, IsTestFunction g → ∫ x, ⟪f x, g x⟫_ℝ ∂μ = 0) :\n    f = 0 := by\n    by_contra h₀\n    obtain ⟨x₀, hx0⟩ := Function.ne_iff.mp h₀\n    have hinner : Continuous (fun x => ⟪f x, f x₀⟫_ℝ) :=\n      Continuous.inner' f (fun _ => f x₀) hf continuous_const\n    have hself : 0 < ⟪f x₀, f x₀⟫_ℝ :=\n      lt_of_le_of_ne (real_inner_self_nonneg') fun h => hx0 (inner_self_eq_zero'.mp h.symm)\n    obtain ⟨δ, hδpos, hδ⟩ := Metric.mem_nhds_iff.mp\n      ((hinner.continuousAt).preimage_mem_nhds (Ioi_mem_nhds hself))\n    obtain ⟨φ, hts, hcs, hc, hr, hφx₀⟩ := exists_contDiff_tsupport_subset\n      (Metric.ball_mem_nhds x₀ hδpos)\n    have key_integral := hg (fun x => φ x • f x₀)\n      (IsTestFunction.smul_right ⟨hc, hcs⟩ contDiff_const)\n    simp only [inner_smul_right'] at key_integral\n    exact (Continuous.integral_pos_of_hasCompactSupport_nonneg_nonzero\n        (x := x₀) (hc.continuous.mul hinner) hcs.mul_right\n        (fun x => if h : φ x = 0 then by simp [h] else\n          mul_nonneg (hr (Set.mem_range_self x)).1 (hδ (hts (subset_closure h))).le)\n        (by simp [hφx₀, hself.ne'])).ne key_integral.symm",
+  "tokens": 202,
+  "heartbeats": 1817,
+  "L": 76.26,
+  "H": 84.8,
+  "Z": 100.0,
+  "compat": {
+   "v4.32.0": true
+  }
+ },
+ "attempts": [
+  {
+   "sha": "1caca4f7cf13",
+   "tokens": 851,
+   "heartbeats": 11954,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:18:03Z"
+  },
+  {
+   "sha": "e05a52d95148",
+   "tokens": 654,
+   "heartbeats": 1078,
+   "ok": false,
+   "error": "117:46: Invalid field `continuousAt`: The environment does not contain `Function.continuousAt`, so it is not possible to project the field `continuousAt` from an expression Continuous.inner' ?m.97 ?m.104 of type Continuous ?m.97 → Continuous ?m.104 → Continuous fun a => ⟪?m.97 a, ?m.104 a⟫_?m.88",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:21:52Z"
+  },
+  {
+   "sha": "4e2e0454d73a",
+   "tokens": 670,
+   "heartbeats": 822,
+   "ok": false,
+   "error": "119:84: Application type mismatch: The argument h has type 0 = ⟪f x₀, f x₀⟫_ℝ but is expected to have type ⟪f x₀, f x₀⟫_(?m.136 h) = 0 in the application inner_self_eq_zero'.mp h",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:22:25Z"
+  },
+  {
+   "sha": "036abb48f864",
+   "tokens": 670,
+   "heartbeats": 6211,
+   "ok": false,
+   "error": "124:12: Tactic `rewrite` failed: Did not find an occurrence of the pattern dist  … [hypotheses omitted] ⊢ |⟪f x, f x₀⟫_ℝ - ⟪f x₀, f x₀⟫_ℝ| < ⟪f x₀, f x₀⟫_ℝ / 2",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:24:52Z"
+  },
+  {
+   "sha": "da9b08916a1f",
+   "tokens": 638,
+   "heartbeats": 5246,
+   "ok": false,
+   "error": "123:20: Application type mismatch: The argument x has type Y of sort `Type u_1` but is expected to have type dist ?m.195 x₀ < δ of sort `Prop` in the application hδ x",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:25:52Z"
+  },
+  {
+   "sha": "6a0daafccf7b",
+   "tokens": 637,
+   "heartbeats": 5672,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:27:09Z",
+   "score": 59.23
+  },
+  {
+   "sha": "9cfd9bbee9a8",
+   "tokens": 587,
+   "heartbeats": 5319,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:31:45Z",
+   "score": 62.18
+  },
+  {
+   "sha": "9f3ead64eb0f",
+   "tokens": 575,
+   "heartbeats": 5065,
+   "ok": false,
+   "error": "133:59: linarith failed to find a contradiction … [hypotheses omitted] ⊢ False failed",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:34:26Z"
+  },
+  {
+   "sha": "9102ba3c4c50",
+   "tokens": 595,
+   "heartbeats": 5217,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:36:45Z"
+  },
+  {
+   "sha": "3e492905274d",
+   "tokens": 594,
+   "heartbeats": 2953,
+   "ok": false,
+   "error": "138:8: Tactic `rewrite` failed: Did not find an occurrence of the pattern ⟪?x, ?r • ?y⟫_?m.482 in the target expression ∫ … [hypotheses omitted] ⊢ False",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:42:38Z"
+  },
+  {
+   "sha": "be3ba075f02c",
+   "tokens": 576,
+   "heartbeats": 5297,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T02:14:59Z",
+   "score": 62.67
+  },
+  {
+   "sha": "9e934b19d347",
+   "tokens": 576,
+   "heartbeats": 5070,
+   "ok": false,
+   "error": "142:19: Unknown constant `mul_ne_zero.mp`",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T02:19:07Z"
+  },
+  {
+   "sha": "f3d159b0a80e",
+   "tokens": 576,
+   "heartbeats": 5037,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T02:20:35Z",
+   "score": 63.39
+  },
+  {
+   "sha": "dbaf3da060d6",
+   "tokens": 545,
+   "heartbeats": 3266,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T02:21:51Z",
+   "score": 69.55
+  },
+  {
+   "sha": "704775b9e1cb",
+   "tokens": 545,
+   "heartbeats": 3161,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T02:23:41Z",
+   "score": 69.84
+  },
+  {
+   "sha": "4883b48e316c",
+   "tokens": 516,
+   "heartbeats": 3161,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T02:30:27Z",
+   "score": 70.97
+  },
+  {
+   "sha": "8011885f0219",
+   "tokens": 517,
+   "heartbeats": 3151,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T02:37:55Z"
+  },
+  {
+   "sha": "a317ad044292",
+   "tokens": 516,
+   "heartbeats": 1914,
+   "ok": false,
+   "error": "137:8: Tactic `rewrite` failed: Did not find an occurrence of the pattern ⟪?x, ?r • ?y⟫_?m.416 in the target expression ∫ … [hypotheses omitted] ⊢ False",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T02:45:46Z"
+  },
+  {
+   "sha": "ec5a51cec8d3",
+   "tokens": 518,
+   "heartbeats": 1606,
+   "ok": false,
+   "error": "135:4: Tactic `assumption` failed … [hypotheses omitted] ⊢ False",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T02:50:01Z"
+  },
+  {
+   "sha": "91e65e3295ee",
+   "tokens": 519,
+   "heartbeats": 1399,
+   "ok": false,
+   "error": "128:10: Tactic `assumption` failed … [hypotheses omitted] ⊢ ∃ φ, IsTestFunction φ ∧ φ x₀ > 0 ∧ (∀ x ∈ Function.support φ, 0 ≤ φ x) ∧ Function.support φ ⊆ Metric.ball x₀ δ ∧ ∀ x ∈ Metric.closedBall x₀ (δ / 2), 0 < φ x",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T02:51:03Z"
+  },
+  {
+   "sha": "838df4d63df3",
+   "tokens": 519,
+   "heartbeats": 899,
+   "ok": false,
+   "error": "121:4: Tactic `assumption` failed … [hypotheses omitted] ⊢ False",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T02:51:51Z"
+  },
+  {
+   "sha": "0b367e40940f",
+   "tokens": 519,
+   "heartbeats": 797,
+   "ok": false,
+   "error": "119:4: Tactic `assumption` failed … [hypotheses omitted] ⊢ False",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T02:53:13Z"
+  },
+  {
+   "sha": "c579fc88be47",
+   "tokens": 474,
+   "heartbeats": 3175,
+   "ok": false,
+   "error": "144:26: Function expected at hφ_non_neg x but this term has type 0 ≤ ↑φ1 x Note: Expected a function because this term is being applied to the argument h",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:49:48Z"
+  },
+  {
+   "sha": "3ee07d77396e",
+   "tokens": 510,
+   "heartbeats": 3223,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:49:50Z",
+   "score": 71.04
+  },
+  {
+   "sha": "e5c82349ca0e",
+   "tokens": 478,
+   "heartbeats": 3170,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:50:09Z",
+   "score": 72.44
+  },
+  {
+   "sha": "be6ce855fa40",
+   "tokens": 250,
+   "heartbeats": 2366,
+   "ok": false,
+   "error": "136:30: Application type mismatch: The argument hx has type ↑φ1 ?m.413 = 0 but is expected to have type ?m.418 * ?m.419 ≠ 0 in the application mul_ne_zero_iff.mp hx",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:50:47Z"
+  },
+  {
+   "sha": "eb113629825d",
+   "tokens": 266,
+   "heartbeats": 2273,
+   "ok": false,
+   "error": "134:10: Function expected at integral_pos_of_integrable_nonneg_nonzero (Continuous.mul (ContDiff.continuous hφ_testfun.smooth) hinner) integrable_prod (fun x => mul_nonneg (ContDiffBump.nonneg φ1) (LT.lt.le ?m.446)) (mul_ne_zero (ne_of_gt (ContDiffBump.pos_of_mem_ball φ1 (Metric.mem_ball_self (ContD",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:51:16Z"
+  },
+  {
+   "sha": "45da22f570c3",
+   "tokens": 269,
+   "heartbeats": 2306,
+   "ok": false,
+   "error": "137:49: Application type mismatch: The argument supp_subset2 has type (Function.support fun x => ↑φ1 x * ⟪f x, f x₀⟫_ℝ) ⊆ Function.support ↑φ1 but is expected to have type x ∈ Function.support ↑φ1 in the application Eq.subset (ContDiffBump.support_eq φ1) supp_subset2",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:51:34Z"
+  },
+  {
+   "sha": "f9bf38e2d4b6",
+   "tokens": 320,
+   "heartbeats": 2468,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:52:00Z",
+   "score": 80.58
+  },
+  {
+   "sha": "f275109ca6bc",
+   "tokens": 100,
+   "heartbeats": 896,
+   "ok": false,
+   "error": "122:4: Tactic `assumption` failed … [hypotheses omitted] ⊢ False",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:52:27Z"
+  },
+  {
+   "sha": "d8318f2057c6",
+   "tokens": 157,
+   "heartbeats": 1654,
+   "ok": false,
+   "error": "128:4: Tactic `assumption` failed … [hypotheses omitted] ⊢ False",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:52:29Z"
+  },
+  {
+   "sha": "697b7031cb3a",
+   "tokens": 131,
+   "heartbeats": 1277,
+   "ok": false,
+   "error": "125:4: Tactic `assumption` failed … [hypotheses omitted] ⊢ False",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:52:51Z"
+  },
+  {
+   "sha": "026c02bdfe27",
+   "tokens": 150,
+   "heartbeats": 1620,
+   "ok": false,
+   "error": "127:4: Tactic `assumption` failed … [hypotheses omitted] ⊢ False",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:52:52Z"
+  },
+  {
+   "sha": "45075c3b2934",
+   "tokens": 121,
+   "heartbeats": 896,
+   "ok": false,
+   "error": "122:4: Tactic `assumption` failed … [hypotheses omitted] ⊢ False",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:52:54Z"
+  },
+  {
+   "sha": "886b1bed85ea",
+   "tokens": 93,
+   "heartbeats": 885,
+   "ok": false,
+   "error": "121:4: Tactic `assumption` failed … [hypotheses omitted] ⊢ False",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:53:08Z"
+  },
+  {
+   "sha": "2ebb08f323e3",
+   "tokens": 73,
+   "heartbeats": 783,
+   "ok": false,
+   "error": "119:4: Tactic `assumption` failed … [hypotheses omitted] ⊢ False",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:53:10Z"
+  },
+  {
+   "sha": "e94eab50bee3",
+   "tokens": 259,
+   "heartbeats": 2022,
+   "ok": false,
+   "error": "136:4: Tactic `assumption` failed … [hypotheses omitted] ⊢ False",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:53:36Z"
+  },
+  {
+   "sha": "d59ee335599a",
+   "tokens": 291,
+   "heartbeats": 2255,
+   "ok": false,
+   "error": "140:4: Tactic `assumption` failed … [hypotheses omitted] ⊢ False",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:53:37Z"
+  },
+  {
+   "sha": "37afbbc27ec5",
+   "tokens": 323,
+   "heartbeats": 3238,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:55:21Z"
+  },
+  {
+   "sha": "240dfa8e7c85",
+   "tokens": 290,
+   "heartbeats": 2406,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:55:23Z",
+   "score": 81.93
+  },
+  {
+   "sha": "52d14542f34b",
+   "tokens": 269,
+   "heartbeats": 937,
+   "ok": false,
+   "error": "117:18: failed to synthesize instance of type class InnerProductSpace ℝ V Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:56:42Z"
+  },
+  {
+   "sha": "6d059ed4ceda",
+   "tokens": 268,
+   "heartbeats": 937,
+   "ok": false,
+   "error": "117:18: failed to synthesize instance of type class InnerProductSpace ℝ V Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:56:45Z"
+  },
+  {
+   "sha": "2cd3c7597e38",
+   "tokens": 271,
+   "heartbeats": 2339,
+   "ok": false,
+   "error": "136:50: Tactic `rewrite` failed: Did not find an occurrence of the pattern ↑φ1 x in the target expression 0 x ≤ (↑φ1 * fun x => ⟪f x, f x₀⟫_ℝ) x … [hypotheses omitted] ⊢ 0 x ≤ (↑φ1 * fun x => ⟪f x, f x₀⟫_ℝ) x",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:57:09Z"
+  },
+  {
+   "sha": "794dd85a3ce6",
+   "tokens": 274,
+   "heartbeats": 2366,
+   "ok": false,
+   "error": "126:59: Application type mismatch: The argument hφ_testfun.smooth has type ContDiff.{0, u_1, 0} ℝ ↑⊤ ↑φ1 but is expected to have type ContDiff.{0, u_1, u_2} ℝ (↑⊤) f in the application ContDiff.inner' hφ_testfun.smooth",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:58:07Z"
+  },
+  {
+   "sha": "d5d726cda1df",
+   "tokens": 288,
+   "heartbeats": 2408,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:59:10Z",
+   "score": 82.0
+  },
+  {
+   "sha": "521a0add8d2a",
+   "tokens": 268,
+   "heartbeats": 2111,
+   "ok": false,
+   "error": "134:28: typeclass instance problem is stuck IsFiniteMeasureOnCompacts ?m.399 Note: Lean will not try to resolve this typeclass instance problem because the fourth type argument to `IsFiniteMeasureOnCompacts` is a metavariable. This argument must be fully determined before Lean will try to resolve th",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:59:12Z"
+  },
+  {
+   "sha": "59c6b846ea3e",
+   "tokens": 284,
+   "heartbeats": 2139,
+   "ok": false,
+   "error": "135:28: typeclass instance problem is stuck IsFiniteMeasureOnCompacts ?m.406 Note: Lean will not try to resolve this typeclass instance problem because the fourth type argument to `IsFiniteMeasureOnCompacts` is a metavariable. This argument must be fully determined before Lean will try to resolve th",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:59:36Z"
+  },
+  {
+   "sha": "c6abbf3eaea5",
+   "tokens": 288,
+   "heartbeats": 2407,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:59:56Z",
+   "score": 82.01
+  },
+  {
+   "sha": "175c7561f9ca",
+   "tokens": 18,
+   "heartbeats": 613,
+   "ok": false,
+   "error": "115:4: Tactic `assumption` failed … [hypotheses omitted] ⊢ False",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:00:30Z"
+  },
+  {
+   "sha": "69bebbe2437c",
+   "tokens": 47,
+   "heartbeats": 703,
+   "ok": false,
+   "error": "117:4: Tactic `assumption` failed … [hypotheses omitted] ⊢ False",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:00:31Z"
+  },
+  {
+   "sha": "9b974554b274",
+   "tokens": 283,
+   "heartbeats": 2414,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:00:58Z",
+   "score": 82.18
+  },
+  {
+   "sha": "40eaa73d8097",
+   "tokens": 2,
+   "heartbeats": 557,
+   "ok": false,
+   "error": "113:4: Tactic `assumption` failed … [hypotheses omitted] ⊢ f = 0",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:01:16Z"
+  },
+  {
+   "sha": "e23db804c87d",
+   "tokens": 260,
+   "heartbeats": 2539,
+   "ok": false,
+   "error": "137:19: Application type mismatch: The argument LT.lt.ne (ContDiffBump.pos_of_mem_ball φ1 (Metric.mem_ball_self (ContDiffBump.rOut_pos φ1))) has type 0 ≠ ↑φ1 x₀ but is expected to have type ↑φ1 ?m.432 ≠ 0 in the application mul_ne_zero (LT.lt.ne (ContDiffBump.pos_of_mem_ball φ1 (Metric.mem_ball_self",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:01:54Z"
+  },
+  {
+   "sha": "1dbe49eb6a20",
+   "tokens": 260,
+   "heartbeats": 2395,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:02:15Z",
+   "score": 83.14
+  },
+  {
+   "sha": "6514fe576503",
+   "tokens": 249,
+   "heartbeats": 2360,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:03:01Z",
+   "score": 83.67
+  },
+  {
+   "sha": "623e9c9a0948",
+   "tokens": 260,
+   "heartbeats": 2395,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:03:03Z"
+  },
+  {
+   "sha": "0409296420d9",
+   "tokens": 249,
+   "heartbeats": 2361,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:03:22Z"
+  },
+  {
+   "sha": "06fb22bce403",
+   "tokens": 240,
+   "heartbeats": 2051,
+   "ok": false,
+   "error": "131:18: don't know how to synthesize implicit argument `f'` @HasCompactSupport.m … [hypotheses omitted] ⊢ Y → ℝ",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:13:19Z"
+  },
+  {
+   "sha": "78d65c3864b0",
+   "tokens": 256,
+   "heartbeats": 2293,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:13:30Z"
+  },
+  {
+   "sha": "8d5fb0a490a2",
+   "tokens": 229,
+   "heartbeats": null,
+   "ok": false,
+   "error": "122:46: expected token",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:14:28Z"
+  },
+  {
+   "sha": "6df9e85a0bc6",
+   "tokens": 234,
+   "heartbeats": 1736,
+   "ok": false,
+   "error": "132:16: Type mismatch (hr (Set.mem_range_self x)).left has type 0 ≤ φ x but is expected to have type 0 x ≤ (φ * fun x => ⟪f x, f x₀⟫_ℝ) x",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:14:37Z"
+  },
+  {
+   "sha": "02bccf139bd2",
+   "tokens": 288,
+   "heartbeats": 1827,
+   "ok": false,
+   "error": "128:60: Type mismatch (hr (Set.mem_range_self x)).left has type 0 ≤ φ x but is expected to have type 0 x ≤ (fun x => φ x * ⟪f x, f x₀⟫_ℝ) x",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:14:58Z"
+  },
+  {
+   "sha": "7591e24d216f",
+   "tokens": 322,
+   "heartbeats": 1904,
+   "ok": false,
+   "error": "133:25: Invalid field `support_subset_tsupport`: The environment does not contain `Function.support_subset_tsupport`, so it is not possible to project the field `support_subset_tsupport` from an expression hcs of type ?m.308 ≤ Filter.principal (tsupport φ) → ∃ x ∈ tsupport φ, ClusterPt x ?m.308",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:15:52Z"
+  },
+  {
+   "sha": "f84c08d8dd16",
+   "tokens": 268,
+   "heartbeats": 1935,
+   "ok": false,
+   "error": "129:8: Application type mismatch: The argument Continuous.mul hinner (ContDiff.continuous hc) has type Continuous ((fun x => ⟪f x, f x₀⟫_ℝ) * φ) but is expected to have type Continuous fun x => φ x * ⟪f x, f x₀⟫_ℝ in the application Continuous.integral_pos_of_hasCompactSupport_nonneg_nonzero (Contin",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:12:00Z"
+  },
+  {
+   "sha": "62b84b87fd74",
+   "tokens": 268,
+   "heartbeats": 1995,
+   "ok": false,
+   "error": "130:30: Type mismatch hts (subset_closure (mul_ne_zero_iff.mp hx).left) has type x ∈ Metric.ball x₀ δ but is expected to have type x ∈ Function.support φ",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:12:16Z"
+  },
+  {
+   "sha": "3401ef890aa3",
+   "tokens": 248,
+   "heartbeats": 1941,
+   "ok": false,
+   "error": "129:30: Type mismatch hts (subset_closure (mul_ne_zero_iff.mp hx).left) has type x ∈ Metric.ball x₀ δ but is expected to have type x ∈ Function.support φ",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:12:18Z"
+  },
+  {
+   "sha": "2be6f3636ab5",
+   "tokens": 264,
+   "heartbeats": 1943,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:12:45Z",
+   "score": 84.24
+  },
+  {
+   "sha": "c2ec93a824fd",
+   "tokens": 244,
+   "heartbeats": 1889,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:13:19Z",
+   "score": 85.18
+  },
+  {
+   "sha": "903def14c887",
+   "tokens": 241,
+   "heartbeats": 1912,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:13:20Z",
+   "score": 85.23
+  },
+  {
+   "sha": "b9b1bd269f3a",
+   "tokens": 242,
+   "heartbeats": 1972,
+   "ok": false,
+   "error": "132:34: Application type mismatch: The argument LT.lt.ne' hself has type ⟪f x₀, f x₀⟫_ℝ ≠ 0 but is expected to have type ?m.352 = ?m.353 in the application Eq.trans (one_mul ?m.352) (LT.lt.ne' hself)",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:13:22Z"
+  },
+  {
+   "sha": "899c416dd464",
+   "tokens": 241,
+   "heartbeats": 1920,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:15:01Z"
+  },
+  {
+   "sha": "6614e366217f",
+   "tokens": 242,
+   "heartbeats": 1915,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:15:03Z"
+  },
+  {
+   "sha": "e4632d56870c",
+   "tokens": 231,
+   "heartbeats": 869,
+   "ok": false,
+   "error": "117:39: failed to synthesize instance of type class InnerProductSpace ℝ V Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:15:59Z"
+  },
+  {
+   "sha": "ed5905436018",
+   "tokens": 215,
+   "heartbeats": 986,
+   "ok": false,
+   "error": "118:62: failed to synthesize instance of type class InnerProductSpace ℝ V Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:16:01Z"
+  },
+  {
+   "sha": "ddc57acb07c9",
+   "tokens": 243,
+   "heartbeats": 1886,
+   "ok": false,
+   "error": "130:45: Tactic `rewrite` failed: Did not find an occurrence of the pattern φ x in the target expression 0 x ≤ (fun x => φ x * ⟪f x, f x₀⟫_ℝ) x … [hypotheses omitted] ⊢ 0 x ≤ (fun x => φ x * ⟪f x, f x₀⟫_ℝ) x",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:34:31Z"
+  },
+  {
+   "sha": "8b1b0927d176",
+   "tokens": 234,
+   "heartbeats": 1934,
+   "ok": false,
+   "error": "117:42: `simp` made no progress",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:34:38Z"
+  },
+  {
+   "sha": "dec1219adc00",
+   "tokens": 231,
+   "heartbeats": 1883,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:34:42Z",
+   "score": 85.7
+  },
+  {
+   "sha": "498285dce750",
+   "tokens": 224,
+   "heartbeats": 1977,
+   "ok": false,
+   "error": "117:42: Type mismatch: After simplification, term norm_pos_iff.mpr hx0 has type ¬f x₀ = 0 but is expected to have type 0 < ⟪f x₀, f x₀⟫_ℝ",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:35:22Z"
+  },
+  {
+   "sha": "e4edaaf21594",
+   "tokens": 229,
+   "heartbeats": 1802,
+   "ok": false,
+   "error": "131:44: Type mismatch: After simplification, term Eq.symm key_integral has type 0 = ∫ (x : Y), ⟪f x, φ x • f x₀⟫_ℝ ∂μ but is expected to have type 0 = ∫ (x : Y), φ x * ⟪f x, f x₀⟫_ℝ ∂?m.257",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:35:26Z"
+  },
+  {
+   "sha": "9379fa3f0609",
+   "tokens": 222,
+   "heartbeats": 788,
+   "ok": false,
+   "error": "115:57: Type mismatch Continuous.inner hf continuous_const has type Continuous fun t => @inner ?m.84 V toInner (f t) ?m.97 but is expected to have type Continuous fun x => @inner ℝ V instInnerOfInnerProductSpace' (f x) (f x₀)",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:35:29Z"
+  },
+  {
+   "sha": "3057fbf15888",
+   "tokens": 222,
+   "heartbeats": 1904,
+   "ok": false,
+   "error": "117:42: Type mismatch: After simplification, term norm_pos_iff.mpr hx0 has type ¬f x₀ = 0 but is expected to have type 0 < ⟪f x₀, f x₀⟫_ℝ",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:35:33Z"
+  },
+  {
+   "sha": "640e68f9e333",
+   "tokens": 233,
+   "heartbeats": 2049,
+   "ok": false,
+   "error": "118:9: `simp` made no progress",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:36:11Z"
+  },
+  {
+   "sha": "c8df871358b1",
+   "tokens": 231,
+   "heartbeats": 2011,
+   "ok": false,
+   "error": "118:9: `simp` made no progress",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:36:15Z"
+  },
+  {
+   "sha": "2932a907e974",
+   "tokens": 234,
+   "heartbeats": 1860,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:36:19Z"
+  },
+  {
+   "sha": "54567836a1e0",
+   "tokens": 231,
+   "heartbeats": 2129,
+   "ok": false,
+   "error": "118:9: Type mismatch: After simplification, term pow_pos (norm_pos_iff.mpr hx0) 2 has type 0 < ‖f x₀‖ ^ 2 but is expected to have type 0 < ⟪f x₀, f x₀⟫_ℝ",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:36:23Z"
+  },
+  {
+   "sha": "928802ad841a",
+   "tokens": 235,
+   "heartbeats": 1863,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:37:56Z"
+  },
+  {
+   "sha": "9366b010db92",
+   "tokens": 216,
+   "heartbeats": 1827,
+   "ok": false,
+   "error": "131:16: Tactic `rewrite` failed: Did not find an occurrence of the pattern φ x₀ in the target expression (φ * fun x => ⟪f x, f x₀⟫_ℝ) x₀ ≠ 0 … [hypotheses omitted] ⊢ (φ * fun x => ⟪f x, f x₀⟫_ℝ) x₀ ≠ 0",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:38:15Z"
+  },
+  {
+   "sha": "2a31a0169e23",
+   "tokens": 217,
+   "heartbeats": 1830,
+   "ok": false,
+   "error": "131:16: Tactic `rewrite` failed: Did not find an occurrence of the pattern φ x₀ in the target expression (φ * fun x => ⟪f x, f x₀⟫_ℝ) x₀ ≠ 0 … [hypotheses omitted] ⊢ (φ * fun x => ⟪f x, f x₀⟫_ℝ) x₀ ≠ 0",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:38:39Z"
+  },
+  {
+   "sha": "e38c34a7a23a",
+   "tokens": 213,
+   "heartbeats": 1889,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:39:04Z",
+   "score": 86.39
+  },
+  {
+   "sha": "4a0816c3c5cf",
+   "tokens": 244,
+   "heartbeats": 1831,
+   "ok": false,
+   "error": "131:19: invalid `▸` notation, the equality Eq.symm hφx₀ has type 1 = φ x₀ but neither side of the equality is mentioned in the type (φ * fun x => ⟪f x, f x₀⟫_ℝ) x₀ = 0",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:39:08Z"
+  },
+  {
+   "sha": "9956308fa4d4",
+   "tokens": 213,
+   "heartbeats": 1913,
+   "ok": false,
+   "error": "114:37: Application type mismatch: The argument h₀ has type ¬f = 0 but is expected to have type ¬∀ (x : ?m.61), ?m.62 x in the application not_forall.mp h₀",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:40:21Z"
+  },
+  {
+   "sha": "b707b979d3f8",
+   "tokens": 214,
+   "heartbeats": 1892,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:40:28Z"
+  },
+  {
+   "sha": "760894334c1f",
+   "tokens": 215,
+   "heartbeats": 1920,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:40:32Z"
+  },
+  {
+   "sha": "b01c111d93e6",
+   "tokens": 216,
+   "heartbeats": 1948,
+   "ok": false,
+   "error": "114:37: Application type mismatch: The argument h₀ has type ¬f = 0 but is expected to have type ¬∀ (x : ?m.61), ?m.62 x in the application not_forall.mp h₀",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:40:36Z"
+  },
+  {
+   "sha": "f5dd29888187",
+   "tokens": 209,
+   "heartbeats": 838,
+   "ok": false,
+   "error": "120:6: Application type mismatch: The argument ContinuousAt.preimage_mem_nhds (Continuous.continuousAt hinner) has type ?m.148 ∈ nhds ⟪f ?m.147, f x₀⟫_ℝ → (fun x => ⟪f x, f x₀⟫_ℝ) ⁻¹' ?m.148 ∈ nhds ?m.147 but is expected to have type ?m.133 ∈ nhds ?m.132 in the application Metric.mem_nhds_iff.mp (Co",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:41:40Z"
+  },
+  {
+   "sha": "92314c4b1fd6",
+   "tokens": 208,
+   "heartbeats": 838,
+   "ok": false,
+   "error": "120:6: Application type mismatch: The argument ContinuousAt.preimage_mem_nhds (Continuous.continuousAt hinner) has type ?m.148 ∈ nhds ⟪f ?m.147, f x₀⟫_ℝ → (fun x => ⟪f x, f x₀⟫_ℝ) ⁻¹' ?m.148 ∈ nhds ?m.147 but is expected to have type ?m.133 ∈ nhds ?m.132 in the application Metric.mem_nhds_iff.mp (Co",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:41:48Z"
+  },
+  {
+   "sha": "05201e5bd480",
+   "tokens": 214,
+   "heartbeats": 1819,
+   "ok": false,
+   "error": "131:7: unsolved goals … [hypotheses omitted] ⊢ 0 = ∫ (x : Y), φ x * ⟪f x, f x₀⟫_ℝ ∂?m.257",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:42:31Z"
+  },
+  {
+   "sha": "c60160eba6cc",
+   "tokens": 216,
+   "heartbeats": 1850,
+   "ok": false,
+   "error": "117:39: Unknown constant `pos_of_gt.mp`",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:34:18Z"
+  },
+  {
+   "sha": "9a51695059d2",
+   "tokens": 215,
+   "heartbeats": 1853,
+   "ok": false,
+   "error": "129:45: Tactic `rewrite` failed: Did not find an occurrence of the pattern φ x in the target expression 0 x ≤ (φ * fun x => ⟪f x, f x₀⟫_ℝ) x … [hypotheses omitted] ⊢ 0 x ≤ (φ * fun x => ⟪f x, f x₀⟫_ℝ) x",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:34:40Z"
+  },
+  {
+   "sha": "e3c2ddf8f51d",
+   "tokens": 213,
+   "heartbeats": 1940,
+   "ok": false,
+   "error": "131:39: Type mismatch key_integral has type ∫ (x : Y), φ x * ⟪f x, f x₀⟫_ℝ ∂μ = 0 but is expected to have type 0 < ∫ (x : Y), (φ * fun x => ⟪f x, f x₀⟫_ℝ) x ∂?m.261",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:34:47Z"
+  },
+  {
+   "sha": "cba7ce9924ea",
+   "tokens": 200,
+   "heartbeats": 1887,
+   "ok": false,
+   "error": "131:24: Unknown identifier `hself.ne'`",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:34:51Z"
+  },
+  {
+   "sha": "240858510a4c",
+   "tokens": 202,
+   "heartbeats": 1907,
+   "ok": false,
+   "error": "131:9: unsolved goals … [hypotheses omitted] ⊢ ¬f x₀ = 0",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:35:50Z"
+  },
+  {
+   "sha": "3e945f2b7cbe",
+   "tokens": 202,
+   "heartbeats": 1907,
+   "ok": false,
+   "error": "131:9: unsolved goals … [hypotheses omitted] ⊢ ¬f x₀ = 0",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:35:54Z"
+  },
+  {
+   "sha": "7a08d34b0cc1",
+   "tokens": 200,
+   "heartbeats": 1368,
+   "ok": false,
+   "error": "128:9: unsolved goals … [hypotheses omitted] ⊢ ¬f x₀ = 0",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:35:57Z"
+  },
+  {
+   "sha": "6d0610fbc4de",
+   "tokens": 204,
+   "heartbeats": 788,
+   "ok": false,
+   "error": "115:57: Type mismatch Continuous.inner hf continuous_const has type Continuous fun t => @inner ?m.84 V toInner (f t) ?m.97 but is expected to have type Continuous fun x => @inner ℝ V instInnerOfInnerProductSpace' (f x) (f x₀)",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:37:32Z"
+  },
+  {
+   "sha": "d30572a14857",
+   "tokens": 196,
+   "heartbeats": 711,
+   "ok": false,
+   "error": "115:28: Application type mismatch: The argument fun x => f x₀ has type ?m.87 → V of sort `Sort (max (u_2 + 1) ?u.68)` but is expected to have type Continuous ?m.86 of sort `Prop` in the application Continuous.inner hf fun x => f x₀",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:37:35Z"
+  },
+  {
+   "sha": "7a452b1dfe54",
+   "tokens": 202,
+   "heartbeats": 788,
+   "ok": false,
+   "error": "115:57: Type mismatch Continuous.inner hf continuous_const has type Continuous fun t => @inner ?m.84 V toInner (f t) ?m.97 but is expected to have type Continuous fun x => @inner ℝ V instInnerOfInnerProductSpace' (f x) (f x₀)",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:37:43Z"
+  },
+  {
+   "sha": "a84db136a337",
+   "tokens": 213,
+   "heartbeats": 1878,
+   "ok": false,
+   "error": "131:37: Application type mismatch: The argument Eq.symm key_integral has type 0 = ∫ (x : Y), φ x * ⟪f x, f x₀⟫_ℝ ∂μ but is expected to have type ∫ (x : Y), (φ * fun x => ⟪f x, f x₀⟫_ℝ) x ∂?m.265 = 0 in the application ne_of_gt (Continuous.integral_pos_of_hasCompactSupport_nonneg_nonzero (Continuous.",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:40:25Z"
+  },
+  {
+   "sha": "0606a35a957b",
+   "tokens": 208,
+   "heartbeats": 1827,
+   "ok": false,
+   "error": "131:19: Invalid field `mul_right`: The environment does not contain `Function.mul_right`, so it is not possible to project the field `mul_right` from an expression LT.lt.ne' hself of type `⟪f x₀, f x₀⟫_ℝ = 0 → False`",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:40:29Z"
+  },
+  {
+   "sha": "dd94962c24ea",
+   "tokens": 217,
+   "heartbeats": 1885,
+   "ok": false,
+   "error": "129:45: Tactic `rewrite` failed: Did not find an occurrence of the pattern φ x in the target expression 0 x ≤ (φ * fun x => ⟪f x, f x₀⟫_ℝ) x … [hypotheses omitted] ⊢ 0 x ≤ (φ * fun x => ⟪f x, f x₀⟫_ℝ) x",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:38:32Z"
+  },
+  {
+   "sha": "bca1bc2a92cb",
+   "tokens": 208,
+   "heartbeats": 1924,
+   "ok": false,
+   "error": "131:9: unsolved goals … [hypotheses omitted] ⊢ ¬φ ?m.265 = 0 ∧ ¬⟪f ?m.265, f x₀⟫_ℝ = 0",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:40:33Z"
+  },
+  {
+   "sha": "6da7b4a40774",
+   "tokens": 213,
+   "heartbeats": 1907,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:40:40Z"
+  },
+  {
+   "sha": "f38c9b7f35bb",
+   "tokens": 206,
+   "heartbeats": 1781,
+   "ok": false,
+   "error": "130:40: Application type mismatch: The argument key_integral has type ∫ (x : Y), ⟪f x, φ x • f x₀⟫_ℝ ∂μ = 0 but is expected to have type 0 = ∫ (x : Y), (φ * fun x => ⟪f x, f x₀⟫_ℝ) x ∂?m.257 in the application LT.lt.ne (Continuous.integral_pos_of_hasCompactSupport_nonneg_nonzero (Continuous.mul (Con",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:42:54Z"
+  },
+  {
+   "sha": "acd938c0b807",
+   "tokens": 202,
+   "heartbeats": 1817,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:45:24Z",
+   "score": 87.02
+  },
+  {
+   "sha": "366985946707",
+   "tokens": 202,
+   "heartbeats": 1850,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:46:40Z"
+  },
+  {
+   "sha": "db1ca85edcd5",
+   "tokens": 203,
+   "heartbeats": 1899,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:46:44Z"
+  }
+ ],
+ "runs": [
+  {
+   "run_id": "fresh-a100-p1",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-06T21:16:23Z"
+  },
+  {
+   "run_id": "fresh-a100-p2",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T02:12:45Z"
+  },
+  {
+   "run_id": "fresh-a100-p3",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T16:49:16Z"
+  },
+  {
+   "run_id": "fresh-a100-p4",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-08T22:12:06Z"
+  },
+  {
+   "run_id": "fresh-a100-p5",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T00:10:27Z"
+  },
+  {
+   "run_id": "fresh-a100-p6",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T03:32:31Z"
+  },
+  {
+   "run_id": "fresh-a100-p7",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T12:32:31Z"
+  },
+  {
+   "run_id": "fresh-a100-p8",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T21:34:29Z"
+  }
+ ],
+ "ledger": {
+  "wins": [
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 7,
+    "d_score": 2.95,
+    "d_tokens": -50,
+    "d_heartbeats": -353,
+    "diff": "-    simp at hx0\n-    have hcont : ContinuousAt (fun x => ⟪f x, f x₀⟫_ℝ) x₀ :=\n-      (Continuous.inner' f (fun _ => f x₀) hf continuous_const).continuousAt\n+    have hinner : Continuous (fun x => ⟪f x, f x₀⟫_ℝ) :=\n+      Continuous.inner' f (fun _ => f x₀) hf continuous_const\n-    obtain ⟨δ, hδpos, hδ⟩ := Metric.continuousAt_iff.mp hcont _ (by linarith)\n-    have inner_pos : ∀ x ∈ Metric.ball x₀ δ, 0 < ⟪f x, f x₀⟫_ℝ := by\n-      intro x hx\n-      have hd := hδ (Metric.mem_ball.mp hx)\n-      rw [Real.dist_eq] at hd\n-      have h := abs_lt.mp hd\n-      linarith\n+    obtain ⟨δ, hδpos, hδ⟩ := Metric.mem_nhds_iff.mp\n+      ((hinner.continuousAt).preimage_mem_nhds (Ioi_mem_nhds hself))\n+    have ",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "345ff620defa"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 1,
+    "d_score": 0.49,
+    "d_tokens": -11,
+    "d_heartbeats": -22,
+    "diff": "-    let g : Y → V := fun x => φ x • f x₀\n-    have hg_test : IsTestFunction g := IsTestFunction.smul_right hφ_testfun contDiff_const\n-    have key_integral := hg g hg_test\n-    simp only [g, inner_smul_right'] at key_integral\n+    have key_integral := hg (fun x => φ x • f x₀)\n+      (IsTestFunction.smul_right hφ_testfun contDiff_const)\n+    simp only [inner_smul_right'] at key_integral\n-      · simp [Function.notMem_support.mp hx]\n+      · rw [Function.notMem_support.mp hx, zero_mul]",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "8b705d383ae1"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 3,
+    "d_score": 0.72,
+    "d_tokens": 0,
+    "d_heartbeats": -260,
+    "diff": "-    have supp_subset2 : Function.support (fun x => φ x * ⟪f x, f x₀⟫_ℝ) ⊆ Function.support φ := by\n-      intro x hprod hφ0\n-      simp [hφ0] at hprod\n+    have supp_subset2 : Function.support (fun x => φ x * ⟪f x, f x₀⟫_ℝ) ⊆ Function.support φ :=\n+      fun x hx => (mul_ne_zero_iff.mp hx).1\n-    linarith\n+    exact integral_pos.ne key_integral.symm",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "5e579359941a"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 4,
+    "d_score": 6.16,
+    "d_tokens": -31,
+    "d_heartbeats": -1771,
+    "diff": "-        Function.support φ ⊆ Metric.ball x₀ (δ/2) ∧\n-        (∀ x ∈ Metric.closedBall x₀ (δ/4), 0 < φ x) := by\n+        Function.support φ ⊆ Metric.ball x₀ δ ∧\n+        (∀ x ∈ Metric.closedBall x₀ (δ/2), 0 < φ x) := by\n-            ⟨δ / 4, δ / 2, by positivity, by linarith⟩\n+            ⟨δ / 2, δ, div_pos hδpos two_pos, half_lt_self hδpos⟩\n-          exact Metric.mem_ball.mpr (lt_of_le_of_lt hx (by show δ / 4 < δ / 2; linarith))\n+          exact Metric.mem_ball.mpr (lt_of_le_of_lt hx (half_lt_self hδpos))\n-    have support_subset : Function.support φ ⊆ Metric.ball x₀ δ :=\n-      hφ_support_subset.trans (Metric.ball_subset_ball (by linarith))\n-      · exact mul_nonneg (hφ_non_neg x hx) (inne",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "ea2fe6111553"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 5,
+    "d_score": 0.29,
+    "d_tokens": 0,
+    "d_heartbeats": -105,
+    "diff": "-            by rw [ContDiffBump.support_eq], fun x hx => φ1.pos_of_mem_ball ?_⟩\n-          rw [Metric.mem_closedBall] at hx\n-          exact Metric.mem_ball.mpr (lt_of_le_of_lt hx (half_lt_self hδpos))\n+            by rw [ContDiffBump.support_eq], fun x hx => φ1.pos_of_mem_ball\n+              (Metric.mem_ball.mpr (lt_of_le_of_lt (Metric.mem_closedBall.mp hx)\n+                (half_lt_self hδpos)))⟩\n-      by_cases hx : x ∈ Function.support φ\n-      · exact mul_nonneg (hφ_non_neg x hx) (inner_pos x (hφ_support_subset hx)).le\n-      · rw [Function.notMem_support.mp hx, zero_mul]\n+      rcases eq_or_ne (φ x) 0 with h | h\n+      · rw [h, zero_mul]\n+      · exact mul_nonneg (hφ_non_neg x h) (inn",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "71e6b57b048c"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 6,
+    "d_score": 1.13,
+    "d_tokens": -29,
+    "d_heartbeats": 0,
+    "diff": "-    have inner_pos : ∀ x ∈ Metric.ball x₀ δ, 0 < ⟪f x, f x₀⟫_ℝ := fun x hx => hδ hx\n-            by rw [ContDiffBump.support_eq], fun x hx => φ1.pos_of_mem_ball\n+            (ContDiffBump.support_eq φ1).subset, fun x hx => φ1.pos_of_mem_ball\n-      · exact mul_nonneg (hφ_non_neg x h) (inner_pos x (hφ_support_subset h)).le\n+      · exact mul_nonneg (hφ_non_neg x h) (hδ (hφ_support_subset h)).le\n-        mul_ne_zero (ne_of_gt (hφ_pos_inner x hx)) (ne_of_gt (inner_pos x\n+        mul_ne_zero (ne_of_gt (hφ_pos_inner x hx)) (ne_of_gt (hδ",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "a4937d190912"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 2,
+    "d_score": 0.07,
+    "d_tokens": -6,
+    "d_heartbeats": 62,
+    "diff": "-    have bump_exists : ∃ φ : Y → ℝ, IsTestFunction φ ∧ φ x₀ > 0 ∧\n+    haveI : HasContDiffBump Y := hasContDiffBump_of_innerProductSpace Y\n+    let φ1 : ContDiffBump x₀ :=\n+      ⟨δ / 2, δ, div_pos hδpos two_pos, half_lt_self hδpos⟩\n+    obtain ⟨φ, hφ_testfun, hφ_pos_x₀, hφ_non_neg, hφ_support_subset, hφ_pos_inner⟩ :\n+      ∃ φ : Y → ℝ, IsTestFunction φ ∧ φ x₀ > 0 ∧\n-        (∀ x ∈ Metric.closedBall x₀ (δ/2), 0 < φ x) := by\n-          haveI : HasContDiffBump Y := hasContDiffBump_of_innerProductSpace Y\n-          let φ1 : ContDiffBump x₀ :=\n-            ⟨δ / 2, δ, div_pos hδpos two_pos, half_lt_self hδpos⟩\n-          refine ⟨φ1.toFun, ⟨φ1.contDiff, φ1.hasCompactSupport⟩,\n-            φ1.pos_",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "55b29212c5ee"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 3,
+    "d_score": 1.4,
+    "d_tokens": -32,
+    "d_heartbeats": -53,
+    "diff": "-    obtain ⟨φ, hφ_testfun, hφ_pos_x₀, hφ_non_neg, hφ_support_subset, hφ_pos_inner⟩ :\n-      ∃ φ : Y → ℝ, IsTestFunction φ ∧ φ x₀ > 0 ∧\n-        (∀ x ∈ Function.support φ, 0 ≤ φ x) ∧\n-        Function.support φ ⊆ Metric.ball x₀ δ ∧\n-        (∀ x ∈ Metric.closedBall x₀ (δ/2), 0 < φ x) :=\n-      ⟨φ1.toFun, ⟨φ1.contDiff, φ1.hasCompactSupport⟩,\n-        φ1.pos_of_mem_ball (Metric.mem_ball_self φ1.rOut_pos), fun x _ => φ1.nonneg,\n-        (ContDiffBump.support_eq φ1).subset, fun x hx => φ1.pos_of_mem_ball\n-          (Metric.mem_ball.mpr (lt_of_le_of_lt (Metric.mem_closedBall.mp hx)\n-            (half_lt_self hδpos)))⟩\n-    have key_integral := hg (fun x => φ x • f x₀)\n+    have hφ_testfun : IsTes",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "0e2209ce68aa"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 7,
+    "d_score": 8.14,
+    "d_tokens": -158,
+    "d_heartbeats": -702,
+    "diff": "-    have hφ_non_neg : ∀ x ∈ Function.support φ1.toFun, 0 ≤ φ1.toFun x := fun x _ => φ1.nonneg\n-    have hφ_support_subset : Function.support φ1.toFun ⊆ Metric.ball x₀ δ :=\n-      (ContDiffBump.support_eq φ1).subset\n-    have hφ_pos_inner : ∀ x ∈ Metric.closedBall x₀ (δ/2), 0 < φ1.toFun x := fun x hx =>\n-      φ1.pos_of_mem_ball (Metric.mem_ball.mpr\n-        (lt_of_le_of_lt (Metric.mem_closedBall.mp hx) (half_lt_self hδpos)))\n-    have supp_subset2 : Function.support (fun x => φ1.toFun x * ⟪f x, f x₀⟫_ℝ) ⊆ Function.support φ1.toFun :=\n-      fun x hx => (mul_ne_zero_iff.mp hx).1\n+    have supp_subset2 : Function.support (fun x => φ1.toFun x * ⟪f x, f x₀⟫_ℝ) ⊆\n+        Function.support φ1.toF",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "7bb21e8515d1"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 18,
+    "d_score": 1.35,
+    "d_tokens": -30,
+    "d_heartbeats": -62,
+    "diff": "-    have supp_subset2 : Function.support (fun x => φ1.toFun x * ⟪f x, f x₀⟫_ℝ) ⊆\n-        Function.support φ1.toFun := fun x hx => (mul_ne_zero_iff.mp hx).1\n-    have h_nonneg : ∀ x, 0 ≤ φ1.toFun x * ⟪f x, f x₀⟫_ℝ := fun x => by\n-      rcases eq_or_ne (φ1.toFun x) 0 with h | h\n-      · rw [h, zero_mul]\n-      · exact mul_nonneg φ1.nonneg (hδ (hφ_support_subset h)).le\n+    have h_nonneg : ∀ x, 0 ≤ φ1.toFun x * ⟪f x, f x₀⟫_ℝ := fun x =>\n+      if h : φ1.toFun x = 0 then by rw [h, zero_mul]\n+      else mul_nonneg φ1.nonneg (hδ (hφ_support_subset h)).le\n-        (hφ_testfun.supp.mono supp_subset2)\n+        (hφ_testfun.supp.mono fun x hx => (mul_ne_zero_iff.mp hx).1)",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "b26a5670f41c"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 23,
+    "d_score": 0.07,
+    "d_tokens": -2,
+    "d_heartbeats": 2,
+    "diff": "-      if h : φ1.toFun x = 0 then by rw [h, zero_mul]\n+      if h : φ1.toFun x = 0 then by simp [h]",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "fc987fd92a60"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 26,
+    "d_score": 0.01,
+    "d_tokens": 0,
+    "d_heartbeats": -1,
+    "diff": "-    have integrable_prod :\n-      Integrable (fun x => φ1.toFun x * ⟪f x, f x₀⟫_ℝ) μ :=\n-      (Continuous.mul hφ_testfun.smooth.continuous hinner).integrable_of_hasCompactSupport\n-        (hφ_testfun.supp.mono fun x hx => (mul_ne_zero_iff.mp hx).1)\n-    exact (integral_pos_of_integrable_nonneg_nonzero\n-      (Continuous.mul hφ_testfun.smooth.continuous hinner) integrable_prod h_nonneg\n+    have hcont : Continuous (fun x => φ1.toFun x * ⟪f x, f x₀⟫_ℝ) :=\n+      Continuous.mul hφ_testfun.smooth.continuous hinner\n+    have integrable_prod : Integrable _ μ := hcont.integrable_of_hasCompactSupport\n+      (hφ_testfun.supp.mono fun x hx => (mul_ne_zero_iff.mp hx).1)\n+    exact (integral_pos_of_in",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "3decb2967160"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 29,
+    "d_score": 0.17,
+    "d_tokens": -5,
+    "d_heartbeats": 7,
+    "diff": "-    rw [funext_iff]; by_contra h₀\n-    obtain ⟨x₀, hx0⟩ := not_forall.1 h₀\n+    by_contra h₀\n+    obtain ⟨x₀, hx0⟩ := Function.ne_iff.mp h₀",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "8e639887d63c"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 32,
+    "d_score": 0.96,
+    "d_tokens": -23,
+    "d_heartbeats": -19,
+    "diff": "-    have hcont : Continuous (fun x => φ1.toFun x * ⟪f x, f x₀⟫_ℝ) :=\n-      Continuous.mul hφ_testfun.smooth.continuous hinner\n+    have hcont := Continuous.mul hφ_testfun.smooth.continuous hinner\n-      (mul_ne_zero (ne_of_gt (φ1.pos_of_mem_ball (Metric.mem_ball_self φ1.rOut_pos)))\n-        (ne_of_gt hself))).ne key_integral.symm\n+      (mul_ne_zero (φ1.pos_of_mem_ball (Metric.mem_ball_self φ1.rOut_pos)).ne'\n+        hself.ne')).ne key_integral.symm",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "dbff239cbf29"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 33,
+    "d_score": 0.53,
+    "d_tokens": -11,
+    "d_heartbeats": -35,
+    "diff": "-    have hφ_support_subset : Function.support φ1.toFun ⊆ Metric.ball x₀ δ :=\n-      (ContDiffBump.support_eq φ1).subset\n-      else mul_nonneg φ1.nonneg (hδ (hφ_support_subset h)).le\n+      else mul_nonneg φ1.nonneg (hδ ((ContDiffBump.support_eq φ1).subset h)).le",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "3e5a2904fa20"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 4,
+    "d_score": 0.57,
+    "d_tokens": 15,
+    "d_heartbeats": -417,
+    "diff": "-    haveI : HasContDiffBump Y := hasContDiffBump_of_innerProductSpace Y\n-    let φ1 : ContDiffBump x₀ :=\n-      ⟨δ / 2, δ, div_pos hδpos two_pos, half_lt_self hδpos⟩\n-    have hφ_testfun : IsTestFunction φ1.toFun := ⟨φ1.contDiff, φ1.hasCompactSupport⟩\n-    have key_integral := hg (fun x => φ1.toFun x • f x₀)\n-      (IsTestFunction.smul_right hφ_testfun contDiff_const)\n+    obtain ⟨φ, hts, hcs, hc, hr, hφx₀⟩ := exists_contDiff_tsupport_subset\n+      (Metric.ball_mem_nhds x₀ hδpos) (n := (⊤ : ℕ∞))\n+    have key_integral := hg (fun x => φ x • f x₀)\n+      (IsTestFunction.smul_right ⟨hc, hcs⟩ contDiff_const)\n-    have h_nonneg : ∀ x, 0 ≤ φ1.toFun x * ⟪f x, f x₀⟫_ℝ := fun x =>\n-      if h : φ1.t"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 5,
+    "d_score": 0.94,
+    "d_tokens": -20,
+    "d_heartbeats": -54,
+    "diff": "-    have hpos : 0 < ∫ x, φ x * ⟪f x, f x₀⟫_ℝ ∂μ :=\n-      Continuous.integral_pos_of_hasCompactSupport_nonneg_nonzero\n+    exact (Continuous.integral_pos_of_hasCompactSupport_nonneg_nonzero\n-        (by rw [hφx₀, one_mul]; exact hself.ne')\n-    exact hpos.ne key_integral.symm\n+        (by rw [hφx₀, one_mul]; exact hself.ne')).ne key_integral.symm"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 6,
+    "d_score": 0.05,
+    "d_tokens": -3,
+    "d_heartbeats": 23,
+    "diff": "-        (hcs.mono fun x hx => (mul_ne_zero_iff.mp hx).1)\n+        (hcs.mono fun _ hx => (mul_ne_zero_iff.mp hx).1)\n-        (by rw [hφx₀, one_mul]; exact hself.ne')).ne key_integral.symm\n+        (by simp [hφx₀, hself.ne'])).ne key_integral.symm"
+   },
+   {
+    "run_id": "fresh-a100-p6",
+    "check": 3,
+    "d_score": 0.47,
+    "d_tokens": -10,
+    "d_heartbeats": -29,
+    "diff": "-      (Metric.ball_mem_nhds x₀ hδpos) (n := (⊤ : ℕ∞))\n+      (Metric.ball_mem_nhds x₀ hδpos)"
+   },
+   {
+    "run_id": "fresh-a100-p6",
+    "check": 15,
+    "d_score": 0.69,
+    "d_tokens": -18,
+    "d_heartbeats": 6,
+    "diff": "-        (f := fun x => φ x * ⟪f x, f x₀⟫_ℝ) (x := x₀)\n-        (hc.continuous.mul hinner)\n+        (x := x₀) (hc.continuous.mul hinner)"
+   },
+   {
+    "run_id": "fresh-a100-p8",
+    "check": 5,
+    "d_score": 0.63,
+    "d_tokens": -11,
+    "d_heartbeats": -72,
+    "diff": "-        (x := x₀) (hc.continuous.mul hinner)\n-        (hcs.mono fun _ hx => (mul_ne_zero_iff.mp hx).1)\n+        (x := x₀) (hc.continuous.mul hinner) hcs.mul_right"
+   }
+  ],
+  "dead_names": [
+   "inner_self_pos"
+  ]
+ },
+ "profile_cache": {
+  "903def14c887": {
+   "ok": true,
+   "total": 1912,
+   "floor": 536,
+   "reference": 11954,
+   "max_heartbeat_score": 31.84,
+   "blocks": [
+    {
+     "lines": "19-25",
+     "depth_indent": 4,
+     "text": "exact (Continuous.integral_pos_of_hasCompactSupport_nonneg_nonzero (f := fun x => φ x * ⟪f x, f x₀⟫_",
+     "heartbeats": 521
+    },
+    {
+     "lines": "16-17",
+     "depth_indent": 4,
+     "text": "have key_integral := hg (fun x => φ x • f x₀) (IsTestFunction.smul_right ⟨hc, hcs⟩ contDiff_const)",
+     "heartbeats": 403
+    },
+    {
+     "lines": "12-13",
+     "depth_indent": 4,
+     "text": "obtain ⟨δ, hδpos, hδ⟩ := Metric.mem_nhds_iff.mp ((hinner.continuousAt).preimage_mem_nhds (Ioi_mem_nh",
+     "heartbeats": 103
+    },
+    {
+     "lines": "8-9",
+     "depth_indent": 4,
+     "text": "have hinner : Continuous (fun x => ⟪f x, f x₀⟫_ℝ) := Continuous.inner' f (fun _ => f x₀) hf continuo",
+     "heartbeats": 91
+    },
+    {
+     "lines": "10-11",
+     "depth_indent": 4,
+     "text": "have hself : 0 < ⟪f x₀, f x₀⟫_ℝ := lt_of_le_of_ne (real_inner_self_nonneg') fun h => hx0 (inner_self",
+     "heartbeats": 84
+    },
+    {
+     "lines": "14-15",
+     "depth_indent": 4,
+     "text": "obtain ⟨φ, hts, hcs, hc, hr, hφx₀⟩ := exists_contDiff_tsupport_subset (Metric.ball_mem_nhds x₀ hδpos",
+     "heartbeats": 79
+    },
+    {
+     "lines": "6-6",
+     "depth_indent": 4,
+     "text": "by_contra h₀",
+     "heartbeats": 52
+    },
+    {
+     "lines": "18-18",
+     "depth_indent": 4,
+     "text": "simp only [inner_smul_right'] at key_integral",
+     "heartbeats": 33
+    },
+    {
+     "lines": "7-7",
+     "depth_indent": 4,
+     "text": "obtain ⟨x₀, hx0⟩ := Function.ne_iff.mp h₀",
+     "heartbeats": 10
+    },
+    {
+     "lines": "20-20",
+     "depth_indent": 8,
+     "text": "(f := fun x => φ x * ⟪f x, f x₀⟫_ℝ) (x := x₀)",
+     "heartbeats": null
+    },
+    {
+     "lines": "21-21",
+     "depth_indent": 8,
+     "text": "(hc.continuous.mul hinner)",
+     "heartbeats": null
+    },
+    {
+     "lines": "22-22",
+     "depth_indent": 8,
+     "text": "(hcs.mono fun _ hx => (mul_ne_zero_iff.mp hx).1)",
+     "heartbeats": null
+    }
+   ],
+   "points_left_heartbeats": 3.84,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "e38c34a7a23a": {
+   "ok": true,
+   "total": 1888,
+   "floor": 536,
+   "reference": 11954,
+   "max_heartbeat_score": 31.84,
+   "blocks": [
+    {
+     "lines": "19-24",
+     "depth_indent": 4,
+     "text": "exact (Continuous.integral_pos_of_hasCompactSupport_nonneg_nonzero (x := x₀) (hc.continuous.mul hinn",
+     "heartbeats": 526
+    },
+    {
+     "lines": "12-13",
+     "depth_indent": 4,
+     "text": "obtain ⟨δ, hδpos, hδ⟩ := Metric.mem_nhds_iff.mp ((hinner.continuousAt).preimage_mem_nhds (Ioi_mem_nh",
+     "heartbeats": 103
+    },
+    {
+     "lines": "8-9",
+     "depth_indent": 4,
+     "text": "have hinner : Continuous (fun x => ⟪f x, f x₀⟫_ℝ) := Continuous.inner' f (fun _ => f x₀) hf continuo",
+     "heartbeats": 91
+    },
+    {
+     "lines": "10-11",
+     "depth_indent": 4,
+     "text": "have hself : 0 < ⟪f x₀, f x₀⟫_ℝ := lt_of_le_of_ne (real_inner_self_nonneg') fun h => hx0 (inner_self",
+     "heartbeats": 84
+    },
+    {
+     "lines": "6-6",
+     "depth_indent": 4,
+     "text": "by_contra h₀",
+     "heartbeats": 52
+    },
+    {
+     "lines": "18-18",
+     "depth_indent": 4,
+     "text": "simp only [inner_smul_right'] at key_integral",
+     "heartbeats": 33
+    },
+    {
+     "lines": "7-7",
+     "depth_indent": 4,
+     "text": "obtain ⟨x₀, hx0⟩ := Function.ne_iff.mp h₀",
+     "heartbeats": 10
+    },
+    {
+     "lines": "14-15",
+     "depth_indent": 4,
+     "text": "obtain ⟨φ, hts, hcs, hc, hr, hφx₀⟩ := exists_contDiff_tsupport_subset (Metric.ball_mem_nhds x₀ hδpos",
+     "heartbeats": null
+    },
+    {
+     "lines": "16-17",
+     "depth_indent": 4,
+     "text": "have key_integral := hg (fun x => φ x • f x₀) (IsTestFunction.smul_right ⟨hc, hcs⟩ contDiff_const)",
+     "heartbeats": null
+    },
+    {
+     "lines": "20-20",
+     "depth_indent": 8,
+     "text": "(x := x₀) (hc.continuous.mul hinner)",
+     "heartbeats": null
+    },
+    {
+     "lines": "21-21",
+     "depth_indent": 8,
+     "text": "(hcs.mono fun _ hx => (mul_ne_zero_iff.mp hx).1)",
+     "heartbeats": null
+    },
+    {
+     "lines": "22-23",
+     "depth_indent": 8,
+     "text": "(fun x => if h : φ x = 0 then by simp [h] else mul_nonneg (hr (Set.mem_range_self x)).1 (hδ (hts (su",
+     "heartbeats": null
+    }
+   ],
+   "points_left_heartbeats": 3.77,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  }
+ },
+ "hb_floor": 536
+}

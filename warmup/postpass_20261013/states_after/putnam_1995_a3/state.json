@@ -1,0 +1,1389 @@
+{
+ "problem": "putnam_1995_a3",
+ "best": {
+  "score": 93.69,
+  "proof": "theorem putnam_1995_a3\n(relation : (Fin 9 → ℤ) → (Fin 9 → ℤ) → Prop)\n(digits_to_num : (Fin 9 → ℤ) → ℤ)\n(hdigits_to_num : digits_to_num = fun dig => ∑ i : Fin 9, (dig i) * 10^i.1)\n(hrelation : ∀ d e : (Fin 9 → ℤ), relation d e ↔ (∀ i : Fin 9, d i < 10 ∧ d i ≥ 0 ∧ e i < 10 ∧ e i ≥ 0) ∧ (∀ i : Fin 9, 7 ∣ (digits_to_num (fun j : Fin 9 => if j = i then e j else d j))))\n: ∀ d e f : (Fin 9 → ℤ), ((relation d e) ∧ (relation e f)) → (∀ i : Fin 9, 7 ∣ d i - f i) := by\n  intro d e f h\n  have h2 := ((hrelation d e).mp h.1).2\n  have h4 := ((hrelation e f).mp h.2).2\n  -- replacing digit i of x by y i changes the number by (y i - x i) * 10^i\n  have key : ∀ (x y : Fin 9 → ℤ) (i : Fin 9),\n      digits_to_num (λj => if j = i then y j else x j)\n        = digits_to_num x + (y i - x i) * 10 ^ i.1 := by\n    intro x y i\n    simp only [hdigits_to_num]\n    rw [← sub_eq_iff_eq_add', ← Finset.sum_sub_distrib,\n      Finset.sum_eq_single_of_mem i (Finset.mem_univ i)\n        (λb _ hb => by simp [hb]), if_pos rfl, ← sub_mul]\n  have hce : 7 ∣ digits_to_num d + digits_to_num e := by\n    have hE : ∑ i : Fin 9, (digits_to_num d + (e i - d i) * 10 ^ i.1)\n        - 7 * digits_to_num d = digits_to_num d + digits_to_num e := by\n      simp only [Finset.sum_add_distrib, hdigits_to_num, sub_mul, Finset.sum_sub_distrib,\n        Finset.sum_const, Finset.card_fin]; ring\n    exact hE ▸ dvd_sub (Finset.dvd_sum λi _ => key d e i ▸ h2 i) ⟨digits_to_num d, rfl⟩\n  have hstep : ∀ i : Fin 9, 7 ∣ (d i - f i) * 10 ^ i.1 := by\n    intro i\n    have h5 := dvd_add (key d e i ▸ h2 i) $ key e f i ▸ h4 i\n    rw [add_add_add_comm, ← add_mul, sub_add_sub_cancel'] at h5\n    have h6 := dvd_sub h5 hce\n    rwa [add_sub_cancel_left, ← dvd_neg, ← neg_mul, neg_sub] at h6\n  intro i\n  exact (Int.isCoprime_iff_gcd_eq_one.mpr rfl |>.pow_right).dvd_of_dvd_mul_right $ hstep i",
+  "tokens": 307,
+  "heartbeats": 1628,
+  "L": 92.48,
+  "H": 88.57,
+  "Z": 100.0,
+  "compat": {
+   "v4.27.0": true,
+   "v4.26.0": true,
+   "v4.25.0": true
+  }
+ },
+ "attempts": [
+  {
+   "sha": "9543ebc33137",
+   "tokens": 1320,
+   "heartbeats": 2665,
+   "ok": false,
+   "error": "36:6: unsolved goals case pos … [hypotheses omitted] ⊢ y i * 10 ^ ↑i = x i * 10 ^ ↑i + (y i - x i) * 10 ^ ↑i",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:43:28Z"
+  },
+  {
+   "sha": "2b9b64399dca",
+   "tokens": 1189,
+   "heartbeats": 4324,
+   "ok": false,
+   "error": "73:13: Tactic `rewrite` failed: Did not find an occurrence of the pattern digits … [hypotheses omitted] ⊢ 7 ∣ digits_to_num e + 8 * digits_to_num d",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:52:55Z"
+  },
+  {
+   "sha": "01ebe573c3b4",
+   "tokens": 1206,
+   "heartbeats": 4534,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:55:32Z",
+   "score": 79.55
+  },
+  {
+   "sha": "b25f2f794d02",
+   "tokens": 1004,
+   "heartbeats": 3097,
+   "ok": false,
+   "error": "79:4: Tactic `assumption` failed … [hypotheses omitted] ⊢ 7 ∣ (f i - d i) * 10 ^ ↑i",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:32:03Z"
+  },
+  {
+   "sha": "663d3e649b53",
+   "tokens": 1000,
+   "heartbeats": 4119,
+   "ok": false,
+   "error": "89:8: Tactic `rewrite` failed: Did not find an occurrence of the pattern ?m.916 ∣ -?m.917 in the target expression 7 ∣ d i - f i case inl … [hypotheses omitted] ⊢ 7 ∣ d i - f i",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:33:51Z"
+  },
+  {
+   "sha": "40cacea44b02",
+   "tokens": 1001,
+   "heartbeats": 4080,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:35:40Z",
+   "score": 82.29
+  },
+  {
+   "sha": "3df3ca1b3ba8",
+   "tokens": 798,
+   "heartbeats": 3494,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:41:42Z",
+   "score": 85.31
+  },
+  {
+   "sha": "9e7fbe5eb937",
+   "tokens": 752,
+   "heartbeats": 3331,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:43:26Z",
+   "score": 86.07
+  },
+  {
+   "sha": "24e1102fca88",
+   "tokens": 692,
+   "heartbeats": 3365,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:45:24Z",
+   "score": 86.48
+  },
+  {
+   "sha": "555c96ecce21",
+   "tokens": 624,
+   "heartbeats": 3966,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:48:25Z"
+  },
+  {
+   "sha": "e44bec096661",
+   "tokens": 690,
+   "heartbeats": 3343,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:50:44Z",
+   "score": 86.55
+  },
+  {
+   "sha": "50ae1a4e6fb2",
+   "tokens": 616,
+   "heartbeats": 3113,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:53:10Z",
+   "score": 87.69
+  },
+  {
+   "sha": "c934161772b1",
+   "tokens": 579,
+   "heartbeats": 2899,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:55:36Z",
+   "score": 88.49
+  },
+  {
+   "sha": "4c05f5f19127",
+   "tokens": 514,
+   "heartbeats": 2934,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:57:23Z",
+   "score": 88.94
+  },
+  {
+   "sha": "b5bcd5b0ac6a",
+   "tokens": 512,
+   "heartbeats": 2933,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T02:01:21Z",
+   "score": 88.96
+  },
+  {
+   "sha": "f9006f7a1fe2",
+   "tokens": 476,
+   "heartbeats": 2617,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T02:03:03Z",
+   "score": 89.99
+  },
+  {
+   "sha": "30f4f39128e6",
+   "tokens": 419,
+   "heartbeats": 2537,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T02:04:33Z",
+   "score": 90.65
+  },
+  {
+   "sha": "5a6349da5bea",
+   "tokens": 414,
+   "heartbeats": 2503,
+   "ok": false,
+   "error": "49:10: typeclass instance problem is stuck AddCommGroup ?m.474 Note: Lean will not try to resolve this typeclass instance problem because the type argument to `AddCommGroup` is a metavariable. This argument must be fully determined before Lean will try to resolve the typeclass. Hint: Adding type ann",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T02:06:12Z"
+  },
+  {
+   "sha": "fa01ee02daaa",
+   "tokens": 420,
+   "heartbeats": 2555,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T02:07:08Z"
+  },
+  {
+   "sha": "6fc465ff1960",
+   "tokens": 406,
+   "heartbeats": 30286,
+   "ok": false,
+   "error": "30:35: Unknown identifier `i`",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T02:09:58Z"
+  },
+  {
+   "sha": "25d48cb5d242",
+   "tokens": 410,
+   "heartbeats": 2548,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T02:11:00Z",
+   "score": 90.69
+  },
+  {
+   "sha": "e9a166429397",
+   "tokens": 415,
+   "heartbeats": 2550,
+   "ok": false,
+   "error": "36:8: Tactic `rfl` failed: The left-hand side x j * 10 ^ ↑j is not definitionally equal to the right-hand side x j * 10 ^ ↑j + 0 case neg … [hypotheses omitted] ⊢ x j * 10 ^ ↑j = x j * 10 ^ ↑j + 0",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:50:15Z"
+  },
+  {
+   "sha": "e5e96ef34c54",
+   "tokens": 417,
+   "heartbeats": 2698,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:52:25Z"
+  },
+  {
+   "sha": "d86a7ab22245",
+   "tokens": 417,
+   "heartbeats": 2498,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:53:15Z",
+   "score": 90.75
+  },
+  {
+   "sha": "59f4370ea50d",
+   "tokens": 422,
+   "heartbeats": 2127,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:54:22Z",
+   "score": 91.58
+  },
+  {
+   "sha": "19fdd140fb67",
+   "tokens": 427,
+   "heartbeats": 2100,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:56:52Z",
+   "score": 91.6
+  },
+  {
+   "sha": "a6353aab5e52",
+   "tokens": 420,
+   "heartbeats": 2084,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:58:45Z",
+   "score": 91.7
+  },
+  {
+   "sha": "162fbb87ca55",
+   "tokens": 420,
+   "heartbeats": 1986,
+   "ok": false,
+   "error": "44:82: omega could not prove the goal: a possible counterexample may satisfy the constraints 9*a - b ≥ 1 where a := digits_to_num d b := 9 • digits_to_num d",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:34:29Z"
+  },
+  {
+   "sha": "2fa1c3a75d4b",
+   "tokens": 418,
+   "heartbeats": 2079,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:34:33Z",
+   "score": 91.73
+  },
+  {
+   "sha": "59250d79fb35",
+   "tokens": 369,
+   "heartbeats": 1602,
+   "ok": false,
+   "error": "31:24: Tactic `rewrite` failed: Did not find an occurrence of the pattern digits … [hypotheses omitted] ⊢ ((fun dig => ∑ i, dig i * 10 ^ ↑i) fun j => if j = i then y j else x j) = (fun dig => ∑ i, dig i * 10 ^ ↑i) x + (y i - x i) * 10 ^ ↑i",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:35:30Z"
+  },
+  {
+   "sha": "bc65651dd7b5",
+   "tokens": 371,
+   "heartbeats": 1602,
+   "ok": false,
+   "error": "31:24: Tactic `rewrite` failed: Did not find an occurrence of the pattern digits … [hypotheses omitted] ⊢ ((fun dig => ∑ i, dig i * 10 ^ ↑i) fun j => if j = i then y j else x j) = (fun dig => ∑ i, dig i * 10 ^ ↑i) x + (y i - x i) * 10 ^ ↑i",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:35:40Z"
+  },
+  {
+   "sha": "c852ad0e2ed0",
+   "tokens": 373,
+   "heartbeats": 1712,
+   "ok": false,
+   "error": "32:29: Tactic `rewrite` failed: Did not find an occurrence of the pattern ∑ x ∈  … [hypotheses omitted] ⊢ ∑ x_1, (if x_1 = i then y x_1 else x x_1) * 10 ^ ↑x_1 - (y i - x i) * 10 ^ ↑i = ∑ i, x i * 10 ^ ↑i",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:36:03Z"
+  },
+  {
+   "sha": "ebc677755199",
+   "tokens": 372,
+   "heartbeats": 1772,
+   "ok": false,
+   "error": "32:8: Tactic `rewrite` failed: Did not find an occurrence of the pattern ?m.193  … [hypotheses omitted] ⊢ ∑ x_1, (if x_1 = i then y x_1 else x x_1) * 10 ^ ↑x_1 = ∑ i, x i * 10 ^ ↑i + (y i - x i) * 10 ^ ↑i",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:36:29Z"
+  },
+  {
+   "sha": "0c113d7f4779",
+   "tokens": 382,
+   "heartbeats": 1791,
+   "ok": false,
+   "error": "32:8: Tactic `rewrite` failed: Did not find an occurrence of the pattern ?m.193  … [hypotheses omitted] ⊢ ∑ x_1, (if x_1 = i then y x_1 else x x_1) * 10 ^ ↑x_1 = ∑ i, x i * 10 ^ ↑i + (y i - x i) * 10 ^ ↑i",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:38:13Z"
+  },
+  {
+   "sha": "99fc02af6059",
+   "tokens": 376,
+   "heartbeats": 1791,
+   "ok": false,
+   "error": "32:8: Tactic `rewrite` failed: Did not find an occurrence of the pattern ?m.193  … [hypotheses omitted] ⊢ ∑ x_1, (if x_1 = i then y x_1 else x x_1) * 10 ^ ↑x_1 = ∑ i, x i * 10 ^ ↑i + (y i - x i) * 10 ^ ↑i",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:38:19Z"
+  },
+  {
+   "sha": "8dc1b5139441",
+   "tokens": 383,
+   "heartbeats": 1846,
+   "ok": false,
+   "error": "33:11: typeclass instance problem is stuck AddCommMonoid ?m.205 Note: Lean will not try to resolve this typeclass instance problem because the type argument to `AddCommMonoid` is a metavariable. This argument must be fully determined before Lean will try to resolve the typeclass. Hint: Adding type a",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:38:39Z"
+  },
+  {
+   "sha": "1354573dcaf5",
+   "tokens": 375,
+   "heartbeats": 1786,
+   "ok": false,
+   "error": "33:72: Tactic `rewrite` failed: Did not find an occurrence of the pattern ?a * 0 in the target expression 0 = 0 … [hypotheses omitted] ⊢ 0 = 0",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:39:02Z"
+  },
+  {
+   "sha": "774046742b7e",
+   "tokens": 379,
+   "heartbeats": 1876,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:39:24Z",
+   "score": 92.52
+  },
+  {
+   "sha": "fa3f0f0f54ea",
+   "tokens": 346,
+   "heartbeats": 1856,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:39:46Z",
+   "score": 92.83
+  },
+  {
+   "sha": "e759e76e1ffd",
+   "tokens": 347,
+   "heartbeats": 1860,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:40:41Z"
+  },
+  {
+   "sha": "2e92bf15831e",
+   "tokens": 347,
+   "heartbeats": 1860,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:40:44Z"
+  },
+  {
+   "sha": "afd20a64ec4f",
+   "tokens": 337,
+   "heartbeats": 1608,
+   "ok": false,
+   "error": "50:9: Function expected at IsCoprime.pow_right hc but this term has type IsCoprime 7 (10 ^ ?m.431) Note: Expected a function because this term is being applied to the argument _",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:48:47Z"
+  },
+  {
+   "sha": "c1fe1b1c57ad",
+   "tokens": 337,
+   "heartbeats": 1608,
+   "ok": false,
+   "error": "50:9: Function expected at IsCoprime.pow_right hc but this term has type IsCoprime 7 (10 ^ ?m.431) Note: Expected a function because this term is being applied to the argument _",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:48:50Z"
+  },
+  {
+   "sha": "71ed4cfa8abc",
+   "tokens": 341,
+   "heartbeats": 1591,
+   "ok": false,
+   "error": "50:56: typeclass instance problem is stuck CommMagma ?m.436 Note: Lean will not try to resolve this typeclass instance problem because the type argument to `CommMagma` is a metavariable. This argument must be fully determined before Lean will try to resolve the typeclass. Hint: Adding type annotatio",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:49:09Z"
+  },
+  {
+   "sha": "12e4db6de3b3",
+   "tokens": 341,
+   "heartbeats": 1594,
+   "ok": false,
+   "error": "51:35: typeclass instance problem is stuck CommMagma ?m.439 Note: Lean will not try to resolve this typeclass instance problem because the type argument to `CommMagma` is a metavariable. This argument must be fully determined before Lean will try to resolve the typeclass. Hint: Adding type annotatio",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:49:12Z"
+  },
+  {
+   "sha": "f997bc7faed3",
+   "tokens": 345,
+   "heartbeats": 1761,
+   "ok": false,
+   "error": "52:55: Application type mismatch: The argument h7 has type 7 ∣ 10 ^ ↑i * (f i - d i) but is expected to have type 7 ∣ (d i - f i) * 10 ^ ↑i in the application IsCoprime.dvd_of_dvd_mul_right (IsCoprime.pow_right hc) h7",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:49:55Z"
+  },
+  {
+   "sha": "c0b764a5102d",
+   "tokens": 370,
+   "heartbeats": 1716,
+   "ok": false,
+   "error": "51:69: typeclass instance problem is stuck CommMagma ?m.468 Note: Lean will not try to resolve this typeclass instance problem because the type argument to `CommMagma` is a metavariable. This argument must be fully determined before Lean will try to resolve the typeclass. Hint: Adding type annotatio",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:50:01Z"
+  },
+  {
+   "sha": "d8a65447c2e3",
+   "tokens": 337,
+   "heartbeats": 1698,
+   "ok": false,
+   "error": "50:55: Application type mismatch: The argument hstep i has type 7 ∣ (f i - d i) * 10 ^ ↑i but is expected to have type 7 ∣ (d i - f i) * 10 ^ ↑i in the application IsCoprime.dvd_of_dvd_mul_right (IsCoprime.pow_right hc) (hstep i)",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:50:15Z"
+  },
+  {
+   "sha": "ab0e016e573b",
+   "tokens": 335,
+   "heartbeats": 1477,
+   "ok": false,
+   "error": "50:6: Tactic `rewrite` failed: Did not find an occurrence of the pattern -(?a - ?b) in the target expression 7 ∣ d i - f i … [hypotheses omitted] ⊢ 7 ∣ d i - f i",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:51:19Z"
+  },
+  {
+   "sha": "40de31936e3c",
+   "tokens": 341,
+   "heartbeats": 1443,
+   "ok": false,
+   "error": "46:15: Unknown identifier `dvd_sub'`",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:51:25Z"
+  },
+  {
+   "sha": "3c2347d0fd6f",
+   "tokens": 351,
+   "heartbeats": 1749,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:52:05Z",
+   "score": 93.04
+  },
+  {
+   "sha": "4a0e4054a99b",
+   "tokens": 348,
+   "heartbeats": 1559,
+   "ok": false,
+   "error": "47:9: Unknown identifier `sub_add_eq`",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:53:12Z"
+  },
+  {
+   "sha": "e85be392e437",
+   "tokens": 350,
+   "heartbeats": 1796,
+   "ok": false,
+   "error": "51:45: Type mismatch hstep i has type 7 ∣ (f i - d i) * 10 ^ ↑i but is expected to have type 7 ∣ - -((f i - d i) * 10 ^ ↑i)",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:53:16Z"
+  },
+  {
+   "sha": "7e2a0d3c2367",
+   "tokens": 345,
+   "heartbeats": 1724,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:54:13Z",
+   "score": 93.15
+  },
+  {
+   "sha": "b1c959ca7a13",
+   "tokens": 402,
+   "heartbeats": 1798,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:55:46Z"
+  },
+  {
+   "sha": "0f63d7dd4ff2",
+   "tokens": 399,
+   "heartbeats": 1798,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:55:53Z"
+  },
+  {
+   "sha": "9f74fe2ac34a",
+   "tokens": 406,
+   "heartbeats": 1645,
+   "ok": false,
+   "error": "38:10: Tactic `rewrite` failed: Did not find an occurrence of the pattern ?m.289 … [hypotheses omitted] ⊢ ∑ i, (e i - d i) * 10 ^ ↑i = digits_to_num e - digits_to_num d",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:57:00Z"
+  },
+  {
+   "sha": "56f1fdf657e4",
+   "tokens": 343,
+   "heartbeats": 1686,
+   "ok": false,
+   "error": "47:30: Tactic `rewrite` failed: Did not find an occurrence of the pattern ?m.408 ∣ -?m.409 in the target expression 7 ∣ (f i - d i) * 10 ^ ↑i … [hypotheses omitted] ⊢ 7 ∣ (d i - f i) * 10 ^ ↑i",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:57:07Z"
+  },
+  {
+   "sha": "b81ef0f05003",
+   "tokens": 345,
+   "heartbeats": 1617,
+   "ok": false,
+   "error": "40:44: omega could not prove the goal: a possible counterexample may satisfy the constraints 9*a - b ≥ 1 where a := ∑ i, d i * 10 ^ ↑i b := 9 • ∑ i, d i * 10 ^ ↑i",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T03:01:31Z"
+  },
+  {
+   "sha": "081889f7c2b3",
+   "tokens": 373,
+   "heartbeats": 2304,
+   "ok": false,
+   "error": "40:69: unsolved goals … [hypotheses omitted] ⊢ ∑ x, digits_to_num d + (digits_to_num e - digits_to_num d * 8) = digits_to_num e + digits_to_num d",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T03:01:41Z"
+  },
+  {
+   "sha": "214ec0a6f0b1",
+   "tokens": 381,
+   "heartbeats": 1808,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T03:01:49Z"
+  },
+  {
+   "sha": "9bca038a74ac",
+   "tokens": 338,
+   "heartbeats": 1721,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T03:02:35Z",
+   "score": 93.22
+  },
+  {
+   "sha": "fd15b464e3c9",
+   "tokens": 338,
+   "heartbeats": 1641,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T03:04:11Z",
+   "score": 93.4
+  },
+  {
+   "sha": "49014fb9ebbb",
+   "tokens": 336,
+   "heartbeats": 1712,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T03:04:56Z"
+  },
+  {
+   "sha": "f4bc1b156e73",
+   "tokens": 329,
+   "heartbeats": 1629,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T03:05:35Z",
+   "score": 93.5
+  },
+  {
+   "sha": "40d81eb34673",
+   "tokens": 322,
+   "heartbeats": 1636,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T03:06:04Z",
+   "score": 93.55
+  },
+  {
+   "sha": "71c9e608d8f3",
+   "tokens": 322,
+   "heartbeats": 1510,
+   "ok": false,
+   "error": "39:58: omega could not prove the goal: a possible counterexample may satisfy the constraints 9*a - b ≥ 1 where a := ∑ i, d i * 10 ^ ↑i b := 9 • ∑ i, d i * 10 ^ ↑i",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T03:07:41Z"
+  },
+  {
+   "sha": "8dcfd1f9edca",
+   "tokens": 317,
+   "heartbeats": 1629,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T03:07:49Z",
+   "score": 93.6
+  },
+  {
+   "sha": "6fc1770fcb9e",
+   "tokens": 319,
+   "heartbeats": 1511,
+   "ok": false,
+   "error": "39:58: omega could not prove the goal: a possible counterexample may satisfy the constraints 9*a - b ≥ 1 where a := ∑ i, d i * 10 ^ ↑i b := 9 • ∑ i, d i * 10 ^ ↑i",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T03:08:31Z"
+  },
+  {
+   "sha": "7684459e1aa2",
+   "tokens": 321,
+   "heartbeats": 1516,
+   "ok": false,
+   "error": "39:71: omega could not prove the goal: a possible counterexample may satisfy the constraints 9*a - b ≥ 1 where a := ∑ i, d i * 10 ^ ↑i b := 9 • ∑ i, d i * 10 ^ ↑i",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T03:09:34Z"
+  },
+  {
+   "sha": "534ca2f362ee",
+   "tokens": 317,
+   "heartbeats": 7356,
+   "ok": false,
+   "error": "39:44: linarith failed to find a contradiction case h1.h … [hypotheses omitted] ⊢ False failed",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T03:09:42Z"
+  },
+  {
+   "sha": "820eff7c0783",
+   "tokens": 319,
+   "heartbeats": 1510,
+   "ok": false,
+   "error": "39:60: omega could not prove the goal: a possible counterexample may satisfy the constraints 9*a - b ≥ 1 where a := ∑ i, d i * 10 ^ ↑i b := 9 • ∑ i, d i * 10 ^ ↑i",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T03:09:50Z"
+  },
+  {
+   "sha": "3f53a9067eed",
+   "tokens": 319,
+   "heartbeats": 1810,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T03:11:45Z"
+  },
+  {
+   "sha": "038f855053a0",
+   "tokens": 319,
+   "heartbeats": 1649,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T03:11:52Z"
+  },
+  {
+   "sha": "594e23612da7",
+   "tokens": 314,
+   "heartbeats": 2333,
+   "ok": false,
+   "error": "37:69: unsolved goals … [hypotheses omitted] ⊢ 9 * ∑ i, d i * 10 ^ ↑i + (∑ x, e x * 10 ^ ↑x - ∑ x, d x * 10 ^ ↑x) - 7 * ∑ i, d i * 10 ^ ↑i = ∑ i, d i * 10 ^ ↑i + ∑ i, e i * 10 ^ ↑i",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T03:16:03Z"
+  },
+  {
+   "sha": "9d55464123e4",
+   "tokens": 317,
+   "heartbeats": 2187,
+   "ok": false,
+   "error": "37:69: unsolved goals … [hypotheses omitted] ⊢ 9 * ∑ i, d i * 10 ^ ↑i + (∑ x, e x * 10 ^ ↑x - ∑ x, d x * 10 ^ ↑x) - 7 * ∑ i, d i * 10 ^ ↑i = ∑ i, d i * 10 ^ ↑i + ∑ i, e i * 10 ^ ↑i",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T03:16:10Z"
+  },
+  {
+   "sha": "c01113664a10",
+   "tokens": 310,
+   "heartbeats": 1872,
+   "ok": false,
+   "error": "44:9: Invalid rewrite argument: Expected an equality or iff proof or definition name, but `dvd_sub h5 hce` is a proof of 7 ∣ digits_to_num d + digits_to_num e + (f i - d i) * 10 ^ ↑i - (digits_to_num d + digits_to_num e)",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T05:38:15Z"
+  },
+  {
+   "sha": "f2927d3a0315",
+   "tokens": 312,
+   "heartbeats": 1921,
+   "ok": false,
+   "error": "47:104: Application type mismatch: The argument hstep i has type 7 ∣ (f i - d i) * 10 ^ ↑i but is expected to have type 7 ∣ -(d i - f i) * ?m.399 ^ ↑i in the application IsCoprime.dvd_of_dvd_mul_right (IsCoprime.pow_right (Int.isCoprime_iff_gcd_eq_one.mpr ?m.395)) (hstep i)",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T05:38:42Z"
+  },
+  {
+   "sha": "36f2658f70ef",
+   "tokens": 318,
+   "heartbeats": 1581,
+   "ok": false,
+   "error": "22:93: unsolved goals … [hypotheses omitted] ⊢ ∀ (i : Fin 9), 7 ∣ d i - f i",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T14:14:38Z"
+  },
+  {
+   "sha": "17bcb939568a",
+   "tokens": 317,
+   "heartbeats": 1633,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T14:14:46Z"
+  },
+  {
+   "sha": "36a98d1c6d5f",
+   "tokens": 287,
+   "heartbeats": 1487,
+   "ok": false,
+   "error": "44:2: Tactic `assumption` failed … [hypotheses omitted] ⊢ 7 ∣ d i - f i",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T14:14:55Z"
+  },
+  {
+   "sha": "b555445846d8",
+   "tokens": 318,
+   "heartbeats": 1670,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T14:15:03Z"
+  },
+  {
+   "sha": "a8f99b181ba4",
+   "tokens": 317,
+   "heartbeats": 1647,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T14:15:53Z"
+  },
+  {
+   "sha": "9741f56d7b3f",
+   "tokens": 315,
+   "heartbeats": 1545,
+   "ok": false,
+   "error": "45:30: Tactic `rewrite` failed: Did not find an occurrence of the pattern ?a * -?b in the target expression 7 ∣ (f i - d i) * 10 ^ ↑i … [hypotheses omitted] ⊢ 7 ∣ (d i - f i) * 10 ^ ↑i",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T14:16:09Z"
+  },
+  {
+   "sha": "241c26674abb",
+   "tokens": 321,
+   "heartbeats": 205,
+   "ok": false,
+   "error": "24:21: Invalid `⟨...⟩` notation: The expected type of this term could not be determined",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T14:16:18Z"
+  },
+  {
+   "sha": "714519aeeb10",
+   "tokens": 307,
+   "heartbeats": 1628,
+   "ok": true,
+   "error": null,
+   "run_id": "a100-postpass-xfer1",
+   "t": "2026-10-13T20:14:44Z",
+   "score": 93.69
+  }
+ ],
+ "runs": [
+  {
+   "run_id": "fresh-a100-p1",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T00:41:29Z"
+  },
+  {
+   "run_id": "fresh-a100-p2",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T04:47:43Z"
+  },
+  {
+   "run_id": "fresh-a100-p3",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T17:33:47Z"
+  },
+  {
+   "run_id": "fresh-a100-p4",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-08T23:45:59Z"
+  },
+  {
+   "run_id": "fresh-a100-p5",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T02:44:30Z"
+  },
+  {
+   "run_id": "fresh-a100-p6",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T05:36:50Z"
+  },
+  {
+   "run_id": "fresh-a100-p7",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T14:10:33Z"
+  }
+ ],
+ "ledger": {
+  "wins": [
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 6,
+    "d_score": 2.74,
+    "d_tokens": -205,
+    "d_heartbeats": -454,
+    "diff": "-    have h9 : 7 ∣ 7 * digits_to_num d := ⟨digits_to_num d, by ring⟩\n-      have h8 : 7 ∣ digits_to_num e + 8 * digits_to_num d := by\n-        rw [hc] at hsum\n-        exact hsum\n-      exact dvd_sub h8 h9\n+      refine dvd_sub ?_ ⟨digits_to_num d, rfl⟩\n+      rw [← hc]\n+      exact hsum\n-  have hcomb : ∀ i : Fin 9, 7 ∣ (digits_to_num d + (e i - d i) * (10 : ℤ) ^ (i : ℕ))\n-      + (digits_to_num e + (f i - e i) * (10 : ℤ) ^ (i : ℕ)) := fun i => dvd_add (A i) (B i)\n-    have h3 := hcomb i\n+    have h3 := dvd_add (A i) (B i)\n-  have h8 : 7 ∣ (f i - d i) * (10 : ℤ) ^ (i : ℕ) := hstep i\n-  have h9 : ¬(7 : ℤ) ∣ (10 : ℤ) ^ (i : ℕ) := by\n-    intro hcon\n-    have h10 : (7 : ℕ) ∣ (10 : ℕ) ^ (i : ℕ) ",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "30ebe8802e4c"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 7,
+    "d_score": 3.02,
+    "d_tokens": -203,
+    "d_heartbeats": -586,
+    "diff": "-  have A : ∀ i : Fin 9, 7 ∣ digits_to_num d + (e i - d i) * (10 : ℤ) ^ (i : ℕ) := by\n-    intro i\n-    have h5 := h2 i\n-    rwa [key d e i] at h5\n-  have B : ∀ i : Fin 9, 7 ∣ digits_to_num e + (f i - e i) * (10 : ℤ) ^ (i : ℕ) := by\n-    intro i\n-    have h5 := h4 i\n-    rwa [key e f i] at h5\n+  have A : ∀ i : Fin 9, 7 ∣ digits_to_num d + (e i - d i) * (10 : ℤ) ^ (i : ℕ) :=\n+    fun i => key d e i ▸ h2 i\n+  have B : ∀ i : Fin 9, 7 ∣ digits_to_num e + (f i - e i) * (10 : ℤ) ^ (i : ℕ) :=\n+    fun i => key e f i ▸ h4 i\n-    simp only [hdigits_to_num]\n-    have hq : ∀ j : Fin 9, (e j - d j) * (10 : ℤ) ^ (j : ℕ)\n-        = e j * (10 : ℤ) ^ (j : ℕ) - d j * (10 : ℤ) ^ (j : ℕ) := fun j => by ring\n- ",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "25453b389bfe"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 8,
+    "d_score": 0.76,
+    "d_tokens": -46,
+    "d_heartbeats": -163,
+    "diff": "-      by_cases hj : j = i\n-      · simp only [if_pos hj]\n-        ring\n-      · simp only [if_neg hj]\n-        ring\n-    rw [Finset.sum_congr rfl (fun j _ => hh j), Finset.sum_add_distrib]\n-    have single : ∑ j : Fin 9, (if j = i then (y j - x j) * (10 : ℤ) ^ (j : ℕ) else 0)\n-        = (y i - x i) * (10 : ℤ) ^ (i : ℕ) := by\n-      simp\n-    rw [single]\n+      split_ifs <;> ring\n+    rw [Finset.sum_congr rfl (fun j _ => hh j), Finset.sum_add_distrib,\n+      Finset.sum_ite_eq' Finset.univ i (fun j => (y j - x j) * (10 : ℤ) ^ (j : ℕ)),\n+      if_pos (Finset.mem_univ i)]\n-    have h5 : 7 ∣ ∑ i : Fin 9, (digits_to_num d + (e i - d i) * (10 : ℤ) ^ (i : ℕ)) :=\n-      Finset.dvd_sum fun i _ => A i",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "a01c6e549723"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 9,
+    "d_score": 0.41,
+    "d_tokens": -60,
+    "d_heartbeats": 34,
+    "diff": "-        = digits_to_num x + (y i - x i) * (10 : ℤ) ^ (i : ℕ) := by\n+        = digits_to_num x + (y i - x i) * 10 ^ (i : ℕ) := by\n-    have hh : ∀ j : Fin 9, (if j = i then y j else x j) * (10 : ℤ) ^ (j : ℕ)\n-        = x j * (10 : ℤ) ^ (j : ℕ) + (if j = i then (y j - x j) * (10 : ℤ) ^ (j : ℕ) else 0) := by\n+    have hh : ∀ j : Fin 9, (if j = i then y j else x j) * 10 ^ (j : ℕ)\n+        = x j * 10 ^ (j : ℕ) + (if j = i then (y j - x j) * 10 ^ (j : ℕ) else 0) := by\n-      Finset.sum_ite_eq' Finset.univ i (fun j => (y j - x j) * (10 : ℤ) ^ (j : ℕ)),\n+      Finset.sum_ite_eq' Finset.univ i (fun j => (y j - x j) * 10 ^ (j : ℕ)),\n-  have A : ∀ i : Fin 9, 7 ∣ digits_to_num d + (e i - d i) * (10 : ℤ",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "8058147e2477"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 11,
+    "d_score": 0.07,
+    "d_tokens": -2,
+    "d_heartbeats": -22,
+    "diff": "-  have h8 := hstep i\n-  rcases (Int.prime_iff_natAbs_prime.mpr (by decide)).dvd_mul.mp h8 with h | h\n+  rcases (Int.prime_iff_natAbs_prime.mpr (by decide)).dvd_mul.mp (hstep i) with h | h",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "d16efb90961d"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 12,
+    "d_score": 1.14,
+    "d_tokens": -74,
+    "d_heartbeats": -230,
+    "diff": "-      Finset.sum_ite_eq' Finset.univ i (fun j => (y j - x j) * 10 ^ (j : ℕ)),\n+      Finset.sum_ite_eq' Finset.univ i _,\n-  have hce : 7 ∣ digits_to_num e + digits_to_num d := by\n+  have hce : 7 ∣ digits_to_num d + digits_to_num e := by\n-        - 7 * digits_to_num d = digits_to_num e + digits_to_num d from by rw [hc]; ring] at h6\n+        - 7 * digits_to_num d = digits_to_num d + digits_to_num e from by rw [hc]; ring] at h6\n-    have h3 := dvd_sub (dvd_add (A i) (B i)) hce\n-    rwa [show (digits_to_num d + (e i - d i) * 10 ^ (i : ℕ))\n-        + (digits_to_num e + (f i - e i) * 10 ^ (i : ℕ))\n-        - (digits_to_num e + digits_to_num d) = (f i - d i) * 10 ^ (i : ℕ) from by ring] at h3\n+   ",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "3fbf9f2a63b4"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 13,
+    "d_score": 0.8,
+    "d_tokens": -37,
+    "d_heartbeats": -214,
+    "diff": "-    have h6 : 7 ∣ ∑ i : Fin 9, (digits_to_num d + (e i - d i) * 10 ^ (i : ℕ))\n-        - 7 * digits_to_num d :=\n-      dvd_sub (Finset.dvd_sum fun i _ => A i) ⟨digits_to_num d, rfl⟩\n-    rwa [show ∑ i : Fin 9, (digits_to_num d + (e i - d i) * 10 ^ (i : ℕ))\n-        - 7 * digits_to_num d = digits_to_num d + digits_to_num e from by rw [hc]; ring] at h6\n+    have hE : ∑ i : Fin 9, (digits_to_num d + (e i - d i) * 10 ^ (i : ℕ))\n+        - 7 * digits_to_num d = digits_to_num d + digits_to_num e := by rw [hc]; ring\n+    exact hE ▸ dvd_sub (Finset.dvd_sum fun i _ => A i) ⟨digits_to_num d, rfl⟩",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "27a7a9bd3ead"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 14,
+    "d_score": 0.45,
+    "d_tokens": -65,
+    "d_heartbeats": 35,
+    "diff": "-  have hc : ∑ i : Fin 9, (digits_to_num d + (e i - d i) * 10 ^ (i : ℕ))\n-      = digits_to_num e + 8 * digits_to_num d := by\n-    rw [Finset.sum_add_distrib]\n-    have h7 : ∑ i : Fin 9, digits_to_num d = 9 * digits_to_num d := by simp\n-    rw [h7, hte]\n-    ring\n-        - 7 * digits_to_num d = digits_to_num d + digits_to_num e := by rw [hc]; ring\n+        - 7 * digits_to_num d = digits_to_num d + digits_to_num e := by\n+      simp [Finset.sum_add_distrib, hte, Finset.sum_const] <;> ring",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "fb4e6d53dbaf"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 15,
+    "d_score": 0.02,
+    "d_tokens": -2,
+    "d_heartbeats": -1,
+    "diff": "-      simp [Finset.sum_add_distrib, hte, Finset.sum_const] <;> ring\n+      simp [Finset.sum_add_distrib, hte] <;> ring",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "a0b45546795b"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 16,
+    "d_score": 1.03,
+    "d_tokens": -36,
+    "d_heartbeats": -316,
+    "diff": "-        = digits_to_num x + (y i - x i) * 10 ^ (i : ℕ) := by\n+        = digits_to_num x + (y i - x i) * 10 ^ i.1 := by\n-    have hh : ∀ j : Fin 9, (if j = i then y j else x j) * 10 ^ (j : ℕ)\n-        = x j * 10 ^ (j : ℕ) + (if j = i then (y j - x j) * 10 ^ (j : ℕ) else 0) := by\n+    have hh : ∀ j : Fin 9, (if j = i then y j else x j) * 10 ^ j.1\n+        = x j * 10 ^ j.1 + (if j = i then (y j - x j) * 10 ^ j.1 else 0) := by\n-      Finset.sum_ite_eq' Finset.univ i _,\n+      Finset.sum_ite_eq' _ i _,\n-  have A : ∀ i : Fin 9, 7 ∣ digits_to_num d + (e i - d i) * 10 ^ (i : ℕ) :=\n+  have A : ∀ i : Fin 9, 7 ∣ digits_to_num d + (e i - d i) * 10 ^ i.1 :=\n-  have B : ∀ i : Fin 9, 7 ∣ digits_to_num e +",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "9d25e6bee595"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 17,
+    "d_score": 0.66,
+    "d_tokens": -57,
+    "d_heartbeats": -80,
+    "diff": "-  have A : ∀ i : Fin 9, 7 ∣ digits_to_num d + (e i - d i) * 10 ^ i.1 :=\n-    fun i => key d e i ▸ h2 i\n-  have B : ∀ i : Fin 9, 7 ∣ digits_to_num e + (f i - e i) * 10 ^ i.1 :=\n-    fun i => key e f i ▸ h4 i\n-    exact hE ▸ dvd_sub (Finset.dvd_sum fun i _ => A i) ⟨digits_to_num d, rfl⟩\n+    exact hE ▸ dvd_sub (Finset.dvd_sum fun i _ => key d e i ▸ h2 i) ⟨digits_to_num d, rfl⟩\n-    have h3 := dvd_add (A i) (B i)\n-    rw [add_add_add_comm, ← add_mul, sub_add_sub_cancel'] at h3\n-    have h4 := dvd_sub h3 hce\n-    rwa [add_sub_cancel_left] at h4\n+    have h5 := dvd_add (key d e i ▸ h2 i) (key e f i ▸ h4 i)\n+    rw [add_add_add_comm, ← add_mul, sub_add_sub_cancel'] at h5\n+    have h6 := dvd_sub h",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "db267cf0b975"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 21,
+    "d_score": 0.04,
+    "d_tokens": -9,
+    "d_heartbeats": 11,
+    "diff": "-    simp only [hdigits_to_num]\n-    rw [Finset.sum_congr rfl (fun j _ => hh j), Finset.sum_add_distrib,\n-      Finset.sum_ite_eq' _ i _,\n-      if_pos (Finset.mem_univ i)]\n+    simp only [hdigits_to_num, hh]\n+    rw [Finset.sum_add_distrib, Finset.sum_ite_eq' _ i _, if_pos (Finset.mem_univ i)]",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "0672cf798331"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 3,
+    "d_score": 0.06,
+    "d_tokens": 7,
+    "d_heartbeats": -50,
+    "diff": "-      split_ifs <;> ring\n+      split_ifs\n+      · ring\n+      · exact (add_zero _).symm\n-      simp [Finset.sum_add_distrib, hte] <;> ring\n+      simp [Finset.sum_add_distrib, hte]; ring",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "9954147ccc9d"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 4,
+    "d_score": 0.83,
+    "d_tokens": 5,
+    "d_heartbeats": -371,
+    "diff": "-      simp [Finset.sum_add_distrib, hte]; ring\n+      simp only [Finset.sum_add_distrib, hte, Finset.sum_const, Finset.card_fin]; ring",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "e3cc93b2760f"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 5,
+    "d_score": 0.02,
+    "d_tokens": 5,
+    "d_heartbeats": -27,
+    "diff": "-      · ring\n+      · rw [sub_mul, add_sub_cancel]",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "5bad43b3e5d7"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 6,
+    "d_score": 0.1,
+    "d_tokens": -7,
+    "d_heartbeats": -16,
+    "diff": "-    simp only [hdigits_to_num, hh]\n-    rw [Finset.sum_add_distrib, Finset.sum_ite_eq' _ i _, if_pos (Finset.mem_univ i)]\n+    simp only [hdigits_to_num, hh, Finset.sum_add_distrib, Finset.sum_ite_eq',\n+      Finset.mem_univ, if_true]",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "bbdc422d48bb"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 2,
+    "d_score": 0.03,
+    "d_tokens": -2,
+    "d_heartbeats": -5,
+    "diff": "-  · rw [← dvd_neg, neg_sub]\n-    exact h\n+  · rwa [← dvd_neg, neg_sub]",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "b5eefe457a87"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 11,
+    "d_score": 0.79,
+    "d_tokens": -39,
+    "d_heartbeats": -203,
+    "diff": "-    have hh : ∀ j : Fin 9, (if j = i then y j else x j) * 10 ^ j.1\n-        = x j * 10 ^ j.1 + (if j = i then (y j - x j) * 10 ^ j.1 else 0) := by\n-      intro j\n-      split_ifs\n-      · rw [sub_mul, add_sub_cancel]\n-      · exact (add_zero _).symm\n-    simp only [hdigits_to_num, hh, Finset.sum_add_distrib, Finset.sum_ite_eq',\n-      Finset.mem_univ, if_true]\n+    simp only [hdigits_to_num]\n+    rw [← sub_eq_iff_eq_add', ← Finset.sum_sub_distrib,\n+      Finset.sum_eq_single i (fun b _ hb => by rw [if_neg hb, sub_self])\n+        (fun hb => absurd (Finset.mem_univ i) hb),\n+      if_pos rfl, ← sub_mul]",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "3405749a5af3"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 12,
+    "d_score": 0.31,
+    "d_tokens": -33,
+    "d_heartbeats": -20,
+    "diff": "-  have hte : ∑ i : Fin 9, (e i - d i) * 10 ^ i.1 = digits_to_num e - digits_to_num d := by\n-    simp only [hdigits_to_num, sub_mul, Finset.sum_sub_distrib]\n-      simp only [Finset.sum_add_distrib, hte, Finset.sum_const, Finset.card_fin]; ring\n+      simp only [Finset.sum_add_distrib, hdigits_to_num, sub_mul, Finset.sum_sub_distrib,\n+        Finset.sum_const, Finset.card_fin]; ring",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "88b0a32cd138"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 12,
+    "d_score": 0.21,
+    "d_tokens": 5,
+    "d_heartbeats": -107,
+    "diff": "-  rcases (Int.prime_iff_natAbs_prime.mpr (by decide)).dvd_mul.mp (hstep i) with h | h\n-  · rwa [← dvd_neg, neg_sub]\n-  · norm_cast at h\n-    exact absurd (Nat.Prime.dvd_of_dvd_pow (by decide) h) (by decide)\n+  have hc : IsCoprime (7:ℤ) 10 := ⟨3, -2, by ring⟩\n+  have h7 := hstep i\n+  rw [← neg_sub, neg_mul] at h7\n+  exact (hc.pow_right (n := i.1)).dvd_of_dvd_mul_right (dvd_neg.mp h7)"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 15,
+    "d_score": 0.11,
+    "d_tokens": -6,
+    "d_heartbeats": -25,
+    "diff": "-  have hstep : ∀ i : Fin 9, 7 ∣ (f i - d i) * 10 ^ i.1 := by\n+  have hstep : ∀ i : Fin 9, 7 ∣ (d i - f i) * 10 ^ i.1 := by\n-    rwa [add_sub_cancel_left] at h6\n+    rwa [add_sub_cancel_left, ← dvd_neg, ← neg_mul, neg_sub] at h6\n-  have h7 := hstep i\n-  rw [← neg_sub, neg_mul] at h7\n-  exact (hc.pow_right (n := i.1)).dvd_of_dvd_mul_right (dvd_neg.mp h7)\n+  exact (hc.pow_right (n := i.1)).dvd_of_dvd_mul_right (hstep i)"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 4,
+    "d_score": 0.07,
+    "d_tokens": -7,
+    "d_heartbeats": -3,
+    "diff": "-      Finset.sum_eq_single i (fun b _ hb => by rw [if_neg hb, sub_self])\n-        (fun hb => absurd (Finset.mem_univ i) hb),\n-      if_pos rfl, ← sub_mul]\n+      Finset.sum_eq_single_of_mem i (Finset.mem_univ i)\n+        (fun b _ hb => by rw [if_neg hb, sub_self]), if_pos rfl, ← sub_mul]"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 5,
+    "d_score": 0.18,
+    "d_tokens": 0,
+    "d_heartbeats": -80,
+    "diff": "-      Finset.sum_eq_single_of_mem i (Finset.mem_univ i)\n-        (fun b _ hb => by rw [if_neg hb, sub_self]), if_pos rfl, ← sub_mul]\n+      Finset.sum_eq_single i (fun b _ hb => by rw [if_neg hb, sub_self])\n+        (fun hb => absurd (Finset.mem_univ i) hb),\n+      if_pos rfl, ← sub_mul]\n-  have hc : IsCoprime (7:ℤ) 10 := ⟨3, -2, by ring⟩\n+  have hc : IsCoprime (7:ℤ) 10 := Int.isCoprime_iff_gcd_eq_one.mpr rfl"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 7,
+    "d_score": 0.1,
+    "d_tokens": -9,
+    "d_heartbeats": -12,
+    "diff": "-  obtain ⟨-, h2⟩ := (hrelation d e).mp h.1\n-  obtain ⟨-, h4⟩ := (hrelation e f).mp h.2\n+  have h2 := ((hrelation d e).mp h.1).2\n+  have h4 := ((hrelation e f).mp h.2).2\n-      Finset.sum_eq_single i (fun b _ hb => by rw [if_neg hb, sub_self])\n-        (fun hb => absurd (Finset.mem_univ i) hb),\n-      if_pos rfl, ← sub_mul]\n+      Finset.sum_eq_single_of_mem i (Finset.mem_univ i)\n+        (fun b _ hb => by rw [if_neg hb, sub_self]), if_pos rfl, ← sub_mul]"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 8,
+    "d_score": 0.05,
+    "d_tokens": -7,
+    "d_heartbeats": 7,
+    "diff": "-  have h2 := ((hrelation d e).mp h.1).2\n-  have h4 := ((hrelation e f).mp h.2).2\n+  obtain ⟨-, h2⟩ := (hrelation d e).mp h.1\n+  obtain ⟨-, h4⟩ := (hrelation e f).mp h.2\n-  have hc : IsCoprime (7:ℤ) 10 := Int.isCoprime_iff_gcd_eq_one.mpr rfl\n-  exact (hc.pow_right (n := i.1)).dvd_of_dvd_mul_right (hstep i)\n+  exact (Int.isCoprime_iff_gcd_eq_one.mpr rfl |>.pow_right (n := i.1)).dvd_of_dvd_mul_right (hstep i)"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 10,
+    "d_score": 0.05,
+    "d_tokens": -5,
+    "d_heartbeats": -7,
+    "diff": "-  obtain ⟨-, h2⟩ := (hrelation d e).mp h.1\n-  obtain ⟨-, h4⟩ := (hrelation e f).mp h.2\n+  have h2 := ((hrelation d e).mp h.1).2\n+  have h4 := ((hrelation e f).mp h.2).2\n-        (fun b _ hb => by rw [if_neg hb, sub_self]), if_pos rfl, ← sub_mul]\n+        (fun b _ hb => by simp [hb]), if_pos rfl, ← sub_mul]"
+   },
+   {
+    "run_id": "a100-postpass-xfer1",
+    "check": 1,
+    "d_score": 0.05,
+    "d_tokens": -5,
+    "d_heartbeats": -1,
+    "diff": "-  exact (Int.isCoprime_iff_gcd_eq_one.mpr rfl |>.pow_right (n := i.1)).dvd_of_dvd_mul_right $ hstep i\n+  exact (Int.isCoprime_iff_gcd_eq_one.mpr rfl |>.pow_right).dvd_of_dvd_mul_right $ hstep i",
+    "source": "v2-check",
+    "kind": "edit",
+    "sha": "3ee08927048c"
+   }
+  ],
+  "dead_names": [
+   "dvd_congr",
+   "Finset.mul_ite",
+   "Finset.sum_update_add"
+  ]
+ },
+ "profile_cache": {
+  "fa3f0f0f54ea": {
+   "ok": true,
+   "total": 1856,
+   "floor": 202,
+   "reference": 14248,
+   "max_heartbeat_score": 32.86,
+   "blocks": [
+    {
+     "lines": "20-25",
+     "depth_indent": 2,
+     "text": "have hce : 7 ∣ digits_to_num d + digits_to_num e := by have hE : ∑ i : Fin 9, (digits_to_num d + (e ",
+     "heartbeats": 589
+    },
+    {
+     "lines": "21-24",
+     "depth_indent": 4,
+     "text": "have hE : ∑ i : Fin 9, (digits_to_num d + (e i - d i) * 10 ^ i.1) - 7 * digits_to_num d = digits_to_",
+     "heartbeats": 477
+    },
+    {
+     "lines": "11-19",
+     "depth_indent": 2,
+     "text": "have key : ∀ (x y : Fin 9 → ℤ) (i : Fin 9), digits_to_num (fun j => if j = i then y j else x j) = di",
+     "heartbeats": 344
+    },
+    {
+     "lines": "26-31",
+     "depth_indent": 2,
+     "text": "have hstep : ∀ i : Fin 9, 7 ∣ (f i - d i) * 10 ^ i.1 := by intro i have h5 := dvd_add (key d e i ▸ h",
+     "heartbeats": 327
+    },
+    {
+     "lines": "35-36",
+     "depth_indent": 2,
+     "text": "· norm_cast at h exact absurd (Nat.Prime.dvd_of_dvd_pow (by decide) h) (by decide)",
+     "heartbeats": 200
+    },
+    {
+     "lines": "34-34",
+     "depth_indent": 2,
+     "text": "· rwa [← dvd_neg, neg_sub]",
+     "heartbeats": 85
+    },
+    {
+     "lines": "33-33",
+     "depth_indent": 2,
+     "text": "rcases (Int.prime_iff_natAbs_prime.mpr (by decide)).dvd_mul.mp (hstep i) with h | h",
+     "heartbeats": 84
+    },
+    {
+     "lines": "25-25",
+     "depth_indent": 4,
+     "text": "exact hE ▸ dvd_sub (Finset.dvd_sum fun i _ => key d e i ▸ h2 i) ⟨digits_to_num d, rfl⟩",
+     "heartbeats": 61
+    },
+    {
+     "lines": "8-8",
+     "depth_indent": 2,
+     "text": "obtain ⟨-, h2⟩ := (hrelation d e).mp h.1",
+     "heartbeats": 13
+    },
+    {
+     "lines": "9-10",
+     "depth_indent": 2,
+     "text": "obtain ⟨-, h4⟩ := (hrelation e f).mp h.2 -- replacing digit i of x by y i changes the number by (y i",
+     "heartbeats": 11
+    },
+    {
+     "lines": "7-7",
+     "depth_indent": 2,
+     "text": "intro d e f h",
+     "heartbeats": 1
+    },
+    {
+     "lines": "32-32",
+     "depth_indent": 2,
+     "text": "intro i",
+     "heartbeats": 0
+    }
+   ],
+   "points_left_heartbeats": 3.87,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "7e2a0d3c2367": {
+   "ok": true,
+   "total": 1724,
+   "floor": 202,
+   "reference": 14248,
+   "max_heartbeat_score": 32.86,
+   "blocks": [
+    {
+     "lines": "20-25",
+     "depth_indent": 2,
+     "text": "have hce : 7 ∣ digits_to_num d + digits_to_num e := by have hE : ∑ i : Fin 9, (digits_to_num d + (e ",
+     "heartbeats": 589
+    },
+    {
+     "lines": "21-24",
+     "depth_indent": 4,
+     "text": "have hE : ∑ i : Fin 9, (digits_to_num d + (e i - d i) * 10 ^ i.1) - 7 * digits_to_num d = digits_to_",
+     "heartbeats": 467
+    },
+    {
+     "lines": "26-31",
+     "depth_indent": 2,
+     "text": "have hstep : ∀ i : Fin 9, 7 ∣ (d i - f i) * 10 ^ i.1 := by intro i have h5 := dvd_add (key d e i ▸ h",
+     "heartbeats": 450
+    },
+    {
+     "lines": "11-19",
+     "depth_indent": 2,
+     "text": "have key : ∀ (x y : Fin 9 → ℤ) (i : Fin 9), digits_to_num (fun j => if j = i then y j else x j) = di",
+     "heartbeats": 344
+    },
+    {
+     "lines": "33-33",
+     "depth_indent": 2,
+     "text": "have hc : IsCoprime (7:ℤ) 10 := ⟨3, -2, by ring⟩",
+     "heartbeats": 97
+    },
+    {
+     "lines": "25-25",
+     "depth_indent": 4,
+     "text": "exact hE ▸ dvd_sub (Finset.dvd_sum fun i _ => key d e i ▸ h2 i) ⟨digits_to_num d, rfl⟩",
+     "heartbeats": 58
+    },
+    {
+     "lines": "34-34",
+     "depth_indent": 2,
+     "text": "exact (hc.pow_right (n := i.1)).dvd_of_dvd_mul_right (hstep i)",
+     "heartbeats": 16
+    },
+    {
+     "lines": "8-8",
+     "depth_indent": 2,
+     "text": "obtain ⟨-, h2⟩ := (hrelation d e).mp h.1",
+     "heartbeats": 13
+    },
+    {
+     "lines": "9-10",
+     "depth_indent": 2,
+     "text": "obtain ⟨-, h4⟩ := (hrelation e f).mp h.2 -- replacing digit i of x by y i changes the number by (y i",
+     "heartbeats": 11
+    },
+    {
+     "lines": "7-7",
+     "depth_indent": 2,
+     "text": "intro d e f h",
+     "heartbeats": 1
+    },
+    {
+     "lines": "32-32",
+     "depth_indent": 2,
+     "text": "intro i",
+     "heartbeats": 1
+    },
+    {
+     "lines": "22-22",
+     "depth_indent": 8,
+     "text": "- 7 * digits_to_num d = digits_to_num d + digits_to_num e := by",
+     "heartbeats": null
+    }
+   ],
+   "points_left_heartbeats": 3.56,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "8dcfd1f9edca": {
+   "ok": true,
+   "total": 1629,
+   "floor": 202,
+   "reference": 14248,
+   "max_heartbeat_score": 32.86,
+   "blocks": [
+    {
+     "lines": "19-24",
+     "depth_indent": 2,
+     "text": "have hce : 7 ∣ digits_to_num d + digits_to_num e := by have hE : ∑ i : Fin 9, (digits_to_num d + (e ",
+     "heartbeats": 590
+    },
+    {
+     "lines": "20-23",
+     "depth_indent": 4,
+     "text": "have hE : ∑ i : Fin 9, (digits_to_num d + (e i - d i) * 10 ^ i.1) - 7 * digits_to_num d = digits_to_",
+     "heartbeats": 478
+    },
+    {
+     "lines": "25-30",
+     "depth_indent": 2,
+     "text": "have hstep : ∀ i : Fin 9, 7 ∣ (d i - f i) * 10 ^ i.1 := by intro i have h5 := dvd_add (key d e i ▸ h",
+     "heartbeats": 451
+    },
+    {
+     "lines": "11-18",
+     "depth_indent": 2,
+     "text": "have key : ∀ (x y : Fin 9 → ℤ) (i : Fin 9), digits_to_num (fun j => if j = i then y j else x j) = di",
+     "heartbeats": 340
+    },
+    {
+     "lines": "24-24",
+     "depth_indent": 4,
+     "text": "exact hE ▸ dvd_sub (Finset.dvd_sum fun i _ => key d e i ▸ h2 i) ⟨digits_to_num d, rfl⟩",
+     "heartbeats": 61
+    },
+    {
+     "lines": "32-32",
+     "depth_indent": 2,
+     "text": "exact (Int.isCoprime_iff_gcd_eq_one.mpr rfl |>.pow_right (n := i.1)).dvd_of_dvd_mul_right (hstep i)",
+     "heartbeats": 30
+    },
+    {
+     "lines": "9-10",
+     "depth_indent": 2,
+     "text": "have h4 := ((hrelation e f).mp h.2).2 -- replacing digit i of x by y i changes the number by (y i - ",
+     "heartbeats": 8
+    },
+    {
+     "lines": "8-8",
+     "depth_indent": 2,
+     "text": "have h2 := ((hrelation d e).mp h.1).2",
+     "heartbeats": 7
+    },
+    {
+     "lines": "7-7",
+     "depth_indent": 2,
+     "text": "intro d e f h",
+     "heartbeats": 1
+    },
+    {
+     "lines": "31-31",
+     "depth_indent": 2,
+     "text": "intro i",
+     "heartbeats": 0
+    },
+    {
+     "lines": "21-21",
+     "depth_indent": 8,
+     "text": "- 7 * digits_to_num d = digits_to_num d + digits_to_num e := by",
+     "heartbeats": null
+    }
+   ],
+   "points_left_heartbeats": 3.34,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  }
+ },
+ "hb_floor": 202
+}

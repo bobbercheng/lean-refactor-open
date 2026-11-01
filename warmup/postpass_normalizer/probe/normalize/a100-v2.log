@@ -1,0 +1,17 @@
+Binius.BinaryBasefold.fiberwise_dist_lt_imp_ improved           tok 637 -> 619  hb 4628 -> 4628  score 75.85 -> 76.26  {'lam': 2, 'dollar': 16}  compiles 29
+Binius.BinaryBasefold.fold_advances_evaluati improved           tok 353 -> 351  hb 7369 -> 7369  score 88.5 -> 88.53  {'lam': 1, 'dollar': 1}  compiles 7
+CallElimCorrect.extractedOldExprInVars       no site compiles   tok 106 -> 106  hb 477 -> 477  score 78.19 -> 78.19    compiles 2
+CallElimCorrect.substOldPostSubset           no sites           tok 32 -> 32  hb 1658 -> 1658  score 85.91 -> 85.91    compiles 1
+Core.InitsUpdatesComm                        improved           tok 99 -> 95  hb 208 -> 209  score 83.66 -> 84.24  {'lam': 1, 'dollar': 3}  compiles 15
+Cslib.CCS.bisimilarity_congr_choice          improved           tok 108 -> 102  hb 388 -> 389  score 82.32 -> 83.11  {'lam': 5, 'dollar': 1}  compiles 7
+Cslib.LambdaCalculus.LocallyNameless.Fsub.Ty no sites           tok 136 -> 136  hb 6861 -> 6861  score 85.07 -> 85.07    compiles 3
+Cslib.SKI.parallelReduction_diamond          no sites           tok 270 -> 270  hb 392 -> 392  score 68.7 -> 68.7    compiles 4
+Electromagnetism.ElectromagneticPotential.ti improved           tok 700 -> 676  hb 11428 -> 11426  score 68.94 -> 69.53  {'lam': 13, 'dollar': 11}  compiles 10
+FieldSpecification.WickAlgebra.ι_timeOrderF_ improved           tok 693 -> 685  hb 14487 -> 14487  score 69.55 -> 69.77  {'lam': 5, 'dollar': 3}  compiles 12
+fundamental_theorem_of_variational_calculus' improved           tok 202 -> 192  hb 1817 -> 1817  score 87.02 -> 87.41  {'lam': 5, 'dollar': 5}  compiles 8
+interleaved_affine_gaps_imply_tensor_gaps    improved           tok 369 -> 356  hb 3820 -> 3820  score 77.34 -> 77.66  {'lam': 6, 'dollar': 7}  compiles 21
+putnam_1964_a4                               improved           tok 483 -> 466  hb 2480 -> 2480  score 90.16 -> 90.48  {'lam': 8, 'dollar': 9}  compiles 17
+putnam_1964_b2                               improved           tok 224 -> 211  hb 918 -> 918  score 95.52 -> 95.76  {'lam': 7, 'dollar': 6}  compiles 11
+putnam_1995_a3                               improved           tok 317 -> 312  hb 1629 -> 1629  score 93.6 -> 93.64  {'lam': 3, 'dollar': 2}  compiles 17
+
+a100: 11/15 improved; summed gain +3.93 = +0.262 on the 15-problem line; 784s -> /home/user/source/lean-refactor/probe/normalize/a100-v2.jsonl

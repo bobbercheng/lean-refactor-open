@@ -1,0 +1,326 @@
+[
+ {
+  "name": "CallElimCorrect.substOldPostSubset",
+  "status": "no sites",
+  "applied": null,
+  "before": {
+   "ok": true,
+   "tokens": 32,
+   "heartbeats": 2362,
+   "Z": 100.0,
+   "score": 81.38
+  },
+  "after": {
+   "ok": true,
+   "tokens": 32,
+   "heartbeats": 2362,
+   "Z": 100.0,
+   "score": 81.38
+  }
+ },
+ {
+  "name": "CallElimCorrect.extractedOldExprInVars",
+  "status": "no sites",
+  "applied": null,
+  "before": {
+   "ok": true,
+   "tokens": 219,
+   "heartbeats": 2425,
+   "Z": 100.0,
+   "score": 37.16
+  },
+  "after": {
+   "ok": true,
+   "tokens": 219,
+   "heartbeats": 2425,
+   "Z": 100.0,
+   "score": 37.16
+  }
+ },
+ {
+  "name": "Core.InitsUpdatesComm",
+  "status": "improved",
+  "applied": {
+   "dollar": 5
+  },
+  "before": {
+   "ok": true,
+   "tokens": 125,
+   "heartbeats": 351,
+   "Z": 100.0,
+   "score": 78.68
+  },
+  "after": {
+   "ok": true,
+   "tokens": 120,
+   "heartbeats": 352,
+   "Z": 100.0,
+   "score": 79.41
+  }
+ },
+ {
+  "name": "fundamental_theorem_of_variational_calculus'",
+  "status": "improved",
+  "applied": {
+   "lam": 11,
+   "dollar": 16,
+   "semi": 1
+  },
+  "before": {
+   "ok": true,
+   "tokens": 587,
+   "heartbeats": 5319,
+   "Z": 100.0,
+   "score": 62.18
+  },
+  "after": {
+   "ok": true,
+   "tokens": 559,
+   "heartbeats": 5317,
+   "Z": 100.0,
+   "score": 63.28
+  }
+ },
+ {
+  "name": "Electromagnetism.ElectromagneticPotential.time_deriv_time_deriv_electricField_of_isExtrema",
+  "status": "improved",
+  "applied": {
+   "lam": 29,
+   "dollar": 10,
+   "bare": 4
+  },
+  "before": {
+   "ok": true,
+   "tokens": 1368,
+   "heartbeats": 27079,
+   "Z": 100.0,
+   "score": 33.47
+  },
+  "after": {
+   "ok": true,
+   "tokens": 1321,
+   "heartbeats": 27082,
+   "Z": 100.0,
+   "score": 34.61
+  }
+ },
+ {
+  "name": "FieldSpecification.WickAlgebra.ι_timeOrderF_superCommuteF_eq_time",
+  "status": "improved",
+  "applied": {
+   "lam": 4,
+   "dollar": 7
+  },
+  "before": {
+   "ok": true,
+   "tokens": 890,
+   "heartbeats": 37084,
+   "Z": 100.0,
+   "score": 46.27
+  },
+  "after": {
+   "ok": true,
+   "tokens": 879,
+   "heartbeats": 37081,
+   "Z": 100.0,
+   "score": 46.57
+  }
+ },
+ {
+  "name": "Cslib.LambdaCalculus.LocallyNameless.Fsub.Typing.progress",
+  "status": "improved",
+  "applied": {
+   "lam": 2
+  },
+  "before": {
+   "ok": true,
+   "tokens": 344,
+   "heartbeats": 1281,
+   "Z": 100.0,
+   "score": 71.18
+  },
+  "after": {
+   "ok": true,
+   "tokens": 342,
+   "heartbeats": 1281,
+   "Z": 100.0,
+   "score": 71.35
+  }
+ },
+ {
+  "name": "Cslib.SKI.parallelReduction_diamond",
+  "status": "improved",
+  "applied": {
+   "dollar": 2
+  },
+  "before": {
+   "ok": true,
+   "tokens": 305,
+   "heartbeats": 386,
+   "Z": 100.0,
+   "score": 65.97
+  },
+  "after": {
+   "ok": true,
+   "tokens": 303,
+   "heartbeats": 386,
+   "Z": 100.0,
+   "score": 66.14
+  }
+ },
+ {
+  "name": "Cslib.CCS.bisimilarity_congr_choice",
+  "status": "improved",
+  "applied": {
+   "lam": 4,
+   "dollar": 1
+  },
+  "before": {
+   "ok": true,
+   "tokens": 137,
+   "heartbeats": 407,
+   "Z": 100.0,
+   "score": 78.31
+  },
+  "after": {
+   "ok": true,
+   "tokens": 132,
+   "heartbeats": 407,
+   "Z": 100.0,
+   "score": 78.97
+  }
+ },
+ {
+  "name": "Binius.BinaryBasefold.fiberwise_dist_lt_imp_dist_lt_unique_decoding_radius",
+  "status": "improved",
+  "applied": {
+   "lam": 2,
+   "dollar": 13
+  },
+  "before": {
+   "ok": true,
+   "tokens": 980,
+   "heartbeats": 7107,
+   "Z": 100.0,
+   "score": 62.87
+  },
+  "after": {
+   "ok": true,
+   "tokens": 965,
+   "heartbeats": 7101,
+   "Z": 100.0,
+   "score": 63.23
+  }
+ },
+ {
+  "name": "Binius.BinaryBasefold.fold_advances_evaluation_poly",
+  "status": "improved",
+  "applied": {
+   "lam": 1,
+   "dollar": 1
+  },
+  "before": {
+   "ok": true,
+   "tokens": 414,
+   "heartbeats": 8039,
+   "Z": 100.0,
+   "score": 86.94
+  },
+  "after": {
+   "ok": true,
+   "tokens": 412,
+   "heartbeats": 8039,
+   "Z": 100.0,
+   "score": 86.98
+  }
+ },
+ {
+  "name": "interleaved_affine_gaps_imply_tensor_gaps",
+  "status": "improved",
+  "applied": {
+   "lam": 7,
+   "dollar": 7
+  },
+  "before": {
+   "ok": true,
+   "tokens": 754,
+   "heartbeats": 6305,
+   "Z": 100.0,
+   "score": 59.02
+  },
+  "after": {
+   "ok": true,
+   "tokens": 740,
+   "heartbeats": 6305,
+   "Z": 100.0,
+   "score": 59.37
+  }
+ },
+ {
+  "name": "putnam_1964_a4",
+  "status": "improved",
+  "applied": {
+   "lam": 6,
+   "dollar": 16,
+   "semi": 1
+  },
+  "before": {
+   "ok": true,
+   "tokens": 719,
+   "heartbeats": 4447,
+   "Z": 100.0,
+   "score": 85.12
+  },
+  "after": {
+   "ok": true,
+   "tokens": 696,
+   "heartbeats": 4448,
+   "Z": 100.0,
+   "score": 85.56
+  }
+ },
+ {
+  "name": "putnam_1964_b2",
+  "status": "improved",
+  "applied": {
+   "lam": 3,
+   "dollar": 4
+  },
+  "before": {
+   "ok": true,
+   "tokens": 383,
+   "heartbeats": 4074,
+   "Z": 100.0,
+   "score": 91.71
+  },
+  "after": {
+   "ok": true,
+   "tokens": 376,
+   "heartbeats": 4073,
+   "Z": 100.0,
+   "score": 91.85
+  }
+ },
+ {
+  "name": "putnam_1995_a3",
+  "status": "improved",
+  "applied": {
+   "lam": 2,
+   "dollar": 5
+  },
+  "before": {
+   "ok": true,
+   "tokens": 410,
+   "heartbeats": 2548,
+   "Z": 100.0,
+   "score": 90.69
+  },
+  "after": {
+   "ok": true,
+   "tokens": 403,
+   "heartbeats": 2548,
+   "Z": 100.0,
+   "score": 90.75
+  }
+ }
+]

@@ -1,0 +1,2163 @@
+{
+ "problem": "CallElimCorrect.extractedOldExprInVars",
+ "best": {
+  "score": 78.19,
+  "proof": "open OldExpressions in\ntheorem extractedOldExprInVars :\n  NormalizedOldExpr post →\n  (extractOldExprVars post).Subset\n  (Imperative.HasVarsPure.getVars post) := by\n  intro Hnorm\n  induction Hnorm\n  case app _ _ h3 ih1 ih2 =>\n    unfold extractOldExprVars\n    split\n    . apply List.Subset.refl\n    . rename_i Hfalse\n      cases h3 IsOldPred.oldPred\n      cases Hfalse _ _ _ rfl\n    . exact List.append_subset.mpr ⟨List.subset_append_of_subset_left _ ih1,\n      List.subset_append_of_subset_right _ ih2⟩\n  case quant _ _ ih1 ih2 | eq _ _ ih1 ih2 =>\n    exact List.Subset.app (List.subset_append_of_subset_left _ ih1)\n      (List.subset_append_of_subset_right _ ih2)\n  case ite _ _ _ ih1 ih2 ih3 =>\n    exact List.append_subset.mpr ⟨List.subset_append_of_subset_left _\n      (List.append_subset.mpr ⟨List.subset_append_of_subset_left _ ih1,\n        List.subset_append_of_subset_right _ ih2⟩), List.subset_append_of_subset_right _ ih3⟩\n  all_goals\n    first\n      | apply List.nil_subset\n      | assumption",
+  "tokens": 106,
+  "heartbeats": 477,
+  "L": 52.25,
+  "H": 82.32,
+  "Z": 100.0,
+  "compat": {
+   "v4.26.0": true
+  }
+ },
+ "attempts": [
+  {
+   "sha": "2cc5b82de593",
+   "tokens": 222,
+   "heartbeats": 2698,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:17:15Z"
+  },
+  {
+   "sha": "7957f207c536",
+   "tokens": 234,
+   "heartbeats": 1380,
+   "ok": false,
+   "error": "2873:31: Missing cases: (Lambda.Identifier.mk (String.ofByteArray (ByteArray.mk (Array.mk _)) (ByteArray.IsValidUTF8.intro _ _)) Visibility.temp) (Lambda.Identifier.mk (String.ofByteArray (ByteArray.mk (Array.mk _)) (ByteArray.IsValidUTF8.intro _ _)) Visibility.locl) (Lambda.Identifier.mk (String.of",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:24:04Z"
+  },
+  {
+   "sha": "e59078af7f25",
+   "tokens": 259,
+   "heartbeats": null,
+   "ok": false,
+   "error": "2878:12: unexpected token ','; expected '=>'",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:35:30Z"
+  },
+  {
+   "sha": "872b544a68dc",
+   "tokens": 256,
+   "heartbeats": 849,
+   "ok": false,
+   "error": "2878:2: too many variable names provided",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:36:15Z"
+  },
+  {
+   "sha": "ebf6dcbe6723",
+   "tokens": 210,
+   "heartbeats": 952,
+   "ok": false,
+   "error": "2879:32: Invalid projection: Expected a value whose type is a structure Hnorm has type NormalizedOldExpr (Lambda.LExpr.abs m✝ ty✝ e✝)",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:39:03Z"
+  },
+  {
+   "sha": "21d9a7726327",
+   "tokens": 242,
+   "heartbeats": 1100,
+   "ok": false,
+   "error": "2902:15: Application type mismatch: The argument ih1 h1 has type (extractOldExprVars c).Subset (Imperative.HasVarsPure.getVars c) but is expected to have type extractOldExprVars c ++ extractOldExprVars t ⊆ Lambda.LExpr.LExpr.getVars c ++ Lambda.LExpr.LExpr.getVars t in the application appm (ih1 h1)",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:40:33Z"
+  },
+  {
+   "sha": "9c2c8f6df54c",
+   "tokens": 198,
+   "heartbeats": 1432,
+   "ok": false,
+   "error": "2878:29: Application type mismatch: The argument Hnorm has type NormalizedOldExpr (Lambda.LExpr.abs m✝ ty✝ e) but is expected to have type NormalizedOldExpr e in the application ih Hnorm",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T02:19:21Z"
+  },
+  {
+   "sha": "48b4a477ce43",
+   "tokens": 175,
+   "heartbeats": 477,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T02:59:51Z",
+   "score": 67.83
+  },
+  {
+   "sha": "d0f9e74e55e8",
+   "tokens": 148,
+   "heartbeats": 461,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T03:13:59Z",
+   "score": 72.08
+  },
+  {
+   "sha": "622a9c83ef65",
+   "tokens": 145,
+   "heartbeats": 431,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T03:21:15Z",
+   "score": 72.9
+  },
+  {
+   "sha": "71184fb95404",
+   "tokens": 143,
+   "heartbeats": 429,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T03:25:47Z",
+   "score": 73.23
+  },
+  {
+   "sha": "2260f5d08111",
+   "tokens": 141,
+   "heartbeats": 425,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T03:28:49Z",
+   "score": 73.58
+  },
+  {
+   "sha": "ce2c75294c2f",
+   "tokens": 144,
+   "heartbeats": 414,
+   "ok": false,
+   "error": "2883:4: Tactic `split` failed: Could not split an `if` or `match` expression in  … [hypotheses omitted] ⊢ (extractOldExprVars (Lambda.LExpr.app m✝ fn✝ e✝)).Subset (Imperative.HasVarsPure.getVars (Lambda.LExpr.app m✝ fn✝ e✝))",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T03:33:04Z"
+  },
+  {
+   "sha": "ebc37edb57a6",
+   "tokens": 137,
+   "heartbeats": null,
+   "ok": false,
+   "error": "2878:17: unknown tactic",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:50:21Z"
+  },
+  {
+   "sha": "7ad15b431c2e",
+   "tokens": 153,
+   "heartbeats": 434,
+   "ok": false,
+   "error": "2877:32: Type mismatch List.nil_subset has type ∀ (l : List ?m.63), [] ⊆ l but is expected to have type (extractOldExprVars (Lambda.LExpr.const x✝¹ x✝)).Subset (Imperative.HasVarsPure.getVars (Lambda.LExpr.const x✝¹ x✝))",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:50:25Z"
+  },
+  {
+   "sha": "6e8b2c67bd90",
+   "tokens": 143,
+   "heartbeats": 430,
+   "ok": false,
+   "error": "2884:52: Type mismatch Hfalse () v✝ ty✝ rfl has type False but is expected to have type (panicWithPosWithDecl \"Strata.Languages.Core.OldExpressions\" \"Core.OldExpressions.extractOldExprVars\" 171 44 (toString \"Old expression \" ++ toString (Lambda.LExpr.app m✝¹ (Lambda.LExpr.op m✝ { name := \"old\", meta",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:50:52Z"
+  },
+  {
+   "sha": "1979c043d368",
+   "tokens": 142,
+   "heartbeats": 429,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:50:56Z"
+  },
+  {
+   "sha": "371cf906d436",
+   "tokens": 143,
+   "heartbeats": 436,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:51:27Z"
+  },
+  {
+   "sha": "03b85a030dbf",
+   "tokens": 150,
+   "heartbeats": 650,
+   "ok": false,
+   "error": "2874:50: Type mismatch hx has type x ∈ extractOldExprVars (Lambda.LExpr.fvar x✝² x✝¹ x✝) but is expected to have type x ∈ Imperative.HasVarsPure.getVars (Lambda.LExpr.fvar x✝² x✝¹ x✝)",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:51:31Z"
+  },
+  {
+   "sha": "4c2efff3ce55",
+   "tokens": 142,
+   "heartbeats": 432,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:51:48Z"
+  },
+  {
+   "sha": "7fa01347f142",
+   "tokens": 150,
+   "heartbeats": 423,
+   "ok": false,
+   "error": "2889:18: No goals to be solved",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:51:53Z"
+  },
+  {
+   "sha": "6e64f1337a46",
+   "tokens": 132,
+   "heartbeats": 47,
+   "ok": false,
+   "error": "2874:4: don't know how to synthesize implicit argument `c` @List.Subset.app ?m.33 a (c ++ d) b (List.subset_append_of_subset_left d h1) (List.subset_append_of_subset_right c h2) context: post : Expression.Expr Hnorm : NormalizedOldExpr post a b c d : List ?m.33 h1 : a ⊆ c h2 : b ⊆ d ⊢ List ?m.33",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:52:39Z"
+  },
+  {
+   "sha": "5d48f21b2fa8",
+   "tokens": 130,
+   "heartbeats": 47,
+   "ok": false,
+   "error": "2874:4: don't know how to synthesize implicit argument `c` @List.Subset.app ?m.33 a (c ++ d) b (List.subset_append_of_subset_left d h1) (List.subset_append_of_subset_right c h2) context: post : Expression.Expr Hnorm : NormalizedOldExpr post a b c d : List ?m.33 h1 : a ⊆ c h2 : b ⊆ d ⊢ List ?m.33",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:52:43Z"
+  },
+  {
+   "sha": "ff55fa93cf6b",
+   "tokens": 135,
+   "heartbeats": 291,
+   "ok": false,
+   "error": "2875:6: Application type mismatch: The argument List.subset_append_of_subset_right ?m.34 h2 has type b ⊆ ?m.34 ++ d but is expected to have type List.Subset (?m.39 h1 h2) c in the application List.Subset.app ?m.30 (List.subset_append_of_subset_right ?m.34 h2)",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:53:07Z"
+  },
+  {
+   "sha": "e2e1de56c377",
+   "tokens": 141,
+   "heartbeats": 421,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:53:14Z",
+   "score": 73.63
+  },
+  {
+   "sha": "866090f55d9b",
+   "tokens": 138,
+   "heartbeats": 111,
+   "ok": false,
+   "error": "2874:4: don't know how to synthesize implicit argument `c` @List.Subset.app ?m.46 a (c ++ d) b (List.subset_append_of_subset_left d h1) (List.subset_append_of_subset_right c h2) context: post : Expression.Expr Hnorm : NormalizedOldExpr post a b c d : List ?m.46 h1 : a ⊆ c h2 : b ⊆ d ⊢ List ?m.46",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:53:31Z"
+  },
+  {
+   "sha": "d80a88777cfa",
+   "tokens": 140,
+   "heartbeats": 111,
+   "ok": false,
+   "error": "2874:4: don't know how to synthesize implicit argument `c` @List.Subset.app ?m.46 a (c ++ d) b (List.subset_append_of_subset_left d h1) (List.subset_append_of_subset_right c h2) context: post : Expression.Expr Hnorm : NormalizedOldExpr post a b c d : List ?m.46 h1 : a ⊆ c h2 : b ⊆ d ⊢ List ?m.46",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:53:34Z"
+  },
+  {
+   "sha": "548f1816596e",
+   "tokens": 142,
+   "heartbeats": 425,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:54:02Z"
+  },
+  {
+   "sha": "dd5f3fd9e591",
+   "tokens": 141,
+   "heartbeats": 547,
+   "ok": false,
+   "error": "2877:50: Unknown constant `List.Subset.nil`",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:13:55Z"
+  },
+  {
+   "sha": "7c6adfe6ad7e",
+   "tokens": 118,
+   "heartbeats": 570,
+   "ok": false,
+   "error": "2881:45: Application type mismatch: The argument ih1 has type (extractOldExprVars c✝).Subset (Imperative.HasVarsPure.getVars c✝) but is expected to have type extractOldExprVars c✝ ⊆ Lambda.LExpr.LExpr.getVars c✝ ++ Lambda.LExpr.LExpr.getVars t✝ in the application List.subset_append_of_subset_left (L",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:14:00Z"
+  },
+  {
+   "sha": "cca743a402ad",
+   "tokens": 96,
+   "heartbeats": 1156,
+   "ok": false,
+   "error": "2876:42: `grind` failed case grind post tr … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] NormalizedOldExpr tr [prop] NormalizedOldExpr e [prop] (extractOldExprVars tr).Subset (Imperative.HasVarsPure.getVars tr) [prop] (extractOldExprVars e).Subset (Imperative.",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:14:16Z"
+  },
+  {
+   "sha": "412685c4c0fb",
+   "tokens": 141,
+   "heartbeats": 559,
+   "ok": false,
+   "error": "2880:40: Application type mismatch: The argument ih1 has type (extractOldExprVars c✝).Subset (Imperative.HasVarsPure.getVars c✝) but is expected to have type extractOldExprVars c✝ ++ extractOldExprVars t✝ ⊆ Lambda.LExpr.LExpr.getVars c✝ ++ Lambda.LExpr.LExpr.getVars t✝ in the application app2 ih1",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:14:41Z"
+  },
+  {
+   "sha": "3b8df15947a0",
+   "tokens": 148,
+   "heartbeats": 244,
+   "ok": false,
+   "error": "2874:31: Application type mismatch: The argument h2 has type b ⊆ d but is expected to have type b.Subset c in the application List.Subset.app h1 h2",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:14:46Z"
+  },
+  {
+   "sha": "23b41c8f2985",
+   "tokens": 140,
+   "heartbeats": 421,
+   "ok": false,
+   "error": "2886:18: unsolved goals case fvar … [hypotheses omitted] ⊢ (panicWithPosWithDecl \"Strata.Languages.Core.OldExpressions\" \"Core.OldExpressions.extractOldExprVars\" 171 44 (toString \"Old expression \" ++ toString (Lambda.LExpr.app m✝¹ (Lambda.LExpr.op m✝ { name := \"old\", metadata := Visibility.unres } ty",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:15:54Z"
+  },
+  {
+   "sha": "a19182303d1c",
+   "tokens": 140,
+   "heartbeats": 415,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:17:37Z",
+   "score": 73.85
+  },
+  {
+   "sha": "c7eb0c545639",
+   "tokens": 142,
+   "heartbeats": 428,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:17:40Z"
+  },
+  {
+   "sha": "ffca486894cb",
+   "tokens": 137,
+   "heartbeats": 111,
+   "ok": false,
+   "error": "2874:4: don't know how to synthesize implicit argument `c` @List.Subset.app ?m.46 a (c ++ d) b (List.subset_append_of_subset_left d h1) (List.subset_append_of_subset_right c h2) context: post : Expression.Expr Hnorm : NormalizedOldExpr post a b c d : List ?m.46 h1 : a ⊆ c h2 : b ⊆ d ⊢ List ?m.46",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:18:18Z"
+  },
+  {
+   "sha": "a3350399b191",
+   "tokens": 143,
+   "heartbeats": 404,
+   "ok": false,
+   "error": "2883:4: Tactic `split` failed: Could not split an `if` or `match` expression in  … [hypotheses omitted] ⊢ (extractOldExprVars (Lambda.LExpr.app m✝ fn✝ e✝)).Subset (Imperative.HasVarsPure.getVars (Lambda.LExpr.app m✝ fn✝ e✝))",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:18:51Z"
+  },
+  {
+   "sha": "e35bc1d59df6",
+   "tokens": 130,
+   "heartbeats": 344,
+   "ok": false,
+   "error": "2880:12: don't know how to synthesize implicit argument `h2` @app2 (extractOldEx … [hypotheses omitted] ⊢ extractOldExprVars e✝ ⊆ Lambda.LExpr.LExpr.getVars e✝",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:18:55Z"
+  },
+  {
+   "sha": "f087b763cd50",
+   "tokens": 138,
+   "heartbeats": 367,
+   "ok": false,
+   "error": "2879:48: don't know how to synthesize implicit argument `h2` @app2 (extractOldEx … [hypotheses omitted] ⊢ extractOldExprVars e✝ ⊆ Lambda.LExpr.LExpr.getVars e✝",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:19:28Z"
+  },
+  {
+   "sha": "5108e6a790dc",
+   "tokens": 137,
+   "heartbeats": 401,
+   "ok": false,
+   "error": "2884:6: Type mismatch List.mem_append.mp has type ?m.186 ∈ ?m.187 ++ ?m.188 → ?m.186 ∈ ?m.187 ∨ ?m.186 ∈ ?m.188 but is expected to have type [v✝].Subset (Imperative.HasVarsPure.getVars (Lambda.LExpr.app m✝² (Lambda.LExpr.op m✝¹ { name := \"old\", metadata := Visibility.unres } ty✝¹) (Lambda.LExpr.fvar",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:19:32Z"
+  },
+  {
+   "sha": "a3013f4aee77",
+   "tokens": 121,
+   "heartbeats": 526,
+   "ok": false,
+   "error": "2881:60: Application type mismatch: The argument ih1 has type (extractOldExprVars c✝).Subset (Imperative.HasVarsPure.getVars c✝) but is expected to have type extractOldExprVars c✝ ⊆ Lambda.LExpr.LExpr.getVars c✝ ++ Lambda.LExpr.LExpr.getVars t✝ in the application List.subset_append_of_subset_left (L",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:19:59Z"
+  },
+  {
+   "sha": "d0f07270173b",
+   "tokens": 96,
+   "heartbeats": 272,
+   "ok": false,
+   "error": "2887:16: redundant parameter `app2`, `grind` uses local hypotheses automatically",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:21:32Z"
+  },
+  {
+   "sha": "b492d52bffbf",
+   "tokens": 93,
+   "heartbeats": 1025,
+   "ok": false,
+   "error": "2887:9: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] ∀ {a b c d : List (Lambda.Identifier Visibility)}, a ⊆ c → b ⊆ d → a ++ b ⊆ c ++ d [prop] ¬(extractOldExprVars (Lambda.LExpr.const x x_1)).Subset (Imperative.HasVarsPure.getVars (L",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:21:45Z"
+  },
+  {
+   "sha": "9724da4d26cb",
+   "tokens": 146,
+   "heartbeats": 423,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:24:11Z"
+  },
+  {
+   "sha": "d33c1ced07c6",
+   "tokens": 62,
+   "heartbeats": 743,
+   "ok": false,
+   "error": "2885:6: unsolved goals case abs post … [hypotheses omitted] ⊢ (extractOldExprVars e✝).Subset (Lambda.LExpr.LExpr.getVars (Lambda.LExpr.abs m✝ ty✝ e✝))",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:26:29Z"
+  },
+  {
+   "sha": "a199ec3b4bc7",
+   "tokens": 64,
+   "heartbeats": 762,
+   "ok": false,
+   "error": "2885:6: unsolved goals case abs post … [hypotheses omitted] ⊢ (extractOldExprVars e✝).Subset (Lambda.LExpr.LExpr.getVars (Lambda.LExpr.abs m✝ ty✝ e✝))",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:26:33Z"
+  },
+  {
+   "sha": "73d9b41a5a1d",
+   "tokens": 64,
+   "heartbeats": 886,
+   "ok": false,
+   "error": "2885:6: unsolved goals case quant post tr✝ … [hypotheses omitted] ⊢ (extractOldExprVars tr✝ ++ extractOldExprVars e✝).Subset (Lambda.LExpr.LExpr.getVars tr✝ ++ Lambda.LExpr.LExpr.getVars e✝)",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:26:53Z"
+  },
+  {
+   "sha": "6a83bfdd93b5",
+   "tokens": 62,
+   "heartbeats": 820,
+   "ok": false,
+   "error": "2885:6: unsolved goals case abs post … [hypotheses omitted] ⊢ (extractOldExprVars e✝).Subset (Imperative.HasVarsPure.getVars (Lambda.LExpr.abs m✝ ty✝ e✝))",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:26:57Z"
+  },
+  {
+   "sha": "3ac8b0129986",
+   "tokens": 62,
+   "heartbeats": 875,
+   "ok": false,
+   "error": "2885:6: unsolved goals case quant post tr✝ … [hypotheses omitted] ⊢ (extractOldExprVars tr✝ ++ extractOldExprVars e✝).Subset (Lambda.LExpr.LExpr.getVars tr✝ ++ Lambda.LExpr.LExpr.getVars e✝)",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:27:18Z"
+  },
+  {
+   "sha": "9fce2eb38c79",
+   "tokens": 66,
+   "heartbeats": 935,
+   "ok": false,
+   "error": "2885:6: unsolved goals case quant post tr✝ … [hypotheses omitted] ⊢ (extractOldExprVars tr✝ ++ extractOldExprVars e✝).Subset (Lambda.LExpr.LExpr.getVars tr✝ ++ Lambda.LExpr.LExpr.getVars e✝)",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:27:22Z"
+  },
+  {
+   "sha": "c40b3919e154",
+   "tokens": 121,
+   "heartbeats": 801,
+   "ok": false,
+   "error": "2893:43: Application type mismatch: The argument ih1 has type (extractOldExprVars c✝).Subset (Imperative.HasVarsPure.getVars c✝) but is expected to have type extractOldExprVars c✝ ⊆ Lambda.LExpr.LExpr.getVars c✝ ++ Lambda.LExpr.LExpr.getVars t✝ in the application List.subset_append_of_subset_left (L",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:28:50Z"
+  },
+  {
+   "sha": "c84f6ebc53bc",
+   "tokens": 122,
+   "heartbeats": 653,
+   "ok": false,
+   "error": "2893:6: Type mismatch List.append_subset.mpr ⟨List.subset_append_of_subset_left (Imperative.HasVarsPure.getVars t✝) ih1, List.subset_append_of_subset_right (Imperative.HasVarsPure.getVars c✝) ih2⟩ has type extractOldExprVars c✝ ++ extractOldExprVars t✝ ⊆ Imperative.HasVarsPure.getVars c✝ ++ Imperati",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:28:56Z"
+  },
+  {
+   "sha": "3114068f5cce",
+   "tokens": 127,
+   "heartbeats": 804,
+   "ok": false,
+   "error": "2893:72: Application type mismatch: The argument ih1 has type (extractOldExprVars c✝).Subset (Imperative.HasVarsPure.getVars c✝) but is expected to have type extractOldExprVars c✝ ⊆ Lambda.LExpr.LExpr.getVars c✝ ++ Lambda.LExpr.LExpr.getVars t✝ in the application List.subset_append_of_subset_left (L",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:29:50Z"
+  },
+  {
+   "sha": "10a10922c443",
+   "tokens": 139,
+   "heartbeats": 601,
+   "ok": false,
+   "error": "2879:63: unsolved goals case quant … [hypotheses omitted] ⊢ (extractOldExprVars tr✝ ++ extractOldExprVars e✝).Subset (Lambda.LExpr.LExpr.getVars tr✝ ++ Lambda.LExpr.LExpr.getVars e✝)",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:12:04Z"
+  },
+  {
+   "sha": "135a1da51d36",
+   "tokens": 139,
+   "heartbeats": 422,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:12:08Z",
+   "score": 73.92
+  },
+  {
+   "sha": "664793f3c4e1",
+   "tokens": 148,
+   "heartbeats": 570,
+   "ok": false,
+   "error": "2879:39: unsolved goals case quant … [hypotheses omitted] ⊢ (extractOldExprVars tr✝ ++ extractOldExprVars e✝).Subset (Lambda.LExpr.LExpr.getVars tr✝ ++ Lambda.LExpr.LExpr.getVars e✝)",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:12:12Z"
+  },
+  {
+   "sha": "4d9c6b75c618",
+   "tokens": 132,
+   "heartbeats": 97,
+   "ok": false,
+   "error": "2876:2: Alternative `app` has not been provided",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:12:16Z"
+  },
+  {
+   "sha": "e9e1d8f8ec43",
+   "tokens": 143,
+   "heartbeats": 482,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:12:20Z"
+  },
+  {
+   "sha": "d7eea9b7b05f",
+   "tokens": 102,
+   "heartbeats": 104,
+   "ok": false,
+   "error": "2876:2: Alternative `app` has not been provided",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:12:40Z"
+  },
+  {
+   "sha": "c7e0c83b3f1f",
+   "tokens": 113,
+   "heartbeats": 104,
+   "ok": false,
+   "error": "2876:2: Alternative `app` has not been provided",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:12:44Z"
+  },
+  {
+   "sha": "b21b6eee82de",
+   "tokens": 146,
+   "heartbeats": 2307,
+   "ok": false,
+   "error": "2881:39: unsolved goals case quant post tr✝ … [hypotheses omitted] ⊢ (extractOldExprVars tr✝ ++ extractOldExprVars e✝).Subset (Lambda.LExpr.LExpr.getVars tr✝ ++ Lambda.LExpr.LExpr.getVars e✝)",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:13:47Z"
+  },
+  {
+   "sha": "9abfb201c109",
+   "tokens": 136,
+   "heartbeats": 94,
+   "ok": false,
+   "error": "2874:4: don't know how to synthesize implicit argument `b` @Iff.mpr (a ++ b ⊆ c  … [hypotheses omitted] ⊢ Prop",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:15:46Z"
+  },
+  {
+   "sha": "f63fdebe4013",
+   "tokens": 137,
+   "heartbeats": 408,
+   "ok": false,
+   "error": "2884:6: Type mismatch List.nil_subset ?m.190 has type [] ⊆ ?m.190 but is expected to have type [v✝].Subset (Imperative.HasVarsPure.getVars (Lambda.LExpr.app m✝² (Lambda.LExpr.op m✝¹ { name := \"old\", metadata := Visibility.unres } ty✝¹) (Lambda.LExpr.fvar m✝ v✝ ty✝)))",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:15:50Z"
+  },
+  {
+   "sha": "af91f0038774",
+   "tokens": 141,
+   "heartbeats": 442,
+   "ok": false,
+   "error": "2887:26: Application type mismatch: The argument h3 IsOldPred.oldPred has type IsFvar e✝ but is expected to have type e✝ = Lambda.LExpr.fvar ?m.194 ?m.195 ?m.196 in the application Hfalse ?m.194 ?m.195 ?m.196 (h3 IsOldPred.oldPred)",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:15:54Z"
+  },
+  {
+   "sha": "fa73e1545be2",
+   "tokens": 136,
+   "heartbeats": 94,
+   "ok": false,
+   "error": "2874:4: don't know how to synthesize implicit argument `b` @Iff.mpr (a ++ b ⊆ c  … [hypotheses omitted] ⊢ Prop",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:16:02Z"
+  },
+  {
+   "sha": "c6f33f680d6e",
+   "tokens": 137,
+   "heartbeats": 957,
+   "ok": false,
+   "error": "2886:18: unsolved goals post … [hypotheses omitted] ⊢ default.Subset (Lambda.LExpr.LExpr.getVars e✝)",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:18:34Z"
+  },
+  {
+   "sha": "2c9d5331c0eb",
+   "tokens": 139,
+   "heartbeats": 101,
+   "ok": false,
+   "error": "2874:4: don't know how to synthesize implicit argument `b` @Iff.mpr (a ++ b ⊆ c  … [hypotheses omitted] ⊢ Prop",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:18:38Z"
+  },
+  {
+   "sha": "e742ef1c4979",
+   "tokens": 137,
+   "heartbeats": 101,
+   "ok": false,
+   "error": "2874:4: don't know how to synthesize implicit argument `b` @Iff.mpr (a ++ b ⊆ c  … [hypotheses omitted] ⊢ Prop",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:18:42Z"
+  },
+  {
+   "sha": "da7243e70b77",
+   "tokens": 140,
+   "heartbeats": 447,
+   "ok": false,
+   "error": "2874:42: Application type mismatch: The argument h2 has type b ⊆ d but is expected to have type b.Subset c in the application List.Subset.app h1 h2",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:19:47Z"
+  },
+  {
+   "sha": "33dd31e709db",
+   "tokens": 141,
+   "heartbeats": 451,
+   "ok": false,
+   "error": "2874:42: Application type mismatch: The argument h2 has type b ⊆ d but is expected to have type b.Subset c in the application List.Subset.app h1 h2",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:19:55Z"
+  },
+  {
+   "sha": "6fa1934873d6",
+   "tokens": 136,
+   "heartbeats": 394,
+   "ok": false,
+   "error": "2879:63: unsolved goals case quant … [hypotheses omitted] ⊢ (extractOldExprVars (Lambda.LExpr.quant m✝ k✝ ty✝ tr✝ e✝)).Subset (Imperative.HasVarsPure.getVars (Lambda.LExpr.quant m✝ k✝ ty✝ tr✝ e✝))",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:21:38Z"
+  },
+  {
+   "sha": "ffc450b37940",
+   "tokens": 96,
+   "heartbeats": 301,
+   "ok": false,
+   "error": "2876:63: unsolved goals case quant post tr✝ … [hypotheses omitted] ⊢ (extractOldExprVars (Lambda.LExpr.quant m✝ k✝ ty✝ tr✝ e✝)).Subset (Imperative.HasVarsPure.getVars (Lambda.LExpr.quant m✝ k✝ ty✝ tr✝ e✝))",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:21:42Z"
+  },
+  {
+   "sha": "397d6bbcceeb",
+   "tokens": 135,
+   "heartbeats": 4511,
+   "ok": false,
+   "error": "2877:104: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] ∀ {a b c d : List (Lambda.Identifier Visibility)}, a ⊆ c → b ⊆ d → a ++ b ⊆ c ++ d [prop] ¬(extractOldExprVars (Lambda.LExpr.const x x_1)).Subset (Imperative.HasVarsPure.getVars ",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:22:26Z"
+  },
+  {
+   "sha": "d2f7ae1e0f7e",
+   "tokens": 96,
+   "heartbeats": 3948,
+   "ok": false,
+   "error": "2874:104: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] ¬(extractOldExprVars (Lambda.LExpr.const x x_1)).Subset (Imperative.HasVarsPure.getVars (Lambda.LExpr.const x x_1)) [prop] extractOldExprVars (Lambda.LExpr.const x x_1) = [] [pro",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:22:30Z"
+  },
+  {
+   "sha": "14f817e4eef3",
+   "tokens": 131,
+   "heartbeats": 2011,
+   "ok": false,
+   "error": "2878:26: unsolved goals case quant post tr✝ … [hypotheses omitted] ⊢ (extractOldExprVars tr✝ ++ extractOldExprVars e✝).Subset (Lambda.LExpr.LExpr.getVars tr✝ ++ Lambda.LExpr.LExpr.getVars e✝)",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:23:51Z"
+  },
+  {
+   "sha": "e66ab10fe5d8",
+   "tokens": 96,
+   "heartbeats": 905,
+   "ok": false,
+   "error": "2875:26: unsolved goals case quant post tr✝ … [hypotheses omitted] ⊢ (extractOldExprVars tr✝ ++ extractOldExprVars e✝).Subset (Lambda.LExpr.LExpr.getVars tr✝ ++ Lambda.LExpr.LExpr.getVars e✝)",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:23:55Z"
+  },
+  {
+   "sha": "ce8139239aeb",
+   "tokens": 133,
+   "heartbeats": 495,
+   "ok": false,
+   "error": "2888:6: Tactic `contradiction` failed case fvar … [hypotheses omitted] ⊢ (panicWithPosWithDecl \"Strata.Languages.Core.OldExpressions\" \"Core.OldExpressions.extractOldExprVars\" 171 44 (toString \"Old expression \" ++ toString (Lambda.LExpr.app m✝¹ (Lambda.LExpr.op m✝ { name := \"old\", metadata := Visibil",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:26:29Z"
+  },
+  {
+   "sha": "5fdd7d9be980",
+   "tokens": 134,
+   "heartbeats": 490,
+   "ok": false,
+   "error": "2889:6: Tactic `contradiction` failed case fvar … [hypotheses omitted] ⊢ False",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:26:33Z"
+  },
+  {
+   "sha": "bb9122bc0e1b",
+   "tokens": 130,
+   "heartbeats": 834,
+   "ok": false,
+   "error": "2886:18: unsolved goals post … [hypotheses omitted] ⊢ default.Subset (Imperative.HasVarsPure.getVars (Lambda.LExpr.app m✝¹ (Lambda.LExpr.op m✝ { name := \"old\", metadata := Visibility.unres } ty✝) e✝))",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:26:36Z"
+  },
+  {
+   "sha": "3433ab8299cd",
+   "tokens": 119,
+   "heartbeats": 332,
+   "ok": false,
+   "error": "2882:13: Application type mismatch: The argument IsOldPred.oldPred has type IsOldPred (Lambda.LExpr.op ?m.113 (CoreIdent.unres \"old\") ?m.114) but is expected to have type IsOldPred fn✝ in the application h3 IsOldPred.oldPred",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:28:05Z"
+  },
+  {
+   "sha": "bc36d3fe110f",
+   "tokens": 121,
+   "heartbeats": 350,
+   "ok": false,
+   "error": "2882:13: Application type mismatch: The argument IsOldPred.oldPred has type IsOldPred (Lambda.LExpr.op ?m.113 (CoreIdent.unres \"old\") ?m.114) but is expected to have type IsOldPred fn✝ in the application h3 IsOldPred.oldPred",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:28:09Z"
+  },
+  {
+   "sha": "2716f3259066",
+   "tokens": 141,
+   "heartbeats": 433,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:29:53Z"
+  },
+  {
+   "sha": "a036a47b38ba",
+   "tokens": 141,
+   "heartbeats": 432,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:31:04Z"
+  },
+  {
+   "sha": "5845fed79218",
+   "tokens": 143,
+   "heartbeats": 428,
+   "ok": false,
+   "error": "2887:27: unsolved goals case fvar … [hypotheses omitted] ⊢ Lambda.LExpr.fvar () v✝ ty✝ = Lambda.LExpr.fvar (?m.216 a✝ ih2 h3 Hfalse) (?m.217 a✝ ih2 h3 Hfalse) (?m.218 a✝ ih2 h3 Hfalse)",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:33:55Z"
+  },
+  {
+   "sha": "c3efc8a6e8ab",
+   "tokens": 89,
+   "heartbeats": 661,
+   "ok": false,
+   "error": "2877:31: Unknown constant `List.append_subset.mpr`",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:34:05Z"
+  },
+  {
+   "sha": "eedf9421b7c0",
+   "tokens": 139,
+   "heartbeats": 476,
+   "ok": false,
+   "error": "2874:72: Application type mismatch: The argument h1 has type a ⊆ c but is expected to have type x ∈ a → x ∈ c ∨ x ∈ d in the application Or.elim (List.mem_append.mp hx) h1",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:35:34Z"
+  },
+  {
+   "sha": "59362576a0f6",
+   "tokens": 137,
+   "heartbeats": 424,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:35:52Z",
+   "score": 74.19
+  },
+  {
+   "sha": "c0334b0079e0",
+   "tokens": 108,
+   "heartbeats": 21,
+   "ok": false,
+   "error": "2873:15: don't know how to synthesize implicit argument `b` @Iff.mpr (?m.11 ++ ?m.12 ⊆ ?m.13) (?m.11 ⊆ ?m.13 ∧ ?m.12 ⊆ ?m.13) List.append_subset context: post : Expression.Expr Hnorm : NormalizedOldExpr post ⊢ Prop",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:37:36Z"
+  },
+  {
+   "sha": "89923ea92c3d",
+   "tokens": 103,
+   "heartbeats": 777,
+   "ok": false,
+   "error": "2876:72: Application type mismatch: The argument ih1 has type (extractOldExprVars tr✝).Subset (Imperative.HasVarsPure.getVars tr✝) but is expected to have type extractOldExprVars tr✝ ⊆ Imperative.HasVarsPure.getVars (Lambda.LExpr.quant m✝ k✝ ty✝ tr✝ e✝) in the application And.intro ih1",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:37:44Z"
+  },
+  {
+   "sha": "36ea944759b6",
+   "tokens": 133,
+   "heartbeats": 488,
+   "ok": false,
+   "error": "2874:41: Application type mismatch: The argument h1 has type a ⊆ c but is expected to have type a ⊆ c ++ d in the application And.intro h1",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:38:15Z"
+  },
+  {
+   "sha": "04308dd5ee13",
+   "tokens": 147,
+   "heartbeats": 827,
+   "ok": false,
+   "error": "2877:59: Application type mismatch: The argument ih1 has type (extractOldExprVars tr✝).Subset (Imperative.HasVarsPure.getVars tr✝) but is expected to have type extractOldExprVars tr✝ ⊆ Imperative.HasVarsPure.getVars (Lambda.LExpr.quant m✝ k✝ ty✝ tr✝ e✝) in the application And.intro ih1",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:38:24Z"
+  },
+  {
+   "sha": "cef92eb8c233",
+   "tokens": 140,
+   "heartbeats": 437,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:39:12Z"
+  },
+  {
+   "sha": "73ee7c020f6e",
+   "tokens": 85,
+   "heartbeats": 84,
+   "ok": false,
+   "error": "2874:80: Type mismatch rfl has type ?m.20 = ?m.20 but is expected to have type Imperative.HasVarsPure.getVars e = ?m.13",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:44:16Z"
+  },
+  {
+   "sha": "4a94785c731d",
+   "tokens": 90,
+   "heartbeats": 560,
+   "ok": false,
+   "error": "2879:4: Tactic `split` failed: Could not split an `if` or `match` expression in  … [hypotheses omitted] ⊢ (extractOldExprVars (Lambda.LExpr.app m✝ fn✝ e✝)).Subset (Lambda.LExpr.LExpr.getVars (Lambda.LExpr.app m✝ fn✝ e✝))",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:44:54Z"
+  },
+  {
+   "sha": "19e4f12d17eb",
+   "tokens": 137,
+   "heartbeats": 104,
+   "ok": false,
+   "error": "2874:17: don't know how to synthesize implicit argument `b` @Iff.mpr (a ++ b ⊆ c … [hypotheses omitted] ⊢ Prop",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:45:51Z"
+  },
+  {
+   "sha": "828c6f2a72ec",
+   "tokens": 141,
+   "heartbeats": 432,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:46:01Z"
+  },
+  {
+   "sha": "836ffc2fb10d",
+   "tokens": 121,
+   "heartbeats": 480,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:47:41Z",
+   "score": 75.9
+  },
+  {
+   "sha": "845cbcb8501f",
+   "tokens": 129,
+   "heartbeats": 604,
+   "ok": false,
+   "error": "2877:71: Application type mismatch: The argument ih1 has type (extractOldExprVars tr✝).Subset (Imperative.HasVarsPure.getVars tr✝) but is expected to have type ?m.70 → x ∈ Lambda.LExpr.LExpr.getVars tr✝ in the application Or.imp ih1",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:48:18Z"
+  },
+  {
+   "sha": "ae02162a2383",
+   "tokens": 120,
+   "heartbeats": 493,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:50:18Z"
+  },
+  {
+   "sha": "785e6a41758c",
+   "tokens": 117,
+   "heartbeats": 519,
+   "ok": false,
+   "error": "2890:19: Application type mismatch: The argument IsOldPred.oldPred has type IsOldPred (Lambda.LExpr.op ?m.246 (CoreIdent.unres \"old\") ?m.247) of sort `Prop` but is expected to have type { base := { Metadata := ExpressionMetadata, IDMeta := Visibility }, TypeType := Lambda.LMonoTy }.base.Metadata of ",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:50:27Z"
+  },
+  {
+   "sha": "47bfcb82dd8e",
+   "tokens": 112,
+   "heartbeats": 501,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:51:38Z",
+   "score": 76.99
+  },
+  {
+   "sha": "1ddd8143dce1",
+   "tokens": 120,
+   "heartbeats": 490,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:51:47Z"
+  },
+  {
+   "sha": "344c6d730758",
+   "tokens": 112,
+   "heartbeats": 637,
+   "ok": false,
+   "error": "2891:35: Unknown identifier `assumption`",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:52:30Z"
+  },
+  {
+   "sha": "9dfac1160f4e",
+   "tokens": 114,
+   "heartbeats": 480,
+   "ok": false,
+   "error": "2891:10: Tactic `apply` failed: could not unify the conclusion of `@List.nil_sub … [hypotheses omitted] ⊢ (extractOldExprVars (Lambda.LExpr.abs m✝ ty✝ e✝)).Subset (Imperative.HasVarsPure.getVars (Lambda.LExpr.abs m✝ ty✝ e✝))",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:52:54Z"
+  },
+  {
+   "sha": "9d174fb7f525",
+   "tokens": 111,
+   "heartbeats": 501,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:54:02Z",
+   "score": 77.14
+  },
+  {
+   "sha": "cf9be166508c",
+   "tokens": 119,
+   "heartbeats": 489,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:33:06Z"
+  },
+  {
+   "sha": "43ebee044d1e",
+   "tokens": 119,
+   "heartbeats": 485,
+   "ok": false,
+   "error": "2891:9: Type mismatch List.nil_subset ?m.276 has type [] ⊆ ?m.276 but is expected to have type (extractOldExprVars (Lambda.LExpr.abs m✝ ty✝ e✝)).Subset (Imperative.HasVarsPure.getVars (Lambda.LExpr.abs m✝ ty✝ e✝))",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:33:15Z"
+  },
+  {
+   "sha": "2fe588eacb22",
+   "tokens": 112,
+   "heartbeats": 481,
+   "ok": false,
+   "error": "2891:47: Unknown identifier `ih`",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:33:24Z"
+  },
+  {
+   "sha": "be0c46099915",
+   "tokens": 107,
+   "heartbeats": 597,
+   "ok": false,
+   "error": "2888:70: Application type mismatch: The argument ih1 has type (extractOldExprVars c✝).Subset (Imperative.HasVarsPure.getVars c✝) but is expected to have type extractOldExprVars c✝ ++ extractOldExprVars t✝ ⊆ Lambda.LExpr.LExpr.getVars c✝ ++ Lambda.LExpr.LExpr.getVars t✝ in the application List.subset",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:35:46Z"
+  },
+  {
+   "sha": "24634663c94b",
+   "tokens": 120,
+   "heartbeats": 496,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:36:03Z"
+  },
+  {
+   "sha": "cd1595a21a67",
+   "tokens": 107,
+   "heartbeats": 576,
+   "ok": false,
+   "error": "2889:31: Application type mismatch: The argument ih1 has type (extractOldExprVars c✝).Subset (Imperative.HasVarsPure.getVars c✝) but is expected to have type extractOldExprVars c✝ ⊆ Lambda.LExpr.LExpr.getVars c✝ ++ Lambda.LExpr.LExpr.getVars t✝ in the application And.intro ih1",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:36:48Z"
+  },
+  {
+   "sha": "164676c650b5",
+   "tokens": 111,
+   "heartbeats": 491,
+   "ok": false,
+   "error": "2881:6: Type mismatch Hfalse () v✝ ty✝ rfl has type False but is expected to have type (panicWithPosWithDecl \"Strata.Languages.Core.OldExpressions\" \"Core.OldExpressions.extractOldExprVars\" 171 44 (toString \"Old expression \" ++ toString (Lambda.LExpr.app m✝¹ (Lambda.LExpr.op m✝ { name := \"old\", metad",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:37:34Z"
+  },
+  {
+   "sha": "80bc1e918809",
+   "tokens": 112,
+   "heartbeats": 495,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:37:55Z"
+  },
+  {
+   "sha": "1c80a64cdf3e",
+   "tokens": 107,
+   "heartbeats": 632,
+   "ok": false,
+   "error": "2885:34: Application type mismatch: The argument ih1 has type (extractOldExprVars tr✝).Subset (Imperative.HasVarsPure.getVars tr✝) but is expected to have type extractOldExprVars tr✝ ⊆ Imperative.HasVarsPure.getVars (Lambda.LExpr.quant m✝ k✝ ty✝ tr✝ e✝) in the application And.intro ih1",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:39:00Z"
+  },
+  {
+   "sha": "758c1f91a0f7",
+   "tokens": 88,
+   "heartbeats": 558,
+   "ok": false,
+   "error": "2885:70: Application type mismatch: The argument ih1 has type (extractOldExprVars c✝).Subset (Imperative.HasVarsPure.getVars c✝) but is expected to have type extractOldExprVars c✝ ++ extractOldExprVars t✝ ⊆ Lambda.LExpr.LExpr.getVars c✝ ++ Lambda.LExpr.LExpr.getVars t✝ in the application List.subset",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:39:09Z"
+  },
+  {
+   "sha": "dc7cbaa42727",
+   "tokens": 108,
+   "heartbeats": 500,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:43:17Z",
+   "score": 77.61
+  },
+  {
+   "sha": "c396dbb2258a",
+   "tokens": 114,
+   "heartbeats": 455,
+   "ok": false,
+   "error": "2876:4: Tactic `split` failed: Could not split an `if` or `match` expression in  … [hypotheses omitted] ⊢ (extractOldExprVars (Lambda.LExpr.app m✝ fn✝ e✝)).Subset (Imperative.HasVarsPure.getVars (Lambda.LExpr.app m✝ fn✝ e✝))",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:43:25Z"
+  },
+  {
+   "sha": "c061f1b255c9",
+   "tokens": 104,
+   "heartbeats": 809,
+   "ok": false,
+   "error": "2888:70: Application type mismatch: The argument ih1 has type (extractOldExprVars c✝).Subset (Imperative.HasVarsPure.getVars c✝) but is expected to have type extractOldExprVars c✝ ++ extractOldExprVars t✝ ⊆ Lambda.LExpr.LExpr.getVars c✝ ++ Lambda.LExpr.LExpr.getVars t✝ in the application List.subset",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:44:10Z"
+  },
+  {
+   "sha": "a01fc48d588d",
+   "tokens": 104,
+   "heartbeats": 596,
+   "ok": false,
+   "error": "2888:70: Application type mismatch: The argument ih1 has type (extractOldExprVars c✝).Subset (Imperative.HasVarsPure.getVars c✝) but is expected to have type extractOldExprVars c✝ ++ extractOldExprVars t✝ ⊆ Lambda.LExpr.LExpr.getVars c✝ ++ Lambda.LExpr.LExpr.getVars t✝ in the application List.subset",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:44:18Z"
+  },
+  {
+   "sha": "598f07338133",
+   "tokens": 108,
+   "heartbeats": 773,
+   "ok": false,
+   "error": "2889:6: Application type mismatch: The argument List.subset_append_left ?m.261 ?m.262 has type ?m.261 ⊆ ?m.261 ++ ?m.262 but is expected to have type Imperative.HasVarsPure.getVars c✝ ⊆ Imperative.HasVarsPure.getVars (Lambda.LExpr.ite m✝ c✝ t✝ e✝) in the application _root_.List.Subset.trans (List.ap",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:45:08Z"
+  },
+  {
+   "sha": "f33266331aea",
+   "tokens": 109,
+   "heartbeats": 488,
+   "ok": false,
+   "error": "2880:19: Invalid `⟨...⟩` notation: The expected type of this term could not be determined",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:46:08Z"
+  },
+  {
+   "sha": "87fd593cab8c",
+   "tokens": 109,
+   "heartbeats": 500,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:46:16Z"
+  },
+  {
+   "sha": "f8a3041f2d38",
+   "tokens": 108,
+   "heartbeats": 500,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:46:24Z"
+  },
+  {
+   "sha": "a90635d5e3fe",
+   "tokens": 108,
+   "heartbeats": 212,
+   "ok": false,
+   "error": "2873:54: Tactic `assumption` failed case quant post tr✝ … [hypotheses omitted] ⊢ (extractOldExprVars (Lambda.LExpr.quant m✝ k✝ ty✝ tr✝ e✝)).Subset (Imperative.HasVarsPure.getVars (Lambda.LExpr.quant m✝ k✝ ty✝ tr✝ e✝))",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:47:03Z"
+  },
+  {
+   "sha": "875e65901241",
+   "tokens": 108,
+   "heartbeats": 548,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:49:25Z"
+  },
+  {
+   "sha": "3afafc8eb43f",
+   "tokens": 103,
+   "heartbeats": 545,
+   "ok": false,
+   "error": "2881:6: Tactic `contradiction` failed case h_2.fvar … [hypotheses omitted] ⊢ (panicWithPosWithDecl \"Strata.Languages.Core.OldExpressions\" \"Core.OldExpressions.extractOldExprVars\" 171 44 (toString \"Old expression \" ++ toString (Lambda.LExpr.app m✝¹ (Lambda.LExpr.op m✝ { name := \"old\", metadata := Vis",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:50:02Z"
+  },
+  {
+   "sha": "84b4cc71c7ef",
+   "tokens": 105,
+   "heartbeats": 490,
+   "ok": false,
+   "error": "2880:25: Application type mismatch: The argument rfl has type ?m.143 = ?m.143 but is expected to have type e✝ = Lambda.LExpr.fvar ?m.139 ?m.140 ?m.141 in the application Hfalse ?m.139 ?m.140 ?m.141 rfl",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:50:30Z"
+  },
+  {
+   "sha": "b187185264ac",
+   "tokens": 109,
+   "heartbeats": 637,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:51:27Z"
+  },
+  {
+   "sha": "e99618b23c20",
+   "tokens": 112,
+   "heartbeats": 499,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:37:52Z"
+  },
+  {
+   "sha": "4a1eefe72840",
+   "tokens": 112,
+   "heartbeats": 493,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:38:04Z"
+  },
+  {
+   "sha": "716471b0e480",
+   "tokens": 62,
+   "heartbeats": 885,
+   "ok": false,
+   "error": "2888:8: Tactic `assumption` failed case quant post tr✝ … [hypotheses omitted] ⊢ (extractOldExprVars (Lambda.LExpr.quant m✝ k✝ ty✝ tr✝ e✝)).Subset (Imperative.HasVarsPure.getVars (Lambda.LExpr.quant m✝ k✝ ty✝ tr✝ e✝))",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:39:00Z"
+  },
+  {
+   "sha": "fb9f6a44594e",
+   "tokens": 58,
+   "heartbeats": null,
+   "ok": false,
+   "error": "2887:15: unexpected token '*'; expected ']'",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:39:13Z"
+  },
+  {
+   "sha": "daca8522c31a",
+   "tokens": 89,
+   "heartbeats": 536,
+   "ok": false,
+   "error": "2871:43: unsolved goals case abs post … [hypotheses omitted] ⊢ (extractOldExprVars (Lambda.LExpr.abs m✝ ty✝ e✝)).Subset (Imperative.HasVarsPure.getVars (Lambda.LExpr.abs m✝ ty✝ e✝)) ‖ ⊢ (extractOldExprVars (Lambda.LExpr.quant m✝ k✝ ty✝ tr✝ e✝)).Subset (Imperative.HasVarsPure.getVars (Lambda.LExpr.qu",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:39:25Z"
+  },
+  {
+   "sha": "bc73c6b99be0",
+   "tokens": 115,
+   "heartbeats": null,
+   "ok": false,
+   "error": "2883:8: unknown tactic",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:44:16Z"
+  },
+  {
+   "sha": "7e2c96acc127",
+   "tokens": 112,
+   "heartbeats": null,
+   "ok": false,
+   "error": "2883:8: unknown tactic",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:44:49Z"
+  },
+  {
+   "sha": "d8d06c497f99",
+   "tokens": 108,
+   "heartbeats": 448,
+   "ok": false,
+   "error": "2874:26: unsolved goals case h_3 post fn✝ … [hypotheses omitted] ⊢ (extractOldExprVars fn✝ ++ extractOldExprVars e✝).Subset (Imperative.HasVarsPure.getVars (Lambda.LExpr.app m✝ fn✝ e✝))",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:44:58Z"
+  },
+  {
+   "sha": "5fd819aa941b",
+   "tokens": 111,
+   "heartbeats": 469,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:47:14Z"
+  },
+  {
+   "sha": "185f20c03ebd",
+   "tokens": 108,
+   "heartbeats": null,
+   "ok": false,
+   "error": "2882:7: unknown tactic",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:48:22Z"
+  },
+  {
+   "sha": "c9020b6f259a",
+   "tokens": 111,
+   "heartbeats": 469,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:49:14Z"
+  },
+  {
+   "sha": "cc9d212b525a",
+   "tokens": 121,
+   "heartbeats": 458,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:49:26Z"
+  },
+  {
+   "sha": "ba5aaf802b47",
+   "tokens": 91,
+   "heartbeats": 1005,
+   "ok": false,
+   "error": "2891:64: Unknown identifier `ih1`",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:51:29Z"
+  },
+  {
+   "sha": "8fb45af13518",
+   "tokens": 109,
+   "heartbeats": 485,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:53:03Z",
+   "score": 77.64
+  },
+  {
+   "sha": "c6ffb23f2d67",
+   "tokens": 109,
+   "heartbeats": null,
+   "ok": false,
+   "error": "2883:8: unknown tactic",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:53:14Z"
+  },
+  {
+   "sha": "62c19a7546aa",
+   "tokens": 110,
+   "heartbeats": 477,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:54:32Z"
+  },
+  {
+   "sha": "bd4b293a4b8a",
+   "tokens": 110,
+   "heartbeats": 477,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:54:40Z"
+  },
+  {
+   "sha": "4da1f931b892",
+   "tokens": 71,
+   "heartbeats": 440,
+   "ok": false,
+   "error": "2884:66: unsolved goals post tr✝ … [hypotheses omitted] ⊢ (extractOldExprVars (Lambda.LExpr.quant m✝ k✝ ty✝ tr✝ e✝)).Subset (Imperative.HasVarsPure.getVars (Lambda.LExpr.quant m✝ k✝ ty✝ tr✝ e✝))",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:55:52Z"
+  },
+  {
+   "sha": "f421be022844",
+   "tokens": 68,
+   "heartbeats": 354,
+   "ok": false,
+   "error": "2885:4: `grind` failed case grind post tr … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] NormalizedOldExpr tr [prop] NormalizedOldExpr e [prop] (extractOldExprVars tr).Subset (Imperative.HasVarsPure.getVars tr) [prop] (extractOldExprVars e).Subset (Imperative.H",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:56:01Z"
+  },
+  {
+   "sha": "29794eb684e9",
+   "tokens": 79,
+   "heartbeats": 447,
+   "ok": false,
+   "error": "2887:4: `grind` failed case grind post tr … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] NormalizedOldExpr tr [prop] NormalizedOldExpr e [prop] (extractOldExprVars tr).Subset (Imperative.HasVarsPure.getVars tr) [prop] (extractOldExprVars e).Subset (Imperative.H",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:56:09Z"
+  },
+  {
+   "sha": "73a8dc8f3413",
+   "tokens": 78,
+   "heartbeats": 1310,
+   "ok": false,
+   "error": "2886:4: `grind` failed case grind.1 post tr … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] NormalizedOldExpr tr [prop] NormalizedOldExpr e [prop] (extractOldExprVars tr).Subset (Imperative.HasVarsPure.getVars tr) [prop] (extractOldExprVars e).Subset (Imperative",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:56:50Z"
+  },
+  {
+   "sha": "0a881785cf54",
+   "tokens": 85,
+   "heartbeats": 634,
+   "ok": false,
+   "error": "2887:19: Unknown constant `Lambda.LExpr.getVars`",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:56:59Z"
+  },
+  {
+   "sha": "edb2c115e615",
+   "tokens": 82,
+   "heartbeats": 248,
+   "ok": false,
+   "error": "2886:16: Invalid projection: Expected a value whose type is a structure hx has type List.Mem x (extractOldExprVars (Lambda.LExpr.quant m✝ k✝ ty✝ tr✝ e✝))",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:57:06Z"
+  },
+  {
+   "sha": "ce519388fdbb",
+   "tokens": 80,
+   "heartbeats": 1735,
+   "ok": false,
+   "error": "2886:4: `grind` failed case grind.1 post tr … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] NormalizedOldExpr tr [prop] NormalizedOldExpr e [prop] (extractOldExprVars tr).Subset (Imperative.HasVarsPure.getVars tr) [prop] (extractOldExprVars e).Subset (Imperative",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:57:41Z"
+  },
+  {
+   "sha": "2e7e0ed89c92",
+   "tokens": 88,
+   "heartbeats": 1372,
+   "ok": false,
+   "error": "2887:4: `grind` failed case grind.1 post tr … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] NormalizedOldExpr tr [prop] NormalizedOldExpr e [prop] ∀ ⦃a : Lambda.Identifier Visibility⦄, a ∈ extractOldExprVars tr → a ∈ Imperative.HasVarsPure.getVars tr [prop] ∀ ⦃a",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:57:50Z"
+  },
+  {
+   "sha": "7cce1d06d9b8",
+   "tokens": 97,
+   "heartbeats": 668,
+   "ok": false,
+   "error": "2887:40: Application type mismatch: The argument ih1 ?m.324 has type ?m.323 ∈ Imperative.HasVarsPure.getVars c✝ but is expected to have type x ∈ Lambda.LExpr.LExpr.getVars c✝ ++ Lambda.LExpr.LExpr.getVars t✝ in the application Or.inl (ih1 ?m.324)",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:58:00Z"
+  },
+  {
+   "sha": "ee430e56f05d",
+   "tokens": 115,
+   "heartbeats": null,
+   "ok": false,
+   "error": "2884:8: unknown tactic",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:58:55Z"
+  },
+  {
+   "sha": "a8f3c2f2e739",
+   "tokens": 117,
+   "heartbeats": null,
+   "ok": false,
+   "error": "2884:8: unknown tactic",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:59:02Z"
+  },
+  {
+   "sha": "ed01ed422956",
+   "tokens": 114,
+   "heartbeats": 491,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:59:28Z"
+  },
+  {
+   "sha": "1097576695cc",
+   "tokens": 115,
+   "heartbeats": 483,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:59:36Z"
+  },
+  {
+   "sha": "b27e0388b0b2",
+   "tokens": 107,
+   "heartbeats": 484,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:00:16Z",
+   "score": 77.95
+  },
+  {
+   "sha": "00ec6e764f97",
+   "tokens": 106,
+   "heartbeats": 477,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:00:25Z",
+   "score": 78.19
+  },
+  {
+   "sha": "92fdfd145034",
+   "tokens": 108,
+   "heartbeats": 461,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:00:49Z"
+  },
+  {
+   "sha": "8c612c74402d",
+   "tokens": 107,
+   "heartbeats": null,
+   "ok": false,
+   "error": "2882:8: unknown tactic",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:00:58Z"
+  },
+  {
+   "sha": "9d420fc6aaac",
+   "tokens": 106,
+   "heartbeats": 477,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:01:33Z"
+  },
+  {
+   "sha": "9adca9798ad0",
+   "tokens": 113,
+   "heartbeats": 473,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:01:41Z"
+  },
+  {
+   "sha": "eee62dc4918c",
+   "tokens": 107,
+   "heartbeats": 477,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:03:06Z"
+  },
+  {
+   "sha": "0620c54516fd",
+   "tokens": 108,
+   "heartbeats": 542,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:06:02Z"
+  },
+  {
+   "sha": "5dbf4a57e34e",
+   "tokens": 109,
+   "heartbeats": 439,
+   "ok": false,
+   "error": "2876:4: Tactic `split` failed: Could not split an `if` or `match` expression in  … [hypotheses omitted] ⊢ (extractOldExprVars (Lambda.LExpr.app m✝ fn✝ e✝)).Subset (Imperative.HasVarsPure.getVars (Lambda.LExpr.app m✝ fn✝ e✝))",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:07:33Z"
+  },
+  {
+   "sha": "ae45aba49a8e",
+   "tokens": 72,
+   "heartbeats": 694,
+   "ok": false,
+   "error": "2883:66: unsolved goals post tr✝ … [hypotheses omitted] ⊢ (extractOldExprVars tr✝ ++ extractOldExprVars e✝).Subset (Lambda.LExpr.LExpr.getVars tr✝ ++ Lambda.LExpr.LExpr.getVars e✝)",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:08:09Z"
+  },
+  {
+   "sha": "58bec37d9b81",
+   "tokens": 52,
+   "heartbeats": 894,
+   "ok": false,
+   "error": "2871:43: unsolved goals case quant post tr✝ … [hypotheses omitted] ⊢ (extractOldExprVars tr✝ ++ extractOldExprVars e✝).Subset (Lambda.LExpr.LExpr.getVars tr✝ ++ Lambda.LExpr.LExpr.getVars e✝) ‖ ⊢ (extractOldExprVars c✝ ++ (extractOldExprVars t✝ ++ extractOldExprVars e✝)).Subset (Lambda.LExpr.LExpr.g",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:08:20Z"
+  },
+  {
+   "sha": "ea771b6e624f",
+   "tokens": 83,
+   "heartbeats": 2247,
+   "ok": false,
+   "error": "2883:66: unsolved goals post tr✝ … [hypotheses omitted] ⊢ ∀ ⦃a : CoreIdent⦄, a ∈ extractOldExprVars tr✝ ∨ a ∈ extractOldExprVars e✝ → a ∈ Lambda.LExpr.LExpr.getVars tr✝ ∨ a ∈ Lambda.LExpr.LExpr.getVars e✝",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:09:00Z"
+  },
+  {
+   "sha": "bea9f9304f4d",
+   "tokens": 76,
+   "heartbeats": 707,
+   "ok": false,
+   "error": "2883:66: unsolved goals post tr✝ … [hypotheses omitted] ⊢ (extractOldExprVars tr✝ ++ extractOldExprVars e✝).Subset (Lambda.LExpr.LExpr.getVars tr✝ ++ Lambda.LExpr.LExpr.getVars e✝)",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T22:09:10Z"
+  }
+ ],
+ "runs": [
+  {
+   "run_id": "fresh-a100-p1",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-06T21:16:23Z"
+  },
+  {
+   "run_id": "fresh-a100-p2",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T02:12:45Z"
+  },
+  {
+   "run_id": "fresh-a100-p3",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T16:49:16Z"
+  },
+  {
+   "run_id": "fresh-a100-p4",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-08T22:12:06Z"
+  },
+  {
+   "run_id": "fresh-a100-p5",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T00:10:27Z",
+   "mode": "fresh"
+  },
+  {
+   "run_id": "fresh-a100-p6",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T03:32:31Z",
+   "mode": "fresh"
+  },
+  {
+   "run_id": "fresh-a100-p7",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T12:32:31Z"
+  },
+  {
+   "run_id": "fresh-a100-p8",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T21:34:29Z"
+  }
+ ],
+ "ledger": {
+  "wins": [
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 3,
+    "d_score": 4.25,
+    "d_tokens": -27,
+    "d_heartbeats": -16,
+    "diff": "-    fun h1 h2 x hx =>\n-      (List.mem_append.mp hx).elim (fun h => List.mem_append.mpr (Or.inl (h1 h)))\n-        (fun h => List.mem_append.mpr (Or.inr (h2 h)))\n+    fun h1 h2 => List.Subset.app (List.subset_append_of_subset_left _ h1)\n+      (List.subset_append_of_subset_right _ h2)\n-  | quant _ _ ih1 ih2 => exact app2 ih1 ih2\n+  | quant _ _ ih1 ih2 | eq _ _ ih1 ih2 => exact app2 ih1 ih2\n-  | eq _ _ ih1 ih2 => exact app2 ih1 ih2",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "31f8c2c62863"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 4,
+    "d_score": 0.82,
+    "d_tokens": -3,
+    "d_heartbeats": -30,
+    "diff": "-  have app2 : ∀ {a b c d : List Expression.Ident}, a.Subset c → b.Subset d → (a ++ b).Subset (c ++ d) :=\n+  have app2 : ∀ {a b c d : List Expression.Ident}, a ⊆ c → b ⊆ d → a ++ b ⊆ c ++ d :=\n-  | const | bvar | op | fvar => intro x hx; cases hx\n-  | abs _ ih => exact ih\n-  | quant _ _ ih1 ih2 | eq _ _ ih1 ih2 => exact app2 ih1 ih2\n+  | const | bvar | op | fvar => exact List.nil_subset _\n+  | abs _ ih | quant _ _ ih1 ih2 | eq _ _ ih1 ih2 =>\n+    first | exact ih | exact app2 ih1 ih2",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "3ba66f68f14b"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 5,
+    "d_score": 0.33,
+    "d_tokens": -2,
+    "d_heartbeats": -2,
+    "diff": "-  | abs _ ih | quant _ _ ih1 ih2 | eq _ _ ih1 ih2 =>\n-    first | exact ih | exact app2 ih1 ih2\n+  | abs _ ih => exact ih\n+  | quant _ _ ih1 ih2 | eq _ _ ih1 ih2 => exact app2 ih1 ih2",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "f366e0803559"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 6,
+    "d_score": 0.35,
+    "d_tokens": -2,
+    "d_heartbeats": -4,
+    "diff": "-  | const | bvar | op | fvar => exact List.nil_subset _\n+  | const | bvar | op | fvar => apply List.nil_subset\n-    . intro x hx; exact hx\n+    . intro x hx\n+      exact hx",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "037eb1441b81"
+   },
+   {
+    "run_id": "fresh-a100-p3",
+    "check": 13,
+    "d_score": 0.05,
+    "d_tokens": 0,
+    "d_heartbeats": -4,
+    "diff": "-  have app2 : ∀ {a b c d : List Expression.Ident}, a ⊆ c → b ⊆ d → a ++ b ⊆ c ++ d :=\n-    fun h1 h2 => List.Subset.app (List.subset_append_of_subset_left _ h1)\n+  have app2 {a b c d : List Expression.Ident} (h1 : a ⊆ c) (h2 : b ⊆ d) : a ++ b ⊆ c ++ d :=\n+    List.Subset.app (List.subset_append_of_subset_left _ h1)",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "4ceec14df641"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 7,
+    "d_score": 0.22,
+    "d_tokens": -1,
+    "d_heartbeats": -6,
+    "diff": "-  | abs _ ih => exact ih\n+  | abs _ ih => assumption"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 2,
+    "d_score": 0.07,
+    "d_tokens": -1,
+    "d_heartbeats": 7,
+    "diff": "-    List.Subset.app (List.subset_append_of_subset_left _ h1)\n-      (List.subset_append_of_subset_right _ h2)\n+    List.append_subset.mpr ⟨List.subset_append_of_subset_left _ h1,\n+      List.subset_append_of_subset_right _ h2⟩"
+   },
+   {
+    "run_id": "fresh-a100-p6",
+    "check": 4,
+    "d_score": 0.27,
+    "d_tokens": -2,
+    "d_heartbeats": 2,
+    "diff": "-  have app2 {a b c d : List Expression.Ident} (h1 : a ⊆ c) (h2 : b ⊆ d) : a ++ b ⊆ c ++ d :=\n-    List.append_subset.mpr ⟨List.subset_append_of_subset_left _ h1,\n+  have app2 {a b c d : List Expression.Ident} : a ⊆ c → b ⊆ d → a ++ b ⊆ c ++ d :=\n+    fun h1 h2 => List.append_subset.mpr ⟨List.subset_append_of_subset_left _ h1,"
+   },
+   {
+    "run_id": "fresh-a100-p6",
+    "check": 14,
+    "d_score": 1.71,
+    "d_tokens": -16,
+    "d_heartbeats": 56,
+    "diff": "-  have app2 {a b c d : List Expression.Ident} : a ⊆ c → b ⊆ d → a ++ b ⊆ c ++ d :=\n-    fun h1 h2 => List.append_subset.mpr ⟨List.subset_append_of_subset_left _ h1,\n-      List.subset_append_of_subset_right _ h2⟩\n-  | quant _ _ ih1 ih2 | eq _ _ ih1 ih2 => exact app2 ih1 ih2\n-  | ite _ _ _ ih1 ih2 ih3 => exact app2 (app2 ih1 ih2) ih3\n+  | quant _ _ ih1 ih2 | eq _ _ ih1 ih2 =>\n+    exact List.append_subset.mpr ⟨List.subset_append_of_subset_left _ ih1,\n+      List.subset_append_of_subset_right _ ih2⟩\n+  | ite _ _ _ ih1 ih2 ih3 =>\n+    exact List.append_subset.mpr ⟨List.subset_append_of_subset_left _\n+      (List.append_subset.mpr ⟨List.subset_append_of_subset_left _ ih1,\n+        List.subset_a"
+   },
+   {
+    "run_id": "fresh-a100-p6",
+    "check": 18,
+    "d_score": 1.09,
+    "d_tokens": -9,
+    "d_heartbeats": 21,
+    "diff": "-  | const | bvar | op | fvar => apply List.nil_subset\n-  | abs _ ih => assumption\n+  | app _ _ h3 ih1 ih2 =>\n+    unfold extractOldExprVars\n+    split\n+    . intro x hx\n+      exact hx\n+    . next Hfalse =>\n+      cases h3 IsOldPred.oldPred\n+      cases Hfalse _ _ _ rfl\n+    . exact List.append_subset.mpr ⟨List.subset_append_of_subset_left _ ih1,\n+      List.subset_append_of_subset_right _ ih2⟩\n-  | app _ _ h3 ih1 ih2 =>\n-    unfold extractOldExprVars\n-    split\n-    . intro x hx\n-      exact hx\n-    . next Hfalse =>\n-      exfalso\n-      cases h3 IsOldPred.oldPred\n-      exact Hfalse _ _ _ rfl\n-    . exact List.append_subset.mpr ⟨List.subset_append_of_subset_left _ ih1,\n-      List.subset_"
+   },
+   {
+    "run_id": "fresh-a100-p6",
+    "check": 22,
+    "d_score": 0.15,
+    "d_tokens": -1,
+    "d_heartbeats": 0,
+    "diff": "-    . next Hfalse =>\n+    . rename_i Hfalse"
+   },
+   {
+    "run_id": "fresh-a100-p7",
+    "check": 11,
+    "d_score": 0.47,
+    "d_tokens": -3,
+    "d_heartbeats": -1,
+    "diff": "-  induction Hnorm with\n-  | app _ _ h3 ih1 ih2 =>\n+  induction Hnorm\n+  case app _ _ h3 ih1 ih2 =>\n-  | quant _ _ ih1 ih2 | eq _ _ ih1 ih2 =>\n+  case quant _ _ ih1 ih2 | eq _ _ ih1 ih2 =>\n-  | ite _ _ _ ih1 ih2 ih3 =>\n+  case ite _ _ _ ih1 ih2 ih3 =>\n-  | _ => first | apply List.nil_subset | assumption\n+  all_goals\n+    first\n+      | apply List.nil_subset\n+      | assumption"
+   },
+   {
+    "run_id": "fresh-a100-p8",
+    "check": 14,
+    "d_score": 0.03,
+    "d_tokens": 1,
+    "d_heartbeats": -15,
+    "diff": "-    exact List.append_subset.mpr ⟨List.subset_append_of_subset_left _ ih1,\n-      List.subset_append_of_subset_right _ ih2⟩\n+    exact List.Subset.app (List.subset_append_of_subset_left _ ih1)\n+      (List.subset_append_of_subset_right _ ih2)"
+   },
+   {
+    "run_id": "fresh-a100-p8",
+    "check": 31,
+    "d_score": 0.31,
+    "d_tokens": -2,
+    "d_heartbeats": -1,
+    "diff": "-    . intro x hx\n-      exact hx\n+    . exact List.Subset.refl _"
+   },
+   {
+    "run_id": "fresh-a100-p8",
+    "check": 32,
+    "d_score": 0.24,
+    "d_tokens": -1,
+    "d_heartbeats": -7,
+    "diff": "-    . exact List.Subset.refl _\n+    . apply List.Subset.refl"
+   }
+  ],
+  "dead_names": [
+   "List.append_subset_append",
+   "LConst.intConst",
+   "List.append_subset_of_subset_left",
+   "Imperative.PureExpr.mkConst",
+   "List.append_subset_iff",
+   "List.Subset.append_left",
+   "List.append_subset_left",
+   "List.cons_subset_append",
+   "List.append_subset_append_right",
+   "List.Subset.append_subset_append_left"
+  ]
+ },
+ "profile_cache": {
+  "a19182303d1c": {
+   "ok": true,
+   "total": 415,
+   "floor": 14,
+   "reference": 2698,
+   "max_heartbeat_score": 33.16,
+   "blocks": [
+    {
+     "lines": "10-24",
+     "depth_indent": 2,
+     "text": "induction Hnorm with | const | bvar | op | fvar => apply List.nil_subset | abs _ ih => assumption | ",
+     "heartbeats": 339
+    },
+    {
+     "lines": "17-17",
+     "depth_indent": 4,
+     "text": "split",
+     "heartbeats": 82
+    },
+    {
+     "lines": "7-9",
+     "depth_indent": 2,
+     "text": "have app2 {a b c d : List Expression.Ident} (h1 : a ⊆ c) (h2 : b ⊆ d) : a ++ b ⊆ c ++ d := List.Subs",
+     "heartbeats": 61
+    },
+    {
+     "lines": "18-19",
+     "depth_indent": 4,
+     "text": ". intro x hx exact hx",
+     "heartbeats": 24
+    },
+    {
+     "lines": "16-16",
+     "depth_indent": 4,
+     "text": "unfold extractOldExprVars",
+     "heartbeats": 21
+    },
+    {
+     "lines": "20-23",
+     "depth_indent": 4,
+     "text": ". next Hfalse => exfalso cases h3 IsOldPred.oldPred exact Hfalse _ _ _ rfl",
+     "heartbeats": 21
+    },
+    {
+     "lines": "24-24",
+     "depth_indent": 4,
+     "text": ". exact app2 ih1 ih2",
+     "heartbeats": 12
+    },
+    {
+     "lines": "6-6",
+     "depth_indent": 2,
+     "text": "intro Hnorm",
+     "heartbeats": 1
+    }
+   ],
+   "points_left_heartbeats": 4.95,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "135a1da51d36": {
+   "ok": true,
+   "total": 422,
+   "floor": 14,
+   "reference": 2698,
+   "max_heartbeat_score": 33.16,
+   "blocks": [
+    {
+     "lines": "10-24",
+     "depth_indent": 2,
+     "text": "induction Hnorm with | const | bvar | op | fvar => apply List.nil_subset | abs _ ih => assumption | ",
+     "heartbeats": 339
+    },
+    {
+     "lines": "17-17",
+     "depth_indent": 4,
+     "text": "split",
+     "heartbeats": 82
+    },
+    {
+     "lines": "7-9",
+     "depth_indent": 2,
+     "text": "have app2 {a b c d : List Expression.Ident} (h1 : a ⊆ c) (h2 : b ⊆ d) : a ++ b ⊆ c ++ d := List.appe",
+     "heartbeats": 68
+    },
+    {
+     "lines": "18-19",
+     "depth_indent": 4,
+     "text": ". intro x hx exact hx",
+     "heartbeats": 24
+    },
+    {
+     "lines": "16-16",
+     "depth_indent": 4,
+     "text": "unfold extractOldExprVars",
+     "heartbeats": 21
+    },
+    {
+     "lines": "20-23",
+     "depth_indent": 4,
+     "text": ". next Hfalse => exfalso cases h3 IsOldPred.oldPred exact Hfalse _ _ _ rfl",
+     "heartbeats": 21
+    },
+    {
+     "lines": "24-24",
+     "depth_indent": 4,
+     "text": ". exact app2 ih1 ih2",
+     "heartbeats": 12
+    },
+    {
+     "lines": "6-6",
+     "depth_indent": 2,
+     "text": "intro Hnorm",
+     "heartbeats": 1
+    }
+   ],
+   "points_left_heartbeats": 5.04,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "59362576a0f6": {
+   "ok": true,
+   "total": 424,
+   "floor": 14,
+   "reference": 2698,
+   "max_heartbeat_score": 33.16,
+   "blocks": [
+    {
+     "lines": "10-24",
+     "depth_indent": 2,
+     "text": "induction Hnorm with | const | bvar | op | fvar => apply List.nil_subset | abs _ ih => assumption | ",
+     "heartbeats": 339
+    },
+    {
+     "lines": "17-17",
+     "depth_indent": 4,
+     "text": "split",
+     "heartbeats": 82
+    },
+    {
+     "lines": "7-9",
+     "depth_indent": 2,
+     "text": "have app2 {a b c d : List Expression.Ident} : a ⊆ c → b ⊆ d → a ++ b ⊆ c ++ d := fun h1 h2 => List.a",
+     "heartbeats": 70
+    },
+    {
+     "lines": "18-19",
+     "depth_indent": 4,
+     "text": ". intro x hx exact hx",
+     "heartbeats": 25
+    },
+    {
+     "lines": "16-16",
+     "depth_indent": 4,
+     "text": "unfold extractOldExprVars",
+     "heartbeats": 21
+    },
+    {
+     "lines": "20-23",
+     "depth_indent": 4,
+     "text": ". next Hfalse => exfalso cases h3 IsOldPred.oldPred exact Hfalse _ _ _ rfl",
+     "heartbeats": 20
+    },
+    {
+     "lines": "24-24",
+     "depth_indent": 4,
+     "text": ". exact app2 ih1 ih2",
+     "heartbeats": 12
+    },
+    {
+     "lines": "6-6",
+     "depth_indent": 2,
+     "text": "intro Hnorm",
+     "heartbeats": 1
+    }
+   ],
+   "points_left_heartbeats": 5.07,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "9d174fb7f525": {
+   "ok": true,
+   "total": 501,
+   "floor": 14,
+   "reference": 2698,
+   "max_heartbeat_score": 33.16,
+   "blocks": [
+    {
+     "lines": "7-25",
+     "depth_indent": 2,
+     "text": "induction Hnorm with | app _ _ h3 ih1 ih2 => unfold extractOldExprVars split . intro x hx exact hx .",
+     "heartbeats": 486
+    },
+    {
+     "lines": "10-10",
+     "depth_indent": 4,
+     "text": "split",
+     "heartbeats": 81
+    },
+    {
+     "lines": "16-17",
+     "depth_indent": 4,
+     "text": ". exact List.append_subset.mpr ⟨List.subset_append_of_subset_left _ ih1, List.subset_append_of_subse",
+     "heartbeats": 37
+    },
+    {
+     "lines": "13-15",
+     "depth_indent": 4,
+     "text": ". rename_i Hfalse cases h3 IsOldPred.oldPred cases Hfalse _ _ _ rfl",
+     "heartbeats": 34
+    },
+    {
+     "lines": "11-12",
+     "depth_indent": 4,
+     "text": ". intro x hx exact hx",
+     "heartbeats": 21
+    },
+    {
+     "lines": "9-9",
+     "depth_indent": 4,
+     "text": "unfold extractOldExprVars",
+     "heartbeats": 20
+    },
+    {
+     "lines": "6-6",
+     "depth_indent": 2,
+     "text": "intro Hnorm",
+     "heartbeats": 1
+    }
+   ],
+   "points_left_heartbeats": 6.02,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "dc7cbaa42727": {
+   "ok": true,
+   "total": 500,
+   "floor": 14,
+   "reference": 2698,
+   "max_heartbeat_score": 33.16,
+   "blocks": [
+    {
+     "lines": "8-17",
+     "depth_indent": 2,
+     "text": "case app _ _ h3 ih1 ih2 => unfold extractOldExprVars split . intro x hx exact hx . rename_i Hfalse c",
+     "heartbeats": 211
+    },
+    {
+     "lines": "18-20",
+     "depth_indent": 2,
+     "text": "case quant _ _ ih1 ih2 | eq _ _ ih1 ih2 => exact List.append_subset.mpr ⟨List.subset_append_of_subse",
+     "heartbeats": 117
+    },
+    {
+     "lines": "21-24",
+     "depth_indent": 2,
+     "text": "case ite _ _ _ ih1 ih2 ih3 => exact List.append_subset.mpr ⟨List.subset_append_of_subset_left _ (Lis",
+     "heartbeats": 100
+    },
+    {
+     "lines": "10-10",
+     "depth_indent": 4,
+     "text": "split",
+     "heartbeats": 81
+    },
+    {
+     "lines": "16-17",
+     "depth_indent": 4,
+     "text": ". exact List.append_subset.mpr ⟨List.subset_append_of_subset_left _ ih1, List.subset_append_of_subse",
+     "heartbeats": 36
+    },
+    {
+     "lines": "13-15",
+     "depth_indent": 4,
+     "text": ". rename_i Hfalse cases h3 IsOldPred.oldPred cases Hfalse _ _ _ rfl",
+     "heartbeats": 34
+    },
+    {
+     "lines": "25-28",
+     "depth_indent": 2,
+     "text": "all_goals first | apply List.nil_subset | assumption",
+     "heartbeats": 33
+    },
+    {
+     "lines": "7-7",
+     "depth_indent": 2,
+     "text": "induction Hnorm",
+     "heartbeats": 24
+    },
+    {
+     "lines": "11-12",
+     "depth_indent": 4,
+     "text": ". intro x hx exact hx",
+     "heartbeats": 22
+    },
+    {
+     "lines": "9-9",
+     "depth_indent": 4,
+     "text": "unfold extractOldExprVars",
+     "heartbeats": 20
+    },
+    {
+     "lines": "6-6",
+     "depth_indent": 2,
+     "text": "intro Hnorm",
+     "heartbeats": 1
+    }
+   ],
+   "points_left_heartbeats": 6.0,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "00ec6e764f97": {
+   "ok": true,
+   "total": 477,
+   "floor": 14,
+   "reference": 2698,
+   "max_heartbeat_score": 33.16,
+   "blocks": [
+    {
+     "lines": "8-16",
+     "depth_indent": 2,
+     "text": "case app _ _ h3 ih1 ih2 => unfold extractOldExprVars split . apply List.Subset.refl . rename_i Hfals",
+     "heartbeats": 202
+    },
+    {
+     "lines": "17-19",
+     "depth_indent": 2,
+     "text": "case quant _ _ ih1 ih2 | eq _ _ ih1 ih2 => exact List.Subset.app (List.subset_append_of_subset_left ",
+     "heartbeats": 102
+    },
+    {
+     "lines": "20-23",
+     "depth_indent": 2,
+     "text": "case ite _ _ _ ih1 ih2 ih3 => exact List.append_subset.mpr ⟨List.subset_append_of_subset_left _ (Lis",
+     "heartbeats": 99
+    },
+    {
+     "lines": "10-10",
+     "depth_indent": 4,
+     "text": "split",
+     "heartbeats": 81
+    },
+    {
+     "lines": "15-16",
+     "depth_indent": 4,
+     "text": ". exact List.append_subset.mpr ⟨List.subset_append_of_subset_left _ ih1, List.subset_append_of_subse",
+     "heartbeats": 37
+    },
+    {
+     "lines": "24-27",
+     "depth_indent": 2,
+     "text": "all_goals first | apply List.nil_subset | assumption",
+     "heartbeats": 35
+    },
+    {
+     "lines": "12-14",
+     "depth_indent": 4,
+     "text": ". rename_i Hfalse cases h3 IsOldPred.oldPred cases Hfalse _ _ _ rfl",
+     "heartbeats": 34
+    },
+    {
+     "lines": "7-7",
+     "depth_indent": 2,
+     "text": "induction Hnorm",
+     "heartbeats": 24
+    },
+    {
+     "lines": "9-9",
+     "depth_indent": 4,
+     "text": "unfold extractOldExprVars",
+     "heartbeats": 19
+    },
+    {
+     "lines": "11-11",
+     "depth_indent": 4,
+     "text": ". apply List.Subset.refl",
+     "heartbeats": 14
+    },
+    {
+     "lines": "6-6",
+     "depth_indent": 2,
+     "text": "intro Hnorm",
+     "heartbeats": 1
+    }
+   ],
+   "points_left_heartbeats": 5.72,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  }
+ },
+ "hb_floor": 14
+}

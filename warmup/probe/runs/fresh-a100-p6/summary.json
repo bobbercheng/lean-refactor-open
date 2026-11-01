@@ -1,0 +1,11 @@
+[
+ {
+  "problem": "putnam_1964_b2",
+  "best_score": 95.29,
+  "checks": 11,
+  "tool_calls": 21,
+  "turns": 20,
+  "out_tokens": 27747,
+  "seconds": 582
+ }
+]

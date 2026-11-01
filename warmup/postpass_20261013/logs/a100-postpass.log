@@ -1,0 +1,42 @@
+transfer hit: row#1 span +0.03
+transfer hit: row#0 span +0.13
+transfer hit: row#2 closer +0.22
+transfer hit: row#6 closer +0.18
+transfer hit: row#8 span +0.12
+transfer hit: row#8 span +0.36
+transfer hit: row#8 rule +0.02
+transfer hit: row#8 rule +0.08
+transfer hit: row#9 delete +0.24
+transfer hit: row#8 span +0.43
+transfer hit: row#11 span +0.31
+transfer hit: row#11 span +0.12
+transfer hit: row#11 span +0.01
+transfer hit: row#14 span +0.05
+transfer sweep 1: 15 row(s) scanned (0 without a row or a best), 271 mechanism(s) (13 closer, 13 delete, 1 operator, 190 rule, 54 span); 488 (mechanism, best) pair(s) tried, 1491 candidate(s), 1499 compiled; 14 hit(s) banked (summed gain +2.30); 4 row slice(s) cut by time, 0 left to a live session / unused review, 0 busy, 0 infrastructure failure(s) (not recorded), 0 error(s)
+transfer done: 1 sweep(s) in 61.5 min; 14 hit(s) recorded on this root so far; 7 TRANSFER HITS entr(y/ies) -> _transfer/mechanisms.json
+hb_polish: 15 stored best(s) polished, 2 strictly better, 2 banked as new bests (summed gain +0.44), 40 compiles, 0 left for the deadline; run a100-postpass-polish1
+row#1 improved compiles 3 applied rw2rewrite:5 banked +0.19
+row#2 no gain compiles 9
+row#3 no gain compiles 2
+row#4 no gain compiles 4
+row#5 no gain compiles 2
+row#6 no gain compiles 4
+row#7 no sites compiles 0
+row#8 no gain compiles 14
+row#9 improved compiles 9 applied rw2rewrite:8 banked +0.16
+row#10 no gain compiles 19
+row#11 no gain compiles 2
+row#12 no gain compiles 5
+row#13 no gain compiles 3
+row#14 no sites compiles 0
+row#15 no gain compiles 6
+hb_rewrite: 15 stored best(s) rewritten, 2 strictly better, 2 banked as new bests (summed gain +0.35), 82 compiles, 0 left for the deadline, 0 errors, 0 bank errors; run a100-postpass-hbrewrite1
+row  1 ok=True Z=None score 76.26 -> 76.58  RECORDED
+row  2 ok=True Z=None score 88.53 -> 88.56  RECORDED
+row  3 ok=True Z=None score 78.19 -> 78.41  RECORDED
+row  7 ok=True Z=None score 85.07 -> 85.25  RECORDED
+row  9 ok=True Z=None score 69.53 -> 70.99  RECORDED
+row 10 ok=True Z=None score 69.77 -> 70.15  RECORDED
+row 12 ok=True Z=None score 77.66 -> 78.1  RECORDED
+row 15 ok=True Z=None score 93.64 -> 93.69  RECORDED
+a100 postpass: 8 row(s) recorded, summed gain +3.08 = +0.205 on the 15-row line

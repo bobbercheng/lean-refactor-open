@@ -1,0 +1,1026 @@
+{
+ "problem": "Cslib.CCS.bisimilarity_congr_choice",
+ "best": {
+  "score": 83.12,
+  "proof": "theorem bisimilarity_congr_choice :\n    (p ~[lts (defs := defs)] q) → (choice p r) ~[lts (defs := defs)] (choice q r) :=\n  λhpq => ⟨ChoiceBisim, .choice hpq, by\n    rintro s1 s2 (h | h) μ\n    · constructor <;> intro s htr <;>\n        cases htr with\n        | choiceL htr => first | exact h.follow_fst htr |>.imp λa => And.imp Tr.choiceL ChoiceBisim.bisim | exact h.follow_snd htr |>.imp λa => And.imp Tr.choiceL ChoiceBisim.bisim\n        | choiceR htr => exact ⟨s, .choiceR htr, .bisim $ .refl s⟩\n    · constructor <;> intro _ htr\n      · exact h.follow_fst htr |>.imp λa => And.imp_right ChoiceBisim.bisim\n      · exact h.follow_snd htr |>.imp λa => And.imp_right ChoiceBisim.bisim⟩",
+  "tokens": 102,
+  "heartbeats": 388,
+  "L": 59.36,
+  "H": 90.0,
+  "Z": 100.0,
+  "compat": {
+   "v4.33.0-rc2": true,
+   "v4.32.0": true,
+   "v4.31.0": true
+  }
+ },
+ "attempts": [
+  {
+   "sha": "1632241c2f89",
+   "tokens": 180,
+   "heartbeats": 386,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:23:57Z",
+   "score": 72.78
+  },
+  {
+   "sha": "0ca8d5c7566f",
+   "tokens": 195,
+   "heartbeats": 599,
+   "ok": false,
+   "error": "332:35: Application type mismatch: The argument htr' has type lts.Tr y μ y' but is expected to have type Tr y μ (y'.choice r) in the application Tr.choiceL htr'",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:28:28Z"
+  },
+  {
+   "sha": "dbdfa26f905e",
+   "tokens": 180,
+   "heartbeats": 673,
+   "ok": false,
+   "error": "325:23: Application type mismatch: The argument Bisimilarity.isBisimulation has type ∀ (lts₁ : LTS ?m.70 ?m.72) (lts₂ : LTS ?m.71 ?m.72), lts₁.IsBisimulation lts₂ (lts₁.Bisimilarity lts₂) but is expected to have type lts.IsBisimulation lts lts.HomBisimilarity in the application IsBisimulation.sup Bi",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:41:50Z"
+  },
+  {
+   "sha": "fca50a433d64",
+   "tokens": 180,
+   "heartbeats": 386,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:52:03Z"
+  },
+  {
+   "sha": "66d728bb77c2",
+   "tokens": 179,
+   "heartbeats": 425,
+   "ok": false,
+   "error": "329:46: Unknown identifier `htr`",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:06:57Z"
+  },
+  {
+   "sha": "4333e447e983",
+   "tokens": 177,
+   "heartbeats": 386,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:10:30Z",
+   "score": 73.18
+  },
+  {
+   "sha": "a0a51407f631",
+   "tokens": 161,
+   "heartbeats": 367,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:17:35Z",
+   "score": 75.47
+  },
+  {
+   "sha": "80c8677be546",
+   "tokens": 139,
+   "heartbeats": 408,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:21:46Z",
+   "score": 78.03
+  },
+  {
+   "sha": "53377a4f8b0e",
+   "tokens": 139,
+   "heartbeats": 407,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:24:14Z",
+   "score": 78.04
+  },
+  {
+   "sha": "fc47efa826a5",
+   "tokens": 139,
+   "heartbeats": 520,
+   "ok": false,
+   "error": "329:51: Invalid `⟨...⟩` notation: The expected type of this term could not be determined",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:27:01Z"
+  },
+  {
+   "sha": "09ff2657ac0c",
+   "tokens": 137,
+   "heartbeats": 440,
+   "ok": false,
+   "error": "328:66: Invalid `⟨...⟩` notation: The expected type of this term could not be determined",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:28:51Z"
+  },
+  {
+   "sha": "46b0d2db06c8",
+   "tokens": 137,
+   "heartbeats": 407,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:30:37Z",
+   "score": 78.31
+  },
+  {
+   "sha": "c77dd58b5f1d",
+   "tokens": 138,
+   "heartbeats": 411,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T01:35:46Z"
+  },
+  {
+   "sha": "bf387cdac7e9",
+   "tokens": 137,
+   "heartbeats": 450,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T03:42:41Z"
+  },
+  {
+   "sha": "22fc7baeece9",
+   "tokens": 33,
+   "heartbeats": 868,
+   "ok": false,
+   "error": "326:4: `grind` failed case grind.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] p ~[lts,lts] q [prop] ChoiceBisim s1 s2 [prop] lts.Tr s1 μ s [prop] ∀ (a : Process Name Constant), lts.Tr s2 μ a → ¬ChoiceBisim s a [prop] p ~[lts,lts] q = ∃ r, r p q ∧ lts.IsBi",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T03:52:00Z"
+  },
+  {
+   "sha": "c25f3251025c",
+   "tokens": 75,
+   "heartbeats": 2075,
+   "ok": false,
+   "error": "327:21: `grind` failed case grind.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] p ~[lts,lts] q [prop] p_1 ~[lts,lts] q_1 [prop] Tr p_1 μ s [prop] ∀ (a : Process Name Constant), lts.Tr (q_1.choice r_1) μ a → ¬ChoiceBisim s a [prop] p_1 ~[lts,lts] q_1 = ∃ r, r",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:01:00Z"
+  },
+  {
+   "sha": "ec7f31e40202",
+   "tokens": 79,
+   "heartbeats": 1638,
+   "ok": false,
+   "error": "328:6: `grind` failed case grind.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] p ~[lts,lts] q [prop] p_1 ~[lts,lts] q_1 [prop] Tr p_1 μ s [prop] ∀ (a : Process Name Constant), lts.Tr (q_1.choice r_1) μ a → ¬ChoiceBisim s a [prop] p_1 ~[lts,lts] q_1 = ∃ r, r ",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:02:49Z"
+  },
+  {
+   "sha": "97999b064f87",
+   "tokens": 102,
+   "heartbeats": 1276,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:07:17Z"
+  },
+  {
+   "sha": "348e7865e343",
+   "tokens": 119,
+   "heartbeats": 394,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:11:49Z",
+   "score": 80.81
+  },
+  {
+   "sha": "0dff0aa74f3b",
+   "tokens": 115,
+   "heartbeats": 387,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:15:13Z",
+   "score": 81.4
+  },
+  {
+   "sha": "340a33fb7abf",
+   "tokens": 108,
+   "heartbeats": 649,
+   "ok": false,
+   "error": "328:23: `grind` failed case grind.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] p ~[lts,lts] q [prop] p_1 ~[lts,lts] q_1 [prop] Tr r_1 μ s [prop] ∀ (a : Process Name Constant), lts.Tr (q_1.choice r_1) μ a → ¬ChoiceBisim s a [prop] p_1 ~[lts,lts] q_1 = ∃ r, r",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:15:51Z"
+  },
+  {
+   "sha": "24039199d7dd",
+   "tokens": 107,
+   "heartbeats": 78,
+   "ok": false,
+   "error": "323:6: don't know how to synthesize implicit argument `defs` @ChoiceBisim Name Constant ?m.27 context: Name : Type u Constant : Type v defs : Constant → Process Name Constant → Prop p q r : Process Name Constant hpq : p ~[lts] q ⊢ Constant → Process Name Constant → Prop",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:19:00Z"
+  },
+  {
+   "sha": "2f7db6a20b34",
+   "tokens": 111,
+   "heartbeats": 387,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:19:58Z",
+   "score": 81.93
+  },
+  {
+   "sha": "dff1fb2e1b59",
+   "tokens": 112,
+   "heartbeats": 390,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:27:15Z"
+  },
+  {
+   "sha": "46fa326082f0",
+   "tokens": 108,
+   "heartbeats": 424,
+   "ok": false,
+   "error": "326:33: Unknown identifier `htr`",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:35:22Z"
+  },
+  {
+   "sha": "bc8e9acc3283",
+   "tokens": 95,
+   "heartbeats": 375,
+   "ok": false,
+   "error": "331:6: Type mismatch Bisimilarity.follow_fst h htr has type ∃ s₂', lts.Tr s2 μ s₂' ∧ s₁'✝ ~[lts,lts] s₂' but is expected to have type ∃ s₂', lts.Tr s2 μ s₂' ∧ ChoiceBisim s₁'✝ s₂'",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:11:22Z"
+  },
+  {
+   "sha": "269fbf9a8ea9",
+   "tokens": 93,
+   "heartbeats": 376,
+   "ok": false,
+   "error": "330:6: Type mismatch Bisimilarity.follow_fst h htr has type ∃ s₂', lts.Tr s2 μ s₂' ∧ s₁'✝ ~[lts,lts] s₂' but is expected to have type ∃ s₂', lts.Tr s2 μ s₂' ∧ ChoiceBisim s₁'✝ s₂'",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:11:24Z"
+  },
+  {
+   "sha": "f62e51c8fd3e",
+   "tokens": 171,
+   "heartbeats": 383,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:13:02Z"
+  },
+  {
+   "sha": "15db641774a2",
+   "tokens": 111,
+   "heartbeats": 429,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:03:21Z"
+  },
+  {
+   "sha": "176df5d10bf6",
+   "tokens": 115,
+   "heartbeats": 387,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:03:23Z"
+  },
+  {
+   "sha": "332889406eee",
+   "tokens": 97,
+   "heartbeats": 460,
+   "ok": false,
+   "error": "330:25: Application type mismatch: The argument htr has type lts.Tr s2 μ s₂'✝ but is expected to have type lts.Tr s1 ?m.668 ?m.669 in the application Bisimilarity.follow_fst h htr",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:03:25Z"
+  },
+  {
+   "sha": "b0782ef330b1",
+   "tokens": 37,
+   "heartbeats": 1327,
+   "ok": false,
+   "error": "327:6: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] p ~[lts,lts] q [prop] p_1 ~[lts,lts] q_1 [prop] lts.Tr (p_1.choice r_1) μ s [prop] ∀ (a : Process Name Constant), lts.Tr (q_1.choice r_1) μ a → ¬ChoiceBisim s a [prop] p_1 ~[lts,lts",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:05:46Z"
+  },
+  {
+   "sha": "9446aac1e207",
+   "tokens": 38,
+   "heartbeats": 579,
+   "ok": false,
+   "error": "327:4: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] p ~[lts,lts] q [prop] p_1 ~[lts,lts] q_1 [prop] lts.Tr (p_1.choice r_1) μ s [prop] ∀ (a : Process Name Constant), lts.Tr (q_1.choice r_1) μ a → ¬ChoiceBisim s a [prop] p_1 ~[lts,lts",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:05:48Z"
+  },
+  {
+   "sha": "413640c9a3eb",
+   "tokens": 53,
+   "heartbeats": 1327,
+   "ok": false,
+   "error": "326:6: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] p ~[lts,lts] q [prop] p_1 ~[lts,lts] q_1 [prop] lts.Tr (p_1.choice r_1) μ s [prop] ∀ (a : Process Name Constant), lts.Tr (q_1.choice r_1) μ a → ¬ChoiceBisim s a [prop] p_1 ~[lts,lts",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:05:50Z"
+  },
+  {
+   "sha": "7741734e98c5",
+   "tokens": 103,
+   "heartbeats": 1118,
+   "ok": false,
+   "error": "332:27: Application type mismatch: The argument htr has type Tr p✝ μ s but is expected to have type lts.Tr s2 ?m.713 ?m.714 in the application Bisimilarity.follow_snd h htr",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:07:41Z"
+  },
+  {
+   "sha": "43ebca0d224f",
+   "tokens": 119,
+   "heartbeats": 415,
+   "ok": false,
+   "error": "327:118: Application type mismatch: The argument htr has type Tr p✝ μ s but is expected to have type lts.Tr q✝ ?m.239 ?m.240 in the application Bisimilarity.follow_snd h htr",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:10:10Z"
+  },
+  {
+   "sha": "c55fb87eb11f",
+   "tokens": 127,
+   "heartbeats": 495,
+   "ok": false,
+   "error": "327:118: Application type mismatch: The argument htr has type Tr p✝ μ s but is expected to have type lts.Tr q✝ ?m.239 ?m.240 in the application Bisimilarity.follow_snd h htr",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:10:13Z"
+  },
+  {
+   "sha": "9e62e69fe1ba",
+   "tokens": 106,
+   "heartbeats": null,
+   "ok": false,
+   "error": "327:32: unknown tactic",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:10:41Z"
+  },
+  {
+   "sha": "540541ed01b4",
+   "tokens": 76,
+   "heartbeats": null,
+   "ok": false,
+   "error": "328:32: unknown tactic",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:10:43Z"
+  },
+  {
+   "sha": "cd777dc72135",
+   "tokens": 109,
+   "heartbeats": null,
+   "ok": false,
+   "error": "333:0: unexpected end of input; expected '⟩'",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:13:02Z"
+  },
+  {
+   "sha": "9a561374e973",
+   "tokens": 109,
+   "heartbeats": 301,
+   "ok": false,
+   "error": "326:6: Alternative `choiceR` has not been provided",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:13:04Z"
+  },
+  {
+   "sha": "42e5a69e1190",
+   "tokens": 119,
+   "heartbeats": 376,
+   "ok": false,
+   "error": "331:45: Invalid `⟨...⟩` notation: The expected type ?m.639 a → lts.Tr s2 μ a ∧ ChoiceBisim s₁'✝ a is not an inductive type Note: This notation can only be used when the expected type is an inductive type with a single constructor",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:13:06Z"
+  },
+  {
+   "sha": "f596d590e2cd",
+   "tokens": 110,
+   "heartbeats": 387,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:13:32Z",
+   "score": 82.07
+  },
+  {
+   "sha": "647680ade63e",
+   "tokens": 109,
+   "heartbeats": 387,
+   "ok": false,
+   "error": "329:8: No goals to be solved",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:13:40Z"
+  },
+  {
+   "sha": "18d52fb5fa13",
+   "tokens": 108,
+   "heartbeats": 415,
+   "ok": false,
+   "error": "328:29: Unknown identifier `htr`",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:17:01Z"
+  },
+  {
+   "sha": "b7163092ddfc",
+   "tokens": 108,
+   "heartbeats": 516,
+   "ok": false,
+   "error": "328:29: Unknown identifier `htr`",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:17:03Z"
+  },
+  {
+   "sha": "90ec3fb53d6c",
+   "tokens": 251,
+   "heartbeats": 3879,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:51:15Z"
+  },
+  {
+   "sha": "31f6e2c6919a",
+   "tokens": 110,
+   "heartbeats": 390,
+   "ok": false,
+   "error": "326:122: Application type mismatch: The argument htr has type Tr p✝ μ s but is expected to have type lts.Tr q✝ ?m.238 ?m.239 in the application Bisimilarity.follow_snd h htr",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:51:49Z"
+  },
+  {
+   "sha": "7639fbc8f5cd",
+   "tokens": 100,
+   "heartbeats": 520,
+   "ok": false,
+   "error": "326:131: Application type mismatch: The argument htr has type Tr p✝ μ s but is expected to have type lts.Tr q✝ ?m.239 ?m.240 in the application Bisimilarity.follow_snd h htr",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:51:53Z"
+  },
+  {
+   "sha": "4eaba5d48b35",
+   "tokens": 102,
+   "heartbeats": 371,
+   "ok": false,
+   "error": "330:33: Invalid field `imp_right`: The environment does not contain `Exists.imp_right`, so it is not possible to project the field `imp_right` from an expression Bisimilarity.follow_fst h htr of type ∃ s₂', lts.Tr s2 μ s₂' ∧ s₁'✝ ~[lts,lts] s₂'",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:52:27Z"
+  },
+  {
+   "sha": "f8025e0a2e72",
+   "tokens": 106,
+   "heartbeats": 660,
+   "ok": false,
+   "error": "326:123: Application type mismatch: The argument htr has type Tr p✝ μ s but is expected to have type lts.Tr q✝ ?m.238 ?m.239 in the application Bisimilarity.follow_snd h htr",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:52:36Z"
+  },
+  {
+   "sha": "875ce186ce99",
+   "tokens": 110,
+   "heartbeats": 430,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:54:47Z"
+  },
+  {
+   "sha": "8d92f0c04d16",
+   "tokens": 107,
+   "heartbeats": 451,
+   "ok": false,
+   "error": "327:56: Application type mismatch: The argument HomBisimilarity.refl has type ∀ (s : ?m.352), s ~[?m.354] s but is expected to have type s ~[lts] s in the application ChoiceBisim.bisim HomBisimilarity.refl",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:54:49Z"
+  },
+  {
+   "sha": "3eb8da94af15",
+   "tokens": 106,
+   "heartbeats": 452,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:56:13Z"
+  },
+  {
+   "sha": "f1d3129aecf2",
+   "tokens": 66,
+   "heartbeats": 1275,
+   "ok": false,
+   "error": "325:16: `grind` failed case grind.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] p ~[lts,lts] q [prop] p_1 ~[lts,lts] q_1 [prop] Tr p_1 μ s [prop] ∀ (a : Process Name Constant), Tr (q_1.choice r_1) μ a → ¬ChoiceBisim s a [prop] p_1 ~[lts,lts] q_1 = ∃ r, r p_1",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:27:42Z"
+  },
+  {
+   "sha": "8d3202889d6a",
+   "tokens": 72,
+   "heartbeats": 3250,
+   "ok": false,
+   "error": "325:16: `grind` failed case grind.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] p ~[lts,lts] q [prop] p_1 ~[lts,lts] q_1 [prop] Tr p_1 μ s [prop] p_1 ~[lts,lts] q_1 = ∃ r, r p_1 q_1 ∧ lts.IsBisimulation lts r [prop] p ~[lts,lts] q = ∃ r, r p q ∧ lts.IsBisimu",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:27:45Z"
+  },
+  {
+   "sha": "13ab2e48d7e3",
+   "tokens": 137,
+   "heartbeats": 740,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:30:05Z"
+  },
+  {
+   "sha": "0750fdefee02",
+   "tokens": 92,
+   "heartbeats": 977,
+   "ok": false,
+   "error": "330:29: Application type mismatch: The argument htr has type lts.Tr (p✝.choice r✝) μ s but is expected to have type lts.Tr q✝ ?m.145 ?m.146 in the application Bisimilarity.follow_snd h htr",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:34:18Z"
+  },
+  {
+   "sha": "09824f1a4dc8",
+   "tokens": 100,
+   "heartbeats": 426,
+   "ok": false,
+   "error": "328:31: Application type mismatch: The argument htr has type lts.Tr (p✝.choice r✝) μ s but is expected to have type lts.Tr q✝ ?m.145 ?m.146 in the application Bisimilarity.follow_snd h htr",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:35:42Z"
+  },
+  {
+   "sha": "dec6ef3f2b15",
+   "tokens": 100,
+   "heartbeats": 376,
+   "ok": false,
+   "error": "328:31: Application type mismatch: The argument htr has type lts.Tr (p✝.choice r✝) μ s but is expected to have type Tr r✝ μ s in the application Tr.choiceR htr",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:36:05Z"
+  },
+  {
+   "sha": "613a08cb1c66",
+   "tokens": 115,
+   "heartbeats": 390,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:38:20Z"
+  },
+  {
+   "sha": "90da3591cc43",
+   "tokens": 106,
+   "heartbeats": 355,
+   "ok": false,
+   "error": "327:4: Invalid alternative name `bisim`: Expected `pre`, `parL`, `parR`, `com`, `res`, or `const`",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:21:17Z"
+  },
+  {
+   "sha": "84ca0d4fc354",
+   "tokens": 108,
+   "heartbeats": 333,
+   "ok": false,
+   "error": "327:4: Invalid alternative name `bisim`: Expected `pre`, `parL`, `parR`, `com`, `res`, or `const`",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:21:22Z"
+  },
+  {
+   "sha": "7124415a3b97",
+   "tokens": 103,
+   "heartbeats": 355,
+   "ok": false,
+   "error": "322:40: unsolved goals case bisim … [hypotheses omitted] ⊢ (∀ (s₁' : Process Name Constant), lts.Tr s1 μ s₁' → ∃ s₂', lts.Tr s2 μ s₂' ∧ ChoiceBisim s₁' s₂') ∧ ∀ (s₂' : Process Name Constant), lts.Tr s2 μ s₂' → ∃ s₁', lts.Tr s1 μ s₁' ∧ ChoiceBisim s₁' s₂'",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:22:28Z"
+  },
+  {
+   "sha": "ad604802a56c",
+   "tokens": 118,
+   "heartbeats": 407,
+   "ok": false,
+   "error": "326:116: Application type mismatch: The argument htr has type Tr p✝ μ s but is expected to have type lts.Tr q✝ ?m.238 ?m.239 in the application Bisimilarity.follow_snd h htr",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:23:10Z"
+  },
+  {
+   "sha": "bd895731726d",
+   "tokens": 121,
+   "heartbeats": 437,
+   "ok": false,
+   "error": "326:116: Application type mismatch: The argument htr has type Tr p✝ μ s but is expected to have type lts.Tr q✝ ?m.238 ?m.239 in the application Bisimilarity.follow_snd h htr",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:23:18Z"
+  },
+  {
+   "sha": "11a7123f85c5",
+   "tokens": 110,
+   "heartbeats": null,
+   "ok": false,
+   "error": "330:0: unexpected end of input; expected '⟩'",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:26:44Z"
+  },
+  {
+   "sha": "b1472ebcfc80",
+   "tokens": 111,
+   "heartbeats": 391,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:26:55Z"
+  },
+  {
+   "sha": "b26dc5564793",
+   "tokens": 60,
+   "heartbeats": null,
+   "ok": false,
+   "error": "329:0: unexpected end of input; expected '⟩'",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:27:38Z"
+  },
+  {
+   "sha": "1d19e0ae6aa8",
+   "tokens": 39,
+   "heartbeats": null,
+   "ok": false,
+   "error": "327:0: unexpected end of input; expected '⟩'",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:27:43Z"
+  },
+  {
+   "sha": "4d01580d8090",
+   "tokens": 35,
+   "heartbeats": null,
+   "ok": false,
+   "error": "327:0: unexpected end of input; expected '⟩'",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:27:47Z"
+  },
+  {
+   "sha": "d532620eca1d",
+   "tokens": 61,
+   "heartbeats": 1934,
+   "ok": false,
+   "error": "326:8: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] p ~[lts,lts] q [prop] p_1 ~[lts,lts] q_1 [prop] lts.Tr (p_1.choice r_1) μ s [prop] ∀ (a : Process Name Constant), lts.Tr (q_1.choice r_1) μ a → ¬ChoiceBisim s a [prop] p_1 ~[lts,lts",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:28:00Z"
+  },
+  {
+   "sha": "7887081b95ab",
+   "tokens": 38,
+   "heartbeats": 1199,
+   "ok": false,
+   "error": "326:6: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] p ~[lts,lts] q [prop] p_1 ~[lts,lts] q_1 [prop] lts.Tr (p_1.choice r_1) μ s [prop] ∀ (a : Process Name Constant), lts.Tr (q_1.choice r_1) μ a → ¬ChoiceBisim s a [prop] p_1 ~[lts,lts",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:28:04Z"
+  },
+  {
+   "sha": "531c936bded2",
+   "tokens": 36,
+   "heartbeats": 881,
+   "ok": false,
+   "error": "326:6: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] p ~[lts,lts] q [prop] p_1 ~[lts,lts] q_1 [prop] lts.Tr (p_1.choice r_1) μ s [prop] ∀ (a : Process Name Constant), lts.Tr (q_1.choice r_1) μ a → ¬ChoiceBisim s a [prop] p_1 ~[lts,lts",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:28:09Z"
+  },
+  {
+   "sha": "e87d89cda9e2",
+   "tokens": 107,
+   "heartbeats": null,
+   "ok": false,
+   "error": "327:24: unexpected token '⟨'; expected '?', '_', '{' or tactic",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:29:49Z"
+  },
+  {
+   "sha": "704ce1871fb8",
+   "tokens": 108,
+   "heartbeats": 72,
+   "ok": false,
+   "error": "324:6: Tactic `constructor` failed: target is not an inductive datatype case nil … [hypotheses omitted] ⊢ ChoiceBisim nil μ → ∀ (μ_1 : Act Name), (∀ (s₁' : Process Name Constant), lts.Tr nil μ_1 s₁' → ∃ s₂', lts.Tr μ μ_1 s₂' ∧ ChoiceBisim s₁' s₂') ∧ ∀ (s₂' : Process Name Constant), lts.Tr μ μ_1 s₂' ",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:29:53Z"
+  },
+  {
+   "sha": "14c50b456cd2",
+   "tokens": 103,
+   "heartbeats": 355,
+   "ok": false,
+   "error": "322:40: unsolved goals case bisim … [hypotheses omitted] ⊢ (∀ (s₁' : Process Name Constant), lts.Tr s1 μ s₁' → ∃ s₂', lts.Tr s2 μ s₂' ∧ ChoiceBisim s₁' s₂') ∧ ∀ (s₂' : Process Name Constant), lts.Tr s2 μ s₂' → ∃ s₁', lts.Tr s1 μ s₁' ∧ ChoiceBisim s₁' s₂'",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:31:14Z"
+  },
+  {
+   "sha": "737e6b2f7ebe",
+   "tokens": 105,
+   "heartbeats": 355,
+   "ok": false,
+   "error": "322:40: unsolved goals case bisim … [hypotheses omitted] ⊢ (∀ (s₁' : Process Name Constant), lts.Tr s1 μ s₁' → ∃ s₂', lts.Tr s2 μ s₂' ∧ ChoiceBisim s₁' s₂') ∧ ∀ (s₂' : Process Name Constant), lts.Tr s2 μ s₂' → ∃ s₁', lts.Tr s1 μ s₁' ∧ ChoiceBisim s₁' s₂'",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:31:19Z"
+  },
+  {
+   "sha": "b8dea7310563",
+   "tokens": 103,
+   "heartbeats": null,
+   "ok": false,
+   "error": "334:0: unexpected end of input; expected '⟩'",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:31:49Z"
+  },
+  {
+   "sha": "69ee7f520f4c",
+   "tokens": 104,
+   "heartbeats": 628,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:32:07Z"
+  },
+  {
+   "sha": "570dafe86f24",
+   "tokens": 13,
+   "heartbeats": 127,
+   "ok": false,
+   "error": "322:14: Application type mismatch: The argument HomBisimilarity has type LTS ?m.20 ?m.19 → ?m.20 → ?m.20 → Prop but is expected to have type Process Name Constant → Process Name Constant → Prop in the application Exists.intro HomBisimilarity",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:34:01Z"
+  },
+  {
+   "sha": "189f0a9a16c5",
+   "tokens": 16,
+   "heartbeats": 133,
+   "ok": false,
+   "error": "323:9: Application type mismatch: The argument HomBisimilarity has type LTS ?m.22 ?m.21 → ?m.22 → ?m.22 → Prop but is expected to have type Process Name Constant → Process Name Constant → Prop in the application Exists.intro HomBisimilarity",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:34:10Z"
+  },
+  {
+   "sha": "cd838ce42ce7",
+   "tokens": 108,
+   "heartbeats": 467,
+   "ok": false,
+   "error": "330:38: Application type mismatch: The argument And.imp_right ChoiceBisim.bisim has type ?m.642 ∧ ?m.646 ~[lts] ?m.647 → ?m.642 ∧ ChoiceBisim ?m.646 ?m.647 but is expected to have type ∀ (a : Process Name Constant), ?m.638 a → lts.Tr s2 μ a ∧ ChoiceBisim s₁'✝ a in the application Exists.imp (And.imp",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:35:44Z"
+  },
+  {
+   "sha": "3c5262f89e03",
+   "tokens": 109,
+   "heartbeats": 470,
+   "ok": false,
+   "error": "328:50: Application type mismatch: The argument And.imp_right ChoiceBisim.bisim has type ?m.638 ∧ ?m.642 ~[lts] ?m.643 → ?m.638 ∧ ChoiceBisim ?m.642 ?m.643 but is expected to have type ∀ (a : Process Name Constant), ?m.634 a → lts.Tr s2 μ a ∧ ChoiceBisim x✝ a in the application Exists.imp (And.imp_r",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:35:53Z"
+  },
+  {
+   "sha": "1ddd87995b19",
+   "tokens": 105,
+   "heartbeats": 452,
+   "ok": false,
+   "error": "327:56: Application type mismatch: The argument HomBisimilarity.refl has type ∀ (s : ?m.352), s ~[?m.354] s but is expected to have type s ~[lts] s in the application ChoiceBisim.bisim HomBisimilarity.refl",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:43:22Z"
+  },
+  {
+   "sha": "377db88d55aa",
+   "tokens": 108,
+   "heartbeats": 388,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:43:30Z",
+   "score": 82.32
+  },
+  {
+   "sha": "6393474bc923",
+   "tokens": 107,
+   "heartbeats": 494,
+   "ok": false,
+   "error": "327:56: Application type mismatch: The argument HomBisimilarity.refl has type ∀ (s : ?m.352), s ~[?m.354] s but is expected to have type s ~[lts] s in the application ChoiceBisim.bisim HomBisimilarity.refl",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:43:42Z"
+  }
+ ],
+ "runs": [
+  {
+   "run_id": "fresh-a100-p1",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-06T23:18:44Z"
+  },
+  {
+   "run_id": "fresh-a100-p2",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T03:39:03Z"
+  },
+  {
+   "run_id": "fresh-a100-p3",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T17:09:10Z"
+  },
+  {
+   "run_id": "fresh-a100-p4",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-08T23:02:43Z"
+  },
+  {
+   "run_id": "fresh-a100-p5",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T00:50:33Z",
+   "mode": "fresh"
+  },
+  {
+   "run_id": "fresh-a100-p6",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T04:20:19Z",
+   "mode": "fresh"
+  },
+  {
+   "run_id": "fresh-a100-p7",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T13:36:39Z",
+   "mode": "structural"
+  },
+  {
+   "run_id": "fresh-a100-p8",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T22:19:38Z",
+   "mode": "structural"
+  }
+ ],
+ "ledger": {
+  "wins": [
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 6,
+    "d_score": 0.4,
+    "d_tokens": -3,
+    "d_heartbeats": 0,
+    "diff": "-  refine ⟨@ChoiceBisim Name Constant defs, .choice hpq, ?_⟩\n+  refine ⟨ChoiceBisim, .choice hpq, ?_⟩\n-  cases hr with\n-  | choice h =>\n-    constructor\n+  rcases hr with ⟨h⟩ | ⟨h⟩\n+  · constructor\n-  | bisim h =>\n-    constructor\n+  · constructor",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "b299ded4965f"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 7,
+    "d_score": 2.29,
+    "d_tokens": -16,
+    "d_heartbeats": -19,
+    "diff": "-        obtain ⟨s', htr', h'⟩ := h.follow_fst htr\n-        exact ⟨s', .choiceL htr', .bisim h'⟩\n+        exact (h.follow_fst htr).imp fun s' h₂ => ⟨.choiceL h₂.1, .bisim h₂.2⟩\n-        obtain ⟨s', htr', h'⟩ := h.follow_snd htr\n-        exact ⟨s', .choiceL htr', .bisim h'⟩\n+        exact (h.follow_snd htr).imp fun s' h₂ => ⟨.choiceL h₂.1, .bisim h₂.2⟩\n-      obtain ⟨s', htr', h'⟩ := h.follow_fst htr\n-      exact ⟨s', htr', .bisim h'⟩\n+      exact (h.follow_fst htr).imp fun w h₂ => ⟨h₂.1, .bisim h₂.2⟩\n-      obtain ⟨s', htr', h'⟩ := h.follow_snd htr\n-      exact ⟨s', htr', .bisim h'⟩\n+      exact (h.follow_snd htr).imp fun w h₂ => ⟨h₂.1, .bisim h₂.2⟩",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "a5b4c7df3b09"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 8,
+    "d_score": 2.56,
+    "d_tokens": -22,
+    "d_heartbeats": 41,
+    "diff": "-  · constructor\n-    · intro s htr\n+  · constructor <;> intro s htr <;>\n-        exact (h.follow_fst htr).imp fun s' h₂ => ⟨.choiceL h₂.1, .bisim h₂.2⟩\n-      | choiceR htr => exact ⟨s, .choiceR htr, .bisim (.refl s)⟩\n-    · intro s htr\n-      cases htr with\n-      | choiceL htr =>\n-        exact (h.follow_snd htr).imp fun s' h₂ => ⟨.choiceL h₂.1, .bisim h₂.2⟩\n+        (first\n+        | exact (h.follow_fst htr).imp fun s' h₂ => ⟨.choiceL h₂.1, .bisim h₂.2⟩\n+        | exact (h.follow_snd htr).imp fun s' h₂ => ⟨.choiceL h₂.1, .bisim h₂.2⟩)",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "7825e7f6476d"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 9,
+    "d_score": 0.01,
+    "d_tokens": 0,
+    "d_heartbeats": -1,
+    "diff": "-        | exact (h.follow_fst htr).imp fun s' h₂ => ⟨.choiceL h₂.1, .bisim h₂.2⟩\n-        | exact (h.follow_snd htr).imp fun s' h₂ => ⟨.choiceL h₂.1, .bisim h₂.2⟩)\n+        | exact h.follow_fst htr |>.imp fun s' h₂ => ⟨.choiceL h₂.1, .bisim h₂.2⟩\n+        | exact h.follow_snd htr |>.imp fun s' h₂ => ⟨.choiceL h₂.1, .bisim h₂.2⟩)\n-      exact (h.follow_fst htr).imp fun w h₂ => ⟨h₂.1, .bisim h₂.2⟩\n+      exact h.follow_fst htr |>.imp fun w h₂ => ⟨h₂.1, .bisim h₂.2⟩\n-      exact (h.follow_snd htr).imp fun w h₂ => ⟨h₂.1, .bisim h₂.2⟩\n+      exact h.follow_snd htr |>.imp fun w h₂ => ⟨h₂.1, .bisim h₂.2⟩",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "fdeb22aa112b"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 12,
+    "d_score": 0.27,
+    "d_tokens": -2,
+    "d_heartbeats": 0,
+    "diff": "-      | choiceL htr =>\n-        (first\n-        | exact h.follow_fst htr |>.imp fun s' h₂ => ⟨.choiceL h₂.1, .bisim h₂.2⟩\n-        | exact h.follow_snd htr |>.imp fun s' h₂ => ⟨.choiceL h₂.1, .bisim h₂.2⟩)\n+      | choiceL htr => first | exact h.follow_fst htr |>.imp fun s' h₂ => ⟨.choiceL h₂.1, .bisim h₂.2⟩ | exact h.follow_snd htr |>.imp fun s' h₂ => ⟨.choiceL h₂.1, .bisim h₂.2⟩",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "ddee28751c9d"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 6,
+    "d_score": 2.5,
+    "d_tokens": -18,
+    "d_heartbeats": -13,
+    "diff": "-      | choiceL htr => first | exact h.follow_fst htr |>.imp fun s' h₂ => ⟨.choiceL h₂.1, .bisim h₂.2⟩ | exact h.follow_snd htr |>.imp fun s' h₂ => ⟨.choiceL h₂.1, .bisim h₂.2⟩\n+      | choiceL htr => first | exact h.follow_fst htr |>.imp fun a => And.imp Tr.choiceL ChoiceBisim.bisim | exact h.follow_snd htr |>.imp fun a => And.imp Tr.choiceL ChoiceBisim.bisim\n-      exact h.follow_fst htr |>.imp fun w h₂ => ⟨h₂.1, .bisim h₂.2⟩\n+      exact h.follow_fst htr |>.imp fun a => And.imp id ChoiceBisim.bisim\n-      exact h.follow_snd htr |>.imp fun w h₂ => ⟨h₂.1, .bisim h₂.2⟩\n+      exact h.follow_snd htr |>.imp fun a => And.imp id ChoiceBisim.bisim",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "31ac63234388"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 7,
+    "d_score": 0.59,
+    "d_tokens": -4,
+    "d_heartbeats": -7,
+    "diff": "-  intro s1 s2 hr μ\n-  rcases hr with ⟨h⟩ | ⟨h⟩\n+  rintro s1 s2 (⟨h⟩ | ⟨h⟩) μ\n-      exact h.follow_fst htr |>.imp fun a => And.imp id ChoiceBisim.bisim\n+      exact h.follow_fst htr |>.imp fun a => And.imp_right ChoiceBisim.bisim\n-      exact h.follow_snd htr |>.imp fun a => And.imp id ChoiceBisim.bisim\n+      exact h.follow_snd htr |>.imp fun a => And.imp_right ChoiceBisim.bisim",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "7f4bbe5ab5be"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 10,
+    "d_score": 0.53,
+    "d_tokens": -4,
+    "d_heartbeats": 0,
+    "diff": "-  rintro s1 s2 (⟨h⟩ | ⟨h⟩) μ\n+  rintro s1 s2 (h | h) μ",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "4d76cc9f8a31"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 15,
+    "d_score": 0.14,
+    "d_tokens": -1,
+    "d_heartbeats": 0,
+    "diff": "-    (p ~[lts (defs := defs)] q) → (choice p r) ~[lts (defs := defs)] (choice q r) := by\n-  intro hpq\n-  refine ⟨ChoiceBisim, .choice hpq, ?_⟩\n-  rintro s1 s2 (h | h) μ\n-  · constructor <;> intro s htr <;>\n-      cases htr with\n-      | choiceL htr => first | exact h.follow_fst htr |>.imp fun a => And.imp Tr.choiceL ChoiceBisim.bisim | exact h.follow_snd htr |>.imp fun a => And.imp Tr.choiceL ChoiceBisim.bisim\n-      | choiceR htr => exact ⟨s, .choiceR htr, .bisim (.refl s)⟩\n-  · constructor\n-    · intro _ htr\n-      exact h.follow_fst htr |>.imp fun a => And.imp_right ChoiceBisim.bisim\n-    · intro _ htr\n-      exact h.follow_snd htr |>.imp fun a => And.imp_right ChoiceBisim.bisim\n+    (p ~"
+   },
+   {
+    "run_id": "fresh-a100-p7",
+    "check": 2,
+    "d_score": 0.25,
+    "d_tokens": -2,
+    "d_heartbeats": 1,
+    "diff": "-    · constructor\n-      · intro _ htr\n-        exact h.follow_fst htr |>.imp fun a => And.imp_right ChoiceBisim.bisim\n-      · intro _ htr\n-        exact h.follow_snd htr |>.imp fun a => And.imp_right ChoiceBisim.bisim⟩\n+    · constructor <;> intro _ htr\n+      · exact h.follow_fst htr |>.imp fun a => And.imp_right ChoiceBisim.bisim\n+      · exact h.follow_snd htr |>.imp fun a => And.imp_right ChoiceBisim.bisim⟩"
+   }
+  ],
+  "dead_names": [
+   "Sup.sup"
+  ]
+ },
+ "profile_cache": {
+  "2f7db6a20b34": {
+   "ok": true,
+   "total": 387,
+   "floor": 37,
+   "reference": 3879,
+   "max_heartbeat_score": 33.02,
+   "blocks": [
+    {
+     "lines": "6-9",
+     "depth_indent": 2,
+     "text": "· constructor <;> intro s htr <;> cases htr with | choiceL htr => first | exact h.follow_fst htr |>.",
+     "heartbeats": 286
+    },
+    {
+     "lines": "7-9",
+     "depth_indent": 6,
+     "text": "cases htr with | choiceL htr => first | exact h.follow_fst htr |>.imp fun a => And.imp Tr.choiceL Ch",
+     "heartbeats": 250
+    },
+    {
+     "lines": "5-5",
+     "depth_indent": 2,
+     "text": "rintro s1 s2 (h | h) μ",
+     "heartbeats": 43
+    },
+    {
+     "lines": "4-4",
+     "depth_indent": 2,
+     "text": "refine ⟨ChoiceBisim, .choice hpq, ?_⟩",
+     "heartbeats": 15
+    },
+    {
+     "lines": "10-14",
+     "depth_indent": 2,
+     "text": "· constructor · intro _ htr exact h.follow_fst htr |>.imp fun a => And.imp_right ChoiceBisim.bisim ·",
+     "heartbeats": 6
+    },
+    {
+     "lines": "3-3",
+     "depth_indent": 2,
+     "text": "intro hpq",
+     "heartbeats": 0
+    }
+   ],
+   "points_left_heartbeats": 3.01,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "f596d590e2cd": {
+   "ok": false,
+   "note": "term-mode proof (no `:= by` block): only the total and the floor are measured.",
+   "total": 388,
+   "floor": 37
+  }
+ },
+ "hb_floor": 37
+}

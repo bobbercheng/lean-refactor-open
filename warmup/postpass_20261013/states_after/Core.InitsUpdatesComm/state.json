@@ -1,0 +1,1391 @@
+{
+ "problem": "Core.InitsUpdatesComm",
+ "best": {
+  "score": 84.24,
+  "proof": "theorem InitsUpdatesComm\n  {P : PureExpr} {σ σ' σ'' : SemanticStore P}\n  {ks ks' : List P.Ident} {vs vs' : List P.Expr} :\n  UpdateStates σ ks vs σ' →\n  InitStates σ' ks' vs' σ'' →\n  ∃ σ₁,\n    σ₁ = (updatedStates σ ks' vs') ∧\n    InitStates σ ks' vs' σ₁ ∧\n    UpdateStates σ₁ ks vs σ'' := by\n  intro Hup Hinit\n  refine ⟨_, rfl, updatedStatesInit (InitStatesLength Hinit)\n    (UpdateStatesNotDefMonotone' (InitStatesNotDefined Hinit) Hup)\n    (InitStatesNodup Hinit), ?_⟩\n  simp only [InitStatesUpdated Hinit, UpdateStatesUpdated Hup, updatedStates,\n    updatedStatesComm (kvs := ks.zip vs) (kvs' := ks'.zip vs') $ by\n      simp [List.unzip_zip, UpdateStatesLength Hup, InitStatesLength Hinit]\n      exact λa Ha Hb =>\n        Bool.noConfusion $ InitStatesNotDefined Hinit a Hb ▸\n          UpdateStatesDefined Hup a Ha]\n  exact updatedStatesUpdate (UpdateStatesLength Hup)\n    (updatedStatesDefMonotone $ UpdateStatesDefined' Hup)",
+  "tokens": 95,
+  "heartbeats": 209,
+  "L": 57.59,
+  "H": 95.14,
+  "Z": 100.0,
+  "compat": {
+   "v4.29.1": true,
+   "v4.27.0": true,
+   "v4.26.0": true
+  }
+ },
+ "attempts": [
+  {
+   "sha": "f48d4177c019",
+   "tokens": 208,
+   "heartbeats": 1739,
+   "ok": false,
+   "error": "1008:10: simp_all made no progress",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:20:39Z"
+  },
+  {
+   "sha": "b25f91d62a90",
+   "tokens": 252,
+   "heartbeats": 231,
+   "ok": false,
+   "error": "973:12: Application type mismatch: The argument rfl has type ?m.54 = ?m.54 of sort `Prop` but is expected to have type SemanticStore P of sort `Type` in the application Exists.intro rfl",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:31:35Z"
+  },
+  {
+   "sha": "35e4d0126b2c",
+   "tokens": 242,
+   "heartbeats": 663,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:35:12Z",
+   "score": 58.85
+  },
+  {
+   "sha": "e86020c68cdf",
+   "tokens": 174,
+   "heartbeats": 462,
+   "ok": false,
+   "error": "988:12: Unknown identifier `x`",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:44:16Z"
+  },
+  {
+   "sha": "db3776b862ba",
+   "tokens": 174,
+   "heartbeats": 507,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:45:13Z",
+   "score": 70.18
+  },
+  {
+   "sha": "46510a32b314",
+   "tokens": 168,
+   "heartbeats": 353,
+   "ok": false,
+   "error": "972:10: Unexpected term `InitStatesUpdated Hinit`; expected single reference to variable",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:48:40Z"
+  },
+  {
+   "sha": "3afc40dabb1f",
+   "tokens": 166,
+   "heartbeats": 460,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T21:51:54Z",
+   "score": 71.73
+  },
+  {
+   "sha": "46191880ae50",
+   "tokens": 155,
+   "heartbeats": 489,
+   "ok": false,
+   "error": "984:55: Application type mismatch: The argument InitStatesNotDefined H1 x Hin has type σ x = none but is expected to have type some v'✝ = ?m.229 in the application Eq.trans Hxval (InitStatesNotDefined H1 x Hin)",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T22:47:14Z"
+  },
+  {
+   "sha": "f7fd7555faef",
+   "tokens": 155,
+   "heartbeats": 469,
+   "ok": false,
+   "error": "984:23: Type mismatch Option.noConfusion ?m.238 has type ?m.223 ≍ ?m.225 → Option.noConfusionType ?m.221 ?m.223 ?m.225 but is expected to have type False",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T22:48:14Z"
+  },
+  {
+   "sha": "91ab8406cf8b",
+   "tokens": 153,
+   "heartbeats": 463,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T22:51:10Z",
+   "score": 73.64
+  },
+  {
+   "sha": "5154d0fd38b8",
+   "tokens": 140,
+   "heartbeats": 401,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T22:54:22Z",
+   "score": 76.06
+  },
+  {
+   "sha": "b47638956950",
+   "tokens": 130,
+   "heartbeats": null,
+   "ok": false,
+   "error": "982:55: unexpected identifier; expected ')', ',' or ':'",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T22:56:32Z"
+  },
+  {
+   "sha": "352c7e0f13d6",
+   "tokens": 129,
+   "heartbeats": 360,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T22:57:32Z",
+   "score": 78.01
+  },
+  {
+   "sha": "d51c703fe828",
+   "tokens": 126,
+   "heartbeats": 397,
+   "ok": false,
+   "error": "982:37: Application type mismatch: The argument fun x_1 => InitStatesNotDefined H1 x x_1 has type x ∈ ks' → σ x = none but is expected to have type σ x = ?m.221 in the application Eq.trans (Eq.symm Hxval) fun x_1 => InitStatesNotDefined H1 x x_1",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:06:54Z"
+  },
+  {
+   "sha": "1ea2ac87dee5",
+   "tokens": 129,
+   "heartbeats": 360,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:07:57Z"
+  },
+  {
+   "sha": "53fdd1723fc9",
+   "tokens": 128,
+   "heartbeats": 351,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:11:33Z",
+   "score": 78.23
+  },
+  {
+   "sha": "c49f1b39238d",
+   "tokens": 125,
+   "heartbeats": 351,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-06T23:14:45Z",
+   "score": 78.68
+  },
+  {
+   "sha": "b9ac9723286f",
+   "tokens": 121,
+   "heartbeats": 347,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T02:17:23Z",
+   "score": 79.3
+  },
+  {
+   "sha": "1f50c5cb9b02",
+   "tokens": 121,
+   "heartbeats": 330,
+   "ok": false,
+   "error": "971:37: unsolved goals … [hypotheses omitted] ⊢ UpdateState P (updatedStates' σ (ks'.zip vs')) x v (updatedState (updatedStates' σ (ks'.zip vs')) x v)",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T02:28:26Z"
+  },
+  {
+   "sha": "799e63a82259",
+   "tokens": 121,
+   "heartbeats": 96,
+   "ok": false,
+   "error": "972:4: `obtain` requires either an expected type or a value. usage: `obtain ⟨patt⟩? : type (:= val)?` or `obtain ⟨patt⟩? (: type)? := val`",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T02:44:33Z"
+  },
+  {
+   "sha": "3b3ab1523ca5",
+   "tokens": 115,
+   "heartbeats": 345,
+   "ok": false,
+   "error": "970:2: unsolved goals case update_none P : PureExpr σ σ' σ'' : SemanticStore P ks ks' : List P.Ident vs vs' : List P.Expr σ✝ : SemanticStore P Hinit : InitStates σ✝ ks' vs' (updatedStates σ✝ ks' vs') ⊢ UpdateStates (updatedStates σ✝ ks' vs') [] [] (updatedStates σ✝ ks' vs')",
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T02:53:44Z"
+  },
+  {
+   "sha": "78b357d7e626",
+   "tokens": 119,
+   "heartbeats": 352,
+   "ok": false,
+   "error": "981:58: Application type mismatch: The argument Hin has type ?m.194 ∈ (List.unzip ?m.196).fst but is expected to have type x ∈ ks' in the application InitStatesNotDefined H1 x Hin",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:50:02Z"
+  },
+  {
+   "sha": "5167ea22ec18",
+   "tokens": 125,
+   "heartbeats": 403,
+   "ok": false,
+   "error": "980:46: Application type mismatch: The argument fun x => ?m.217 has type (x : ?m.215) → ?m.218 x but is expected to have type x ∈ ks' in the application InitStatesNotDefined H1 x fun x => ?m.217",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:50:04Z"
+  },
+  {
+   "sha": "2170a10f3074",
+   "tokens": 120,
+   "heartbeats": 357,
+   "ok": false,
+   "error": "978:47: Tactic `rewrite` failed: Did not find an occurrence of the pattern updat … [hypotheses omitted] ⊢ UpdateState P (updatedStates' σ (ks'.zip vs')) x v (updatedStates (updatedState σ x v) ks' vs')",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:50:05Z"
+  },
+  {
+   "sha": "dfdf6b44edea",
+   "tokens": 119,
+   "heartbeats": 355,
+   "ok": false,
+   "error": "982:4: Type mismatch updatedStateUpdate (InitStatesSomeMonotone Hxval H1) has type UpdateState P (updatedStates σ ks' vs') x ?m.196 (updatedState (updatedStates σ ks' vs') x ?m.196) but is expected to have type UpdateState P (updatedStates σ ks' vs') x v (updatedStates (updatedState σ x v) ks' vs')",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:51:03Z"
+  },
+  {
+   "sha": "041d26f97da4",
+   "tokens": 127,
+   "heartbeats": 353,
+   "ok": false,
+   "error": "979:10: Tactic `rewrite` failed: Did not find an occurrence of the pattern (ks'.zip vs').unzip in the target expression x ∈ ks' … [hypotheses omitted] ⊢ x ∈ ks'",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:51:04Z"
+  },
+  {
+   "sha": "c93fe1103e7f",
+   "tokens": 135,
+   "heartbeats": 270,
+   "ok": false,
+   "error": "974:15: Application type mismatch: The argument updatedStatesInit (InitStatesLength Hinit) (UpdateStateNotDefMonotone' (InitStatesNotDefined H1') Hup) (InitStatesNodup Hinit) has type InitStates σ ks' vs' (updatedStates σ ks' vs') but is expected to have type ?m.148 = updatedStates σ ks' vs' in the ",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:51:05Z"
+  },
+  {
+   "sha": "04df57fdca39",
+   "tokens": 121,
+   "heartbeats": 212,
+   "ok": false,
+   "error": "975:61: Application type mismatch: The argument Hup has type UpdateStates v [] [] v but is expected to have type UpdateState P ?m.225 ?m.229 ?m.228 v in the application UpdateStateNotDefMonotone' (InitStatesNotDefined H1') Hup",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:53:14Z"
+  },
+  {
+   "sha": "bec315582e5e",
+   "tokens": 124,
+   "heartbeats": 369,
+   "ok": false,
+   "error": "981:31: Application type mismatch: The argument Eq.trans (Eq.symm Hxval) (InitStatesNotDefined H1 x Hin) has type Eq.{1} (some v'✝) none but is expected to have type Eq.{?u.4490 + 2} ?m.211 ?m.213 in the application Option.noConfusion ⋯",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:53:16Z"
+  },
+  {
+   "sha": "e6fff93be4e6",
+   "tokens": 121,
+   "heartbeats": 347,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:53:54Z"
+  },
+  {
+   "sha": "a0c5f4a676dc",
+   "tokens": 120,
+   "heartbeats": 357,
+   "ok": false,
+   "error": "978:47: Tactic `rewrite` failed: Did not find an occurrence of the pattern updat … [hypotheses omitted] ⊢ UpdateState P (updatedStates' σ (ks'.zip vs')) x v (updatedStates (updatedState σ x v) ks' vs')",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:56:56Z"
+  },
+  {
+   "sha": "60d02a528f69",
+   "tokens": 122,
+   "heartbeats": 474,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:57:08Z"
+  },
+  {
+   "sha": "22c924af0e0d",
+   "tokens": 121,
+   "heartbeats": 347,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:59:07Z"
+  },
+  {
+   "sha": "2e3d76a6cda4",
+   "tokens": 121,
+   "heartbeats": 347,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:59:08Z"
+  },
+  {
+   "sha": "b88d66c9ee04",
+   "tokens": 124,
+   "heartbeats": 474,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T16:59:09Z"
+  },
+  {
+   "sha": "7c8b510dd546",
+   "tokens": 121,
+   "heartbeats": 395,
+   "ok": false,
+   "error": "970:11: Application type mismatch: The argument InitStatesUpdated Hinit has type σ'' = updatedStates σ✝ ks' vs' of sort `Prop` but is expected to have type SemanticStore P of sort `Type` in the application Exists.intro (InitStatesUpdated Hinit)",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:25:14Z"
+  },
+  {
+   "sha": "ea00d1ae3dfd",
+   "tokens": 123,
+   "heartbeats": 355,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:25:36Z"
+  },
+  {
+   "sha": "3efd45e3434e",
+   "tokens": 117,
+   "heartbeats": 354,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:28:32Z",
+   "score": 79.85
+  },
+  {
+   "sha": "66098a5a3794",
+   "tokens": 123,
+   "heartbeats": 355,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:28:34Z"
+  },
+  {
+   "sha": "d465d0b833b2",
+   "tokens": 117,
+   "heartbeats": 312,
+   "ok": false,
+   "error": "980:9: invalid `▸` notation, expected result type of cast is x✝ ∈ ks' however, the equality List.unzip_zip (InitStatesLength Hinit) of type (ks'.zip vs').unzip = (ks', vs') does not contain the expected result type on either the left or the right hand side",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:30:37Z"
+  },
+  {
+   "sha": "95d812706bdf",
+   "tokens": 112,
+   "heartbeats": 491,
+   "ok": false,
+   "error": "978:75: unsolved goals … [hypotheses omitted] ⊢ ∀ (x : PureExpr.Expr ?m.192), ¬(?m.194, x) ∈ ?m.196",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:30:38Z"
+  },
+  {
+   "sha": "b2627e910e8e",
+   "tokens": 115,
+   "heartbeats": 346,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:47:00Z",
+   "score": 80.2
+  },
+  {
+   "sha": "e138b8947e31",
+   "tokens": 111,
+   "heartbeats": 328,
+   "ok": false,
+   "error": "979:40: Invalid field `something`: The environment does not contain `Imperative.UpdateState.something`, so it is not possible to project the field `something` from an expression id Hup of type `UpdateState P σ✝ x✝ v✝ σ'✝`",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:47:03Z"
+  },
+  {
+   "sha": "34493f5281c8",
+   "tokens": 115,
+   "heartbeats": 346,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:50:01Z"
+  },
+  {
+   "sha": "97a2acc12b9f",
+   "tokens": 114,
+   "heartbeats": 363,
+   "ok": false,
+   "error": "982:4: Type mismatch updatedStateUpdate (InitStatesSomeMonotone Hxval H1) has type UpdateState P (updatedStates σ✝ ks' vs') x✝ ?m.196 (updatedState (updatedStates σ✝ ks' vs') x✝ ?m.196) but is expected to have type UpdateState P (updatedStates' σ✝ (ks'.zip vs')) x✝ v✝ (updatedStates' σ'✝ (ks'.zip vs",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:50:02Z"
+  },
+  {
+   "sha": "3e24e93790ac",
+   "tokens": 115,
+   "heartbeats": 460,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:59:13Z"
+  },
+  {
+   "sha": "99289749cdb3",
+   "tokens": 115,
+   "heartbeats": 347,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T22:59:14Z"
+  },
+  {
+   "sha": "84f1067d60e3",
+   "tokens": 102,
+   "heartbeats": 660,
+   "ok": false,
+   "error": "978:65: invalid `grind` theorem, failed to find an usable pattern using different modifiers",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:00:35Z"
+  },
+  {
+   "sha": "cee1609adba6",
+   "tokens": 105,
+   "heartbeats": 666,
+   "ok": false,
+   "error": "979:50: invalid `grind` theorem, failed to find an usable pattern using different modifiers",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:00:36Z"
+  },
+  {
+   "sha": "15a6c5f3245b",
+   "tokens": 104,
+   "heartbeats": 666,
+   "ok": false,
+   "error": "979:50: invalid `grind` theorem, failed to find an usable pattern using different modifiers",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:01:23Z"
+  },
+  {
+   "sha": "e4c4112dd719",
+   "tokens": 96,
+   "heartbeats": 666,
+   "ok": false,
+   "error": "979:50: invalid `grind` theorem, failed to find an usable pattern using different modifiers",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:01:24Z"
+  },
+  {
+   "sha": "1a0c96129aed",
+   "tokens": 109,
+   "heartbeats": 322,
+   "ok": false,
+   "error": "972:4: `simp` made no progress",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:18:32Z"
+  },
+  {
+   "sha": "efdf8a9ec968",
+   "tokens": 117,
+   "heartbeats": 1063,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:20:15Z"
+  },
+  {
+   "sha": "f43573797552",
+   "tokens": 116,
+   "heartbeats": 1054,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:20:16Z"
+  },
+  {
+   "sha": "d46faa9f1308",
+   "tokens": 115,
+   "heartbeats": 337,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:20:17Z",
+   "score": 80.27
+  },
+  {
+   "sha": "ea40f3f1ec81",
+   "tokens": 114,
+   "heartbeats": 329,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:20:19Z",
+   "score": 80.49
+  },
+  {
+   "sha": "dc60fc11bdcf",
+   "tokens": 111,
+   "heartbeats": 248,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:23:10Z",
+   "score": 81.56
+  },
+  {
+   "sha": "ffc8692cd6ea",
+   "tokens": 113,
+   "heartbeats": 295,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:23:13Z"
+  },
+  {
+   "sha": "f840371b9791",
+   "tokens": 113,
+   "heartbeats": 291,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:23:14Z"
+  },
+  {
+   "sha": "e130cdaac1a4",
+   "tokens": 108,
+   "heartbeats": 246,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:26:46Z",
+   "score": 82.02
+  },
+  {
+   "sha": "e386ff53002e",
+   "tokens": 109,
+   "heartbeats": 247,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:26:49Z"
+  },
+  {
+   "sha": "6952ab9385ff",
+   "tokens": 108,
+   "heartbeats": 247,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T00:26:50Z"
+  },
+  {
+   "sha": "2cc1e488b75f",
+   "tokens": 92,
+   "heartbeats": 408,
+   "ok": false,
+   "error": "971:4: `grind` failed case grind … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] UpdateStates σ ks vs σ' [prop] InitStates σ' ks' vs' σ'' [prop] ¬ks.Disjoint ks' [eqc] True propositions [prop] InitStates σ' ks' vs' σ'' [prop] UpdateStates σ ks vs σ' [eqc] False ",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:34:18Z"
+  },
+  {
+   "sha": "952a722b779e",
+   "tokens": 102,
+   "heartbeats": 230,
+   "ok": false,
+   "error": "972:4: `simp` made no progress",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:34:22Z"
+  },
+  {
+   "sha": "f84a00acf5d9",
+   "tokens": 80,
+   "heartbeats": 24860,
+   "ok": false,
+   "error": "970:4: `grind` failed case grind.1.1.1.1.1.1.1.1.1.1.1.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] UpdateStates σ ks vs σ' [prop] InitStates σ' ks' vs' σ'' [prop] ¬(ks.zip vs).unzip.fst.Disjoint (ks'.zip vs').unzip.fst [prop] ks'.length = vs'.length → ",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:35:04Z"
+  },
+  {
+   "sha": "771ebb318f76",
+   "tokens": 108,
+   "heartbeats": 246,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:39:25Z"
+  },
+  {
+   "sha": "decf0f8037cb",
+   "tokens": 104,
+   "heartbeats": 220,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:39:27Z",
+   "score": 82.82
+  },
+  {
+   "sha": "c0302365eb67",
+   "tokens": 104,
+   "heartbeats": 242,
+   "ok": false,
+   "error": "978:2: Type mismatch updatedStatesUpdate (UpdateStatesLength Hup) (updatedStatesDefMonotone (UpdateStatesDefined' Hup)) has type UpdateStates (updatedStates' σ ?m.112) ks vs (updatedStates (updatedStates' σ ?m.112) ks vs) but is expected to have type UpdateStates (updatedStates' σ (ks'.zip vs')) ks ",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:39:34Z"
+  },
+  {
+   "sha": "d0593f59460a",
+   "tokens": 100,
+   "heartbeats": 216,
+   "ok": false,
+   "error": "978:2: Type mismatch updatedStatesUpdate (UpdateStatesLength Hup) (updatedStatesDefMonotone (UpdateStatesDefined' Hup)) has type UpdateStates (updatedStates' σ ?m.93) ks vs (updatedStates (updatedStates' σ ?m.93) ks vs) but is expected to have type UpdateStates (updatedStates' σ (ks'.zip vs')) ks vs",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:39:36Z"
+  },
+  {
+   "sha": "1aee56f5b698",
+   "tokens": 106,
+   "heartbeats": 225,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:42:44Z"
+  },
+  {
+   "sha": "0c9e34355fce",
+   "tokens": 107,
+   "heartbeats": 226,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:42:46Z"
+  },
+  {
+   "sha": "70d1107fe8e8",
+   "tokens": 106,
+   "heartbeats": 226,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:42:47Z"
+  },
+  {
+   "sha": "71d8bc0395fe",
+   "tokens": 109,
+   "heartbeats": 203,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:44:55Z"
+  },
+  {
+   "sha": "2ece21e133b9",
+   "tokens": 109,
+   "heartbeats": 199,
+   "ok": false,
+   "error": "971:7: invalid `▸` notation, expected result type of cast is a ∈ ks however, the equality List.unzip_zip (UpdateStatesLength Hup) of type (ks.zip vs).unzip = (ks, vs) does not contain the expected result type on either the left or the right hand side",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T03:44:57Z"
+  },
+  {
+   "sha": "aa8e2a6b7b2e",
+   "tokens": 105,
+   "heartbeats": 220,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:38:34Z"
+  },
+  {
+   "sha": "c5daf9f7ffcb",
+   "tokens": 104,
+   "heartbeats": 213,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:38:36Z",
+   "score": 82.87
+  },
+  {
+   "sha": "e836ff3dfcaf",
+   "tokens": 105,
+   "heartbeats": 213,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:38:42Z"
+  },
+  {
+   "sha": "3eaa103042a1",
+   "tokens": 92,
+   "heartbeats": 286,
+   "ok": false,
+   "error": "975:61: Application type mismatch: The argument Ha has type a ∈ List.map Prod.fst ?m.51 but is expected to have type a ∈ ks in the application UpdateStatesDefined Hup a Ha",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:40:18Z"
+  },
+  {
+   "sha": "301f98ebe9c1",
+   "tokens": 86,
+   "heartbeats": 17652,
+   "ok": false,
+   "error": "970:4: `grind` failed case grind.1.1.1.1.1.1.1.1.1.1.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] UpdateStates σ ks vs σ' [prop] InitStates σ' ks' vs' σ'' [prop] ¬(ks.zip vs).unzip.fst.Disjoint (ks'.zip vs').unzip.fst [prop] ks.length = vs.length [prop]",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:40:59Z"
+  },
+  {
+   "sha": "ab40268cd7f1",
+   "tokens": 105,
+   "heartbeats": 221,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:41:01Z"
+  },
+  {
+   "sha": "059973ea724b",
+   "tokens": 105,
+   "heartbeats": 276,
+   "ok": false,
+   "error": "971:59: Application type mismatch: The argument Ha has type a ∈ List.map Prod.fst (ks.zip vs) but is expected to have type a ∈ ks in the application UpdateStatesDefined Hup a Ha",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:41:03Z"
+  },
+  {
+   "sha": "fbfe2a2d4890",
+   "tokens": 98,
+   "heartbeats": 204,
+   "ok": false,
+   "error": "972:4: `simp` made no progress",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:42:41Z"
+  },
+  {
+   "sha": "6f9a7aaa22b8",
+   "tokens": 111,
+   "heartbeats": 236,
+   "ok": false,
+   "error": "970:30: Application type mismatch: The argument ks.zip vs has type List (P.Ident × P.Expr) of sort `Type` but is expected to have type List.length ?m.32 = List.length ?m.33 of sort `Prop` in the application List.unzip_zip (ks.zip vs)",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:42:43Z"
+  },
+  {
+   "sha": "1597b04ed227",
+   "tokens": 103,
+   "heartbeats": 214,
+   "ok": false,
+   "error": "971:33: Unknown identifier `a`",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:42:46Z"
+  },
+  {
+   "sha": "b20de61f0590",
+   "tokens": 111,
+   "heartbeats": 227,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:42:48Z"
+  },
+  {
+   "sha": "64694f2e2150",
+   "tokens": 87,
+   "heartbeats": 205,
+   "ok": false,
+   "error": "972:4: simp_all made no progress",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:43:20Z"
+  },
+  {
+   "sha": "d161176f7387",
+   "tokens": 82,
+   "heartbeats": 202,
+   "ok": false,
+   "error": "969:65: unsolved goals P : PureExpr σ σ' σ'' : SemanticStore P ks ks' : List P.Ident vs vs' : List P.Expr Hup : UpdateStates σ ks vs σ' Hinit : InitStates σ' ks' vs' σ'' ⊢ ks.Disjoint ks'",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:43:22Z"
+  },
+  {
+   "sha": "9c8b476e3649",
+   "tokens": 91,
+   "heartbeats": 208,
+   "ok": false,
+   "error": "972:4: simp_all made no progress",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:43:26Z"
+  },
+  {
+   "sha": "18dd6ae22dd2",
+   "tokens": 98,
+   "heartbeats": 171,
+   "ok": false,
+   "error": "974:31: Unknown identifier `le_of_eq`",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:47:13Z"
+  },
+  {
+   "sha": "79c7ee65eb3e",
+   "tokens": 96,
+   "heartbeats": 270,
+   "ok": false,
+   "error": "977:47: Application type mismatch: The argument Hb has type a ∈ (List.unzip ?m.53).fst but is expected to have type a ∈ ks' in the application InitStatesNotDefined Hinit a Hb",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:47:15Z"
+  },
+  {
+   "sha": "1da2b9159d11",
+   "tokens": 98,
+   "heartbeats": 263,
+   "ok": false,
+   "error": "976:47: Application type mismatch: The argument Hb has type a ∈ List.map Prod.fst ?m.53 but is expected to have type a ∈ ks' in the application InitStatesNotDefined Hinit a Hb",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T12:47:17Z"
+  },
+  {
+   "sha": "f15a752c2490",
+   "tokens": 102,
+   "heartbeats": 180,
+   "ok": false,
+   "error": "974:51: Tactic `rewrite` failed: Did not find an occurrence of the pattern (ks'.zip vs').unzip in the target expression (ks, vs).fst.Disjoint (ks, vs).fst … [hypotheses omitted] ⊢ (ks, vs).fst.Disjoint (ks, vs).fst",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:37:55Z"
+  },
+  {
+   "sha": "5f4dacf5b2b5",
+   "tokens": 101,
+   "heartbeats": 180,
+   "ok": false,
+   "error": "974:51: Tactic `rewrite` failed: Did not find an occurrence of the pattern (ks'.zip vs').unzip in the target expression (ks, vs).fst.Disjoint (ks, vs).fst … [hypotheses omitted] ⊢ (ks, vs).fst.Disjoint (ks, vs).fst",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:38:12Z"
+  },
+  {
+   "sha": "6c7a8c292e03",
+   "tokens": 108,
+   "heartbeats": 238,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:38:14Z"
+  },
+  {
+   "sha": "d8a194c5c0ed",
+   "tokens": 97,
+   "heartbeats": 216,
+   "ok": false,
+   "error": "976:8: Function expected at InitStatesNotDefined Hinit a Hb but this term has type σ' a = none Note: Expected a function because this term is being applied to the argument (UpdateStatesDefined Hup a Ha)",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:42:15Z"
+  },
+  {
+   "sha": "c1df154700c9",
+   "tokens": 98,
+   "heartbeats": 215,
+   "ok": false,
+   "error": "976:8: Function expected at InitStatesNotDefined Hinit a Hb but this term has type σ' a = none Note: Expected a function because this term is being applied to the argument (UpdateStatesDefined Hup a Ha)",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:42:19Z"
+  },
+  {
+   "sha": "e09c8a2c0631",
+   "tokens": 97,
+   "heartbeats": 216,
+   "ok": false,
+   "error": "976:8: Function expected at UpdateStatesDefined Hup a Ha but this term has type (σ' a).isSome = true Note: Expected a function because this term is being applied to the argument (InitStatesNotDefined Hinit a Hb)",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:42:51Z"
+  },
+  {
+   "sha": "34913eb2f3be",
+   "tokens": 98,
+   "heartbeats": 215,
+   "ok": false,
+   "error": "976:8: Function expected at UpdateStatesDefined Hup a Ha but this term has type (σ' a).isSome = true Note: Expected a function because this term is being applied to the argument (InitStatesNotDefined Hinit a Hb)",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:42:54Z"
+  },
+  {
+   "sha": "20f36f0e97b6",
+   "tokens": 99,
+   "heartbeats": 208,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:48:11Z",
+   "score": 83.66
+  },
+  {
+   "sha": "fcc6a1c94cbb",
+   "tokens": 104,
+   "heartbeats": 275,
+   "ok": false,
+   "error": "976:9: unsolved goals P : PureExpr σ σ' σ'' : SemanticStore P ks ks' : List P.Ident vs vs' : List P.Expr Hup : UpdateStates σ ks vs σ' Hinit : InitStates σ' ks' vs' σ'' a : P.Ident Ha : a ∈ ks Hb : a ∈ ks' ⊢ ¬none.isSome = true",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:48:19Z"
+  },
+  {
+   "sha": "f19decd16281",
+   "tokens": 104,
+   "heartbeats": 232,
+   "ok": false,
+   "error": "976:12: `simp` made no progress",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:48:24Z"
+  },
+  {
+   "sha": "32975d4c79ee",
+   "tokens": 100,
+   "heartbeats": 207,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:49:26Z"
+  },
+  {
+   "sha": "8e08fb6f7991",
+   "tokens": 103,
+   "heartbeats": 234,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:49:32Z"
+  },
+  {
+   "sha": "5c4159c2a93b",
+   "tokens": 99,
+   "heartbeats": 214,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:57:54Z"
+  },
+  {
+   "sha": "d48d463cce27",
+   "tokens": 105,
+   "heartbeats": 194,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:59:04Z"
+  },
+  {
+   "sha": "7017e34b3f42",
+   "tokens": 104,
+   "heartbeats": 228,
+   "ok": false,
+   "error": "974:60: Application type mismatch: The argument Eq.symm (List.unzip_zip (InitStatesLength Hinit)) has type (ks', vs') = (ks'.zip vs').unzip but is expected to have type (ks.zip vs).unzip = ?m.70 in the application Eq.trans (Eq.symm (List.unzip_zip (UpdateStatesLength Hup))) (Eq.symm (List.unzip_zip ",
+   "run_id": "fresh-a100-p8",
+   "t": "2026-10-09T21:59:08Z"
+  }
+ ],
+ "runs": [
+  {
+   "run_id": "fresh-a100-p1",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-06T21:16:23Z"
+  },
+  {
+   "run_id": "fresh-a100-p2",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T02:12:45Z"
+  },
+  {
+   "run_id": "fresh-a100-p3",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T16:49:16Z"
+  },
+  {
+   "run_id": "fresh-a100-p4",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-08T22:12:06Z",
+   "mode": "structural"
+  },
+  {
+   "run_id": "fresh-a100-p5",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T00:10:27Z",
+   "mode": "structural"
+  },
+  {
+   "run_id": "fresh-a100-p6",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T03:32:31Z",
+   "mode": "structural"
+  },
+  {
+   "run_id": "fresh-a100-p7",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T12:32:31Z",
+   "mode": "structural"
+  },
+  {
+   "run_id": "fresh-a100-p8",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T21:34:29Z",
+   "mode": "structural"
+  }
+ ],
+ "ledger": {
+  "wins": [
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 7,
+    "d_score": 1.55,
+    "d_tokens": -8,
+    "d_heartbeats": -47,
+    "diff": "-  induction Hup generalizing σ''\n+  induction Hup\n-    refine ⟨_, rfl, updatedStatesInit Hlen (InitStatesNotDefined Hinit)\n-      (InitStatesNodup Hinit), ?_⟩\n-    exact .update_none\n+    exact ⟨_, rfl, updatedStatesInit Hlen (InitStatesNotDefined Hinit)\n+      (InitStatesNodup Hinit), .update_none⟩\n-    obtain ⟨Hxval, -⟩ := id Hup\n-    obtain ⟨σ₂, rfl, -, Hup₂⟩ := ih Hinit\n+    obtain ⟨Hxval⟩ := id Hup\n+    obtain ⟨_, rfl, -, Hup₂⟩ := ih Hinit\n-    rw [UpdateStateUpdated Hup]\n-    simp only [updatedStates, ← updatedStateComm' Hxin']\n+    simp only [UpdateStateUpdated Hup, updatedStates, ← updatedStateComm' Hxin']",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "87a3435b0f36"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 10,
+    "d_score": 1.91,
+    "d_tokens": -13,
+    "d_heartbeats": 3,
+    "diff": "-    have Hxin' : ¬ x ∈ (ks'.zip vs').unzip.1 := by\n-      rw [List.unzip_zip Hlen]\n-      intro Hin\n-      have h10 := UpdateStatesDefined (UpdateStates.update_some Hup Hups) x (by simp)\n-      simp [InitStatesNotDefined Hinit x Hin] at h10\n+    have Hxin' : ¬ x ∈ (ks'.zip vs').unzip.1 := by\n+      rw [List.unzip_zip Hlen]\n+      exact fun Hin => nomatch Hxval.symm.trans (InitStatesNotDefined H1 x Hin)",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "3b000e7ec6f2"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 11,
+    "d_score": 2.42,
+    "d_tokens": -13,
+    "d_heartbeats": -62,
+    "diff": "-    rw [InitStatesUpdated Hinit]\n-    exact ⟨_, rfl, updatedStatesInit Hlen (InitStatesNotDefined Hinit)\n-      (InitStatesNodup Hinit), .update_none⟩\n+    exact ⟨_, InitStatesUpdated Hinit, Hinit, .update_none⟩",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "f806b2c9bf37"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 13,
+    "d_score": 1.95,
+    "d_tokens": -11,
+    "d_heartbeats": -41,
+    "diff": "-    have Hxin' : ¬ x ∈ (ks'.zip vs').unzip.1 := by\n+    refine ⟨_, rfl, H1, .update_some ?_ Hup₂⟩\n+    simp only [UpdateStateUpdated Hup, updatedStates, ← updatedStateComm' (by\n-      exact fun Hin => nomatch Hxval.symm.trans (InitStatesNotDefined H1 x Hin)\n-    refine ⟨_, rfl, H1, .update_some ?_ Hup₂⟩\n-    simp only [UpdateStateUpdated Hup, updatedStates, ← updatedStateComm' Hxin']\n+      exact fun Hin => nomatch Hxval.symm.trans (InitStatesNotDefined H1 x Hin))]",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "caa5cd48fa62"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 16,
+    "d_score": 0.22,
+    "d_tokens": -1,
+    "d_heartbeats": -9,
+    "diff": "-  have Hlen := InitStatesLength Hinit\n-    have H1 := updatedStatesInit Hlen\n-      (UpdateStatesNotDefMonotone' (InitStatesNotDefined Hinit)\n-        (UpdateStates.update_some Hup Hups))\n+    have H1 := updatedStatesInit (InitStatesLength Hinit)\n+      (UpdateStatesNotDefMonotone' (InitStatesNotDefined Hinit) (.update_some Hup Hups))\n-      rw [List.unzip_zip Hlen]\n-      exact fun Hin => nomatch Hxval.symm.trans (InitStatesNotDefined H1 x Hin))]\n+      rw [List.unzip_zip (InitStatesLength Hinit)]\n+      intro Hin\n+      cases Hxval.symm.trans (InitStatesNotDefined H1 x Hin))]",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "70fe2dab2adc"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 17,
+    "d_score": 0.45,
+    "d_tokens": -3,
+    "d_heartbeats": 0,
+    "diff": "-  case update_none =>\n-    exact ⟨_, InitStatesUpdated Hinit, Hinit, .update_none⟩\n-  case update_some σ x v σ₀ xs vs σ₁ Hup Hups ih =>\n+  · exact ⟨_, InitStatesUpdated Hinit, Hinit, .update_none⟩\n+  next σ x v σ₀ xs vs σ₁ Hup Hups ih =>",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "a3a9fe24758b"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 1,
+    "d_score": 0.62,
+    "d_tokens": -4,
+    "d_heartbeats": -4,
+    "diff": "-    obtain ⟨_, rfl, -, Hup₂⟩ := ih Hinit\n+    obtain ⟨_, rfl, H1', Hup₂⟩ := ih Hinit\n-      (UpdateStatesNotDefMonotone' (InitStatesNotDefined Hinit) (.update_some Hup Hups))\n+      (UpdateStateNotDefMonotone' (InitStatesNotDefined H1') Hup)",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "d01c4ee793ff"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 3,
+    "d_score": 0.55,
+    "d_tokens": -4,
+    "d_heartbeats": 7,
+    "diff": "-  next σ x v σ₀ xs vs σ₁ Hup Hups ih =>\n+  case update_some Hup _ ih =>\n-      intro Hin\n-      cases Hxval.symm.trans (InitStatesNotDefined H1 x Hin))]\n+      exact fun Hin => nomatch Hxval.symm.trans (InitStatesNotDefined H1 _ Hin))]"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 7,
+    "d_score": 0.35,
+    "d_tokens": -2,
+    "d_heartbeats": -8,
+    "diff": "-      exact fun Hin => nomatch Hxval.symm.trans (InitStatesNotDefined H1 _ Hin))]\n+      intro Hin\n+      cases Hxval.symm.trans (InitStatesNotDefined H1 _ Hin))]"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 4,
+    "d_score": 0.07,
+    "d_tokens": 0,
+    "d_heartbeats": -9,
+    "diff": "-  induction Hup\n-  · exact ⟨_, InitStatesUpdated Hinit, Hinit, .update_none⟩\n-  case update_some Hup _ ih =>\n-    obtain ⟨Hxval⟩ := id Hup\n-    obtain ⟨_, rfl, H1', Hup₂⟩ := ih Hinit\n-    have H1 := updatedStatesInit (InitStatesLength Hinit)\n-      (UpdateStateNotDefMonotone' (InitStatesNotDefined H1') Hup)\n-      (InitStatesNodup Hinit)\n-    refine ⟨_, rfl, H1, .update_some ?_ Hup₂⟩\n-    simp only [UpdateStateUpdated Hup, updatedStates, ← updatedStateComm' (by\n-      rw [List.unzip_zip (InitStatesLength Hinit)]\n-      intro Hin\n-      cases Hxval.symm.trans (InitStatesNotDefined H1 _ Hin))]\n-    exact updatedStateUpdate (InitStatesSomeMonotone Hxval H1)\n+  have Hdj : (ks.zip vs).unzip.1.Di"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 5,
+    "d_score": 0.22,
+    "d_tokens": -1,
+    "d_heartbeats": -8,
+    "diff": "-    exact absurd (UpdateStatesDefined Hup a Ha) (by\n-      rw [InitStatesNotDefined Hinit a Hb]; simp)\n+    have h1 := UpdateStatesDefined Hup a Ha\n+    rw [InitStatesNotDefined Hinit a Hb] at h1\n+    simp at h1"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 6,
+    "d_score": 1.07,
+    "d_tokens": -3,
+    "d_heartbeats": -81,
+    "diff": "-    have h1 := UpdateStatesDefined Hup a Ha\n-    rw [InitStatesNotDefined Hinit a Hb] at h1\n-    simp at h1\n+    exact absurd (UpdateStatesDefined Hup a Ha)\n+      (by simp [InitStatesNotDefined Hinit a Hb])\n-  simp only [InitStatesUpdated Hinit, UpdateStatesUpdated Hup, updatedStates]\n-  rw [updatedStatesComm Hdj]\n+  simp only [InitStatesUpdated Hinit, UpdateStatesUpdated Hup, updatedStates,\n+    updatedStatesComm Hdj]"
+   },
+   {
+    "run_id": "fresh-a100-p5",
+    "check": 9,
+    "d_score": 0.46,
+    "d_tokens": -3,
+    "d_heartbeats": -2,
+    "diff": "-  refine ⟨updatedStates σ ks' vs', rfl, updatedStatesInit (InitStatesLength Hinit)\n+  refine ⟨_, rfl, updatedStatesInit (InitStatesLength Hinit)"
+   },
+   {
+    "run_id": "fresh-a100-p6",
+    "check": 5,
+    "d_score": 0.8,
+    "d_tokens": -4,
+    "d_heartbeats": -26,
+    "diff": "-  have Hdj : (ks.zip vs).unzip.1.Disjoint (ks'.zip vs').unzip.1 := by\n-    rw [List.unzip_zip (UpdateStatesLength Hup), List.unzip_zip (InitStatesLength Hinit)]\n+  have d : (ks.zip vs).unzip.1.Disjoint (ks'.zip vs').unzip.1 := by\n+    simp [List.unzip_zip, UpdateStatesLength Hup, InitStatesLength Hinit]\n-    updatedStatesComm Hdj]\n+    updatedStatesComm d]"
+   },
+   {
+    "run_id": "fresh-a100-p7",
+    "check": 2,
+    "d_score": 0.05,
+    "d_tokens": 0,
+    "d_heartbeats": -7,
+    "diff": "-  have d : (ks.zip vs).unzip.1.Disjoint (ks'.zip vs').unzip.1 := by\n-    simp [List.unzip_zip, UpdateStatesLength Hup, InitStatesLength Hinit]\n-    intro a Ha Hb\n-    exact absurd (UpdateStatesDefined Hup a Ha)\n-      (by simp [InitStatesNotDefined Hinit a Hb])\n-    updatedStatesComm d]\n+    updatedStatesComm (kvs := ks.zip vs) (kvs' := ks'.zip vs') (by\n+      simp [List.unzip_zip, UpdateStatesLength Hup, InitStatesLength Hinit]\n+      exact fun a Ha Hb => absurd (UpdateStatesDefined Hup a Ha)\n+        (by simp [InitStatesNotDefined Hinit a Hb]))]"
+   },
+   {
+    "run_id": "fresh-a100-p8",
+    "check": 8,
+    "d_score": 0.79,
+    "d_tokens": -5,
+    "d_heartbeats": -5,
+    "diff": "-      exact fun a Ha Hb => absurd (UpdateStatesDefined Hup a Ha)\n-        (by simp [InitStatesNotDefined Hinit a Hb]))]\n+      exact fun a Ha Hb =>\n+        Bool.noConfusion (InitStatesNotDefined Hinit a Hb ▸\n+          UpdateStatesDefined Hup a Ha))]"
+   }
+  ],
+  "dead_names": [
+   "List.unzip_left",
+   "List.mem_unzip_left",
+   "List.mem_zip_left",
+   "List.mem_of_mem_unzip_left",
+   "List.mem_unzip",
+   "List.mem_zip"
+  ]
+ },
+ "profile_cache": {
+  "b2627e910e8e": {
+   "ok": true,
+   "total": 346,
+   "floor": 33,
+   "reference": 4300,
+   "max_heartbeat_score": 33.08,
+   "blocks": [
+    {
+     "lines": "13-24",
+     "depth_indent": 2,
+     "text": "case update_some Hup _ ih => obtain ⟨Hxval⟩ := id Hup obtain ⟨_, rfl, H1', Hup₂⟩ := ih Hinit have H1",
+     "heartbeats": 245
+    },
+    {
+     "lines": "20-23",
+     "depth_indent": 4,
+     "text": "simp only [UpdateStateUpdated Hup, updatedStates, ← updatedStateComm' (by rw [List.unzip_zip (InitSt",
+     "heartbeats": 113
+    },
+    {
+     "lines": "19-19",
+     "depth_indent": 4,
+     "text": "refine ⟨_, rfl, H1, .update_some ?_ Hup₂⟩",
+     "heartbeats": 55
+    },
+    {
+     "lines": "12-12",
+     "depth_indent": 2,
+     "text": "· exact ⟨_, InitStatesUpdated Hinit, Hinit, .update_none⟩",
+     "heartbeats": 51
+    },
+    {
+     "lines": "14-14",
+     "depth_indent": 4,
+     "text": "obtain ⟨Hxval⟩ := id Hup",
+     "heartbeats": 47
+    },
+    {
+     "lines": "15-15",
+     "depth_indent": 4,
+     "text": "obtain ⟨_, rfl, H1', Hup₂⟩ := ih Hinit",
+     "heartbeats": 22
+    },
+    {
+     "lines": "16-18",
+     "depth_indent": 4,
+     "text": "have H1 := updatedStatesInit (InitStatesLength Hinit) (UpdateStateNotDefMonotone' (InitStatesNotDefi",
+     "heartbeats": 17
+    },
+    {
+     "lines": "11-11",
+     "depth_indent": 2,
+     "text": "induction Hup",
+     "heartbeats": 16
+    },
+    {
+     "lines": "10-10",
+     "depth_indent": 2,
+     "text": "intro Hup Hinit",
+     "heartbeats": 0
+    },
+    {
+     "lines": "21-21",
+     "depth_indent": 6,
+     "text": "rw [List.unzip_zip (InitStatesLength Hinit)]",
+     "heartbeats": null
+    },
+    {
+     "lines": "22-22",
+     "depth_indent": 6,
+     "text": "intro Hin",
+     "heartbeats": null
+    },
+    {
+     "lines": "24-24",
+     "depth_indent": 4,
+     "text": "exact updatedStateUpdate (InitStatesSomeMonotone Hxval H1)",
+     "heartbeats": -9
+    }
+   ],
+   "points_left_heartbeats": 2.43,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "decf0f8037cb": {
+   "ok": true,
+   "total": 220,
+   "floor": 33,
+   "reference": 4300,
+   "max_heartbeat_score": 33.08,
+   "blocks": [
+    {
+     "lines": "11-15",
+     "depth_indent": 2,
+     "text": "have d : (ks.zip vs).unzip.1.Disjoint (ks'.zip vs').unzip.1 := by simp [List.unzip_zip, UpdateStates",
+     "heartbeats": 88
+    },
+    {
+     "lines": "16-18",
+     "depth_indent": 2,
+     "text": "refine ⟨_, rfl, updatedStatesInit (InitStatesLength Hinit) (UpdateStatesNotDefMonotone' (InitStatesN",
+     "heartbeats": 65
+    },
+    {
+     "lines": "12-12",
+     "depth_indent": 4,
+     "text": "simp [List.unzip_zip, UpdateStatesLength Hup, InitStatesLength Hinit]",
+     "heartbeats": 42
+    },
+    {
+     "lines": "19-20",
+     "depth_indent": 2,
+     "text": "simp only [InitStatesUpdated Hinit, UpdateStatesUpdated Hup, updatedStates, updatedStatesComm d]",
+     "heartbeats": 28
+    },
+    {
+     "lines": "14-15",
+     "depth_indent": 4,
+     "text": "exact absurd (UpdateStatesDefined Hup a Ha) (by simp [InitStatesNotDefined Hinit a Hb])",
+     "heartbeats": 16
+    },
+    {
+     "lines": "21-22",
+     "depth_indent": 2,
+     "text": "exact updatedStatesUpdate (UpdateStatesLength Hup) (updatedStatesDefMonotone (UpdateStatesDefined' H",
+     "heartbeats": 5
+    },
+    {
+     "lines": "13-13",
+     "depth_indent": 4,
+     "text": "intro a Ha Hb",
+     "heartbeats": 2
+    },
+    {
+     "lines": "10-10",
+     "depth_indent": 2,
+     "text": "intro Hup Hinit",
+     "heartbeats": 0
+    }
+   ],
+   "points_left_heartbeats": 1.45,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "20f36f0e97b6": {
+   "ok": true,
+   "total": 208,
+   "floor": 33,
+   "reference": 4300,
+   "max_heartbeat_score": 33.08,
+   "blocks": [
+    {
+     "lines": "14-19",
+     "depth_indent": 2,
+     "text": "simp only [InitStatesUpdated Hinit, UpdateStatesUpdated Hup, updatedStates, updatedStatesComm (kvs :",
+     "heartbeats": 103
+    },
+    {
+     "lines": "11-13",
+     "depth_indent": 2,
+     "text": "refine ⟨_, rfl, updatedStatesInit (InitStatesLength Hinit) (UpdateStatesNotDefMonotone' (InitStatesN",
+     "heartbeats": 66
+    },
+    {
+     "lines": "20-21",
+     "depth_indent": 2,
+     "text": "exact updatedStatesUpdate (UpdateStatesLength Hup) (updatedStatesDefMonotone (UpdateStatesDefined' H",
+     "heartbeats": 5
+    },
+    {
+     "lines": "10-10",
+     "depth_indent": 2,
+     "text": "intro Hup Hinit",
+     "heartbeats": 0
+    },
+    {
+     "lines": "16-16",
+     "depth_indent": 6,
+     "text": "simp [List.unzip_zip, UpdateStatesLength Hup, InitStatesLength Hinit]",
+     "heartbeats": null
+    },
+    {
+     "lines": "17-19",
+     "depth_indent": 6,
+     "text": "exact fun a Ha Hb => Bool.noConfusion (InitStatesNotDefined Hinit a Hb ▸ UpdateStatesDefined Hup a H",
+     "heartbeats": null
+    }
+   ],
+   "points_left_heartbeats": 1.36,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  }
+ },
+ "hb_floor": 33
+}

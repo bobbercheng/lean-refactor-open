@@ -1,0 +1,1087 @@
+{
+ "problem": "Binius.BinaryBasefold.fold_advances_evaluation_poly",
+ "best": {
+  "score": 88.5,
+  "proof": "theorem fold_advances_evaluation_poly\n  (i : Fin (ℓ)) (h_i_succ_lt : i + 1 < ℓ + 𝓡)\n  (coeffs : Fin (2 ^ (ℓ - ↑i)) → L) (r_chal : L) :\n  let P_i : L[X] := intermediateEvaluationPoly 𝔽q β h_ℓ_add_R_rate (i := ⟨i, by\n    exact Nat.lt_trans (n := i) (k := ℓ+1) (m := ℓ) (h₁ := i.isLt) (by exact Nat.lt_add_one ℓ)\n  ⟩) coeffs\n  let f_i := fun (x : (sDomain 𝔽q β h_ℓ_add_R_rate)\n      ⟨i, by exact Nat.lt_trans (n := i) (k := r) (m := ℓ) (h₁ := by omega) (by omega)⟩) =>\n    P_i.eval (x.val : L)\n  let f_i_plus_1 := fold (i := ⟨i, by omega⟩) (h_i := by omega) (f := f_i) (r_chal := r_chal)\n  let new_coeffs := fun j : Fin (2^(ℓ - (i + 1))) =>\n    (1 - r_chal) * (coeffs ⟨j.val * 2, by\n      rw [←Nat.add_zero (j.val * 2)]\n      apply mul_two_add_bit_lt_two_pow (c := ℓ - i) (a := j) (b := ℓ - (↑i + 1))\n        (i := 0) (by omega) (by omega)\n    ⟩) +\n    r_chal * (coeffs ⟨j.val * 2 + 1, by\n      apply mul_two_add_bit_lt_two_pow (c := ℓ - i) (a := j) (b := ℓ - (↑i + 1))\n        (i := 1) (by omega) (by omega)\n    ⟩)\n  let P_i_plus_1 :=\n    intermediateEvaluationPoly 𝔽q β h_ℓ_add_R_rate (i := ⟨i+1, by omega⟩) new_coeffs\n  ∀ (y : (sDomain 𝔽q β h_ℓ_add_R_rate)\n    ⟨i+1, by omega⟩), f_i_plus_1 y = P_i_plus_1.eval y.val := by\n  intro P_i f_i f_i_plus_1 new_coeffs P_i_plus_1 y\n  let fiberMap := qMap_total_fiber 𝔽q β ⟨i, by omega⟩ 1 (by omega) y\n  let x₀ := fiberMap 0\n  let x₁ := fiberMap 1\n  have h_eval_qMap (k : Fin 2) :\n      (AdditiveNTT.qMap 𝔽q β ⟨i, by omega⟩).eval (fiberMap k).val = y := by\n    rw [is_fiber_iff_generates_quotient_point 𝔽q β i 1 (by omega) (fiberMap k) y |>.mpr\n      (by rw [pointToIterateQuotientIndex_qMap_total_fiber_eq_self]),\n      iteratedQuotientMap_k_eq_1_is_qMap 𝔽q β h_ℓ_add_R_rate i (by omega)]\n  have h_one := qMap_total_fiber_one_level_eq 𝔽q β i (by omega) y\n  have h_fiber_diff : x₁.val - x₀.val = 1 := by\n    simp only [show x₀ = _ from h_one 0, show x₁ = _ from h_one 1, Fin2ToF2,\n      one_ne_zero, ↓reduceIte, one_smul, Submodule.coe_add,\n      get_sDomain_first_basis_eq_1, zero_smul, zero_add, add_sub_cancel_right]\n  let P₀ := evenRefinement 𝔽q β h_ℓ_add_R_rate i coeffs\n  let P₁ := oddRefinement 𝔽q β h_ℓ_add_R_rate i coeffs\n  have h_P_i_eval := evaluation_poly_split_identity 𝔽q β h_ℓ_add_R_rate ⟨i, by omega⟩ coeffs\n  have h_equation_39 (k : Fin 2) :\n      P_i.eval (fiberMap k).val = P₀.eval y.val + (fiberMap k).val * P₁.eval y.val := by\n    simp only [h_P_i_eval, Polynomial.eval_add, eval_comp,\n      h_eval_qMap k, Polynomial.eval_mul, Polynomial.eval_X, P_i, P₀, P₁]\n  calc f_i_plus_1 y\n    = P_i.eval x₀.val * ((1 - r_chal) * x₁.val - r_chal) +\n        P_i.eval x₁.val * (r_chal - (1 - r_chal) * x₀.val) := rfl\n    _ = P₀.eval y.val * (1 - r_chal) + P₁.eval y.val * r_chal := by\n      rw [h_equation_39 0, h_equation_39 1, eq_add_of_sub_eq h_fiber_diff]\n      ring\n    _ = P_i_plus_1.eval y.val := by\n      simp only [P_i_plus_1, P₀, P₁, new_coeffs, evenRefinement, oddRefinement,\n        intermediateEvaluationPoly, Polynomial.eval_finset_sum, Polynomial.eval_mul,\n        Polynomial.eval_C, Finset.sum_mul, ← Finset.sum_add_distrib]\n      exact Finset.sum_congr rfl fun j _ => by ring",
+  "tokens": 353,
+  "heartbeats": 7369,
+  "L": 81.48,
+  "H": 84.01,
+  "Z": 100.0,
+  "compat": {
+   "v4.31.0": true,
+   "v4.30.0": true,
+   "v4.29.0": true
+  }
+ },
+ "attempts": [
+  {
+   "sha": "e54472da636c",
+   "tokens": 432,
+   "heartbeats": 8156,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:07:02Z",
+   "score": 75.43
+  },
+  {
+   "sha": "02cd972ca2b1",
+   "tokens": 432,
+   "heartbeats": 8156,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:10:15Z",
+   "score": 86.54
+  },
+  {
+   "sha": "d28d930427e3",
+   "tokens": 431,
+   "heartbeats": 8151,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:11:33Z",
+   "score": 86.57
+  },
+  {
+   "sha": "0d219adbc318",
+   "tokens": 427,
+   "heartbeats": 8135,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:15:17Z",
+   "score": 86.65
+  },
+  {
+   "sha": "35c822aaf818",
+   "tokens": 425,
+   "heartbeats": 8126,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:16:03Z",
+   "score": 86.69
+  },
+  {
+   "sha": "15e9e7e83df9",
+   "tokens": 423,
+   "heartbeats": 8061,
+   "ok": false,
+   "error": "873:86: unsolved goals … [hypotheses omitted] ⊢ Polynomial.eval (↑(fiberMap k)) P_i = Polynomial.eval (↑y) (evenRefinement 𝔽q β h_ℓ_add_R_rate i coeffs) + ↑(fiberMap k) * Polynomial.eval (↑y) (oddRefinement 𝔽q β h_ℓ_add_R_rate i coeffs)",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:16:43Z"
+  },
+  {
+   "sha": "79379544fe74",
+   "tokens": 422,
+   "heartbeats": 8078,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:18:28Z",
+   "score": 86.78
+  },
+  {
+   "sha": "07a5b58d1f96",
+   "tokens": 420,
+   "heartbeats": 7605,
+   "ok": false,
+   "error": "863:45: unsolved goals … [hypotheses omitted] ⊢ 1 + ↑(sDomain.lift 𝔽q β h_ℓ_add_R_rate ⟨↑i, ⋯⟩ ⟨↑i + 1, ⋯⟩ ⋯ ⋯ y) - (↑0 + ↑(sDomain.lift 𝔽q β h_ℓ_add_R_rate ⟨↑i, ⋯⟩ ⟨↑i + 1, ⋯⟩ ⋯ ⋯ y)) = 1",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:19:35Z"
+  },
+  {
+   "sha": "b9441bf54ba3",
+   "tokens": 420,
+   "heartbeats": 7939,
+   "ok": false,
+   "error": "863:45: unsolved goals … [hypotheses omitted] ⊢ 1 + ↑(sDomain.lift 𝔽q β h_ℓ_add_R_rate ⟨↑i, ⋯⟩ ⟨↑i + 1, ⋯⟩ ⋯ ⋯ y) - ↑(sDomain.lift 𝔽q β h_ℓ_add_R_rate ⟨↑i, ⋯⟩ ⟨↑i + 1, ⋯⟩ ⋯ ⋯ y) = 1",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:20:22Z"
+  },
+  {
+   "sha": "26b4a151cb1a",
+   "tokens": 449,
+   "heartbeats": 8268,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:28:46Z"
+  },
+  {
+   "sha": "63bf6ee64c16",
+   "tokens": 414,
+   "heartbeats": 8039,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:30:48Z",
+   "score": 86.94
+  },
+  {
+   "sha": "f317319ec819",
+   "tokens": 408,
+   "heartbeats": 8169,
+   "ok": false,
+   "error": "860:8: Application type mismatch: The argument pointToIterateQuotientIndex_qMap_total_fiber_eq_self has type ∀ (𝔽q : Type) [inst : Field 𝔽q] [inst_1 : Fintype 𝔽q] [inst_2 : DecidableEq 𝔽q] [h_Fq_char_prime : Fact (Nat.Prime (ringChar 𝔽q))] [inst_3 : Algebra 𝔽q ?m.654] (β : Fin ?m.652 → ?m.654) [hβ_l",
+   "run_id": "fresh-a100-p1",
+   "t": "2026-10-07T00:33:00Z"
+  },
+  {
+   "sha": "86fa0f059460",
+   "tokens": 400,
+   "heartbeats": 7649,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:12:51Z",
+   "score": 87.47
+  },
+  {
+   "sha": "f50f69f84e27",
+   "tokens": 400,
+   "heartbeats": 7672,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p2",
+   "t": "2026-10-07T04:16:31Z"
+  },
+  {
+   "sha": "5b83f713ccf3",
+   "tokens": 400,
+   "heartbeats": 6998,
+   "ok": false,
+   "error": "884:47: `ring_nf` made no progress on the goal",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:16:32Z"
+  },
+  {
+   "sha": "8d55bcbcc67e",
+   "tokens": 401,
+   "heartbeats": 6935,
+   "ok": false,
+   "error": "884:13: typeclass instance problem is stuck AddCommMonoid ?m.948 Note: Lean will not try to resolve this typeclass instance problem because the type argument to `AddCommMonoid` is a metavariable. This argument must be fully determined before Lean will try to resolve the typeclass. Hint: Adding type ",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:17:15Z"
+  },
+  {
+   "sha": "5013d6ba4f09",
+   "tokens": 427,
+   "heartbeats": 7580,
+   "ok": false,
+   "error": "877:8: Unknown constant `Polynomial.C_smul`",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:18:46Z"
+  },
+  {
+   "sha": "277fe459bb4f",
+   "tokens": 423,
+   "heartbeats": 7604,
+   "ok": false,
+   "error": "874:90: unsolved goals … [hypotheses omitted] ⊢ ∑ x, (Polynomial.C (1 - r_chal) * Polynomial.C (coeffs ⟨↑x * 2, ⋯⟩) + Polynomial.C r_chal * Polynomial.C (coeffs ⟨↑x * 2 + 1, ⋯⟩)) * intermediateNovelBasisX 𝔽q β h_ℓ_add_R_rate ⟨↑i + 1, ⋯⟩ ⟨↑x, ⋯⟩ = ∑ x, (Polynomial.C (1 - r_chal) * (Polynomial.C (coef",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:19:43Z"
+  },
+  {
+   "sha": "94870a743ab9",
+   "tokens": 426,
+   "heartbeats": 7558,
+   "ok": false,
+   "error": "874:64: unsolved goals … [hypotheses omitted] ⊢ ∑ x, (Polynomial.C (1 - r_chal) * Polynomial.C (coeffs ⟨↑x * 2, ⋯⟩) + Polynomial.C r_chal * Polynomial.C (coeffs ⟨↑x * 2 + 1, ⋯⟩)) * intermediateNovelBasisX 𝔽q β h_ℓ_add_R_rate ⟨↑i + 1, ⋯⟩ ⟨↑x, ⋯⟩ = ∑ x, ((1 - r_chal) • (Polynomial.C (coeffs ⟨↑x * 2, ⋯",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:19:47Z"
+  },
+  {
+   "sha": "4640101f2e78",
+   "tokens": 427,
+   "heartbeats": 7621,
+   "ok": false,
+   "error": "877:6: Unknown constant `Polynomial.mul_add`",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:20:33Z"
+  },
+  {
+   "sha": "ab5722a103bb",
+   "tokens": 430,
+   "heartbeats": 7575,
+   "ok": false,
+   "error": "877:27: Unknown constant `Polynomial.mul_add`",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:20:37Z"
+  },
+  {
+   "sha": "3ce89f7b2442",
+   "tokens": 427,
+   "heartbeats": 7611,
+   "ok": false,
+   "error": "874:90: unsolved goals … [hypotheses omitted] ⊢ ∑ x, (Polynomial.C (1 - r_chal) * Polynomial.C (coeffs ⟨↑x * 2, ⋯⟩) + Polynomial.C r_chal * Polynomial.C (coeffs ⟨↑x * 2 + 1, ⋯⟩)) * intermediateNovelBasisX 𝔽q β h_ℓ_add_R_rate ⟨↑i + 1, ⋯⟩ ⟨↑x, ⋯⟩ = ∑ x, (Polynomial.C (1 - r_chal) * (Polynomial.C (coef",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:21:14Z"
+  },
+  {
+   "sha": "897f37e85e2c",
+   "tokens": 430,
+   "heartbeats": 7567,
+   "ok": false,
+   "error": "874:64: unsolved goals … [hypotheses omitted] ⊢ ∑ x, (Polynomial.C (1 - r_chal) * Polynomial.C (coeffs ⟨↑x * 2, ⋯⟩) + Polynomial.C r_chal * Polynomial.C (coeffs ⟨↑x * 2 + 1, ⋯⟩)) * intermediateNovelBasisX 𝔽q β h_ℓ_add_R_rate ⟨↑i + 1, ⋯⟩ ⟨↑x, ⋯⟩ = ∑ x, ((1 - r_chal) • (Polynomial.C (coeffs ⟨↑x * 2, ⋯",
+   "run_id": "fresh-a100-p3",
+   "t": "2026-10-07T17:21:18Z"
+  },
+  {
+   "sha": "d9a766ba0ac7",
+   "tokens": 376,
+   "heartbeats": 6280,
+   "ok": false,
+   "error": "863:4: `simp` made no progress",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:13:25Z"
+  },
+  {
+   "sha": "f788a60cb12f",
+   "tokens": 398,
+   "heartbeats": 7482,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:13:29Z",
+   "score": 87.63
+  },
+  {
+   "sha": "03856a16a995",
+   "tokens": 380,
+   "heartbeats": 6284,
+   "ok": false,
+   "error": "862:45: unsolved goals … [hypotheses omitted] ⊢ ↑(fiberMap 1) - ↑(fiberMap 0) = 1",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:14:38Z"
+  },
+  {
+   "sha": "48e1d0d35c89",
+   "tokens": 404,
+   "heartbeats": 7511,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:14:42Z"
+  },
+  {
+   "sha": "be6648f9b471",
+   "tokens": 379,
+   "heartbeats": 7910,
+   "ok": false,
+   "error": "883:47: `ring_nf` made no progress on the goal",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:17:39Z"
+  },
+  {
+   "sha": "adfdeccbaeb4",
+   "tokens": 418,
+   "heartbeats": 7097,
+   "ok": false,
+   "error": "886:49: `ring_nf` made no progress on the goal",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:17:43Z"
+  },
+  {
+   "sha": "a11f3051f4e0",
+   "tokens": 397,
+   "heartbeats": null,
+   "ok": false,
+   "error": "884:7: unknown tactic",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:17:48Z"
+  },
+  {
+   "sha": "8d033b91347b",
+   "tokens": 394,
+   "heartbeats": 7430,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:19:43Z",
+   "score": 87.73
+  },
+  {
+   "sha": "a3b4859c02d9",
+   "tokens": 364,
+   "heartbeats": 6005,
+   "ok": false,
+   "error": "880:4: `simp` made no progress",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:21:33Z"
+  },
+  {
+   "sha": "f47a1be8d66f",
+   "tokens": 373,
+   "heartbeats": 7445,
+   "ok": false,
+   "error": "881:43: `ring_nf` made no progress on the goal",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:21:37Z"
+  },
+  {
+   "sha": "c70b49185df3",
+   "tokens": 399,
+   "heartbeats": 7332,
+   "ok": false,
+   "error": "858:39: Type mismatch Eq.symm h has type Polynomial.eval (↑(fiberMap k)) (qMap 𝔽q β ⟨↑i, ⋯⟩) = ↑(iteratedQuotientMap 𝔽q β h_ℓ_add_R_rate i 1 ⋯ (fiberMap k)) but is expected to have type ↑(fiberMap k) = ?m.631",
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:21:41Z"
+  },
+  {
+   "sha": "fc1c3c394a4f",
+   "tokens": 376,
+   "heartbeats": 7430,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:22:52Z",
+   "score": 88.05
+  },
+  {
+   "sha": "bb6529dbeefe",
+   "tokens": 372,
+   "heartbeats": 7430,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:23:50Z",
+   "score": 88.12
+  },
+  {
+   "sha": "63d41763d478",
+   "tokens": 368,
+   "heartbeats": 7416,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p4",
+   "t": "2026-10-08T23:25:05Z",
+   "score": 88.2
+  },
+  {
+   "sha": "4c9a652697e8",
+   "tokens": 381,
+   "heartbeats": 200147,
+   "ok": false,
+   "error": "883:8: Tactic `simp` failed with a nested error: (deterministic) timeout at `«Lean.Meta.acLt»`, maximum number of heartbeats (200000) has been reached Note: Use `set_option maxHeartbeats <num>` to set the limit. Hint: Additional diagnostic information may be available using the `set_option diagnosti",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:45:08Z"
+  },
+  {
+   "sha": "a17bc04f83e1",
+   "tokens": 384,
+   "heartbeats": 7475,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:45:15Z"
+  },
+  {
+   "sha": "84dd4d10b282",
+   "tokens": 370,
+   "heartbeats": 7591,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:48:06Z"
+  },
+  {
+   "sha": "3f962e942c9d",
+   "tokens": 370,
+   "heartbeats": 7872,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:48:20Z"
+  },
+  {
+   "sha": "09dbe73f9e68",
+   "tokens": 392,
+   "heartbeats": 7678,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:48:27Z"
+  },
+  {
+   "sha": "9420587759b4",
+   "tokens": 366,
+   "heartbeats": 7326,
+   "ok": false,
+   "error": "861:45: unsolved goals … [hypotheses omitted] ⊢ 1 + ↑(sDomain.lift 𝔽q β h_ℓ_add_R_rate ⟨↑i, ⋯⟩ ⟨↑i + 1, ⋯⟩ ⋯ ⋯ y) - ↑(sDomain.lift 𝔽q β h_ℓ_add_R_rate ⟨↑i, ⋯⟩ ⟨↑i + 1, ⋯⟩ ⋯ ⋯ y) = 1",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:50:16Z"
+  },
+  {
+   "sha": "1c6b0e699134",
+   "tokens": 368,
+   "heartbeats": 7416,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:50:23Z"
+  },
+  {
+   "sha": "3ceb1b78c814",
+   "tokens": 363,
+   "heartbeats": 7073,
+   "ok": false,
+   "error": "882:47: `ring_nf` made no progress on the goal",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:57:47Z"
+  },
+  {
+   "sha": "917bd730477e",
+   "tokens": 367,
+   "heartbeats": 7121,
+   "ok": false,
+   "error": "882:47: `ring_nf` made no progress on the goal",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:58:45Z"
+  },
+  {
+   "sha": "634c15e0c02e",
+   "tokens": 368,
+   "heartbeats": 7121,
+   "ok": false,
+   "error": "884:8: `ring_nf` made no progress on the goal",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T01:59:29Z"
+  },
+  {
+   "sha": "cd8b8a3d50cf",
+   "tokens": 369,
+   "heartbeats": 200030,
+   "ok": false,
+   "error": "851:40: Application type mismatch: The argument i' has type Fin (ℓ + 1) but is expected to have type Fin r in the application qMap_total_fiber 𝔽q β i'",
+   "run_id": "fresh-a100-p5",
+   "t": "2026-10-09T02:01:13Z"
+  },
+  {
+   "sha": "3a7a6bd35445",
+   "tokens": 317,
+   "heartbeats": 4945,
+   "ok": false,
+   "error": "872:38: Tactic `rewrite` failed: Did not find an occurrence of the pattern Polyn … [hypotheses omitted] ⊢ f_i_plus_1 y = Polynomial.eval (↑y) P_i_plus_1",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:29:32Z"
+  },
+  {
+   "sha": "a81090bee21f",
+   "tokens": 367,
+   "heartbeats": null,
+   "ok": false,
+   "error": "882:7: unknown tactic",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:29:51Z"
+  },
+  {
+   "sha": "c52fd5d82807",
+   "tokens": 342,
+   "heartbeats": 6218,
+   "ok": false,
+   "error": "878:43: `ring_nf` made no progress on the goal",
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:30:34Z"
+  },
+  {
+   "sha": "926a0100a79a",
+   "tokens": 368,
+   "heartbeats": 7416,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:32:29Z"
+  },
+  {
+   "sha": "bced11ab9e50",
+   "tokens": 353,
+   "heartbeats": 7369,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p6",
+   "t": "2026-10-09T04:35:10Z",
+   "score": 88.5
+  },
+  {
+   "sha": "c750b0a01f2f",
+   "tokens": 351,
+   "heartbeats": 6687,
+   "ok": false,
+   "error": "880:47: `ring_nf` made no progress on the goal",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:39:59Z"
+  },
+  {
+   "sha": "8c5e4b2dbf69",
+   "tokens": 351,
+   "heartbeats": 7032,
+   "ok": false,
+   "error": "880:47: `ring_nf` made no progress on the goal",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:40:08Z"
+  },
+  {
+   "sha": "62ef04412342",
+   "tokens": 345,
+   "heartbeats": 8312,
+   "ok": false,
+   "error": "876:33: unsolved goals … [hypotheses omitted] ⊢ ∑ x, (coeffs ⟨↑x * 2, ⋯⟩ * Polynomial.eval (↑y) (intermediateNovelBasisX 𝔽q β h_ℓ_add_R_rate ⟨↑i + 1, ⋯⟩ x) * (1 - r_chal) + coeffs ⟨↑x * 2 + 1, ⋯⟩ * Polynomial.eval (↑y) (intermediateNovelBasisX 𝔽q β h_ℓ_add_R_rate ⟨↑i + 1, ⋯⟩ x) * r_chal) = ∑ x, ((1 ",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:40:18Z"
+  },
+  {
+   "sha": "ef3a19f6257f",
+   "tokens": 368,
+   "heartbeats": 7331,
+   "ok": false,
+   "error": "881:47: `simp` made no progress",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:40:28Z"
+  },
+  {
+   "sha": "a6bd1bb57ea2",
+   "tokens": 367,
+   "heartbeats": 7758,
+   "ok": true,
+   "error": null,
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:42:18Z"
+  },
+  {
+   "sha": "61ee62c9cf67",
+   "tokens": 345,
+   "heartbeats": 31879,
+   "ok": false,
+   "error": "880:6: `grind` failed case grind.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1 … [hypotheses omitted] ⊢ False [grind] Goal diagnostics [facts] Asserted facts [prop] NeZero r [prop] CharP L 2 [prop] Fact (Nat.Prime (ringChar 𝔽q)) [prop] Fact (Fintype.card 𝔽q = 2) [prop] Fact (LinearIndependent 𝔽q β) [prop] Fac",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:42:31Z"
+  },
+  {
+   "sha": "1ea9e1a5dc00",
+   "tokens": 353,
+   "heartbeats": 7302,
+   "ok": false,
+   "error": "856:10: `simp` made no progress",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:44:03Z"
+  },
+  {
+   "sha": "9f00f6a34281",
+   "tokens": 353,
+   "heartbeats": 7373,
+   "ok": false,
+   "error": "857:6: Application type mismatch: The argument iteratedQuotientMap_k_eq_1_is_qMap 𝔽q β h_ℓ_add_R_rate i ?m.636 has type ∀ (x : ↥(sDomain 𝔽q β h_ℓ_add_R_rate ⟨↑i, ⋯⟩)), iteratedQuotientMap 𝔽q β h_ℓ_add_R_rate i 1 ?m.636 x = ⟨Polynomial.eval (↑x) (qMap 𝔽q β ⟨↑i, ⋯⟩), ⋯⟩ but is expected to have type it",
+   "run_id": "fresh-a100-p7",
+   "t": "2026-10-09T13:44:13Z"
+  }
+ ],
+ "runs": [
+  {
+   "run_id": "fresh-a100-p1",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-06T23:56:14Z"
+  },
+  {
+   "run_id": "fresh-a100-p2",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T04:07:51Z"
+  },
+  {
+   "run_id": "fresh-a100-p3",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-07T17:14:33Z"
+  },
+  {
+   "run_id": "fresh-a100-p4",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-08T23:09:19Z"
+  },
+  {
+   "run_id": "fresh-a100-p5",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T01:41:23Z"
+  },
+  {
+   "run_id": "fresh-a100-p6",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T04:26:14Z"
+  },
+  {
+   "run_id": "fresh-a100-p7",
+   "model": "glm-5.3-flash",
+   "started": "2026-10-09T13:36:39Z"
+  }
+ ],
+ "ledger": {
+  "wins": [
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 2,
+    "d_score": 11.11,
+    "d_tokens": 0,
+    "d_heartbeats": 0,
+    "diff": "-        intermediateEvaluationPoly, Fin.eta, Polynomial.eval_finsetSum, Polynomial.eval_mul,\n+        intermediateEvaluationPoly, Fin.eta, Polynomial.eval_finset_sum, Polynomial.eval_mul,",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "89ae7b411b6a"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 3,
+    "d_score": 0.03,
+    "d_tokens": -1,
+    "d_heartbeats": -5,
+    "diff": "-  classical\n-  -- The two fiber points differ by the first basis vector of `S⁽ⁱ⁾`, which is `1`.\n-  -- Equation 39 : P^(i)(X) = P₀^(i+1)(q^(i)(X)) + X · P₁^(i+1)(q^(i)(X))",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "9b753d549a25"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 4,
+    "d_score": 0.08,
+    "d_tokens": -4,
+    "d_heartbeats": -16,
+    "diff": "-    simp only [Fin2ToF2, Fin.isValue, one_ne_zero, ↓reduceIte, one_smul, Submodule.coe_add,\n+    simp only [Fin2ToF2, one_ne_zero, ↓reduceIte, one_smul, Submodule.coe_add,\n-        intermediateEvaluationPoly, Fin.eta, Polynomial.eval_finset_sum, Polynomial.eval_mul,\n+        intermediateEvaluationPoly, Polynomial.eval_finset_sum, Polynomial.eval_mul,",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "265d36060699"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 5,
+    "d_score": 0.04,
+    "d_tokens": -2,
+    "d_heartbeats": -9,
+    "diff": "-    simp only [h_P_i_eval, Fin.eta, Polynomial.eval_add, eval_comp,\n+    simp only [h_P_i_eval, Polynomial.eval_add, eval_comp,",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "4b12afa655ae"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 7,
+    "d_score": 0.09,
+    "d_tokens": -3,
+    "d_heartbeats": -48,
+    "diff": "-    (h_i_add_steps := by simp only; omega) (y := y)\n+    (h_i_add_steps := by omega) (y := y)",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "5a5c5dd6bb8b"
+   },
+   {
+    "run_id": "fresh-a100-p1",
+    "check": 11,
+    "d_score": 0.16,
+    "d_tokens": -8,
+    "d_heartbeats": -39,
+    "diff": "-    rw [h.symm]\n-    rw [h_res]\n+    rw [h.symm, h_res]\n-    have hx₀ : x₀ = _ := qMap_total_fiber_one_level_eq 𝔽q β i (by omega) y 0\n-    have hx₁ : x₁ = _ := qMap_total_fiber_one_level_eq 𝔽q β i (by omega) y 1\n-    rw [hx₀, hx₁]\n+    rw [show x₀ = _ from qMap_total_fiber_one_level_eq 𝔽q β i (by omega) y 0,\n+      show x₁ = _ from qMap_total_fiber_one_level_eq 𝔽q β i (by omega) y 1]",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "5d8d69a86a63"
+   },
+   {
+    "run_id": "fresh-a100-p2",
+    "check": 1,
+    "d_score": 0.53,
+    "d_tokens": -14,
+    "d_heartbeats": -390,
+    "diff": "-      rw [h_equation_39 0, h_equation_39 1]\n-      linear_combination (P₀.eval y.val * (1 - r_chal) + P₁.eval y.val * r_chal) * h_fiber_diff\n+      rw [h_equation_39 0, h_equation_39 1, eq_add_of_sub_eq h_fiber_diff]\n+      ring",
+    "source": "discover",
+    "kind": "edit",
+    "sha": "04f9dfd90f7e"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 2,
+    "d_score": 0.16,
+    "d_tokens": -2,
+    "d_heartbeats": -167,
+    "diff": "-    rw [show x₀ = _ from qMap_total_fiber_one_level_eq 𝔽q β i (by omega) y 0,\n-      show x₁ = _ from qMap_total_fiber_one_level_eq 𝔽q β i (by omega) y 1]\n-    simp only [Fin2ToF2, one_ne_zero, ↓reduceIte, one_smul, Submodule.coe_add,\n+    simp only [show x₀ = _ from qMap_total_fiber_one_level_eq 𝔽q β i (by omega) y 0,\n+      show x₁ = _ from qMap_total_fiber_one_level_eq 𝔽q β i (by omega) y 1, Fin2ToF2,\n+      one_ne_zero, ↓reduceIte, one_smul, Submodule.coe_add,\n-      refine Finset.sum_congr rfl fun j _ => ?_\n-      ring\n+      exact Finset.sum_congr rfl fun j _ => by ring"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 8,
+    "d_score": 0.1,
+    "d_tokens": -4,
+    "d_heartbeats": -52,
+    "diff": "+  have h_one := qMap_total_fiber_one_level_eq 𝔽q β i (by omega) y\n-    simp only [show x₀ = _ from qMap_total_fiber_one_level_eq 𝔽q β i (by omega) y 0,\n-      show x₁ = _ from qMap_total_fiber_one_level_eq 𝔽q β i (by omega) y 1, Fin2ToF2,\n+    simp only [show x₀ = _ from h_one 0, show x₁ = _ from h_one 1, Fin2ToF2,"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 12,
+    "d_score": 0.32,
+    "d_tokens": -18,
+    "d_heartbeats": 0,
+    "diff": "-  let fiberMap := qMap_total_fiber 𝔽q β (i := ⟨i, by omega⟩) (steps := 1)\n-    (h_i_add_steps := by omega) (y := y)\n+  let fiberMap := qMap_total_fiber 𝔽q β ⟨i, by omega⟩ 1 (by omega) y\n-    have h_res := is_fiber_iff_generates_quotient_point 𝔽q β i (steps := 1) (by omega)\n+    have h_res := is_fiber_iff_generates_quotient_point 𝔽q β i 1 (by omega)"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 13,
+    "d_score": 0.07,
+    "d_tokens": -4,
+    "d_heartbeats": 0,
+    "diff": "-      (x := fiberMap k) (y := y).mpr\n+      (fiberMap k) y |>.mpr"
+   },
+   {
+    "run_id": "fresh-a100-p4",
+    "check": 14,
+    "d_score": 0.08,
+    "d_tokens": -4,
+    "d_heartbeats": -14,
+    "diff": "-    have h_res := is_fiber_iff_generates_quotient_point 𝔽q β i 1 (by omega)\n+    rw [h.symm, is_fiber_iff_generates_quotient_point 𝔽q β i 1 (by omega)\n-        (by rw [pointToIterateQuotientIndex_qMap_total_fiber_eq_self])\n-    rw [h.symm, h_res]\n+      (by rw [pointToIterateQuotientIndex_qMap_total_fiber_eq_self])]"
+   },
+   {
+    "run_id": "fresh-a100-p6",
+    "check": 7,
+    "d_score": 0.3,
+    "d_tokens": -15,
+    "d_heartbeats": -47,
+    "diff": "-    have h := iteratedQuotientMap_k_eq_1_is_qMap 𝔽q β h_ℓ_add_R_rate i (by omega) (fiberMap k)\n-    simp only [Subtype.eq_iff] at h\n-    rw [h.symm, is_fiber_iff_generates_quotient_point 𝔽q β i 1 (by omega)\n-      (fiberMap k) y |>.mpr\n-      (by rw [pointToIterateQuotientIndex_qMap_total_fiber_eq_self])]\n+    rw [is_fiber_iff_generates_quotient_point 𝔽q β i 1 (by omega) (fiberMap k) y |>.mpr\n+      (by rw [pointToIterateQuotientIndex_qMap_total_fiber_eq_self]),\n+      iteratedQuotientMap_k_eq_1_is_qMap 𝔽q β h_ℓ_add_R_rate i (by omega)]"
+   }
+  ],
+  "dead_names": [
+   "Polynomial.mul_add",
+   "Polynomial.C_smul"
+  ]
+ },
+ "profile_cache": {
+  "86fa0f059460": {
+   "ok": true,
+   "total": 7649,
+   "floor": 2536,
+   "reference": 46076,
+   "max_heartbeat_score": 31.5,
+   "blocks": [
+    {
+     "lines": "44-44",
+     "depth_indent": 2,
+     "text": "let P₁ := oddRefinement 𝔽q β h_ℓ_add_R_rate i coeffs",
+     "heartbeats": 2660
+    },
+    {
+     "lines": "38-42",
+     "depth_indent": 2,
+     "text": "have h_fiber_diff : x₁.val - x₀.val = 1 := by rw [show x₀ = _ from qMap_total_fiber_one_level_eq 𝔽q ",
+     "heartbeats": 1586
+    },
+    {
+     "lines": "30-37",
+     "depth_indent": 2,
+     "text": "have h_eval_qMap (k : Fin 2) : (AdditiveNTT.qMap 𝔽q β ⟨i, by omega⟩).eval (fiberMap k).val = y := by",
+     "heartbeats": 720
+    },
+    {
+     "lines": "26-27",
+     "depth_indent": 2,
+     "text": "let fiberMap := qMap_total_fiber 𝔽q β (i := ⟨i, by omega⟩) (steps := 1) (h_i_add_steps := by omega) ",
+     "heartbeats": 94
+    },
+    {
+     "lines": "43-43",
+     "depth_indent": 2,
+     "text": "let P₀ := evenRefinement 𝔽q β h_ℓ_add_R_rate i coeffs",
+     "heartbeats": 19
+    },
+    {
+     "lines": "28-28",
+     "depth_indent": 2,
+     "text": "let x₀ := fiberMap 0",
+     "heartbeats": 17
+    },
+    {
+     "lines": "29-29",
+     "depth_indent": 2,
+     "text": "let x₁ := fiberMap 1",
+     "heartbeats": 13
+    },
+    {
+     "lines": "25-25",
+     "depth_indent": 2,
+     "text": "intro P_i f_i f_i_plus_1 new_coeffs P_i_plus_1 y",
+     "heartbeats": 4
+    },
+    {
+     "lines": "10-10",
+     "depth_indent": 2,
+     "text": "let f_i_plus_1 := fold (i := ⟨i, by omega⟩) (h_i := by omega) (f := f_i) (r_chal := r_chal)",
+     "heartbeats": null
+    },
+    {
+     "lines": "11-20",
+     "depth_indent": 2,
+     "text": "let new_coeffs := fun j : Fin (2^(ℓ - (i + 1))) => (1 - r_chal) * (coeffs ⟨j.val * 2, by rw [←Nat.ad",
+     "heartbeats": null
+    },
+    {
+     "lines": "21-22",
+     "depth_indent": 2,
+     "text": "let P_i_plus_1 := intermediateEvaluationPoly 𝔽q β h_ℓ_add_R_rate (i := ⟨i+1, by omega⟩) new_coeffs",
+     "heartbeats": null
+    },
+    {
+     "lines": "23-24",
+     "depth_indent": 2,
+     "text": "∀ (y : (sDomain 𝔽q β h_ℓ_add_R_rate) ⟨i+1, by omega⟩), f_i_plus_1 y = P_i_plus_1.eval y.val := by",
+     "heartbeats": null
+    }
+   ],
+   "points_left_heartbeats": 3.7,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "f788a60cb12f": {
+   "ok": true,
+   "total": 7482,
+   "floor": 2536,
+   "reference": 46076,
+   "max_heartbeat_score": 31.5,
+   "blocks": [
+    {
+     "lines": "44-44",
+     "depth_indent": 2,
+     "text": "let P₁ := oddRefinement 𝔽q β h_ℓ_add_R_rate i coeffs",
+     "heartbeats": 2679
+    },
+    {
+     "lines": "38-42",
+     "depth_indent": 2,
+     "text": "have h_fiber_diff : x₁.val - x₀.val = 1 := by simp only [show x₀ = _ from qMap_total_fiber_one_level",
+     "heartbeats": 1400
+    },
+    {
+     "lines": "30-37",
+     "depth_indent": 2,
+     "text": "have h_eval_qMap (k : Fin 2) : (AdditiveNTT.qMap 𝔽q β ⟨i, by omega⟩).eval (fiberMap k).val = y := by",
+     "heartbeats": 720
+    },
+    {
+     "lines": "26-27",
+     "depth_indent": 2,
+     "text": "let fiberMap := qMap_total_fiber 𝔽q β (i := ⟨i, by omega⟩) (steps := 1) (h_i_add_steps := by omega) ",
+     "heartbeats": 94
+    },
+    {
+     "lines": "43-43",
+     "depth_indent": 2,
+     "text": "let P₀ := evenRefinement 𝔽q β h_ℓ_add_R_rate i coeffs",
+     "heartbeats": 19
+    },
+    {
+     "lines": "28-28",
+     "depth_indent": 2,
+     "text": "let x₀ := fiberMap 0",
+     "heartbeats": 17
+    },
+    {
+     "lines": "29-29",
+     "depth_indent": 2,
+     "text": "let x₁ := fiberMap 1",
+     "heartbeats": 13
+    },
+    {
+     "lines": "25-25",
+     "depth_indent": 2,
+     "text": "intro P_i f_i f_i_plus_1 new_coeffs P_i_plus_1 y",
+     "heartbeats": 4
+    },
+    {
+     "lines": "10-10",
+     "depth_indent": 2,
+     "text": "let f_i_plus_1 := fold (i := ⟨i, by omega⟩) (h_i := by omega) (f := f_i) (r_chal := r_chal)",
+     "heartbeats": null
+    },
+    {
+     "lines": "11-20",
+     "depth_indent": 2,
+     "text": "let new_coeffs := fun j : Fin (2^(ℓ - (i + 1))) => (1 - r_chal) * (coeffs ⟨j.val * 2, by rw [←Nat.ad",
+     "heartbeats": null
+    },
+    {
+     "lines": "21-22",
+     "depth_indent": 2,
+     "text": "let P_i_plus_1 := intermediateEvaluationPoly 𝔽q β h_ℓ_add_R_rate (i := ⟨i+1, by omega⟩) new_coeffs",
+     "heartbeats": null
+    },
+    {
+     "lines": "23-24",
+     "depth_indent": 2,
+     "text": "∀ (y : (sDomain 𝔽q β h_ℓ_add_R_rate) ⟨i+1, by omega⟩), f_i_plus_1 y = P_i_plus_1.eval y.val := by",
+     "heartbeats": null
+    }
+   ],
+   "points_left_heartbeats": 3.58,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "63d41763d478": {
+   "ok": true,
+   "total": 7416,
+   "floor": 2536,
+   "reference": 46076,
+   "max_heartbeat_score": 31.5,
+   "blocks": [
+    {
+     "lines": "41-41",
+     "depth_indent": 2,
+     "text": "let P₀ := evenRefinement 𝔽q β h_ℓ_add_R_rate i coeffs",
+     "heartbeats": 2696
+    },
+    {
+     "lines": "37-40",
+     "depth_indent": 2,
+     "text": "have h_fiber_diff : x₁.val - x₀.val = 1 := by simp only [show x₀ = _ from h_one 0, show x₁ = _ from ",
+     "heartbeats": 1234
+    },
+    {
+     "lines": "29-35",
+     "depth_indent": 2,
+     "text": "have h_eval_qMap (k : Fin 2) : (AdditiveNTT.qMap 𝔽q β ⟨i, by omega⟩).eval (fiberMap k).val = y := by",
+     "heartbeats": 706
+    },
+    {
+     "lines": "36-36",
+     "depth_indent": 2,
+     "text": "have h_one := qMap_total_fiber_one_level_eq 𝔽q β i (by omega) y",
+     "heartbeats": 116
+    },
+    {
+     "lines": "26-26",
+     "depth_indent": 2,
+     "text": "let fiberMap := qMap_total_fiber 𝔽q β ⟨i, by omega⟩ 1 (by omega) y",
+     "heartbeats": 94
+    },
+    {
+     "lines": "27-27",
+     "depth_indent": 2,
+     "text": "let x₀ := fiberMap 0",
+     "heartbeats": 17
+    },
+    {
+     "lines": "28-28",
+     "depth_indent": 2,
+     "text": "let x₁ := fiberMap 1",
+     "heartbeats": 13
+    },
+    {
+     "lines": "25-25",
+     "depth_indent": 2,
+     "text": "intro P_i f_i f_i_plus_1 new_coeffs P_i_plus_1 y",
+     "heartbeats": 4
+    },
+    {
+     "lines": "10-10",
+     "depth_indent": 2,
+     "text": "let f_i_plus_1 := fold (i := ⟨i, by omega⟩) (h_i := by omega) (f := f_i) (r_chal := r_chal)",
+     "heartbeats": null
+    },
+    {
+     "lines": "11-20",
+     "depth_indent": 2,
+     "text": "let new_coeffs := fun j : Fin (2^(ℓ - (i + 1))) => (1 - r_chal) * (coeffs ⟨j.val * 2, by rw [←Nat.ad",
+     "heartbeats": null
+    },
+    {
+     "lines": "21-22",
+     "depth_indent": 2,
+     "text": "let P_i_plus_1 := intermediateEvaluationPoly 𝔽q β h_ℓ_add_R_rate (i := ⟨i+1, by omega⟩) new_coeffs",
+     "heartbeats": null
+    },
+    {
+     "lines": "23-24",
+     "depth_indent": 2,
+     "text": "∀ (y : (sDomain 𝔽q β h_ℓ_add_R_rate) ⟨i+1, by omega⟩), f_i_plus_1 y = P_i_plus_1.eval y.val := by",
+     "heartbeats": null
+    }
+   ],
+   "points_left_heartbeats": 3.53,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  },
+  "bced11ab9e50": {
+   "ok": true,
+   "total": 7369,
+   "floor": 2536,
+   "reference": 46076,
+   "max_heartbeat_score": 31.5,
+   "blocks": [
+    {
+     "lines": "39-39",
+     "depth_indent": 2,
+     "text": "let P₀ := evenRefinement 𝔽q β h_ℓ_add_R_rate i coeffs",
+     "heartbeats": 2696
+    },
+    {
+     "lines": "35-38",
+     "depth_indent": 2,
+     "text": "have h_fiber_diff : x₁.val - x₀.val = 1 := by simp only [show x₀ = _ from h_one 0, show x₁ = _ from ",
+     "heartbeats": 1233
+    },
+    {
+     "lines": "29-33",
+     "depth_indent": 2,
+     "text": "have h_eval_qMap (k : Fin 2) : (AdditiveNTT.qMap 𝔽q β ⟨i, by omega⟩).eval (fiberMap k).val = y := by",
+     "heartbeats": 659
+    },
+    {
+     "lines": "34-34",
+     "depth_indent": 2,
+     "text": "have h_one := qMap_total_fiber_one_level_eq 𝔽q β i (by omega) y",
+     "heartbeats": 117
+    },
+    {
+     "lines": "26-26",
+     "depth_indent": 2,
+     "text": "let fiberMap := qMap_total_fiber 𝔽q β ⟨i, by omega⟩ 1 (by omega) y",
+     "heartbeats": 94
+    },
+    {
+     "lines": "27-27",
+     "depth_indent": 2,
+     "text": "let x₀ := fiberMap 0",
+     "heartbeats": 17
+    },
+    {
+     "lines": "28-28",
+     "depth_indent": 2,
+     "text": "let x₁ := fiberMap 1",
+     "heartbeats": 13
+    },
+    {
+     "lines": "25-25",
+     "depth_indent": 2,
+     "text": "intro P_i f_i f_i_plus_1 new_coeffs P_i_plus_1 y",
+     "heartbeats": 4
+    },
+    {
+     "lines": "10-10",
+     "depth_indent": 2,
+     "text": "let f_i_plus_1 := fold (i := ⟨i, by omega⟩) (h_i := by omega) (f := f_i) (r_chal := r_chal)",
+     "heartbeats": null
+    },
+    {
+     "lines": "11-20",
+     "depth_indent": 2,
+     "text": "let new_coeffs := fun j : Fin (2^(ℓ - (i + 1))) => (1 - r_chal) * (coeffs ⟨j.val * 2, by rw [←Nat.ad",
+     "heartbeats": null
+    },
+    {
+     "lines": "21-22",
+     "depth_indent": 2,
+     "text": "let P_i_plus_1 := intermediateEvaluationPoly 𝔽q β h_ℓ_add_R_rate (i := ⟨i+1, by omega⟩) new_coeffs",
+     "heartbeats": null
+    },
+    {
+     "lines": "23-24",
+     "depth_indent": 2,
+     "text": "∀ (y : (sDomain 𝔽q β h_ℓ_add_R_rate) ⟨i+1, by omega⟩), f_i_plus_1 y = P_i_plus_1.eval y.val := by",
+     "heartbeats": null
+    }
+   ],
+   "points_left_heartbeats": 3.5,
+   "note": "each block's cost = heartbeats saved if it and its later siblings were `sorry` minus the same for the next sibling; nested blocks are profiled under the costliest step. Costs include elaborating terms (notation, instance search). Odd values mean a cut changed elaboration."
+  }
+ },
+ "hb_floor": 2536
+}

@@ -1,0 +1,4474 @@
+{
+ "rule": "Every leading token of Lean core's `tactic` syntax category (Init + Lean; complete, nothing filtered by name), bare and with one term argument, run on a fixed battery of synthetic Prop/Nat goals (t2_closers_query.lean) on every installed core toolchain; class per form from the summed outcomes (a token whose runs did not finish within the wall-clock limit on a toolchain is skipped there and on every later toolchain, listed in skipped_hung): closer = closed some goal and never left one open or unchanged or closed through sorry; mixed = closed some and left some open/unchanged; decomposer = never closed, left some open; inert = otherwise. combinators: the five goal-list combinators the T2 spec allows the scheduler to add (rotate_left, any_goals, all_goals, repeat, repeat'), each checked present in the same token table on every toolchain.",
+ "query": "harness/tools/tables/t2_closers_query.lean via harness/tools/tables/gen_t2_closers.py (lean <query> per toolchain)",
+ "generated_at": "2026-10-22T04:15:01Z",
+ "toolchains": [
+  "leanprover--lean4---v4.25.0",
+  "leanprover--lean4---v4.26.0",
+  "leanprover--lean4---v4.27.0",
+  "leanprover--lean4---v4.28.0",
+  "leanprover--lean4---v4.29.0",
+  "leanprover--lean4---v4.29.1",
+  "leanprover--lean4---v4.30.0",
+  "leanprover--lean4---v4.31.0",
+  "leanprover--lean4---v4.32.0",
+  "leanprover--lean4---v4.33.0-rc2"
+ ],
+ "toolchains_failed": [],
+ "forms": {
+  "ac_nf": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 90,
+     "open": 50,
+     "unchanged": 70
+    }
+   }
+  },
+  "ac_nf0": {
+   "bare": {
+    "class": "decomposer",
+    "counts": {
+     "open": 110,
+     "unchanged": 100
+    }
+   }
+  },
+  "ac_rfl": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 30,
+     "fail": 180
+    }
+   }
+  },
+  "admit": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "sorry": 210
+    }
+   }
+  },
+  "and_intros": {
+   "bare": {
+    "class": "decomposer",
+    "counts": {
+     "open": 40,
+     "unchanged": 170
+    }
+   }
+  },
+  "apply": {
+   "arg": {
+    "class": "mixed",
+    "counts": {
+     "closed": 10,
+     "fail": 1120,
+     "open": 60
+    }
+   }
+  },
+  "apply?": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 160,
+     "fail": 2,
+     "sorry": 48
+    }
+   }
+  },
+  "apply_assumption": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 70,
+     "fail": 110,
+     "open": 30
+    }
+   }
+  },
+  "apply_ext_theorem": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "apply_mod_cast": {
+   "arg": {
+    "class": "mixed",
+    "counts": {
+     "closed": 10,
+     "fail": 1120,
+     "open": 60
+    }
+   }
+  },
+  "apply_rfl": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 30,
+     "fail": 180
+    }
+   }
+  },
+  "apply_rules": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 100,
+     "fail": 110
+    }
+   }
+  },
+  "array_get_dec": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "array_mem_dec": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "assumption": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 10,
+     "fail": 200
+    }
+   }
+  },
+  "assumption_mod_cast": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 10,
+     "fail": 200
+    }
+   }
+  },
+  "bv_decide": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 30,
+     "fail": 180
+    }
+   }
+  },
+  "bv_decide?": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "bv_normalize": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 30,
+     "open": 180
+    }
+   }
+  },
+  "bv_omega": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 70,
+     "fail": 140
+    }
+   }
+  },
+  "by_cases": {
+   "arg": {
+    "class": "decomposer",
+    "counts": {
+     "fail": 970,
+     "open": 220
+    }
+   }
+  },
+  "calc": {
+   "arg": {
+    "class": "mixed",
+    "counts": {
+     "closed": 20,
+     "fail": 1110,
+     "open": 60
+    }
+   }
+  },
+  "cases": {
+   "arg": {
+    "class": "mixed",
+    "counts": {
+     "closed": 10,
+     "fail": 1080,
+     "open": 100
+    }
+   }
+  },
+  "cbv": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 26,
+     "open": 100
+    }
+   }
+  },
+  "change": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 1130,
+     "unchanged": 60
+    }
+   }
+  },
+  "clean_wf": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 20,
+     "open": 20,
+     "unchanged": 170
+    }
+   }
+  },
+  "clear": {
+   "arg": {
+    "class": "decomposer",
+    "counts": {
+     "fail": 1020,
+     "open": 170
+    }
+   }
+  },
+  "clear_value": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 1190
+    }
+   }
+  },
+  "congr": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 40,
+     "unchanged": 170
+    }
+   }
+  },
+  "constructor": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 30,
+     "fail": 90,
+     "open": 90
+    }
+   }
+  },
+  "contradiction": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 10,
+     "fail": 200
+    }
+   }
+  },
+  "cutsat": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 170,
+     "fail": 40
+    }
+   }
+  },
+  "decide": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 20,
+     "fail": 190
+    }
+   }
+  },
+  "decide_cbv": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 24,
+     "fail": 102
+    }
+   }
+  },
+  "decreasing_tactic": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 100,
+     "fail": 110
+    }
+   }
+  },
+  "decreasing_trivial": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 90,
+     "fail": 120
+    }
+   }
+  },
+  "decreasing_trivial_pre_omega": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "delta": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 490
+    }
+   }
+  },
+  "deriving_LawfulEq_tactic": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "deriving_LawfulEq_tactic_step": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 40,
+     "fail": 170
+    }
+   }
+  },
+  "deriving_ReflEq_tactic": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "done": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "dsimp": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 30,
+     "fail": 170,
+     "open": 10
+    }
+   }
+  },
+  "dsimp!": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 30,
+     "fail": 170,
+     "open": 10
+    }
+   }
+  },
+  "dsimp?": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 30,
+     "fail": 170,
+     "open": 10
+    }
+   }
+  },
+  "dsimp?!": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 30,
+     "fail": 170,
+     "open": 10
+    }
+   }
+  },
+  "eq_refl": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 30,
+     "fail": 180
+    }
+   }
+  },
+  "exact": {
+   "arg": {
+    "class": "closer",
+    "counts": {
+     "closed": 10,
+     "fail": 1180
+    }
+   }
+  },
+  "exact?": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 160,
+     "fail": 50
+    }
+   }
+  },
+  "exact_mod_cast": {
+   "arg": {
+    "class": "closer",
+    "counts": {
+     "closed": 10,
+     "fail": 1180
+    }
+   }
+  },
+  "exfalso": {
+   "bare": {
+    "class": "decomposer",
+    "counts": {
+     "open": 210
+    }
+   }
+  },
+  "exists": {
+   "arg": {
+    "class": "closer",
+    "counts": {
+     "closed": 10,
+     "fail": 1180
+    }
+   }
+  },
+  "expose_names": {
+   "bare": {
+    "class": "decomposer",
+    "counts": {
+     "open": 210
+    }
+   }
+  },
+  "ext": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 490
+    }
+   },
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "ext1": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 490
+    }
+   },
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "extract_lets": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 490
+    }
+   },
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "fail": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "false_or_by_contra": {
+   "bare": {
+    "class": "decomposer",
+    "counts": {
+     "open": 210
+    }
+   }
+  },
+  "fun_cases": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 1190
+    }
+   }
+  },
+  "fun_induction": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 1190
+    }
+   }
+  },
+  "funext": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 1190
+    }
+   },
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "unchanged": 210
+    }
+   }
+  },
+  "get_elem_tactic": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 110,
+     "fail": 100
+    }
+   }
+  },
+  "get_elem_tactic_extensible": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 110,
+     "fail": 100
+    }
+   }
+  },
+  "get_elem_tactic_trivial": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "grind": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 170,
+     "fail": 40
+    }
+   }
+  },
+  "grind?": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 206,
+     "fail": 4
+    }
+   }
+  },
+  "grind_linarith": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 102,
+     "fail": 24
+    }
+   }
+  },
+  "grind_order": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 102,
+     "fail": 24
+    }
+   }
+  },
+  "grobner": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 170,
+     "fail": 40
+    }
+   }
+  },
+  "guard_hyp": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 210,
+     "unchanged": 490
+    }
+   }
+  },
+  "induction": {
+   "arg": {
+    "class": "mixed",
+    "counts": {
+     "closed": 10,
+     "fail": 1080,
+     "open": 100
+    }
+   }
+  },
+  "infer_instance": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "injection": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 1190
+    }
+   }
+  },
+  "injections": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 490
+    }
+   },
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 10,
+     "unchanged": 200
+    }
+   }
+  },
+  "intro": {
+   "arg": {
+    "class": "decomposer",
+    "counts": {
+     "fail": 1170,
+     "open": 20
+    }
+   },
+   "bare": {
+    "class": "decomposer",
+    "counts": {
+     "fail": 200,
+     "open": 10
+    }
+   }
+  },
+  "intros": {
+   "arg": {
+    "class": "decomposer",
+    "counts": {
+     "fail": 470,
+     "open": 20
+    }
+   },
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "unchanged": 210
+    }
+   }
+  },
+  "left": {
+   "bare": {
+    "class": "decomposer",
+    "counts": {
+     "fail": 180,
+     "open": 30
+    }
+   }
+  },
+  "let_to_have": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "lia": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 136,
+     "fail": 32
+    }
+   }
+  },
+  "lift_lets": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "massumption": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mcases": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mclear": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 490
+    }
+   },
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mconstructor": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mexact": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 1190
+    }
+   },
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mexfalso": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mexists": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 1190
+    }
+   },
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mframe": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mhave": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mintro": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 490
+    }
+   },
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mleave": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 50,
+     "open": 10,
+     "unchanged": 150
+    }
+   }
+  },
+  "mleft": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mpure": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 490
+    }
+   },
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mpure_intro": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mrefine": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 700
+    }
+   },
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mrename_i": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 490
+    }
+   },
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mreplace": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mrevert": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 490
+    }
+   },
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mright": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mspec": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 1190
+    }
+   },
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mspec_no_bind": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 1190
+    }
+   },
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mspec_no_simp": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 1190
+    }
+   },
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mspecialize": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 980
+    }
+   },
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mspecialize_pure": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mstart": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mstop": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mvcgen": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "mvcgen'": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 6,
+     "fail": 1,
+     "open": 35
+    }
+   }
+  },
+  "mvcgen?": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "unchanged": 210
+    }
+   }
+  },
+  "mvcgen_trivial": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 80,
+     "unchanged": 130
+    }
+   }
+  },
+  "mvcgen_trivial_extensible": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "native_decide": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 20,
+     "fail": 190
+    }
+   }
+  },
+  "nofun": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "nomatch": {
+   "arg": {
+    "class": "closer",
+    "counts": {
+     "closed": 10,
+     "fail": 1180
+    }
+   }
+  },
+  "norm_cast": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 80,
+     "unchanged": 130
+    }
+   }
+  },
+  "norm_cast0": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "unchanged": 210
+    }
+   }
+  },
+  "obtain": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 490
+    }
+   },
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "omega": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 60,
+     "fail": 150
+    }
+   }
+  },
+  "push_cast": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 10,
+     "unchanged": 200
+    }
+   }
+  },
+  "rcases": {
+   "arg": {
+    "class": "mixed",
+    "counts": {
+     "closed": 10,
+     "fail": 1080,
+     "open": 100
+    }
+   },
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "unchanged": 210
+    }
+   }
+  },
+  "refine": {
+   "arg": {
+    "class": "mixed",
+    "counts": {
+     "closed": 10,
+     "fail": 1100,
+     "open": 80
+    }
+   }
+  },
+  "refine'": {
+   "arg": {
+    "class": "mixed",
+    "counts": {
+     "closed": 10,
+     "fail": 1100,
+     "open": 80
+    }
+   }
+  },
+  "refine_lift": {
+   "arg": {
+    "class": "mixed",
+    "counts": {
+     "closed": 10,
+     "fail": 1100,
+     "open": 80
+    }
+   }
+  },
+  "refine_lift'": {
+   "arg": {
+    "class": "mixed",
+    "counts": {
+     "closed": 10,
+     "fail": 1100,
+     "open": 80
+    }
+   }
+  },
+  "rename_i": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 490
+    }
+   }
+  },
+  "revert": {
+   "arg": {
+    "class": "decomposer",
+    "counts": {
+     "fail": 700,
+     "open": 490
+    }
+   }
+  },
+  "rfl": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 30,
+     "fail": 180
+    }
+   }
+  },
+  "rfl'": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 30,
+     "fail": 180
+    }
+   }
+  },
+  "right": {
+   "bare": {
+    "class": "decomposer",
+    "counts": {
+     "fail": 170,
+     "open": 40
+    }
+   }
+  },
+  "rintro": {
+   "arg": {
+    "class": "decomposer",
+    "counts": {
+     "fail": 470,
+     "open": 20
+    }
+   }
+  },
+  "rotate_left": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "unchanged": 210
+    }
+   }
+  },
+  "rotate_right": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "unchanged": 210
+    }
+   }
+  },
+  "run_tac": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 1190
+    }
+   }
+  },
+  "rw?": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 40,
+     "fail": 70,
+     "open": 100
+    }
+   }
+  },
+  "show": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 1130,
+     "unchanged": 60
+    }
+   }
+  },
+  "simp": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 70,
+     "fail": 100,
+     "open": 40
+    }
+   }
+  },
+  "simp!": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 70,
+     "fail": 100,
+     "open": 40
+    }
+   }
+  },
+  "simp?": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 70,
+     "fail": 100,
+     "open": 40
+    }
+   }
+  },
+  "simp?!": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 70,
+     "fail": 100,
+     "open": 40
+    }
+   }
+  },
+  "simp_all": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 180,
+     "fail": 10,
+     "open": 20
+    }
+   }
+  },
+  "simp_all!": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 180,
+     "fail": 10,
+     "open": 20
+    }
+   }
+  },
+  "simp_all?": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 180,
+     "fail": 10,
+     "open": 20
+    }
+   }
+  },
+  "simp_all?!": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 180,
+     "fail": 10,
+     "open": 20
+    }
+   }
+  },
+  "simp_all_arith": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "simp_all_arith!": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "simp_arith": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "simp_arith!": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "simp_wf": {
+   "bare": {
+    "class": "mixed",
+    "counts": {
+     "closed": 70,
+     "open": 40,
+     "unchanged": 100
+    }
+   }
+  },
+  "simpa": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 90,
+     "fail": 120
+    }
+   }
+  },
+  "simpa!": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 90,
+     "fail": 120
+    }
+   }
+  },
+  "simpa?": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 90,
+     "fail": 120
+    }
+   }
+  },
+  "simpa?!": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 90,
+     "fail": 120
+    }
+   }
+  },
+  "sizeOf_list_dec": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "skip": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "unchanged": 210
+    }
+   }
+  },
+  "solve_by_elim": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 170,
+     "fail": 40
+    }
+   }
+  },
+  "sorry": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "sorry": 210
+    }
+   }
+  },
+  "specialize": {
+   "arg": {
+    "class": "decomposer",
+    "counts": {
+     "fail": 650,
+     "open": 540
+    }
+   }
+  },
+  "split": {
+   "arg": {
+    "class": "inert",
+    "counts": {
+     "fail": 1190
+    }
+   },
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "subst": {
+   "arg": {
+    "class": "decomposer",
+    "counts": {
+     "fail": 1160,
+     "open": 30
+    }
+   }
+  },
+  "subst_eqs": {
+   "bare": {
+    "class": "decomposer",
+    "counts": {
+     "open": 10,
+     "unchanged": 200
+    }
+   }
+  },
+  "subst_vars": {
+   "bare": {
+    "class": "decomposer",
+    "counts": {
+     "open": 10,
+     "unchanged": 200
+    }
+   }
+  },
+  "suggest_premises": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 21
+    }
+   }
+  },
+  "suggestions": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "unchanged": 189
+    }
+   }
+  },
+  "symm": {
+   "bare": {
+    "class": "decomposer",
+    "counts": {
+     "fail": 90,
+     "open": 120
+    }
+   }
+  },
+  "symm_saturate": {
+   "bare": {
+    "class": "decomposer",
+    "counts": {
+     "open": 20,
+     "unchanged": 190
+    }
+   }
+  },
+  "trace_state": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "unchanged": 210
+    }
+   }
+  },
+  "trivial": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 80,
+     "fail": 130
+    }
+   }
+  },
+  "try?": {
+   "bare": {
+    "class": "closer",
+    "counts": {
+     "closed": 180,
+     "fail": 30
+    }
+   }
+  },
+  "try_suggestions": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 210
+    }
+   }
+  },
+  "vcgen": {
+   "bare": {
+    "class": "inert",
+    "counts": {
+     "fail": 21
+    }
+   }
+  }
+ },
+ "present": {
+  "ac_nf": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "ac_nf0": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "ac_rfl": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "admit": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "all_goals": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "and_intros": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "any_goals": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "apply": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "apply?": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "apply_assumption": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "apply_ext_theorem": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "apply_mod_cast": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "apply_rfl": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "apply_rules": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "array_get_dec": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "array_mem_dec": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "as_aux_lemma": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "assumption": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "assumption_mod_cast": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "attempt_all": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "attempt_all_par": [
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "bv_check": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "bv_decide": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "bv_decide?": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "bv_normalize": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "bv_omega": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "by_cases": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "calc": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "case": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "case'": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "cases": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "cbv": [
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "change": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "classical": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "clean_wf": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "clear": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "clear_value": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "congr": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "constructor": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "contradiction": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "conv": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "conv'": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "cutsat": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "dbg_trace": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "decide": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "decide_cbv": [
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "decreasing_tactic": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "decreasing_trivial": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "decreasing_trivial_pre_omega": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "decreasing_with": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "delta": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "deriving_LawfulEq_tactic": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "deriving_LawfulEq_tactic_step": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "deriving_ReflEq_tactic": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "done": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "dsimp": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "dsimp!": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "dsimp?": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "dsimp?!": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "eq_refl": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "erw": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "exact": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "exact?": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "exact_mod_cast": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "exfalso": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "exists": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "expose_names": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "ext": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "ext1": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "extract_lets": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "fail": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "fail_if_success": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "false_or_by_contra": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "first": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "first_par": [
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "focus": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "fun_cases": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "fun_induction": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "funext": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "generalize": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "get_elem_tactic": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "get_elem_tactic_extensible": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "get_elem_tactic_trivial": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "grind": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "grind?": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "grind_linarith": [
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "grind_order": [
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "grobner": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "guard_expr": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "guard_hyp": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "guard_target": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "have": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "have'": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "haveI": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "ident": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "if": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "impossible": [
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "induction": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "infer_instance": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "injection": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "injections": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "intro": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "intros": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "iterate": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "left": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "let": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "let'": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "letI": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "let_to_have": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "lia": [
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "lift_lets": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "massumption": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "match": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mcases": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mclear": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mconstructor": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mdup": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mexact": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mexfalso": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mexists": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mframe": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mhave": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mintro": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mleave": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mleft": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mpure": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mpure_intro": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mrefine": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mrename_i": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mreplace": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mrevert": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mright": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mspec": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mspec_no_bind": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mspec_no_simp": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mspecialize": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mspecialize_pure": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mstart": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mstop": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mvcgen": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mvcgen'": [
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0"
+  ],
+  "mvcgen?": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mvcgen_trivial": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "mvcgen_trivial_extensible": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "native_decide": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "next": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "nofun": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "nomatch": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "norm_cast": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "norm_cast0": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "obtain": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "omega": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "open": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "push_cast": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "rcases": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "refine": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "refine'": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "refine_lift": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "refine_lift'": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "rename": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "rename_i": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "repeat": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "repeat'": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "repeat1'": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "replace": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "revert": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "rewrite": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "rfl": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "rfl'": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "right": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "rintro": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "rotate_left": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "rotate_right": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "run_tac": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "rw": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "rw?": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "rw_mod_cast": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "rwa": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "set_option": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "show": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "show_term": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "simp": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "simp!": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "simp?": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "simp?!": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "simp_all": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "simp_all!": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "simp_all?": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "simp_all?!": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "simp_all_arith": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "simp_all_arith!": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "simp_arith": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "simp_arith!": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "simp_wf": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "simpa": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "simpa!": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "simpa?": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "simpa?!": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "sizeOf_list_dec": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "skip": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "sleep": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "solve": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "solve_by_elim": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "sorry": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "specialize": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "split": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "stop": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "subst": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "subst_eqs": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "subst_vars": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "suffices": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "suggest_premises": [
+   "leanprover--lean4---v4.25.0"
+  ],
+  "suggestions": [
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "sym": [
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "symm": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "symm_saturate": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "trace": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "trace_state": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "trivial": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "try": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "try?": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "try_suggestions": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "unhygienic": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "vcgen": [
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "with_implicit": [
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "with_reducible": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "with_reducible_and_instances": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "with_unfolding_all": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "with_unfolding_none": [
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "«$»": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "«(»": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "«.»": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "«{»": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "«·»": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "«∎»": [
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ]
+ },
+ "skipped_hung": {
+  "unfold": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "wait_for_unblock_async": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ]
+ },
+ "combinators": {
+  "rotate_left": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "any_goals": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "all_goals": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "repeat": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ],
+  "repeat'": [
+   "leanprover--lean4---v4.25.0",
+   "leanprover--lean4---v4.26.0",
+   "leanprover--lean4---v4.27.0",
+   "leanprover--lean4---v4.28.0",
+   "leanprover--lean4---v4.29.0",
+   "leanprover--lean4---v4.29.1",
+   "leanprover--lean4---v4.30.0",
+   "leanprover--lean4---v4.31.0",
+   "leanprover--lean4---v4.32.0",
+   "leanprover--lean4---v4.33.0-rc2"
+  ]
+ }
+}

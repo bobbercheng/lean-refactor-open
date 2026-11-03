@@ -1,0 +1,156 @@
+{
+ "arklib-v4.28.0": {
+  "exists": true,
+  "commit": "673fa440714eb1949b8b50a28f2a4f52b1837e9b",
+  "toolchain": "leanprover/lean4:v4.28.0",
+  "lake_dir_size": "7.4G",
+  "modules": {
+   "ArkLib/ProofSystem/Binius/BinaryBasefold/Prelude": true
+  },
+  "ok": true
+ },
+ "arklib-v4.29.0": {
+  "exists": true,
+  "commit": "de71a9dfd2f5a343e8895517b7efe857d9f1ce5c",
+  "toolchain": "leanprover/lean4:v4.29.0",
+  "lake_dir_size": "8.1G",
+  "modules": {
+   "ArkLib/Data/CodingTheory/ProximityGap/DG25/MainResults": true,
+   "ArkLib/ProofSystem/Binius/BinaryBasefold/Prelude": true
+  },
+  "ok": true
+ },
+ "arklib-v4.30.0": {
+  "exists": true,
+  "commit": "e6d77b18ca1334a91faf4d1ccf9f96d854d58ba4",
+  "toolchain": "leanprover/lean4:v4.30.0",
+  "lake_dir_size": "8.5G",
+  "modules": {
+   "ArkLib/Data/CodingTheory/ProximityGap/DG25/MainResults": true,
+   "ArkLib/ProofSystem/Binius/BinaryBasefold/Prelude": true
+  },
+  "ok": true
+ },
+ "arklib-v4.31.0": {
+  "exists": true,
+  "commit": "c1712f6c496d0aef04f09bae42aec13811b3273f",
+  "toolchain": "leanprover/lean4:v4.31.0",
+  "lake_dir_size": "8.3G",
+  "modules": {
+   "ArkLib/Data/CodingTheory/ProximityGap/DG25/MainResults": true,
+   "ArkLib/ProofSystem/Binius/BinaryBasefold/Prelude": true
+  },
+  "ok": true
+ },
+ "cslib-v4.30.0": {
+  "exists": true,
+  "commit": "c7944a9fb44c3298f1a960a5e574ab23a6ab8ed5",
+  "toolchain": "leanprover/lean4:v4.30.0",
+  "lake_dir_size": "7.5G",
+  "modules": {
+   "Cslib/Languages/CombinatoryLogic/Confluence": true
+  },
+  "ok": true
+ },
+ "cslib-v4.31.0": {
+  "exists": true,
+  "commit": "8ea71c8df91acd63285515a04da952b23b78d266",
+  "toolchain": "leanprover/lean4:v4.31.0",
+  "lake_dir_size": "7.4G",
+  "modules": {
+   "Cslib/Languages/CCS/BehaviouralTheory": true,
+   "Cslib/Languages/CombinatoryLogic/Confluence": true,
+   "Cslib/Languages/LambdaCalculus/LocallyNameless/Fsub/Safety": true
+  },
+  "ok": true
+ },
+ "cslib-v4.32.0": {
+  "exists": true,
+  "commit": "197a7be621263b84c67ca4f803f69205b36d06df",
+  "toolchain": "leanprover/lean4:v4.32.0",
+  "lake_dir_size": "7.8G",
+  "modules": {
+   "Cslib/Languages/CCS/BehaviouralTheory": true,
+   "Cslib/Languages/CombinatoryLogic/Confluence": true,
+   "Cslib/Languages/LambdaCalculus/LocallyNameless/Fsub/Safety": true
+  },
+  "ok": true
+ },
+ "cslib-v4.33.0-rc2": {
+  "exists": true,
+  "commit": "3aa9d4416c185e0b9faeb72bbd65abe85b95dbcc",
+  "toolchain": "leanprover/lean4:v4.33.0-rc2",
+  "lake_dir_size": "7.9G",
+  "modules": {
+   "Cslib/Languages/CCS/BehaviouralTheory": true,
+   "Cslib/Languages/CombinatoryLogic/Confluence": true,
+   "Cslib/Languages/LambdaCalculus/LocallyNameless/Fsub/Safety": true
+  },
+  "ok": true
+ },
+ "mathlib-v4.25.0": {
+  "exists": true,
+  "commit": "1ccd71f89cbbd82ae7d097723ce1722ca7b01c33",
+  "toolchain": "leanprover/lean4:v4.25.0",
+  "lake_dir_size": "5.9G",
+  "ok": true
+ },
+ "mathlib-v4.26.0": {
+  "exists": true,
+  "commit": "2df2f0150c275ad53cb3c90f7c98ec15a56a1a67",
+  "toolchain": "leanprover/lean4:v4.26.0",
+  "lake_dir_size": "6.3G",
+  "ok": true
+ },
+ "mathlib-v4.27.0": {
+  "exists": true,
+  "commit": "a3a10db0e9d66acbebf76c5e6a135066525ac900",
+  "toolchain": "leanprover/lean4:v4.27.0",
+  "lake_dir_size": "6.3G",
+  "ok": true
+ },
+ "physlib-v4.32.0": {
+  "exists": true,
+  "commit": "c48433678e8fb6306ebcd48453300c8e16058a62",
+  "toolchain": "leanprover/lean4:v4.32.0",
+  "lake_dir_size": "8.1G",
+  "modules": {
+   "Physlib/Electromagnetism/Dynamics/IsExtrema": true,
+   "Physlib/Mathematics/VariationalCalculus/Basic": true,
+   "Physlib/QFT/PerturbationTheory/WickAlgebra/TimeOrder": true
+  },
+  "ok": true
+ },
+ "strata-v4.26.0": {
+  "exists": true,
+  "commit": "451e5f047bafa010d178856db76c00029bfa4d7f",
+  "toolchain": "leanprover/lean4:v4.26.0",
+  "lake_dir_size": "110M",
+  "modules": {
+   "Strata/Languages/Core/StatementSemanticsProps": true,
+   "Strata/Transform/CallElimCorrect": true
+  },
+  "ok": true
+ },
+ "strata-v4.27.0": {
+  "exists": true,
+  "commit": "4348c65a93a3b57b1a4541991ed2d2fcdd9fa35d",
+  "toolchain": "leanprover/lean4:v4.27.0",
+  "lake_dir_size": "353M",
+  "modules": {
+   "Strata/Languages/Core/StatementSemanticsProps": true
+  },
+  "ok": true
+ },
+ "strata-v4.29.1": {
+  "exists": true,
+  "commit": "384e22374e0872095ad9c6f74c5998c09cfd93a9",
+  "toolchain": "leanprover/lean4:v4.29.1",
+  "lake_dir_size": "330M",
+  "modules": {
+   "Strata/Languages/Core/StatementSemanticsProps": true
+  },
+  "ok": true
+ },
+ "_generated": "2026-10-06T03:14:46Z"
+}

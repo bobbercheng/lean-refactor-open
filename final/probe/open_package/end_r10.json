@@ -1,0 +1,62 @@
+{
+ "name": "r10-open-package",
+ "description": "The closed final's end-stage method (b71-final END_CONFIG probe/b63/r10_candidate.json, method keys verbatim) for the open package's eager end pipeline r10 rounds (harness/open_package.EndPipe, harness/endstage_r10.py); the pipeline scales budgets.sweep.seconds / budgets.tools.seconds to each round's clock. $0: no model call. Provenance: docs/open_package_audit.md section G (operator ruling 2026-10-31).",
+ "families": [
+  "t1",
+  "t2",
+  "t3",
+  "t4",
+  "t5",
+  "t6",
+  "t7",
+  "t8",
+  "golf"
+ ],
+ "sweep": true,
+ "crossover": true,
+ "k": 6,
+ "prefer": "direct",
+ "budgets": {
+  "sweep": {
+   "compiles": 600,
+   "seconds": 1800
+  },
+  "tools": {
+   "compiles": 600,
+   "seconds": 1800
+  },
+  "passes": 2,
+  "max_per_op": null
+ },
+ "caps": {
+  "t3": 200,
+  "t4": 60,
+  "t5": 60,
+  "t6": 40,
+  "t7": 40,
+  "t8": 40,
+  "golf": 40
+ },
+ "fail_cache": null,
+ "screen": {
+  "on": true,
+  "k": 24,
+  "depth": 2
+ },
+ "ops": {
+  "t1": [
+   "t1:proj",
+   "t1:projapp",
+   "t1:inline",
+   "t1:hole",
+   "t1:hole2"
+  ]
+ },
+ "opt_in": [
+  "golf:trailarg",
+  "golf:casewrap",
+  "golf:dot"
+ ],
+ "t3_suggest": "rule",
+ "ctx": {}
+}

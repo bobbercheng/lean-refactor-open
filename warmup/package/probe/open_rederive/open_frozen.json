@@ -1,0 +1,217 @@
+{
+ "name": "open-frozen",
+ "description": "Open-track end stage re-derived from non-benchmark evidence (docs/open_tools_rederive.md); provenance in probe/open_rederive/provenance/.",
+ "families": [
+  "hp",
+  "t3",
+  "t1",
+  "t2",
+  "t4",
+  "gr",
+  "hr"
+ ],
+ "sweep": true,
+ "crossover": true,
+ "k": 1000000,
+ "prefer": "direct",
+ "budgets": {
+  "sweep": {
+   "compiles": 1000000,
+   "seconds": null
+  },
+  "tools": {
+   "compiles": 1000000,
+   "seconds": null
+  },
+  "passes": 1000,
+  "max_per_op": null
+ },
+ "caps": {},
+ "fail_cache": null,
+ "screen": {
+  "on": true,
+  "k": 48,
+  "depth": 2
+ },
+ "ops": {
+  "hp": [
+   "hp:cert",
+   "hp:prune"
+  ],
+  "t3": [
+   "t3:hint",
+   "t3:d1",
+   "t3:d2"
+  ],
+  "t1": [
+   "t1:proj",
+   "t1:inline",
+   "t1:hole",
+   "t1:hole2"
+  ],
+  "t2": [
+   "t2:intros",
+   "t2:introdestr",
+   "t2:funintro",
+   "t2:chain",
+   "t2:try2pos"
+  ],
+  "t4": [
+   "t4:intro",
+   "t4:rcases",
+   "t4:all"
+  ],
+  "gr": [
+   "gr:tail-closer",
+   "gr:arg-underscore",
+   "gr:wit-underscore",
+   "gr:inline-have",
+   "gr:obtain-proj",
+   "gr:bullet-merge",
+   "gr:bullet-hoist",
+   "gr:by-exact",
+   "gr:eta-lam",
+   "gr:rwa",
+   "gr:simpa",
+   "gr:refine-constructor"
+  ],
+  "hr": [
+   "hr:lemmavariant"
+  ]
+ },
+ "opt_in": [],
+ "t3_suggest": "rule",
+ "ctx": {
+  "t3": {
+   "t3_ops": [
+    "t3:d1",
+    "t3:hint",
+    "t3:d2"
+   ]
+  }
+ },
+ "accept": {
+  "hb_eps": 10,
+  "min_gain": 0.010554,
+  "screen_hb": 20,
+  "screen_frac": 0.000317
+ },
+ "tunables": {
+  "harness.sweep": {
+   "MAX_PER_OP": 64
+  },
+  "harness.hb_rewrite": {
+   "SPEC_CAP": 8,
+   "PREORDER_CAP": 4,
+   "CLEAR_CAP": 8,
+   "VARIANT_CAP": 1,
+   "VARIANT_SITES": 16
+  },
+  "harness.tools.t1_compress": {
+   "MAX_PER_OP": 80,
+   "PER_SITE": 4,
+   "PAIR_TOP": 16,
+   "MAX_USES": 6
+  },
+  "harness.tools.t2_schedule": {
+   "MAX_PER_OP": 64,
+   "SITE_CAP": 300,
+   "MAX_ROT": 24,
+   "MAX_EITHER": 8
+  },
+  "harness.tools.t3_reclose": {
+   "TOP_SPANS": 16,
+   "D2_TOTAL": 128,
+   "MAX_SUFFIX": 8,
+   "MAX_OWN_TOKENS": 32,
+   "TIMEOUT_MULT": 1.512,
+   "MIN_TIMEOUT_S": 10,
+   "DEFAULT_TIMEOUT_S": 16
+  },
+  "harness.tools.t4_nameless": {
+   "MAX_PER_OP": 4,
+   "PROBE_MAX_SITES": 4,
+   "PROBE_MAX_FILES": 4
+  },
+  "harness.gap_rules": {
+   "DEFAULT_CAPS": {
+    "arg-underscore": 8,
+    "bullet-hoist": 1,
+    "bullet-merge": 2,
+    "by-exact": 8,
+    "eta-lam": 16,
+    "inline-have": 4,
+    "obtain-proj": 8,
+    "refine-constructor": 8,
+    "rwa": 4,
+    "simpa": 4,
+    "tail-closer": 48,
+    "wit-underscore": 8
+   }
+  },
+  "harness.tools.t3_suggest": {
+   "PROBE_K": 20,
+   "PROBE_MAX_FILES": 4,
+   "PROBE_HB_SEARCH": 50465,
+   "PROBE_EXTRA_S": 8
+  }
+ },
+ "tables": "probe/open_rederive/open_tables.json",
+ "entries": {
+  "sweep:swap": [
+   "apply -> exact",
+   "cases -> induction",
+   "cases -> rcases",
+   "exact -> apply",
+   "rcases -> cases",
+   "simp_all -> simp at *"
+  ],
+  "sweep:combdrop": [
+   "all_goals",
+   "any_goals",
+   "try"
+  ],
+  "sweep:ctorshort": [
+   "And.intro -> constructor",
+   "Iff.intro -> constructor",
+   "rule: .refl / .rfl -> rfl"
+  ],
+  "hr:lemmavariant": [
+   "'",
+   "namespace"
+  ]
+ },
+ "order": [
+  "hp",
+  "t3",
+  "t1",
+  "t2",
+  "t4",
+  "gr",
+  "hr"
+ ],
+ "drop_ops": [
+  "hr:anyiftry",
+  "hr:exists2refine",
+  "hr:firstorder",
+  "hr:intromerge",
+  "hr:nilarg",
+  "hr:nthrw",
+  "hr:repeatrw",
+  "hr:withreducible",
+  "sweep:assumpswap",
+  "sweep:bycontra",
+  "sweep:cleararg",
+  "sweep:flagdrop",
+  "sweep:gendrop",
+  "sweep:nth2plain",
+  "sweep:refine'",
+  "sweep:rwa2rewrite",
+  "sweep:rwfinal",
+  "sweep:substhoist"
+ ],
+ "r5": {
+  "env": "LRA_END_STAGE_SECONDS",
+  "sweep_share": 0.1
+ }
+}

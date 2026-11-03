@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# `vastai` scoped to ONE instance (b96, 2026-10-31): the official on-demand box and the p85b bid box bill on ONE vast account, and
+# infra/vast/spend_guard.sh destroys EVERY listed instance on a stop reason. Put this directory first on PATH (infra/vast/official_ondemand.sh
+# passes it as LRA_FAKE_VAST_BIN=<this dir>[:<fake dir>], which common.sh prepends) with LRA_SCOPE_ID=<id>: `show instances` then lists only
+# that instance, so the guard, destroy.sh and package_watch.sh see (and can destroy) only the official box. Every other call passes through
+# unchanged to the next `vastai` on PATH (the real CLI, or the $0 dry run's fake). Fail-closed: without LRA_SCOPE_ID, `show instances` fails
+# (exit 2) instead of listing every instance (the guard then logs "vast unreadable" every poll and destroys nothing).
+set -u
+SELF=$(cd "$(dirname "$0")" && pwd)
+NEXT=""; IFS=: read -r -a P <<< "$PATH"
+for d in "${P[@]}"; do [ -n "$d" ] && [ "$(cd "$d" 2>/dev/null && pwd)" != "$SELF" ] && [ -x "$d/vastai" ] && { NEXT=$d/vastai; break; }; done
+[ -n "$NEXT" ] || { echo "scoped vastai: no other vastai on PATH" >&2; exit 127; }
+if [ "${1:-} ${2:-}" = "show instances" ]; then
+  case "${LRA_SCOPE_ID:-}" in ''|*[!0-9]*) echo "scoped vastai: LRA_SCOPE_ID unset or not numeric: refusing to list instances" >&2; exit 2;; esac
+  J=$("$NEXT" "$@") || exit $?
+  printf '%s' "$J" | python3 -c '
+import json, sys
+sid = int(sys.argv[1])
+try:
+    rows = json.load(sys.stdin)
+except Exception:
+    sys.exit(3)   # unreadable stays unreadable (the guard treats it as such)
+print(json.dumps([r for r in rows if isinstance(r, dict) and r.get("id") == sid] if isinstance(rows, list) else rows))' "$LRA_SCOPE_ID"
+  exit $?
+fi
+exec "$NEXT" "$@"

@@ -1,0 +1,228 @@
+{
+ "strata-v4.31.0": {
+  "repo": "strata",
+  "url": "https://github.com/strata-org/Strata",
+  "commit": "33faa3268be189ae1891bd7c061471e1fa8aad82",
+  "modules": [
+   "Strata.Languages.Core.StatementSemanticsProps",
+   "Strata.DL.Lambda.Denote.LExprDenoteProps",
+   "Strata.DL.Lambda.Denote.LExprDenote",
+   "Strata.DL.Lambda.Semantics",
+   "Strata.DL.Lambda.Denote.LExprDenoteSubst",
+   "Strata.DL.Lambda.Denote.LExprAnnotated",
+   "Strata.DL.Lambda.Denote.LExprDenoteConstrs"
+  ],
+  "cache": false
+ },
+ "strata-v4.27.0": {
+  "repo": "strata",
+  "url": "https://github.com/strata-org/Strata",
+  "commit": "4348c65a93a3b57b1a4541991ed2d2fcdd9fa35d",
+  "modules": [
+   "Strata.Languages.Core.StatementSemanticsProps",
+   "Strata.DL.Lambda.Denote.LExprDenoteProps",
+   "Strata.DL.Lambda.Denote.LExprDenote",
+   "Strata.DL.Lambda.Semantics",
+   "Strata.DL.Lambda.Denote.LExprDenoteSubst",
+   "Strata.DL.Lambda.Denote.LExprAnnotated",
+   "Strata.DL.Lambda.Denote.LExprDenoteConstrs"
+  ],
+  "cache": false
+ },
+ "strata-v4.26.0": {
+  "repo": "strata",
+  "url": "https://github.com/strata-org/Strata",
+  "commit": "451e5f047bafa010d178856db76c00029bfa4d7f",
+  "modules": [
+   "Strata.Languages.Core.StatementSemanticsProps"
+  ],
+  "cache": false
+ },
+ "physlib-v4.34.1": {
+  "repo": "physlib",
+  "url": "https://github.com/leanprover-community/physlib",
+  "commit": "9b22984adeb0ed3d15e8ccc9cd5aea2c790b5687",
+  "modules": [
+   "Physlib.StringTheory.FTheory.SU5.Charges.Viable",
+   "Physlib.Relativity.PauliMatrices.Relations",
+   "Physlib.Electromagnetism.Dynamics.IsExtrema",
+   "Physlib.QFT.PerturbationTheory.WickAlgebra.TimeOrder",
+   "Physlib.Mathematics.VariationalCalculus.Basic",
+   "QuantumInfo.ForMathlib.HermitianMat.LogExp",
+   "QuantumInfo.ForMathlib.Majorization"
+  ],
+  "cache": true
+ },
+ "physlib-v4.34.0": {
+  "repo": "physlib",
+  "url": "https://github.com/leanprover-community/physlib",
+  "commit": "58d73ebd01edb1c5caa3ea5db07b0245afe93cb0",
+  "modules": [
+   "Physlib.StringTheory.FTheory.SU5.Charges.Viable",
+   "Physlib.Relativity.PauliMatrices.Relations",
+   "Physlib.Electromagnetism.Dynamics.IsExtrema",
+   "Physlib.QFT.PerturbationTheory.WickAlgebra.TimeOrder",
+   "Physlib.Mathematics.VariationalCalculus.Basic",
+   "QuantumInfo.ForMathlib.HermitianMat.LogExp",
+   "QuantumInfo.ForMathlib.Majorization"
+  ],
+  "cache": true
+ },
+ "cslib-v4.34.1": {
+  "repo": "cslib",
+  "url": "https://github.com/leanprover/cslib",
+  "commit": "7c8f6c0f67015df29b152fdcffaf7850db2e9185",
+  "modules": [
+   "Cslib.Languages.LambdaCalculus.LocallyNameless.Fsub.Safety",
+   "Cslib.Languages.CombinatoryLogic.Confluence",
+   "Cslib.Languages.CCS.BehaviouralTheory",
+   "Cslib.Computability.Distributed.FLP.PseudoConsensus",
+   "Cslib.Computability.Distributed.FLP.OnePseudoConsensus",
+   "Cslib.Computability.Distributed.FLP.CanReachVia",
+   "Cslib.Languages.LambdaCalculus.LocallyNameless.Untyped.FullBetaConfluence"
+  ],
+  "cache": true
+ },
+ "cslib-v4.33.1": {
+  "repo": "cslib",
+  "url": "https://github.com/leanprover/cslib",
+  "commit": "98e395a701f2027a413ad24729e1a11a6c772eb4",
+  "modules": [
+   "Cslib.Languages.LambdaCalculus.LocallyNameless.Fsub.Safety",
+   "Cslib.Languages.CombinatoryLogic.Confluence",
+   "Cslib.Languages.CCS.BehaviouralTheory",
+   "Cslib.Computability.Distributed.FLP.PseudoConsensus",
+   "Cslib.Computability.Languages.Congruences.BuchiCongruence",
+   "Cslib.Computability.Distributed.FLP.OnePseudoConsensus",
+   "Cslib.Foundations.Semantics.LTS.OmegaExecution",
+   "Cslib.Computability.Distributed.FLP.CanReachVia",
+   "Cslib.Languages.LambdaCalculus.LocallyNameless.Untyped.FullBetaConfluence"
+  ],
+  "cache": true
+ },
+ "cslib-v4.31.0": {
+  "repo": "cslib",
+  "url": "https://github.com/leanprover/cslib",
+  "commit": "8ea71c8df91acd63285515a04da952b23b78d266",
+  "modules": [
+   "Cslib.Languages.CCS.BehaviouralTheory",
+   "Cslib.Computability.Languages.Congruences.BuchiCongruence",
+   "Cslib.Foundations.Semantics.LTS.OmegaExecution"
+  ],
+  "cache": true
+ },
+ "cslib-v4.30.0": {
+  "repo": "cslib",
+  "url": "https://github.com/leanprover/cslib",
+  "commit": "c7944a9fb44c3298f1a960a5e574ab23a6ab8ed5",
+  "modules": [
+   "Cslib.Foundations.Semantics.LTS.OmegaExecution"
+  ],
+  "cache": true
+ },
+ "arklib-v4.34.0": {
+  "repo": "arklib",
+  "url": "https://github.com/Verified-zkEVM/ArkLib",
+  "commit": "fa14552d40e793f2ea26e65c440306aae0c08a26",
+  "modules": [
+   "ArkLib.Data.CodingTheory.ProximityGap.DG25.MainResults",
+   "ArkLib.Data.CodingTheory.PolishchukSpielman.Existence"
+  ],
+  "cache": true
+ },
+ "arklib-v4.33.1": {
+  "repo": "arklib",
+  "url": "https://github.com/Verified-zkEVM/ArkLib",
+  "commit": "3f3f045dd295834c262bd6f0d9dfdfee07cc8e76",
+  "modules": [
+   "ArkLib.Data.CodingTheory.ProximityGap.DG25.MainResults",
+   "ArkLib.ProofSystem.Stir.Combine",
+   "ArkLib.Data.CodingTheory.PolishchukSpielman.Existence"
+  ],
+  "cache": true
+ },
+ "arklib-v4.31.0": {
+  "repo": "arklib",
+  "url": "https://github.com/Verified-zkEVM/ArkLib",
+  "commit": "c1712f6c496d0aef04f09bae42aec13811b3273f",
+  "modules": [
+   "ArkLib.Data.CodingTheory.ProximityGap.DG25.MainResults",
+   "ArkLib.ProofSystem.Binius.BinaryBasefold.Prelude",
+   "ArkLib.ProofSystem.Stir.Combine",
+   "ArkLib.Data.CodingTheory.JohnsonBound.Basic",
+   "ArkLib.Data.CodingTheory.ProximityGap.AHIV22",
+   "ArkLib.Data.CodingTheory.ProximityGap.BCIKS20.AffineLines.BWMatrix",
+   "ArkLib.Data.CodingTheory.ProximityGap.BCIKS20.AffineLines.JointAgreement",
+   "ArkLib.ProofSystem.Sumcheck.Spec.SingleRound",
+   "ArkLib.Data.CodingTheory.PolishchukSpielman.Existence"
+  ],
+  "cache": true
+ },
+ "arklib-v4.30.0": {
+  "repo": "arklib",
+  "url": "https://github.com/Verified-zkEVM/ArkLib",
+  "commit": "e6d77b18ca1334a91faf4d1ccf9f96d854d58ba4",
+  "modules": [
+   "ArkLib.Data.CodingTheory.ProximityGap.DG25.MainResults",
+   "ArkLib.ProofSystem.Binius.BinaryBasefold.Prelude",
+   "ArkLib.ProofSystem.Stir.Combine",
+   "ArkLib.Data.CodingTheory.JohnsonBound.Basic",
+   "ArkLib.Data.CodingTheory.ProximityGap.AHIV22",
+   "ArkLib.Data.CodingTheory.ProximityGap.BCIKS20.AffineLines.BWMatrix",
+   "ArkLib.Data.CodingTheory.ProximityGap.BCIKS20.AffineLines.JointAgreement",
+   "ArkLib.ProofSystem.Sumcheck.Spec.SingleRound",
+   "ArkLib.Data.CodingTheory.PolishchukSpielman.Existence"
+  ],
+  "cache": true
+ },
+ "leanpool-v4.35.0-rc3": {
+  "repo": "leanpool",
+  "url": "https://github.com/LeanPool/lean-pool",
+  "commit": "630eb920bd1ec60f18dbd4e70f2d942f45725b04",
+  "modules": [
+   "LeanPool.Erdos132ConvexK3.TerminalColorClosure",
+   "LeanPool.DemazureOperatorsLean.Matsumoto",
+   "LeanPool.Vlasov.OT.WeakToLagrangian",
+   "LeanPool.ZetaZeros.MontgomeryTaylor.Reduction",
+   "LeanPool.LocalComplexGeometry.Analytic.ConstantRank",
+   "LeanPool.ClassificationOfSurfaces.Moise.ChartInductionCore",
+   "LeanPool.ClassificationOfSurfaces.Moise.PolygonalCrosscut",
+   "LeanPool.IsoGraph.Canon.Optimal",
+   "LeanPool.InfinitaryLogic.Methods.SchemaTermTruth",
+   "LeanPool.JacobianDiffgeo.CechCount.Count"
+  ],
+  "cache": true
+ },
+ "leanpool-v4.34.0": {
+  "repo": "leanpool",
+  "url": "https://github.com/LeanPool/lean-pool",
+  "commit": "38b8ba36899903cb7d3a42bb9f8a3f5c70fdb05f",
+  "modules": [
+   "LeanPool.Erdos132ConvexK3.TerminalColorClosure",
+   "LeanPool.DemazureOperatorsLean.Matsumoto",
+   "LeanPool.Vlasov.OT.WeakToLagrangian",
+   "LeanPool.ZetaZeros.MontgomeryTaylor.Reduction",
+   "LeanPool.LocalComplexGeometry.Analytic.ConstantRank",
+   "LeanPool.ClassificationOfSurfaces.Moise.ChartInductionCore",
+   "LeanPool.ClassificationOfSurfaces.Moise.PolygonalCrosscut",
+   "LeanPool.IsoGraph.Canon.Optimal",
+   "LeanPool.InfinitaryLogic.Methods.SchemaTermTruth",
+   "LeanPool.JacobianDiffgeo.CechCount.Count"
+  ],
+  "cache": true
+ },
+ "mathlib-v4.27.0": {
+  "repo": "mathlib4",
+  "url": "https://github.com/leanprover-community/mathlib4",
+  "commit": "a3a10db0e9d66acbebf76c5e6a135066525ac900",
+  "modules": [],
+  "cache": true
+ },
+ "mathlib-v4.26.0": {
+  "repo": "mathlib4",
+  "url": "https://github.com/leanprover-community/mathlib4",
+  "commit": "2df2f0150c275ad53cb3c90f7c98ec15a56a1a67",
+  "modules": [],
+  "cache": true
+ }
+}

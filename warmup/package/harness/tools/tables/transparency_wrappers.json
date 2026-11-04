@@ -1,0 +1,671 @@
+{
+ "rule": "Every leading token of Lean core's `tactic` syntax category (Init + Lean; complete, nothing filtered by name) is run as `<token> <probe>` on the goal True, where the probe (transparency_query.lean) fails with the transparency setting it runs under (Lean.Meta.getTransparency); a token whose run reports a setting other than the bare probe's (the default) is a transparency wrapper, recorded with that setting, on every installed core toolchain. common = the wrappers present with the same setting on every toolchain, sorted from the least to the greatest setting by Lean's own TransparencyMode.lt (consistent on every toolchain). harness/sweep.py addwr inserts common[0]: the least transparency setting that every toolchain's tactic framework offers as a wrapper.",
+ "query": "python3 harness/tools/tables/gen_transparency.py: lean harness/tools/tables/transparency_query.lean (import Lean) on every installed core toolchain",
+ "generated_at": "2026-10-22T06:42:18Z",
+ "generator": "harness/tools/tables/gen_transparency.py",
+ "toolchains": [
+  "leanprover--lean4---v4.25.0",
+  "leanprover--lean4---v4.26.0",
+  "leanprover--lean4---v4.27.0",
+  "leanprover--lean4---v4.28.0",
+  "leanprover--lean4---v4.29.0",
+  "leanprover--lean4---v4.29.1",
+  "leanprover--lean4---v4.30.0",
+  "leanprover--lean4---v4.31.0",
+  "leanprover--lean4---v4.32.0",
+  "leanprover--lean4---v4.33.0-rc2"
+ ],
+ "toolchains_failed": {},
+ "per_toolchain": {
+  "leanprover--lean4---v4.25.0": {
+   "tokens": 223,
+   "default": "default",
+   "modes": [
+    "all",
+    "default",
+    "reducible",
+    "instances"
+   ],
+   "lt": [
+    [
+     "default",
+     "all"
+    ],
+    [
+     "instances",
+     "all"
+    ],
+    [
+     "instances",
+     "default"
+    ],
+    [
+     "reducible",
+     "all"
+    ],
+    [
+     "reducible",
+     "default"
+    ],
+    [
+     "reducible",
+     "instances"
+    ]
+   ],
+   "wrappers": {
+    "with_reducible": "reducible",
+    "with_reducible_and_instances": "instances",
+    "with_unfolding_all": "all"
+   }
+  },
+  "leanprover--lean4---v4.26.0": {
+   "tokens": 224,
+   "default": "default",
+   "modes": [
+    "all",
+    "default",
+    "reducible",
+    "instances"
+   ],
+   "lt": [
+    [
+     "default",
+     "all"
+    ],
+    [
+     "instances",
+     "all"
+    ],
+    [
+     "instances",
+     "default"
+    ],
+    [
+     "reducible",
+     "all"
+    ],
+    [
+     "reducible",
+     "default"
+    ],
+    [
+     "reducible",
+     "instances"
+    ]
+   ],
+   "wrappers": {
+    "with_reducible": "reducible",
+    "with_reducible_and_instances": "instances",
+    "with_unfolding_all": "all"
+   }
+  },
+  "leanprover--lean4---v4.27.0": {
+   "tokens": 226,
+   "default": "default",
+   "modes": [
+    "all",
+    "default",
+    "reducible",
+    "instances"
+   ],
+   "lt": [
+    [
+     "default",
+     "all"
+    ],
+    [
+     "instances",
+     "all"
+    ],
+    [
+     "instances",
+     "default"
+    ],
+    [
+     "reducible",
+     "all"
+    ],
+    [
+     "reducible",
+     "default"
+    ],
+    [
+     "reducible",
+     "instances"
+    ]
+   ],
+   "wrappers": {
+    "with_reducible": "reducible",
+    "with_reducible_and_instances": "instances",
+    "with_unfolding_all": "all"
+   }
+  },
+  "leanprover--lean4---v4.28.0": {
+   "tokens": 228,
+   "default": "default",
+   "modes": [
+    "all",
+    "default",
+    "reducible",
+    "instances",
+    "none"
+   ],
+   "lt": [
+    [
+     "default",
+     "all"
+    ],
+    [
+     "instances",
+     "all"
+    ],
+    [
+     "instances",
+     "default"
+    ],
+    [
+     "none",
+     "all"
+    ],
+    [
+     "none",
+     "default"
+    ],
+    [
+     "none",
+     "instances"
+    ],
+    [
+     "none",
+     "reducible"
+    ],
+    [
+     "reducible",
+     "all"
+    ],
+    [
+     "reducible",
+     "default"
+    ],
+    [
+     "reducible",
+     "instances"
+    ]
+   ],
+   "wrappers": {
+    "with_reducible": "reducible",
+    "with_reducible_and_instances": "instances",
+    "with_unfolding_all": "all",
+    "with_unfolding_none": "none"
+   }
+  },
+  "leanprover--lean4---v4.29.0": {
+   "tokens": 232,
+   "default": "default",
+   "modes": [
+    "all",
+    "default",
+    "reducible",
+    "instances",
+    "none"
+   ],
+   "lt": [
+    [
+     "default",
+     "all"
+    ],
+    [
+     "instances",
+     "all"
+    ],
+    [
+     "instances",
+     "default"
+    ],
+    [
+     "none",
+     "all"
+    ],
+    [
+     "none",
+     "default"
+    ],
+    [
+     "none",
+     "instances"
+    ],
+    [
+     "none",
+     "reducible"
+    ],
+    [
+     "reducible",
+     "all"
+    ],
+    [
+     "reducible",
+     "default"
+    ],
+    [
+     "reducible",
+     "instances"
+    ]
+   ],
+   "wrappers": {
+    "with_reducible": "reducible",
+    "with_reducible_and_instances": "instances",
+    "with_unfolding_all": "all",
+    "with_unfolding_none": "none"
+   }
+  },
+  "leanprover--lean4---v4.29.1": {
+   "tokens": 232,
+   "default": "default",
+   "modes": [
+    "all",
+    "default",
+    "reducible",
+    "instances",
+    "none"
+   ],
+   "lt": [
+    [
+     "default",
+     "all"
+    ],
+    [
+     "instances",
+     "all"
+    ],
+    [
+     "instances",
+     "default"
+    ],
+    [
+     "none",
+     "all"
+    ],
+    [
+     "none",
+     "default"
+    ],
+    [
+     "none",
+     "instances"
+    ],
+    [
+     "none",
+     "reducible"
+    ],
+    [
+     "reducible",
+     "all"
+    ],
+    [
+     "reducible",
+     "default"
+    ],
+    [
+     "reducible",
+     "instances"
+    ]
+   ],
+   "wrappers": {
+    "with_reducible": "reducible",
+    "with_reducible_and_instances": "instances",
+    "with_unfolding_all": "all",
+    "with_unfolding_none": "none"
+   }
+  },
+  "leanprover--lean4---v4.30.0": {
+   "tokens": 233,
+   "default": "default",
+   "modes": [
+    "all",
+    "default",
+    "reducible",
+    "instances",
+    "none"
+   ],
+   "lt": [
+    [
+     "default",
+     "all"
+    ],
+    [
+     "instances",
+     "all"
+    ],
+    [
+     "instances",
+     "default"
+    ],
+    [
+     "none",
+     "all"
+    ],
+    [
+     "none",
+     "default"
+    ],
+    [
+     "none",
+     "instances"
+    ],
+    [
+     "none",
+     "reducible"
+    ],
+    [
+     "reducible",
+     "all"
+    ],
+    [
+     "reducible",
+     "default"
+    ],
+    [
+     "reducible",
+     "instances"
+    ]
+   ],
+   "wrappers": {
+    "with_reducible": "reducible",
+    "with_reducible_and_instances": "instances",
+    "with_unfolding_all": "all",
+    "with_unfolding_none": "none"
+   }
+  },
+  "leanprover--lean4---v4.31.0": {
+   "tokens": 235,
+   "default": "default",
+   "modes": [
+    "all",
+    "default",
+    "reducible",
+    "instances",
+    "none"
+   ],
+   "lt": [
+    [
+     "default",
+     "all"
+    ],
+    [
+     "instances",
+     "all"
+    ],
+    [
+     "instances",
+     "default"
+    ],
+    [
+     "none",
+     "all"
+    ],
+    [
+     "none",
+     "default"
+    ],
+    [
+     "none",
+     "instances"
+    ],
+    [
+     "none",
+     "reducible"
+    ],
+    [
+     "reducible",
+     "all"
+    ],
+    [
+     "reducible",
+     "default"
+    ],
+    [
+     "reducible",
+     "instances"
+    ]
+   ],
+   "wrappers": {
+    "with_reducible": "reducible",
+    "with_reducible_and_instances": "instances",
+    "with_unfolding_all": "all",
+    "with_unfolding_none": "none"
+   }
+  },
+  "leanprover--lean4---v4.32.0": {
+   "tokens": 235,
+   "default": "default",
+   "modes": [
+    "all",
+    "default",
+    "reducible",
+    "instances",
+    "none"
+   ],
+   "lt": [
+    [
+     "default",
+     "all"
+    ],
+    [
+     "instances",
+     "all"
+    ],
+    [
+     "instances",
+     "default"
+    ],
+    [
+     "none",
+     "all"
+    ],
+    [
+     "none",
+     "default"
+    ],
+    [
+     "none",
+     "instances"
+    ],
+    [
+     "none",
+     "reducible"
+    ],
+    [
+     "reducible",
+     "all"
+    ],
+    [
+     "reducible",
+     "default"
+    ],
+    [
+     "reducible",
+     "instances"
+    ]
+   ],
+   "wrappers": {
+    "with_reducible": "reducible",
+    "with_reducible_and_instances": "instances",
+    "with_unfolding_all": "all",
+    "with_unfolding_none": "none"
+   }
+  },
+  "leanprover--lean4---v4.33.0-rc2": {
+   "tokens": 236,
+   "default": "default",
+   "modes": [
+    "all",
+    "default",
+    "reducible",
+    "instances",
+    "none",
+    "implicit"
+   ],
+   "lt": [
+    [
+     "default",
+     "all"
+    ],
+    [
+     "implicit",
+     "all"
+    ],
+    [
+     "implicit",
+     "default"
+    ],
+    [
+     "instances",
+     "all"
+    ],
+    [
+     "instances",
+     "default"
+    ],
+    [
+     "instances",
+     "implicit"
+    ],
+    [
+     "none",
+     "all"
+    ],
+    [
+     "none",
+     "default"
+    ],
+    [
+     "none",
+     "implicit"
+    ],
+    [
+     "none",
+     "instances"
+    ],
+    [
+     "none",
+     "reducible"
+    ],
+    [
+     "reducible",
+     "all"
+    ],
+    [
+     "reducible",
+     "default"
+    ],
+    [
+     "reducible",
+     "implicit"
+    ],
+    [
+     "reducible",
+     "instances"
+    ]
+   ],
+   "wrappers": {
+    "with_implicit": "implicit",
+    "with_reducible": "reducible",
+    "with_reducible_and_instances": "instances",
+    "with_unfolding_all": "all",
+    "with_unfolding_none": "none"
+   }
+  }
+ },
+ "wrappers": {
+  "with_implicit": {
+   "modes": [
+    "implicit"
+   ],
+   "toolchains": [
+    "leanprover--lean4---v4.33.0-rc2"
+   ]
+  },
+  "with_reducible": {
+   "modes": [
+    "reducible"
+   ],
+   "toolchains": [
+    "leanprover--lean4---v4.25.0",
+    "leanprover--lean4---v4.26.0",
+    "leanprover--lean4---v4.27.0",
+    "leanprover--lean4---v4.28.0",
+    "leanprover--lean4---v4.29.0",
+    "leanprover--lean4---v4.29.1",
+    "leanprover--lean4---v4.30.0",
+    "leanprover--lean4---v4.31.0",
+    "leanprover--lean4---v4.32.0",
+    "leanprover--lean4---v4.33.0-rc2"
+   ]
+  },
+  "with_reducible_and_instances": {
+   "modes": [
+    "instances"
+   ],
+   "toolchains": [
+    "leanprover--lean4---v4.25.0",
+    "leanprover--lean4---v4.26.0",
+    "leanprover--lean4---v4.27.0",
+    "leanprover--lean4---v4.28.0",
+    "leanprover--lean4---v4.29.0",
+    "leanprover--lean4---v4.29.1",
+    "leanprover--lean4---v4.30.0",
+    "leanprover--lean4---v4.31.0",
+    "leanprover--lean4---v4.32.0",
+    "leanprover--lean4---v4.33.0-rc2"
+   ]
+  },
+  "with_unfolding_all": {
+   "modes": [
+    "all"
+   ],
+   "toolchains": [
+    "leanprover--lean4---v4.25.0",
+    "leanprover--lean4---v4.26.0",
+    "leanprover--lean4---v4.27.0",
+    "leanprover--lean4---v4.28.0",
+    "leanprover--lean4---v4.29.0",
+    "leanprover--lean4---v4.29.1",
+    "leanprover--lean4---v4.30.0",
+    "leanprover--lean4---v4.31.0",
+    "leanprover--lean4---v4.32.0",
+    "leanprover--lean4---v4.33.0-rc2"
+   ]
+  },
+  "with_unfolding_none": {
+   "modes": [
+    "none"
+   ],
+   "toolchains": [
+    "leanprover--lean4---v4.28.0",
+    "leanprover--lean4---v4.29.0",
+    "leanprover--lean4---v4.29.1",
+    "leanprover--lean4---v4.30.0",
+    "leanprover--lean4---v4.31.0",
+    "leanprover--lean4---v4.32.0",
+    "leanprover--lean4---v4.33.0-rc2"
+   ]
+  }
+ },
+ "common": [
+  {
+   "token": "with_reducible",
+   "mode": "reducible",
+   "rank": 0
+  },
+  {
+   "token": "with_reducible_and_instances",
+   "mode": "instances",
+   "rank": 1
+  },
+  {
+   "token": "with_unfolding_all",
+   "mode": "all",
+   "rank": 2
+  }
+ ]
+}

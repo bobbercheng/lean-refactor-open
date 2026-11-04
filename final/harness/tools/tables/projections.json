@@ -1,0 +1,10159 @@
+{
+"generated_at": "2026-10-22T04:06:53Z",
+"generator": "harness/tools/tables/gen_projections.py",
+"names": {
+"Equiv": {
+"other": 1,
+"proj": 1
+},
+"IsPlausibleStep": {
+"other": 3,
+"proj": 1
+},
+"Map": {
+"other": 2,
+"proj": 2
+},
+"Property": {
+"other": 0,
+"proj": 1
+},
+"SSubset": {
+"other": 0,
+"proj": 1
+},
+"Set": {
+"other": 1,
+"proj": 2
+},
+"Subset": {
+"other": 3,
+"proj": 1
+},
+"abbreviationDict": {
+"other": 2,
+"proj": 1
+},
+"abstractProof": {
+"other": 0,
+"proj": 1
+},
+"ac": {
+"other": 1,
+"proj": 1
+},
+"acSteps": {
+"other": 0,
+"proj": 1
+},
+"acc": {
+"other": 3,
+"proj": 1
+},
+"accessed": {
+"other": 0,
+"proj": 1
+},
+"add": {
+"other": 41,
+"proj": 1
+},
+"add_assoc": {
+"other": 20,
+"proj": 3
+},
+"add_comm": {
+"other": 21,
+"proj": 7
+},
+"add_eq_zero_symm": {
+"other": 2,
+"proj": 1
+},
+"add_le_left_iff": {
+"other": 0,
+"proj": 1
+},
+"add_left_cancel": {
+"other": 3,
+"proj": 1
+},
+"add_one_nsmul": {
+"other": 0,
+"proj": 1
+},
+"add_right_cancel": {
+"other": 3,
+"proj": 2
+},
+"add_zero": {
+"other": 21,
+"proj": 4
+},
+"add_zsmul": {
+"other": 1,
+"proj": 1
+},
+"all": {
+"other": 25,
+"proj": 1
+},
+"allEq": {
+"other": 0,
+"proj": 1
+},
+"allowAutoName": {
+"other": 0,
+"proj": 1
+},
+"allowSynthFailures": {
+"other": 0,
+"proj": 1
+},
+"and": {
+"other": 5,
+"proj": 1
+},
+"andThen": {
+"other": 0,
+"proj": 1
+},
+"antisymm": {
+"other": 9,
+"proj": 1
+},
+"append": {
+"other": 18,
+"proj": 1
+},
+"appliedArgs": {
+"other": 0,
+"proj": 1
+},
+"approx": {
+"other": 0,
+"proj": 1
+},
+"arbitrary": {
+"other": 1,
+"proj": 2
+},
+"arg": {
+"other": 2,
+"proj": 1
+},
+"argInfoAttr": {
+"other": 2,
+"proj": 1
+},
+"args": {
+"other": 1,
+"proj": 3
+},
+"arith": {
+"other": 0,
+"proj": 1
+},
+"arity": {
+"other": 1,
+"proj": 1
+},
+"array": {
+"other": 1,
+"proj": 2
+},
+"assoc": {
+"other": 0,
+"proj": 2
+},
+"asymm": {
+"other": 6,
+"proj": 1
+},
+"attrName": {
+"other": 0,
+"proj": 1
+},
+"attrs": {
+"other": 0,
+"proj": 2
+},
+"autoUnfold": {
+"other": 0,
+"proj": 2
+},
+"beq": {
+"other": 57,
+"proj": 3
+},
+"beqEq": {
+"other": 0,
+"proj": 1
+},
+"beq_iff": {
+"other": 1,
+"proj": 1
+},
+"beq_iff_le_and_ge": {
+"other": 1,
+"proj": 2
+},
+"beta": {
+"other": 0,
+"proj": 2
+},
+"bind": {
+"other": 13,
+"proj": 1
+},
+"bind_assoc": {
+"other": 2,
+"proj": 1
+},
+"bind_map": {
+"other": 1,
+"proj": 1
+},
+"bind_mono_left": {
+"other": 0,
+"proj": 1
+},
+"bind_mono_right": {
+"other": 0,
+"proj": 1
+},
+"bind_pure_comp": {
+"other": 2,
+"proj": 1
+},
+"bitVecOfNat": {
+"other": 0,
+"proj": 1
+},
+"bot": {
+"other": 3,
+"proj": 1
+},
+"bot_le": {
+"other": 2,
+"proj": 2
+},
+"bvars": {
+"other": 0,
+"proj": 1
+},
+"byteIdx": {
+"other": 0,
+"proj": 1
+},
+"byteSize": {
+"other": 0,
+"proj": 1
+},
+"cache": {
+"other": 0,
+"proj": 1
+},
+"canonHeartbeats": {
+"other": 0,
+"proj": 1
+},
+"carrier": {
+"other": 0,
+"proj": 4
+},
+"catchRuntime": {
+"other": 0,
+"proj": 1
+},
+"cfg": {
+"other": 0,
+"proj": 1
+},
+"changeNumeral": {
+"other": 1,
+"proj": 1
+},
+"children": {
+"other": 0,
+"proj": 1
+},
+"choice": {
+"other": 3,
+"proj": 2
+},
+"choice_eq": {
+"other": 1,
+"proj": 2
+},
+"className": {
+"other": 0,
+"proj": 1
+},
+"clean": {
+"other": 0,
+"proj": 1
+},
+"closePost": {
+"other": 0,
+"proj": 1
+},
+"closePre": {
+"other": 0,
+"proj": 1
+},
+"cmd": {
+"other": 0,
+"proj": 1
+},
+"codisjoint": {
+"other": 0,
+"proj": 1
+},
+"coe": {
+"other": 2,
+"proj": 17
+},
+"coe_injective'": {
+"other": 0,
+"proj": 3
+},
+"coeffs": {
+"other": 0,
+"proj": 1
+},
+"comm": {
+"other": 7,
+"proj": 2
+},
+"commands": {
+"other": 0,
+"proj": 1
+},
+"comp_map": {
+"other": 3,
+"proj": 1
+},
+"compare": {
+"other": 0,
+"proj": 1
+},
+"compare_eq_compareOfLessAndEq": {
+"other": 0,
+"proj": 1
+},
+"compare_eq_iff_beq": {
+"other": 1,
+"proj": 1
+},
+"compare_self": {
+"other": 1,
+"proj": 1
+},
+"compl": {
+"other": 5,
+"proj": 2
+},
+"complement": {
+"other": 10,
+"proj": 1
+},
+"computedKeys": {
+"other": 0,
+"proj": 1
+},
+"config": {
+"other": 2,
+"proj": 1
+},
+"congrConsts": {
+"other": 0,
+"proj": 1
+},
+"conn": {
+"other": 0,
+"proj": 1
+},
+"const": {
+"other": 7,
+"proj": 1
+},
+"constToUnfold": {
+"other": 0,
+"proj": 1
+},
+"contextual": {
+"other": 0,
+"proj": 1
+},
+"countdown": {
+"other": 0,
+"proj": 1
+},
+"ctx": {
+"other": 0,
+"proj": 2
+},
+"ctxI": {
+"other": 0,
+"proj": 1
+},
+"currColumn": {
+"other": 0,
+"proj": 1
+},
+"currMacroScope": {
+"other": 0,
+"proj": 1
+},
+"currPos": {
+"other": 0,
+"proj": 6
+},
+"currRecDepth": {
+"other": 0,
+"proj": 1
+},
+"currentGoal": {
+"other": 0,
+"proj": 1
+},
+"cwd": {
+"other": 0,
+"proj": 1
+},
+"d": {
+"other": 0,
+"proj": 1
+},
+"dList": {
+"other": 0,
+"proj": 1
+},
+"data": {
+"other": 4,
+"proj": 3
+},
+"debug": {
+"other": 0,
+"proj": 1
+},
+"decLe": {
+"other": 15,
+"proj": 1
+},
+"decLt": {
+"other": 15,
+"proj": 1
+},
+"decidableLE": {
+"other": 3,
+"proj": 3
+},
+"decidableLT": {
+"other": 3,
+"proj": 3
+},
+"decide": {
+"other": 10,
+"proj": 2
+},
+"declName": {
+"other": 0,
+"proj": 2
+},
+"decls": {
+"other": 0,
+"proj": 1
+},
+"default": {
+"other": 81,
+"proj": 1
+},
+"den": {
+"other": 0,
+"proj": 1
+},
+"den_nz": {
+"other": 1,
+"proj": 1
+},
+"dense": {
+"other": 0,
+"proj": 1
+},
+"descend": {
+"other": 0,
+"proj": 1
+},
+"detailed": {
+"other": 0,
+"proj": 1
+},
+"disch": {
+"other": 0,
+"proj": 1
+},
+"disjoint": {
+"other": 0,
+"proj": 1
+},
+"distrib": {
+"other": 0,
+"proj": 1
+},
+"div": {
+"other": 19,
+"proj": 1
+},
+"div_eq_mul_inv": {
+"other": 1,
+"proj": 2
+},
+"doTranslateAttr": {
+"other": 2,
+"proj": 1
+},
+"doc": {
+"other": 0,
+"proj": 1
+},
+"dontTranslate": {
+"other": 0,
+"proj": 1
+},
+"down": {
+"other": 2,
+"proj": 3
+},
+"dropPrefix?": {
+"other": 4,
+"proj": 1
+},
+"dropSuffix?": {
+"other": 4,
+"proj": 1
+},
+"dsimp": {
+"other": 2,
+"proj": 1
+},
+"dvd": {
+"other": 0,
+"proj": 1
+},
+"eList": {
+"other": 0,
+"proj": 1
+},
+"eNew": {
+"other": 0,
+"proj": 1
+},
+"elemsAndSeps": {
+"other": 0,
+"proj": 2
+},
+"elts": {
+"other": 0,
+"proj": 1
+},
+"ematch": {
+"other": 0,
+"proj": 1
+},
+"emptyCollection": {
+"other": 0,
+"proj": 1
+},
+"endExclusive": {
+"other": 0,
+"proj": 1
+},
+"endTags": {
+"other": 0,
+"proj": 1
+},
+"endsWith": {
+"other": 3,
+"proj": 1
+},
+"env": {
+"other": 0,
+"proj": 1
+},
+"eq": {
+"other": 41,
+"proj": 3
+},
+"eq_append": {
+"other": 0,
+"proj": 2
+},
+"eq_of_beq": {
+"other": 0,
+"proj": 1
+},
+"eq_of_compare": {
+"other": 1,
+"proj": 2
+},
+"eq_of_succ?_eq": {
+"other": 1,
+"proj": 1
+},
+"eq_swap": {
+"other": 1,
+"proj": 1
+},
+"eta": {
+"other": 8,
+"proj": 2
+},
+"etaExpand": {
+"other": 0,
+"proj": 1
+},
+"etaStruct": {
+"other": 0,
+"proj": 3
+},
+"eval": {
+"other": 4,
+"proj": 1
+},
+"evalOp": {
+"other": 0,
+"proj": 1
+},
+"evalVar": {
+"other": 0,
+"proj": 1
+},
+"execution": {
+"other": 0,
+"proj": 1
+},
+"existing": {
+"other": 0,
+"proj": 1
+},
+"exists_add_of_le": {
+"other": 1,
+"proj": 1
+},
+"exists_gt": {
+"other": 0,
+"proj": 1
+},
+"exists_isCompl": {
+"other": 0,
+"proj": 1
+},
+"exists_lt": {
+"other": 1,
+"proj": 1
+},
+"exists_not_ge": {
+"other": 0,
+"proj": 1
+},
+"exists_not_le": {
+"other": 0,
+"proj": 1
+},
+"exists_pair_ne": {
+"other": 1,
+"proj": 1
+},
+"exists_zpow_surjective": {
+"other": 1,
+"proj": 1
+},
+"exists_zsmul_surjective": {
+"other": 1,
+"proj": 1
+},
+"exitCode": {
+"other": 0,
+"proj": 1
+},
+"exp": {
+"other": 2,
+"proj": 1
+},
+"expandMacro?": {
+"other": 1,
+"proj": 1
+},
+"expandedMacroDecls": {
+"other": 0,
+"proj": 0
+},
+"expectedType?": {
+"other": 0,
+"proj": 1
+},
+"expr": {
+"other": 1,
+"proj": 3
+},
+"expr?": {
+"other": 0,
+"proj": 1
+},
+"ext": {
+"other": 91,
+"proj": 1
+},
+"extAll": {
+"other": 0,
+"proj": 1
+},
+"extraGoals": {
+"other": 0,
+"proj": 2
+},
+"failIfUnchanged": {
+"other": 0,
+"proj": 2
+},
+"failure": {
+"other": 3,
+"proj": 1
+},
+"failureCache": {
+"other": 0,
+"proj": 1
+},
+"false": {
+"other": 3,
+"proj": 1
+},
+"fileName": {
+"other": 1,
+"proj": 1
+},
+"findArgs": {
+"other": 0,
+"proj": 1
+},
+"finite": {
+"other": 0,
+"proj": 5
+},
+"float": {
+"other": 0,
+"proj": 1
+},
+"flush": {
+"other": 1,
+"proj": 1
+},
+"fn": {
+"other": 0,
+"proj": 3
+},
+"foldState": {
+"other": 0,
+"proj": 1
+},
+"forIn": {
+"other": 6,
+"proj": 2
+},
+"forIn'": {
+"other": 4,
+"proj": 1
+},
+"forM": {
+"other": 7,
+"proj": 1
+},
+"form": {
+"other": 0,
+"proj": 1
+},
+"format": {
+"other": 6,
+"proj": 1
+},
+"fst": {
+"other": 10,
+"proj": 5
+},
+"fullyApplied": {
+"other": 0,
+"proj": 1
+},
+"funArgId": {
+"other": 0,
+"proj": 1
+},
+"funCC": {
+"other": 0,
+"proj": 1
+},
+"funOrigin": {
+"other": 0,
+"proj": 1
+},
+"funPropName": {
+"other": 0,
+"proj": 4
+},
+"funext": {
+"other": 1,
+"proj": 1
+},
+"fvars": {
+"other": 0,
+"proj": 1
+},
+"gc": {
+"other": 0,
+"proj": 2
+},
+"gen": {
+"other": 0,
+"proj": 1
+},
+"get": {
+"other": 24,
+"proj": 3
+},
+"getContext": {
+"other": 0,
+"proj": 1
+},
+"getCurrMacroScope": {
+"other": 0,
+"proj": 1
+},
+"getCurrNamespace": {
+"other": 1,
+"proj": 1
+},
+"getElem": {
+"other": 2,
+"proj": 1
+},
+"getElem!": {
+"other": 0,
+"proj": 1
+},
+"getElem!_def": {
+"other": 0,
+"proj": 1
+},
+"getElem?": {
+"other": 0,
+"proj": 1
+},
+"getElem?_def": {
+"other": 0,
+"proj": 1
+},
+"getLine": {
+"other": 1,
+"proj": 1
+},
+"getNGen": {
+"other": 0,
+"proj": 1
+},
+"getRef": {
+"other": 0,
+"proj": 1
+},
+"givenName": {
+"other": 0,
+"proj": 1
+},
+"goals": {
+"other": 0,
+"proj": 3
+},
+"grind": {
+"other": 3,
+"proj": 1
+},
+"ground": {
+"other": 0,
+"proj": 1
+},
+"group": {
+"other": 1,
+"proj": 1
+},
+"guessNameData": {
+"other": 0,
+"proj": 1
+},
+"h": {
+"other": 0,
+"proj": 1
+},
+"hAdd": {
+"other": 0,
+"proj": 1
+},
+"hAnd": {
+"other": 0,
+"proj": 1
+},
+"hAndThen": {
+"other": 0,
+"proj": 1
+},
+"hAppend": {
+"other": 0,
+"proj": 1
+},
+"hDiv": {
+"other": 0,
+"proj": 1
+},
+"hMod": {
+"other": 0,
+"proj": 1
+},
+"hMul": {
+"other": 0,
+"proj": 1
+},
+"hOr": {
+"other": 0,
+"proj": 1
+},
+"hOrElse": {
+"other": 0,
+"proj": 1
+},
+"hPow": {
+"other": 0,
+"proj": 1
+},
+"hSMul": {
+"other": 0,
+"proj": 1
+},
+"hShiftLeft": {
+"other": 0,
+"proj": 1
+},
+"hShiftRight": {
+"other": 0,
+"proj": 1
+},
+"hSub": {
+"other": 0,
+"proj": 1
+},
+"hVAdd": {
+"other": 0,
+"proj": 1
+},
+"hXor": {
+"other": 0,
+"proj": 1
+},
+"harder": {
+"other": 0,
+"proj": 1
+},
+"hasDecl": {
+"other": 1,
+"proj": 1
+},
+"has_csup": {
+"other": 0,
+"proj": 1
+},
+"has_sup": {
+"other": 0,
+"proj": 1
+},
+"hash": {
+"other": 17,
+"proj": 1
+},
+"hash_eq": {
+"other": 1,
+"proj": 1
+},
+"hdPos": {
+"other": 0,
+"proj": 1
+},
+"hdiv": {
+"other": 0,
+"proj": 1
+},
+"head": {
+"other": 8,
+"proj": 1
+},
+"header": {
+"other": 1,
+"proj": 1
+},
+"himp": {
+"other": 0,
+"proj": 1
+},
+"himp_bot": {
+"other": 1,
+"proj": 1
+},
+"himp_eq": {
+"other": 2,
+"proj": 1
+},
+"hinv": {
+"other": 0,
+"proj": 1
+},
+"hnot": {
+"other": 0,
+"proj": 1
+},
+"hqWidth": {
+"other": 0,
+"proj": 1
+},
+"hrLtDivisor": {
+"other": 0,
+"proj": 1
+},
+"hrWidth": {
+"other": 0,
+"proj": 1
+},
+"hwn_lt": {
+"other": 0,
+"proj": 1
+},
+"hwrn": {
+"other": 0,
+"proj": 1
+},
+"hypothesisFVarId": {
+"other": 0,
+"proj": 1
+},
+"hypothesisGoal": {
+"other": 0,
+"proj": 1
+},
+"i": {
+"other": 0,
+"proj": 1
+},
+"id_map": {
+"other": 1,
+"proj": 1
+},
+"idem": {
+"other": 0,
+"proj": 1
+},
+"idempotent": {
+"other": 0,
+"proj": 1
+},
+"idx": {
+"other": 0,
+"proj": 2
+},
+"ignoreArgsAttr": {
+"other": 2,
+"proj": 1
+},
+"impProof": {
+"other": 0,
+"proj": 1
+},
+"implicationHyp": {
+"other": 0,
+"proj": 1
+},
+"implicitDefEqProofs": {
+"other": 0,
+"proj": 1
+},
+"implicits": {
+"other": 0,
+"proj": 1
+},
+"imported": {
+"other": 0,
+"proj": 1
+},
+"incomp_trans": {
+"other": 0,
+"proj": 1
+},
+"indent": {
+"other": 0,
+"proj": 1
+},
+"index": {
+"other": 0,
+"proj": 2
+},
+"inf": {
+"other": 6,
+"proj": 2
+},
+"inf_compl_le_bot": {
+"other": 0,
+"proj": 1
+},
+"inf_inf_sdiff": {
+"other": 1,
+"proj": 1
+},
+"inf_le_left": {
+"other": 1,
+"proj": 2
+},
+"inf_le_right": {
+"other": 1,
+"proj": 2
+},
+"inheritEnv": {
+"other": 0,
+"proj": 1
+},
+"inj": {
+"other": 374,
+"proj": 1
+},
+"inj'": {
+"other": 0,
+"proj": 1
+},
+"injective'": {
+"other": 0,
+"proj": 1
+},
+"inner": {
+"other": 0,
+"proj": 6
+},
+"insert": {
+"other": 14,
+"proj": 1
+},
+"insert_empty_eq": {
+"other": 0,
+"proj": 1
+},
+"inst": {
+"other": 0,
+"proj": 2
+},
+"instances": {
+"other": 1,
+"proj": 1
+},
+"insts": {
+"other": 0,
+"proj": 1
+},
+"intCast": {
+"other": 13,
+"proj": 2
+},
+"intCast_neg": {
+"other": 13,
+"proj": 1
+},
+"intCast_ofNat": {
+"other": 12,
+"proj": 1
+},
+"inter": {
+"other": 4,
+"proj": 1
+},
+"internalRepresentation": {
+"other": 0,
+"proj": 1
+},
+"internalState": {
+"other": 0,
+"proj": 2
+},
+"intersection": {
+"other": 0,
+"proj": 8
+},
+"inv": {
+"other": 3,
+"proj": 2
+},
+"invFun": {
+"other": 1,
+"proj": 1
+},
+"inv_eq_of_mul": {
+"other": 0,
+"proj": 1
+},
+"inv_inv": {
+"other": 3,
+"proj": 2
+},
+"inv_mul_cancel": {
+"other": 3,
+"proj": 1
+},
+"inv_one": {
+"other": 2,
+"proj": 2
+},
+"inv_zero": {
+"other": 1,
+"proj": 1
+},
+"invariant": {
+"other": 0,
+"proj": 1
+},
+"iota": {
+"other": 0,
+"proj": 2
+},
+"irrefl": {
+"other": 5,
+"proj": 1
+},
+"isComm": {
+"other": 0,
+"proj": 1
+},
+"isCustom": {
+"other": 0,
+"proj": 1
+},
+"isDecl": {
+"other": 0,
+"proj": 1
+},
+"isDefault": {
+"other": 0,
+"proj": 2
+},
+"isDual": {
+"other": 0,
+"proj": 1
+},
+"isFirst": {
+"other": 0,
+"proj": 1
+},
+"isGE_compare": {
+"other": 3,
+"proj": 2
+},
+"isIdem": {
+"other": 0,
+"proj": 1
+},
+"isLE_compare": {
+"other": 3,
+"proj": 2
+},
+"isLE_trans": {
+"other": 1,
+"proj": 1
+},
+"isLt": {
+"other": 2,
+"proj": 1
+},
+"isNeutral": {
+"other": 0,
+"proj": 1
+},
+"isNotation": {
+"other": 0,
+"proj": 1
+},
+"isPlausibleStep_eq_eq": {
+"other": 0,
+"proj": 1
+},
+"isPrefix": {
+"other": 0,
+"proj": 2
+},
+"isRelLowerSet'": {
+"other": 0,
+"proj": 1
+},
+"isRelUpperSet'": {
+"other": 0,
+"proj": 1
+},
+"isSimp": {
+"other": 0,
+"proj": 1
+},
+"isSome_succ?": {
+"other": 1,
+"proj": 1
+},
+"isTty": {
+"other": 1,
+"proj": 1
+},
+"isValid": {
+"other": 2,
+"proj": 1
+},
+"isValidForSlice": {
+"other": 1,
+"proj": 1
+},
+"isValidUTF8": {
+"other": 0,
+"proj": 1
+},
+"isValidUTF8_extract_zero": {
+"other": 0,
+"proj": 1
+},
+"isValid_offsetBy": {
+"other": 0,
+"proj": 1
+},
+"is_comm": {
+"other": 0,
+"proj": 2
+},
+"iseqv": {
+"other": 0,
+"proj": 1
+},
+"it": {
+"other": 0,
+"proj": 7
+},
+"iterMInternal": {
+"other": 0,
+"proj": 1
+},
+"it₁": {
+"other": 0,
+"proj": 1
+},
+"it₂": {
+"other": 0,
+"proj": 1
+},
+"k": {
+"other": 0,
+"proj": 1
+},
+"kernel": {
+"other": 0,
+"proj": 1
+},
+"key": {
+"other": 1,
+"proj": 1
+},
+"keys": {
+"other": 0,
+"proj": 1
+},
+"labelledStars": {
+"other": 0,
+"proj": 1
+},
+"labelledStars?": {
+"other": 0,
+"proj": 1
+},
+"lawful": {
+"other": 0,
+"proj": 2
+},
+"lawfulOrderOrd": {
+"other": 0,
+"proj": 1
+},
+"lawful_toArrayMapped": {
+"other": 0,
+"proj": 1
+},
+"lax": {
+"other": 0,
+"proj": 1
+},
+"lctx": {
+"other": 0,
+"proj": 2
+},
+"le": {
+"other": 27,
+"proj": 4
+},
+"le_antisymm": {
+"other": 25,
+"proj": 6
+},
+"le_himp_iff": {
+"other": 1,
+"proj": 1
+},
+"le_iff": {
+"other": 5,
+"proj": 2
+},
+"le_inf": {
+"other": 2,
+"proj": 2
+},
+"le_l_u": {
+"other": 0,
+"proj": 1
+},
+"le_min_iff": {
+"other": 2,
+"proj": 1
+},
+"le_rawEndPos": {
+"other": 0,
+"proj": 2
+},
+"le_refl": {
+"other": 28,
+"proj": 3
+},
+"le_sup_inf": {
+"other": 1,
+"proj": 1
+},
+"le_sup_left": {
+"other": 1,
+"proj": 1
+},
+"le_sup_right": {
+"other": 1,
+"proj": 1
+},
+"le_top": {
+"other": 1,
+"proj": 2
+},
+"le_total": {
+"other": 26,
+"proj": 5
+},
+"le_trans": {
+"other": 29,
+"proj": 3
+},
+"least?": {
+"other": 0,
+"proj": 1
+},
+"least?_le": {
+"other": 1,
+"proj": 1
+},
+"left": {
+"other": 7,
+"proj": 3
+},
+"left_comm": {
+"other": 0,
+"proj": 1
+},
+"left_distrib": {
+"other": 4,
+"proj": 1
+},
+"left_id": {
+"other": 0,
+"proj": 1
+},
+"left_inv": {
+"other": 0,
+"proj": 2
+},
+"lemmaType": {
+"other": 0,
+"proj": 1
+},
+"letToHave": {
+"other": 2,
+"proj": 1
+},
+"lhs": {
+"other": 1,
+"proj": 3
+},
+"lia": {
+"other": 2,
+"proj": 1
+},
+"lift": {
+"other": 20,
+"proj": 1
+},
+"liftBind_bind": {
+"other": 0,
+"proj": 1
+},
+"liftBind_pure": {
+"other": 0,
+"proj": 1
+},
+"liftWith": {
+"other": 0,
+"proj": 2
+},
+"lift_bind": {
+"other": 2,
+"proj": 1
+},
+"lift_pure": {
+"other": 2,
+"proj": 1
+},
+"linarith": {
+"other": 1,
+"proj": 1
+},
+"list": {
+"other": 0,
+"proj": 2
+},
+"localInsts": {
+"other": 0,
+"proj": 1
+},
+"lookahead": {
+"other": 0,
+"proj": 1
+},
+"lower": {
+"other": 1,
+"proj": 6
+},
+"lower'": {
+"other": 0,
+"proj": 1
+},
+"lowerBound": {
+"other": 0,
+"proj": 1
+},
+"lt": {
+"other": 22,
+"proj": 4
+},
+"lt_iff": {
+"other": 8,
+"proj": 5
+},
+"lt_iff_le_not_ge": {
+"other": 1,
+"proj": 1
+},
+"macroScope": {
+"other": 0,
+"proj": 1
+},
+"main": {
+"other": 1,
+"proj": 1
+},
+"mainArgs": {
+"other": 0,
+"proj": 2
+},
+"mainSubgoals": {
+"other": 0,
+"proj": 1
+},
+"mainVar": {
+"other": 0,
+"proj": 1
+},
+"makesNewMVars": {
+"other": 0,
+"proj": 2
+},
+"map": {
+"other": 40,
+"proj": 2
+},
+"mapConst": {
+"other": 0,
+"proj": 1
+},
+"mapFind?": {
+"other": 0,
+"proj": 2
+},
+"mapInsert": {
+"other": 0,
+"proj": 2
+},
+"map_add": {
+"other": 3,
+"proj": 1
+},
+"map_add'": {
+"other": 0,
+"proj": 2
+},
+"map_const": {
+"other": 3,
+"proj": 1
+},
+"map_le_map_iff": {
+"other": 0,
+"proj": 1
+},
+"map_mul": {
+"other": 3,
+"proj": 1
+},
+"map_mul'": {
+"other": 0,
+"proj": 2
+},
+"map_one": {
+"other": 3,
+"proj": 1
+},
+"map_one'": {
+"other": 0,
+"proj": 1
+},
+"map_pure": {
+"other": 1,
+"proj": 1
+},
+"map_refl'": {
+"other": 0,
+"proj": 1
+},
+"map_rel": {
+"other": 1,
+"proj": 1
+},
+"map_rel'": {
+"other": 0,
+"proj": 1
+},
+"map_rel_iff'": {
+"other": 0,
+"proj": 2
+},
+"map_trans'": {
+"other": 0,
+"proj": 1
+},
+"map_zero": {
+"other": 3,
+"proj": 1
+},
+"map_zero'": {
+"other": 0,
+"proj": 1
+},
+"matchEqs": {
+"other": 0,
+"proj": 1
+},
+"max": {
+"other": 8,
+"proj": 4
+},
+"maxArgs": {
+"other": 0,
+"proj": 1
+},
+"maxDischargeDepth": {
+"other": 0,
+"proj": 1
+},
+"maxRecDepth": {
+"other": 0,
+"proj": 1
+},
+"maxSteps": {
+"other": 1,
+"proj": 2
+},
+"maxTransitionDepth": {
+"other": 0,
+"proj": 1
+},
+"max_def": {
+"other": 4,
+"proj": 1
+},
+"max_eq": {
+"other": 1,
+"proj": 2
+},
+"max_eq_left": {
+"other": 4,
+"proj": 1
+},
+"max_eq_or": {
+"other": 3,
+"proj": 1
+},
+"max_eq_right": {
+"other": 4,
+"proj": 1
+},
+"max_le_iff": {
+"other": 2,
+"proj": 1
+},
+"mayFail": {
+"other": 0,
+"proj": 1
+},
+"mbtc": {
+"other": 1,
+"proj": 1
+},
+"mctx": {
+"other": 0,
+"proj": 1
+},
+"mem": {
+"other": 7,
+"proj": 1
+},
+"mem_intersection_iff": {
+"other": 0,
+"proj": 8
+},
+"memoize": {
+"other": 0,
+"proj": 1
+},
+"merge": {
+"other": 4,
+"proj": 2
+},
+"methods": {
+"other": 0,
+"proj": 1
+},
+"min": {
+"other": 9,
+"proj": 4
+},
+"min_def": {
+"other": 4,
+"proj": 1
+},
+"min_eq": {
+"other": 1,
+"proj": 2
+},
+"min_eq_left": {
+"other": 4,
+"proj": 1
+},
+"min_eq_or": {
+"other": 2,
+"proj": 1
+},
+"min_eq_right": {
+"other": 4,
+"proj": 1
+},
+"missing": {
+"other": 1,
+"proj": 1
+},
+"mkMap": {
+"other": 0,
+"proj": 1
+},
+"mkSet": {
+"other": 0,
+"proj": 1
+},
+"mkSlice": {
+"other": 0,
+"proj": 9
+},
+"mkState": {
+"other": 0,
+"proj": 1
+},
+"mod": {
+"other": 13,
+"proj": 1
+},
+"modName": {
+"other": 0,
+"proj": 1
+},
+"modified": {
+"other": 0,
+"proj": 1
+},
+"modifyGet": {
+"other": 5,
+"proj": 2
+},
+"monadEval": {
+"other": 0,
+"proj": 2
+},
+"monadLift": {
+"other": 0,
+"proj": 2
+},
+"monadLift_bind": {
+"other": 0,
+"proj": 2
+},
+"monadLift_pure": {
+"other": 0,
+"proj": 2
+},
+"monadMap": {
+"other": 0,
+"proj": 2
+},
+"monotone'": {
+"other": 1,
+"proj": 1
+},
+"morTheorems": {
+"other": 0,
+"proj": 1
+},
+"mp": {
+"other": 1,
+"proj": 1
+},
+"mpr": {
+"other": 1,
+"proj": 1
+},
+"msgLog": {
+"other": 0,
+"proj": 1
+},
+"msgs": {
+"other": 0,
+"proj": 1
+},
+"mul": {
+"other": 32,
+"proj": 1
+},
+"mul_assoc": {
+"other": 20,
+"proj": 2
+},
+"mul_comm": {
+"other": 21,
+"proj": 7
+},
+"mul_eq_one_symm": {
+"other": 2,
+"proj": 1
+},
+"mul_inv_cancel": {
+"other": 2,
+"proj": 1
+},
+"mul_inv_rev": {
+"other": 1,
+"proj": 1
+},
+"mul_left_cancel": {
+"other": 2,
+"proj": 1
+},
+"mul_lt_mul_of_pos_left": {
+"other": 3,
+"proj": 1
+},
+"mul_lt_mul_of_pos_right": {
+"other": 3,
+"proj": 1
+},
+"mul_one": {
+"other": 19,
+"proj": 3
+},
+"mul_right_cancel": {
+"other": 2,
+"proj": 1
+},
+"mul_zero": {
+"other": 18,
+"proj": 1
+},
+"mvarIds": {
+"other": 0,
+"proj": 1
+},
+"n": {
+"other": 0,
+"proj": 1
+},
+"name": {
+"other": 1,
+"proj": 6
+},
+"nameDict": {
+"other": 2,
+"proj": 1
+},
+"namePrefix": {
+"other": 0,
+"proj": 1
+},
+"nameStem": {
+"other": 0,
+"proj": 1
+},
+"natCast": {
+"other": 13,
+"proj": 2
+},
+"native": {
+"other": 0,
+"proj": 1
+},
+"ne_of_lt": {
+"other": 23,
+"proj": 1
+},
+"needle": {
+"other": 0,
+"proj": 2
+},
+"neg": {
+"other": 28,
+"proj": 1
+},
+"neg_add_cancel": {
+"other": 7,
+"proj": 3
+},
+"neg_add_rev": {
+"other": 1,
+"proj": 1
+},
+"neg_eq_of_add": {
+"other": 0,
+"proj": 1
+},
+"neg_neg": {
+"other": 14,
+"proj": 2
+},
+"neg_zero": {
+"other": 16,
+"proj": 2
+},
+"neg_zsmul": {
+"other": 2,
+"proj": 1
+},
+"neqs": {
+"other": 0,
+"proj": 1
+},
+"neutral": {
+"other": 0,
+"proj": 1
+},
+"newGoals": {
+"other": 0,
+"proj": 2
+},
+"newName": {
+"other": 0,
+"proj": 1
+},
+"newStx": {
+"other": 0,
+"proj": 1
+},
+"next": {
+"other": 15,
+"proj": 4
+},
+"next?": {
+"other": 3,
+"proj": 1
+},
+"nextAtIdx?": {
+"other": 1,
+"proj": 1
+},
+"no_nat_zero_divisors": {
+"other": 0,
+"proj": 1
+},
+"nodup": {
+"other": 2,
+"proj": 1
+},
+"none": {
+"other": 5,
+"proj": 1
+},
+"notRecursive": {
+"other": 0,
+"proj": 1
+},
+"npow": {
+"other": 2,
+"proj": 2
+},
+"npow_succ": {
+"other": 0,
+"proj": 1
+},
+"npow_zero": {
+"other": 0,
+"proj": 1
+},
+"nsec": {
+"other": 0,
+"proj": 1
+},
+"nsmul": {
+"other": 2,
+"proj": 4
+},
+"nsmul_eq_natCast_mul": {
+"other": 0,
+"proj": 1
+},
+"nsmul_right_injective": {
+"other": 0,
+"proj": 1
+},
+"nsmul_succ": {
+"other": 0,
+"proj": 1
+},
+"nsmul_zero": {
+"other": 2,
+"proj": 1
+},
+"num": {
+"other": 10,
+"proj": 1
+},
+"numHyps": {
+"other": 0,
+"proj": 1
+},
+"numSteps": {
+"other": 0,
+"proj": 1
+},
+"numVarying": {
+"other": 0,
+"proj": 1
+},
+"occs": {
+"other": 1,
+"proj": 1
+},
+"ofNat": {
+"other": 26,
+"proj": 2
+},
+"ofNat_eq_natCast": {
+"other": 1,
+"proj": 1
+},
+"ofNat_ext_iff": {
+"other": 0,
+"proj": 1
+},
+"ofNat_succ": {
+"other": 2,
+"proj": 1
+},
+"ofScientific": {
+"other": 3,
+"proj": 1
+},
+"ofScientific_def": {
+"other": 1,
+"proj": 1
+},
+"offset": {
+"other": 1,
+"proj": 4
+},
+"offsetCnstrs": {
+"other": 0,
+"proj": 1
+},
+"offset_eq_rawEndPos": {
+"other": 0,
+"proj": 2
+},
+"one": {
+"other": 2,
+"proj": 1
+},
+"one_mul": {
+"other": 18,
+"proj": 3
+},
+"one_zsmul": {
+"other": 2,
+"proj": 1
+},
+"only": {
+"other": 0,
+"proj": 1
+},
+"onlyGivenNames": {
+"other": 0,
+"proj": 1
+},
+"op": {
+"other": 2,
+"proj": 2
+},
+"operation": {
+"other": 0,
+"proj": 1
+},
+"opt": {
+"other": 0,
+"proj": 1
+},
+"optionName": {
+"other": 0,
+"proj": 1
+},
+"or": {
+"other": 6,
+"proj": 1
+},
+"orElse": {
+"other": 6,
+"proj": 2
+},
+"ord": {
+"other": 2,
+"proj": 2
+},
+"order": {
+"other": 0,
+"proj": 1
+},
+"other": {
+"other": 2,
+"proj": 1
+},
+"out": {
+"other": 6,
+"proj": 3
+},
+"partialApp": {
+"other": 0,
+"proj": 1
+},
+"path": {
+"other": 1,
+"proj": 1
+},
+"patterns": {
+"other": 0,
+"proj": 1
+},
+"pending": {
+"other": 0,
+"proj": 1
+},
+"pf?": {
+"other": 0,
+"proj": 1
+},
+"pos": {
+"other": 7,
+"proj": 3
+},
+"pow": {
+"other": 21,
+"proj": 3
+},
+"pow_left_injective": {
+"other": 1,
+"proj": 1
+},
+"pow_succ": {
+"other": 18,
+"proj": 1
+},
+"pow_zero": {
+"other": 18,
+"proj": 1
+},
+"preTransparency": {
+"other": 0,
+"proj": 1
+},
+"preferLHS": {
+"other": 0,
+"proj": 1
+},
+"preserveBinderNames": {
+"other": 0,
+"proj": 1
+},
+"prettyLemma": {
+"other": 0,
+"proj": 1
+},
+"previous": {
+"other": 0,
+"proj": 1
+},
+"prf": {
+"other": 0,
+"proj": 1
+},
+"prio": {
+"other": 1,
+"proj": 1
+},
+"priority": {
+"other": 0,
+"proj": 2
+},
+"proj": {
+"other": 1,
+"proj": 2
+},
+"projNrs": {
+"other": 0,
+"proj": 2
+},
+"prom": {
+"other": 0,
+"proj": 0
+},
+"proof": {
+"other": 2,
+"proj": 2
+},
+"proofs": {
+"other": 0,
+"proj": 1
+},
+"prop": {
+"other": 5,
+"proj": 1
+},
+"property": {
+"other": 0,
+"proj": 1
+},
+"pure": {
+"other": 13,
+"proj": 1
+},
+"pure_bind": {
+"other": 1,
+"proj": 1
+},
+"pure_seq": {
+"other": 0,
+"proj": 1
+},
+"pushNewline": {
+"other": 0,
+"proj": 1
+},
+"pushOutput": {
+"other": 0,
+"proj": 1
+},
+"putStr": {
+"other": 1,
+"proj": 1
+},
+"q": {
+"other": 0,
+"proj": 1
+},
+"qlia": {
+"other": 0,
+"proj": 1
+},
+"quotContext": {
+"other": 0,
+"proj": 1
+},
+"quote": {
+"other": 2,
+"proj": 1
+},
+"r": {
+"other": 2,
+"proj": 2
+},
+"range": {
+"other": 5,
+"proj": 1
+},
+"raw": {
+"other": 1,
+"proj": 1
+},
+"read": {
+"other": 3,
+"proj": 4
+},
+"reduced": {
+"other": 1,
+"proj": 1
+},
+"reducible": {
+"other": 1,
+"proj": 1
+},
+"reductionFVarIds": {
+"other": 0,
+"proj": 1
+},
+"reductionGoal": {
+"other": 0,
+"proj": 1
+},
+"ref": {
+"other": 0,
+"proj": 5
+},
+"refl": {
+"other": 38,
+"proj": 2
+},
+"rel": {
+"other": 6,
+"proj": 4
+},
+"relName": {
+"other": 0,
+"proj": 1
+},
+"rel_antisymm": {
+"other": 0,
+"proj": 1
+},
+"rel_refl": {
+"other": 0,
+"proj": 1
+},
+"rel_trans": {
+"other": 1,
+"proj": 1
+},
+"relevantArg": {
+"other": 0,
+"proj": 1
+},
+"relevantArg?": {
+"other": 0,
+"proj": 1
+},
+"reorder": {
+"other": 0,
+"proj": 1
+},
+"reorder?": {
+"other": 0,
+"proj": 1
+},
+"replaceRange": {
+"other": 0,
+"proj": 2
+},
+"replacement": {
+"other": 0,
+"proj": 2
+},
+"replacementString": {
+"other": 0,
+"proj": 1
+},
+"reprPrec": {
+"other": 1,
+"proj": 1
+},
+"reprTuple": {
+"other": 1,
+"proj": 1
+},
+"resolveGlobalName": {
+"other": 1,
+"proj": 1
+},
+"resolveNamespace": {
+"other": 2,
+"proj": 1
+},
+"restore": {
+"other": 0,
+"proj": 1
+},
+"restoreM": {
+"other": 0,
+"proj": 2
+},
+"result?": {
+"other": 1,
+"proj": 1
+},
+"revert": {
+"other": 1,
+"proj": 2
+},
+"revertedFVarIds": {
+"other": 0,
+"proj": 1
+},
+"rfl": {
+"other": 10,
+"proj": 1
+},
+"rhs": {
+"other": 1,
+"proj": 3
+},
+"rhsMd": {
+"other": 0,
+"proj": 1
+},
+"right": {
+"other": 7,
+"proj": 3
+},
+"right_comm": {
+"other": 0,
+"proj": 1
+},
+"right_distrib": {
+"other": 3,
+"proj": 1
+},
+"right_id": {
+"other": 0,
+"proj": 1
+},
+"right_iff_left_not_left": {
+"other": 1,
+"proj": 1
+},
+"right_inv": {
+"other": 0,
+"proj": 2
+},
+"ring": {
+"other": 1,
+"proj": 1
+},
+"ringSteps": {
+"other": 0,
+"proj": 1
+},
+"root": {
+"other": 0,
+"proj": 3
+},
+"run": {
+"other": 17,
+"proj": 1
+},
+"s": {
+"other": 0,
+"proj": 3
+},
+"s1": {
+"other": 0,
+"proj": 1
+},
+"s2": {
+"other": 0,
+"proj": 1
+},
+"sameFun": {
+"other": 0,
+"proj": 1
+},
+"save": {
+"other": 0,
+"proj": 1
+},
+"scopeState": {
+"other": 0,
+"proj": 1
+},
+"scopes": {
+"other": 0,
+"proj": 1
+},
+"sdiff": {
+"other": 1,
+"proj": 1
+},
+"sdiff_eq": {
+"other": 2,
+"proj": 1
+},
+"sdiff_le_iff": {
+"other": 1,
+"proj": 2
+},
+"sec": {
+"other": 0,
+"proj": 1
+},
+"selectedLocations": {
+"other": 0,
+"proj": 2
+},
+"self": {
+"other": 0,
+"proj": 1
+},
+"sep": {
+"other": 1,
+"proj": 1
+},
+"seq": {
+"other": 2,
+"proj": 1
+},
+"seqLeft": {
+"other": 0,
+"proj": 1
+},
+"seqLeft_eq": {
+"other": 3,
+"proj": 1
+},
+"seqRight": {
+"other": 1,
+"proj": 1
+},
+"seqRight_eq": {
+"other": 3,
+"proj": 1
+},
+"seq_assoc": {
+"other": 0,
+"proj": 1
+},
+"seq_pure": {
+"other": 0,
+"proj": 1
+},
+"set": {
+"other": 16,
+"proj": 2
+},
+"setFind?": {
+"other": 0,
+"proj": 2
+},
+"setInsert": {
+"other": 0,
+"proj": 2
+},
+"setNGen": {
+"other": 0,
+"proj": 1
+},
+"setsid": {
+"other": 0,
+"proj": 1
+},
+"shiftLeft": {
+"other": 15,
+"proj": 1
+},
+"shiftRight": {
+"other": 14,
+"proj": 1
+},
+"simpRhs": {
+"other": 0,
+"proj": 1
+},
+"singlePass": {
+"other": 0,
+"proj": 1
+},
+"singleton": {
+"other": 5,
+"proj": 1
+},
+"size": {
+"other": 31,
+"proj": 4
+},
+"sizeOf": {
+"other": 13,
+"proj": 1
+},
+"size_eq_one_of_succ?_eq_none": {
+"other": 0,
+"proj": 3
+},
+"size_eq_succ_of_succ?_eq_some": {
+"other": 0,
+"proj": 3
+},
+"size_eq_zero_of_not_le": {
+"other": 0,
+"proj": 2
+},
+"size_toArray": {
+"other": 14,
+"proj": 1
+},
+"smul": {
+"other": 4,
+"proj": 1
+},
+"snd": {
+"other": 10,
+"proj": 5
+},
+"sorries": {
+"other": 0,
+"proj": 1
+},
+"sorryMsgs": {
+"other": 0,
+"proj": 1
+},
+"split": {
+"other": 4,
+"proj": 1
+},
+"splitDisjunctions": {
+"other": 0,
+"proj": 1
+},
+"splitImp": {
+"other": 0,
+"proj": 1
+},
+"splitIndPred": {
+"other": 0,
+"proj": 1
+},
+"splitIte": {
+"other": 0,
+"proj": 1
+},
+"splitMatch": {
+"other": 0,
+"proj": 1
+},
+"splitMinMax": {
+"other": 0,
+"proj": 1
+},
+"splitNatAbs": {
+"other": 0,
+"proj": 1
+},
+"splitNatSub": {
+"other": 0,
+"proj": 1
+},
+"splits": {
+"other": 2,
+"proj": 1
+},
+"sprod": {
+"other": 0,
+"proj": 1
+},
+"stM": {
+"other": 0,
+"proj": 2
+},
+"stack": {
+"other": 0,
+"proj": 1
+},
+"star": {
+"other": 4,
+"proj": 3
+},
+"start": {
+"other": 1,
+"proj": 2
+},
+"startInclusive": {
+"other": 0,
+"proj": 1
+},
+"startInclusive_le_endExclusive": {
+"other": 0,
+"proj": 1
+},
+"startPos": {
+"other": 2,
+"proj": 1
+},
+"startTag": {
+"other": 0,
+"proj": 1
+},
+"start_le_stop": {
+"other": 1,
+"proj": 1
+},
+"startsWith": {
+"other": 3,
+"proj": 1
+},
+"state": {
+"other": 0,
+"proj": 1
+},
+"stderr": {
+"other": 0,
+"proj": 3
+},
+"stdin": {
+"other": 0,
+"proj": 2
+},
+"stdout": {
+"other": 0,
+"proj": 3
+},
+"step": {
+"other": 15,
+"proj": 2
+},
+"step_pos": {
+"other": 0,
+"proj": 1
+},
+"stop": {
+"other": 1,
+"proj": 3
+},
+"stopPos": {
+"other": 0,
+"proj": 1
+},
+"stop_le_array_size": {
+"other": 1,
+"proj": 1
+},
+"str": {
+"other": 2,
+"proj": 2
+},
+"strName": {
+"other": 0,
+"proj": 1
+},
+"strStx": {
+"other": 0,
+"proj": 1
+},
+"stringLength": {
+"other": 0,
+"proj": 1
+},
+"sub": {
+"other": 28,
+"proj": 1
+},
+"sub_eq_add_neg": {
+"other": 22,
+"proj": 3
+},
+"subrelation": {
+"other": 0,
+"proj": 2
+},
+"succ?": {
+"other": 0,
+"proj": 1
+},
+"succMany?": {
+"other": 0,
+"proj": 1
+},
+"succMany?_add_one": {
+"other": 1,
+"proj": 1
+},
+"succMany?_zero": {
+"other": 1,
+"proj": 1
+},
+"suggestions": {
+"other": 1,
+"proj": 2
+},
+"sup": {
+"other": 8,
+"proj": 1
+},
+"sup_inf_sdiff": {
+"other": 1,
+"proj": 1
+},
+"sup_le": {
+"other": 2,
+"proj": 1
+},
+"symm": {
+"other": 33,
+"proj": 6
+},
+"symm_op": {
+"other": 0,
+"proj": 1
+},
+"synthAssignedInstances": {
+"other": 0,
+"proj": 1
+},
+"tacI": {
+"other": 0,
+"proj": 1
+},
+"tactic": {
+"other": 1,
+"proj": 1
+},
+"targetOnly": {
+"other": 0,
+"proj": 1
+},
+"tell": {
+"other": 0,
+"proj": 1
+},
+"test": {
+"other": 0,
+"proj": 1
+},
+"tgt": {
+"other": 0,
+"proj": 1
+},
+"theorems": {
+"other": 0,
+"proj": 3
+},
+"thmArgs": {
+"other": 0,
+"proj": 1
+},
+"thmName": {
+"other": 0,
+"proj": 2
+},
+"thmOrigin": {
+"other": 0,
+"proj": 1
+},
+"throw": {
+"other": 3,
+"proj": 2
+},
+"toAdd": {
+"other": 0,
+"proj": 5
+},
+"toAddCommGroup": {
+"other": 1,
+"proj": 1
+},
+"toAddCommMonoid": {
+"other": 2,
+"proj": 3
+},
+"toAddGroup": {
+"other": 0,
+"proj": 1
+},
+"toAddHomClass": {
+"other": 0,
+"proj": 1
+},
+"toAddLeftCancelMonoid": {
+"other": 1,
+"proj": 1
+},
+"toAddMonoid": {
+"other": 0,
+"proj": 4
+},
+"toAddSemigroup": {
+"other": 0,
+"proj": 4
+},
+"toAddZero": {
+"other": 0,
+"proj": 1
+},
+"toAntisymm": {
+"other": 0,
+"proj": 1
+},
+"toApplicative": {
+"other": 0,
+"proj": 2
+},
+"toArray": {
+"other": 23,
+"proj": 2
+},
+"toArrayMapped": {
+"other": 1,
+"proj": 1
+},
+"toBEq": {
+"other": 1,
+"proj": 1
+},
+"toBind": {
+"other": 0,
+"proj": 1
+},
+"toBitVec": {
+"other": 5,
+"proj": 5
+},
+"toBool": {
+"other": 1,
+"proj": 1
+},
+"toBot": {
+"other": 0,
+"proj": 3
+},
+"toByteArray": {
+"other": 1,
+"proj": 1
+},
+"toCommMonoid": {
+"other": 2,
+"proj": 1
+},
+"toCommRing": {
+"other": 0,
+"proj": 1
+},
+"toCompl": {
+"other": 0,
+"proj": 2
+},
+"toConfig": {
+"other": 0,
+"proj": 6
+},
+"toDecidableEq": {
+"other": 0,
+"proj": 1
+},
+"toDecidableLE": {
+"other": 0,
+"proj": 1
+},
+"toDecidableLT": {
+"other": 0,
+"proj": 1
+},
+"toDistribLattice": {
+"other": 3,
+"proj": 2
+},
+"toDiv": {
+"other": 0,
+"proj": 2
+},
+"toDivInvMonoid": {
+"other": 0,
+"proj": 3
+},
+"toDivisionMonoid": {
+"other": 1,
+"proj": 1
+},
+"toEmbedding": {
+"other": 1,
+"proj": 1
+},
+"toEquiv": {
+"other": 1,
+"proj": 1
+},
+"toExtractLetsConfig": {
+"other": 0,
+"proj": 1
+},
+"toFin": {
+"other": 5,
+"proj": 1
+},
+"toFun": {
+"other": 0,
+"proj": 8
+},
+"toFunctor": {
+"other": 0,
+"proj": 1
+},
+"toGeneralizedCoheytingAlgebra": {
+"other": 1,
+"proj": 1
+},
+"toGeneralizedHeytingAlgebra": {
+"other": 0,
+"proj": 1
+},
+"toGetElem": {
+"other": 0,
+"proj": 1
+},
+"toGroup": {
+"other": 0,
+"proj": 1
+},
+"toHImp": {
+"other": 0,
+"proj": 2
+},
+"toHNot": {
+"other": 0,
+"proj": 2
+},
+"toHeytingAlgebra": {
+"other": 0,
+"proj": 1
+},
+"toIdentity": {
+"other": 0,
+"proj": 1
+},
+"toInhabited": {
+"other": 0,
+"proj": 1
+},
+"toInt": {
+"other": 7,
+"proj": 1
+},
+"toInt_add": {
+"other": 6,
+"proj": 1
+},
+"toInt_div": {
+"other": 5,
+"proj": 1
+},
+"toInt_inj": {
+"other": 6,
+"proj": 1
+},
+"toInt_mem": {
+"other": 0,
+"proj": 1
+},
+"toInt_mod": {
+"other": 5,
+"proj": 1
+},
+"toInt_mul": {
+"other": 6,
+"proj": 1
+},
+"toInt_neg": {
+"other": 6,
+"proj": 1
+},
+"toInt_ofNat": {
+"other": 6,
+"proj": 1
+},
+"toInt_pow": {
+"other": 0,
+"proj": 1
+},
+"toInt_sub": {
+"other": 6,
+"proj": 1
+},
+"toInt_zero": {
+"other": 6,
+"proj": 1
+},
+"toInv": {
+"other": 0,
+"proj": 4
+},
+"toIrrefl": {
+"other": 0,
+"proj": 1
+},
+"toIsLeftCancelAdd": {
+"other": 1,
+"proj": 4
+},
+"toIsLeftCancelMul": {
+"other": 1,
+"proj": 4
+},
+"toIsPartialOrder": {
+"other": 1,
+"proj": 2
+},
+"toIsPreorder": {
+"other": 0,
+"proj": 5
+},
+"toIsRightCancelAdd": {
+"other": 1,
+"proj": 4
+},
+"toIsRightCancelMul": {
+"other": 1,
+"proj": 4
+},
+"toIsStrictOrder": {
+"other": 0,
+"proj": 2
+},
+"toIsTrans": {
+"other": 0,
+"proj": 3
+},
+"toIsTrichotomous": {
+"other": 0,
+"proj": 2
+},
+"toIsWellFounded": {
+"other": 0,
+"proj": 1
+},
+"toLE": {
+"other": 1,
+"proj": 2
+},
+"toLT": {
+"other": 1,
+"proj": 2
+},
+"toLattice": {
+"other": 1,
+"proj": 3
+},
+"toLawful": {
+"other": 0,
+"proj": 1
+},
+"toLawfulApplicative": {
+"other": 0,
+"proj": 1
+},
+"toLawfulFunctor": {
+"other": 0,
+"proj": 1
+},
+"toLawfulIdentity": {
+"other": 0,
+"proj": 1
+},
+"toLawfulLeftIdentity": {
+"other": 0,
+"proj": 1
+},
+"toLawfulOrderBEq": {
+"other": 0,
+"proj": 1
+},
+"toLawfulOrderInf": {
+"other": 0,
+"proj": 1
+},
+"toLawfulOrderLT": {
+"other": 0,
+"proj": 1
+},
+"toLawfulOrderMax": {
+"other": 0,
+"proj": 1
+},
+"toLawfulOrderMin": {
+"other": 0,
+"proj": 1
+},
+"toLawfulOrderOrd": {
+"other": 0,
+"proj": 1
+},
+"toLawfulOrderSup": {
+"other": 0,
+"proj": 1
+},
+"toLawfulRightIdentity": {
+"other": 0,
+"proj": 1
+},
+"toLeftCancelMonoid": {
+"other": 1,
+"proj": 1
+},
+"toLeftIdentity": {
+"other": 0,
+"proj": 2
+},
+"toLinearPreorderOfLEArgs": {
+"other": 0,
+"proj": 1
+},
+"toLinearPreorderOfOrdArgs": {
+"other": 0,
+"proj": 1
+},
+"toLinearPreorderPackage": {
+"other": 0,
+"proj": 1
+},
+"toList": {
+"other": 26,
+"proj": 2
+},
+"toMax": {
+"other": 1,
+"proj": 2
+},
+"toMaxEqOr": {
+"other": 0,
+"proj": 1
+},
+"toMin": {
+"other": 1,
+"proj": 2
+},
+"toMinEqOr": {
+"other": 0,
+"proj": 1
+},
+"toMonadRef": {
+"other": 0,
+"proj": 1
+},
+"toMonoid": {
+"other": 0,
+"proj": 4
+},
+"toMul": {
+"other": 0,
+"proj": 4
+},
+"toMulHomClass": {
+"other": 0,
+"proj": 1
+},
+"toMulOne": {
+"other": 0,
+"proj": 1
+},
+"toNeg": {
+"other": 0,
+"proj": 5
+},
+"toNoopConfig": {
+"other": 0,
+"proj": 2
+},
+"toOne": {
+"other": 0,
+"proj": 3
+},
+"toOneHom": {
+"other": 1,
+"proj": 1
+},
+"toOneHomClass": {
+"other": 0,
+"proj": 1
+},
+"toOrd": {
+"other": 0,
+"proj": 2
+},
+"toOrderBot": {
+"other": 1,
+"proj": 3
+},
+"toOrderTop": {
+"other": 0,
+"proj": 3
+},
+"toOrderedAdd": {
+"other": 0,
+"proj": 1
+},
+"toOrientedCmp": {
+"other": 0,
+"proj": 1
+},
+"toPartialEquivBEq": {
+"other": 0,
+"proj": 1
+},
+"toPartialOrder": {
+"other": 0,
+"proj": 5
+},
+"toPreorder": {
+"other": 0,
+"proj": 1
+},
+"toPreorderOfLEArgs": {
+"other": 0,
+"proj": 2
+},
+"toPreorderPackage": {
+"other": 0,
+"proj": 2
+},
+"toPure": {
+"other": 1,
+"proj": 1
+},
+"toRefl": {
+"other": 0,
+"proj": 1
+},
+"toReflBEq": {
+"other": 0,
+"proj": 2
+},
+"toReflCmp": {
+"other": 0,
+"proj": 1
+},
+"toRightIdentity": {
+"other": 1,
+"proj": 1
+},
+"toRing": {
+"other": 0,
+"proj": 1
+},
+"toSDiff": {
+"other": 0,
+"proj": 4
+},
+"toSearcher": {
+"other": 0,
+"proj": 2
+},
+"toSelectInsertParams": {
+"other": 0,
+"proj": 1
+},
+"toSemigroup": {
+"other": 0,
+"proj": 4
+},
+"toSemilatticeSup": {
+"other": 0,
+"proj": 1
+},
+"toSemiring": {
+"other": 0,
+"proj": 2
+},
+"toSeq": {
+"other": 1,
+"proj": 1
+},
+"toSeqLeft": {
+"other": 0,
+"proj": 1
+},
+"toSeqRight": {
+"other": 0,
+"proj": 1
+},
+"toSlice": {
+"other": 5,
+"proj": 1
+},
+"toStdioConfig": {
+"other": 0,
+"proj": 1
+},
+"toStream": {
+"other": 1,
+"proj": 1
+},
+"toString": {
+"other": 14,
+"proj": 2
+},
+"toSub": {
+"other": 0,
+"proj": 3
+},
+"toSubNegMonoid": {
+"other": 0,
+"proj": 3
+},
+"toSubtractionMonoid": {
+"other": 1,
+"proj": 1
+},
+"toSymm": {
+"other": 0,
+"proj": 1
+},
+"toTop": {
+"other": 0,
+"proj": 2
+},
+"toTotal": {
+"other": 0,
+"proj": 1
+},
+"toUInt16": {
+"other": 8,
+"proj": 1
+},
+"toUInt32": {
+"other": 8,
+"proj": 1
+},
+"toUInt64": {
+"other": 8,
+"proj": 1
+},
+"toUInt8": {
+"other": 9,
+"proj": 1
+},
+"toUSize": {
+"other": 8,
+"proj": 1
+},
+"toZero": {
+"other": 0,
+"proj": 4
+},
+"toZeroHom": {
+"other": 1,
+"proj": 1
+},
+"toZeroHomClass": {
+"other": 0,
+"proj": 1
+},
+"top": {
+"other": 0,
+"proj": 1
+},
+"top_le_sup_compl": {
+"other": 0,
+"proj": 1
+},
+"top_sdiff": {
+"other": 1,
+"proj": 2
+},
+"total": {
+"other": 2,
+"proj": 1
+},
+"trace": {
+"other": 2,
+"proj": 2
+},
+"traceMsgs": {
+"other": 0,
+"proj": 1
+},
+"trans": {
+"other": 46,
+"proj": 4
+},
+"transOrd": {
+"other": 0,
+"proj": 1
+},
+"transitionDepth": {
+"other": 0,
+"proj": 1
+},
+"transitionTheorems": {
+"other": 0,
+"proj": 1
+},
+"translations": {
+"other": 2,
+"proj": 1
+},
+"transparency": {
+"other": 0,
+"proj": 2
+},
+"trees": {
+"other": 0,
+"proj": 1
+},
+"trichotomous": {
+"other": 1,
+"proj": 2
+},
+"tries": {
+"other": 0,
+"proj": 2
+},
+"trigger": {
+"other": 0,
+"proj": 1
+},
+"try?": {
+"other": 0,
+"proj": 1
+},
+"tryCatch": {
+"other": 7,
+"proj": 2
+},
+"tryFinally'": {
+"other": 0,
+"proj": 1
+},
+"type": {
+"other": 2,
+"proj": 1
+},
+"typeEqs": {
+"other": 0,
+"proj": 1
+},
+"typeMd": {
+"other": 0,
+"proj": 1
+},
+"types": {
+"other": 0,
+"proj": 1
+},
+"u_l_le": {
+"other": 0,
+"proj": 1
+},
+"uncurry": {
+"other": 3,
+"proj": 1
+},
+"underBinder": {
+"other": 0,
+"proj": 1
+},
+"unfoldPartialApp": {
+"other": 0,
+"proj": 2
+},
+"union": {
+"other": 7,
+"proj": 1
+},
+"uniq": {
+"other": 0,
+"proj": 1
+},
+"upper": {
+"other": 1,
+"proj": 6
+},
+"upper'": {
+"other": 0,
+"proj": 1
+},
+"upperBound": {
+"other": 0,
+"proj": 3
+},
+"useCongrSimp": {
+"other": 0,
+"proj": 1
+},
+"useContext": {
+"other": 0,
+"proj": 1
+},
+"useRewrite": {
+"other": 0,
+"proj": 1
+},
+"useSorry": {
+"other": 0,
+"proj": 1
+},
+"usedOnly": {
+"other": 0,
+"proj": 1
+},
+"user": {
+"other": 0,
+"proj": 1
+},
+"vadd": {
+"other": 0,
+"proj": 1
+},
+"val": {
+"other": 1,
+"proj": 11
+},
+"valid": {
+"other": 0,
+"proj": 1
+},
+"value": {
+"other": 1,
+"proj": 1
+},
+"values": {
+"other": 0,
+"proj": 1
+},
+"variablesKept": {
+"other": 0,
+"proj": 1
+},
+"vars": {
+"other": 0,
+"proj": 3
+},
+"verbose": {
+"other": 2,
+"proj": 1
+},
+"visited": {
+"other": 0,
+"proj": 1
+},
+"vsub": {
+"other": 0,
+"proj": 1
+},
+"warnExponents": {
+"other": 0,
+"proj": 1
+},
+"wf": {
+"other": 3,
+"proj": 6
+},
+"withFreshMacroScope": {
+"other": 1,
+"proj": 1
+},
+"withReader": {
+"other": 0,
+"proj": 2
+},
+"withRef": {
+"other": 1,
+"proj": 1
+},
+"withShareCommon": {
+"other": 2,
+"proj": 1
+},
+"wn": {
+"other": 0,
+"proj": 1
+},
+"wr": {
+"other": 2,
+"proj": 1
+},
+"wrapWithBy": {
+"other": 0,
+"proj": 1
+},
+"write": {
+"other": 2,
+"proj": 2
+},
+"x": {
+"other": 0,
+"proj": 1
+},
+"xor": {
+"other": 14,
+"proj": 1
+},
+"xs": {
+"other": 0,
+"proj": 1
+},
+"zero": {
+"other": 7,
+"proj": 1
+},
+"zero_add": {
+"other": 19,
+"proj": 2
+},
+"zero_lt_one": {
+"other": 14,
+"proj": 1
+},
+"zero_mul": {
+"other": 19,
+"proj": 1
+},
+"zero_ne_one": {
+"other": 13,
+"proj": 1
+},
+"zero_nsmul": {
+"other": 1,
+"proj": 1
+},
+"zero_zsmul": {
+"other": 2,
+"proj": 1
+},
+"zeta": {
+"other": 1,
+"proj": 3
+},
+"zetaDelta": {
+"other": 0,
+"proj": 3
+},
+"zetaHave": {
+"other": 0,
+"proj": 2
+},
+"zetaReduce": {
+"other": 0,
+"proj": 1
+},
+"zetaUnused": {
+"other": 0,
+"proj": 2
+},
+"zpow": {
+"other": 1,
+"proj": 2
+},
+"zpow_neg": {
+"other": 1,
+"proj": 1
+},
+"zpow_neg'": {
+"other": 0,
+"proj": 1
+},
+"zpow_succ": {
+"other": 0,
+"proj": 1
+},
+"zpow_succ'": {
+"other": 0,
+"proj": 1
+},
+"zpow_zero": {
+"other": 2,
+"proj": 1
+},
+"zpow_zero'": {
+"other": 0,
+"proj": 1
+},
+"zsmul": {
+"other": 2,
+"proj": 3
+},
+"zsmul_natCast_eq_nsmul": {
+"other": 1,
+"proj": 2
+},
+"zsmul_neg'": {
+"other": 0,
+"proj": 1
+},
+"zsmul_succ'": {
+"other": 0,
+"proj": 1
+},
+"zsmul_zero'": {
+"other": 0,
+"proj": 1
+}
+},
+"pin": "leanprover/lean4:v4.27.0",
+"query": "python3 harness/tools/tables/gen_projections.py --env envs/mathlib-v4.27.0: lake env lean harness/tools/tables/projections_query.lean (leanprover/lean4:v4.27.0); imports Mathlib.Logic.Equiv.Defs, Mathlib.Order.Hom.Basic, Mathlib.Algebra.Group.Hom.Defs, Mathlib.Data.Finset.Defs",
+"rule": "every structure declared in a module under Init or Mathlib in the import closure of the query's imports, its direct fields in declaration order (Lean.getStructureFields; `x.i` = field i, 1-based), the parent of each subobject field, class/Prop flags; per field name the count of projection functions and of other declarations in that slice whose last name component it is",
+"seconds": 4.0,
+"structures": {
+"Add": {
+"class": true,
+"fields": [
+"add"
+],
+"parents": {},
+"prop": false
+},
+"AddCancelCommMonoid": {
+"class": true,
+"fields": [
+"toAddCommMonoid",
+"toIsLeftCancelAdd"
+],
+"parents": {
+"toAddCommMonoid": "AddCommMonoid",
+"toIsLeftCancelAdd": "IsLeftCancelAdd"
+},
+"prop": false
+},
+"AddCancelMonoid": {
+"class": true,
+"fields": [
+"toAddLeftCancelMonoid",
+"toIsRightCancelAdd"
+],
+"parents": {
+"toAddLeftCancelMonoid": "AddLeftCancelMonoid",
+"toIsRightCancelAdd": "IsRightCancelAdd"
+},
+"prop": false
+},
+"AddCommGroup": {
+"class": true,
+"fields": [
+"toAddGroup",
+"add_comm"
+],
+"parents": {
+"toAddGroup": "AddGroup"
+},
+"prop": false
+},
+"AddCommMagma": {
+"class": true,
+"fields": [
+"toAdd",
+"add_comm"
+],
+"parents": {
+"toAdd": "Add"
+},
+"prop": false
+},
+"AddCommMonoid": {
+"class": true,
+"fields": [
+"toAddMonoid",
+"add_comm"
+],
+"parents": {
+"toAddMonoid": "AddMonoid"
+},
+"prop": false
+},
+"AddCommSemigroup": {
+"class": true,
+"fields": [
+"toAddSemigroup",
+"add_comm"
+],
+"parents": {
+"toAddSemigroup": "AddSemigroup"
+},
+"prop": false
+},
+"AddGroup": {
+"class": true,
+"fields": [
+"toSubNegMonoid",
+"neg_add_cancel"
+],
+"parents": {
+"toSubNegMonoid": "SubNegMonoid"
+},
+"prop": false
+},
+"AddHom": {
+"class": false,
+"fields": [
+"toFun",
+"map_add'"
+],
+"parents": {},
+"prop": false
+},
+"AddHomClass": {
+"class": true,
+"fields": [
+"map_add"
+],
+"parents": {},
+"prop": true
+},
+"AddLeftCancelMonoid": {
+"class": true,
+"fields": [
+"toAddMonoid",
+"toIsLeftCancelAdd"
+],
+"parents": {
+"toAddMonoid": "AddMonoid",
+"toIsLeftCancelAdd": "IsLeftCancelAdd"
+},
+"prop": false
+},
+"AddLeftCancelSemigroup": {
+"class": true,
+"fields": [
+"toAddSemigroup",
+"toIsLeftCancelAdd"
+],
+"parents": {
+"toAddSemigroup": "AddSemigroup",
+"toIsLeftCancelAdd": "IsLeftCancelAdd"
+},
+"prop": false
+},
+"AddMonoid": {
+"class": true,
+"fields": [
+"toAddSemigroup",
+"toZero",
+"zero_add",
+"add_zero",
+"nsmul",
+"nsmul_zero",
+"nsmul_succ"
+],
+"parents": {
+"toAddSemigroup": "AddSemigroup",
+"toZero": "Zero"
+},
+"prop": false
+},
+"AddMonoidHom": {
+"class": false,
+"fields": [
+"toZeroHom",
+"map_add'"
+],
+"parents": {
+"toZeroHom": "ZeroHom"
+},
+"prop": false
+},
+"AddMonoidHomClass": {
+"class": true,
+"fields": [
+"toAddHomClass",
+"toZeroHomClass"
+],
+"parents": {
+"toAddHomClass": "AddHomClass",
+"toZeroHomClass": "ZeroHomClass"
+},
+"prop": true
+},
+"AddRightCancelMonoid": {
+"class": true,
+"fields": [
+"toAddMonoid",
+"toIsRightCancelAdd"
+],
+"parents": {
+"toAddMonoid": "AddMonoid",
+"toIsRightCancelAdd": "IsRightCancelAdd"
+},
+"prop": false
+},
+"AddRightCancelSemigroup": {
+"class": true,
+"fields": [
+"toAddSemigroup",
+"toIsRightCancelAdd"
+],
+"parents": {
+"toAddSemigroup": "AddSemigroup",
+"toIsRightCancelAdd": "IsRightCancelAdd"
+},
+"prop": false
+},
+"AddSemigroup": {
+"class": true,
+"fields": [
+"toAdd",
+"add_assoc"
+],
+"parents": {
+"toAdd": "Add"
+},
+"prop": false
+},
+"AddZero": {
+"class": true,
+"fields": [
+"toZero",
+"toAdd"
+],
+"parents": {
+"toAdd": "Add",
+"toZero": "Zero"
+},
+"prop": false
+},
+"AddZeroClass": {
+"class": true,
+"fields": [
+"toAddZero",
+"zero_add",
+"add_zero"
+],
+"parents": {
+"toAddZero": "AddZero"
+},
+"prop": false
+},
+"Alternative": {
+"class": true,
+"fields": [
+"toApplicative",
+"failure",
+"orElse"
+],
+"parents": {
+"toApplicative": "Applicative"
+},
+"prop": false
+},
+"And": {
+"class": false,
+"fields": [
+"left",
+"right"
+],
+"parents": {},
+"prop": true
+},
+"AndOp": {
+"class": true,
+"fields": [
+"and"
+],
+"parents": {},
+"prop": false
+},
+"AndThen": {
+"class": true,
+"fields": [
+"andThen"
+],
+"parents": {},
+"prop": false
+},
+"Append": {
+"class": true,
+"fields": [
+"append"
+],
+"parents": {},
+"prop": false
+},
+"Applicative": {
+"class": true,
+"fields": [
+"toFunctor",
+"toPure",
+"toSeq",
+"toSeqLeft",
+"toSeqRight"
+],
+"parents": {
+"toFunctor": "Functor",
+"toPure": "Pure",
+"toSeq": "Seq",
+"toSeqLeft": "SeqLeft",
+"toSeqRight": "SeqRight"
+},
+"prop": false
+},
+"Array": {
+"class": false,
+"fields": [
+"toList"
+],
+"parents": {},
+"prop": false
+},
+"Array.Mem": {
+"class": false,
+"fields": [
+"val"
+],
+"parents": {},
+"prop": true
+},
+"Array.Perm": {
+"class": false,
+"fields": [
+"toList"
+],
+"parents": {},
+"prop": true
+},
+"BEq": {
+"class": true,
+"fields": [
+"beq"
+],
+"parents": {},
+"prop": false
+},
+"BiheytingAlgebra": {
+"class": true,
+"fields": [
+"toHeytingAlgebra",
+"toSDiff",
+"toHNot",
+"sdiff_le_iff",
+"top_sdiff"
+],
+"parents": {
+"toHNot": "HNot",
+"toHeytingAlgebra": "HeytingAlgebra",
+"toSDiff": "SDiff"
+},
+"prop": false
+},
+"Bind": {
+"class": true,
+"fields": [
+"bind"
+],
+"parents": {},
+"prop": false
+},
+"BitVec": {
+"class": false,
+"fields": [
+"toFin"
+],
+"parents": {},
+"prop": false
+},
+"BitVec.DivModArgs": {
+"class": false,
+"fields": [
+"n",
+"d"
+],
+"parents": {},
+"prop": false
+},
+"BitVec.DivModState": {
+"class": false,
+"fields": [
+"wn",
+"wr",
+"q",
+"r"
+],
+"parents": {},
+"prop": false
+},
+"BitVec.DivModState.Lawful": {
+"class": false,
+"fields": [
+"hwrn",
+"hdPos",
+"hrLtDivisor",
+"hrWidth",
+"hqWidth",
+"hdiv"
+],
+"parents": {},
+"prop": true
+},
+"BitVec.DivModState.Poised": {
+"class": false,
+"fields": [
+"toLawful",
+"hwn_lt"
+],
+"parents": {
+"toLawful": "BitVec.DivModState.Lawful"
+},
+"prop": true
+},
+"BooleanAlgebra": {
+"class": true,
+"fields": [
+"toDistribLattice",
+"toCompl",
+"toSDiff",
+"toHImp",
+"toTop",
+"toBot",
+"inf_compl_le_bot",
+"top_le_sup_compl",
+"le_top",
+"bot_le",
+"sdiff_eq",
+"himp_eq"
+],
+"parents": {
+"toBot": "Bot",
+"toCompl": "Compl",
+"toDistribLattice": "DistribLattice",
+"toHImp": "HImp",
+"toSDiff": "SDiff",
+"toTop": "Top"
+},
+"prop": false
+},
+"Bot": {
+"class": true,
+"fields": [
+"bot"
+],
+"parents": {},
+"prop": false
+},
+"BoundedOrder": {
+"class": true,
+"fields": [
+"toOrderTop",
+"toOrderBot"
+],
+"parents": {
+"toOrderBot": "OrderBot",
+"toOrderTop": "OrderTop"
+},
+"prop": false
+},
+"ByteArray": {
+"class": false,
+"fields": [
+"data"
+],
+"parents": {},
+"prop": false
+},
+"ByteArray.Iterator": {
+"class": false,
+"fields": [
+"array",
+"idx"
+],
+"parents": {},
+"prop": false
+},
+"CalcParams": {
+"class": false,
+"fields": [
+"toSelectInsertParams",
+"isFirst",
+"indent"
+],
+"parents": {
+"toSelectInsertParams": "SelectInsertParams"
+},
+"prop": false
+},
+"CanLift": {
+"class": true,
+"fields": [
+"prf"
+],
+"parents": {},
+"prop": true
+},
+"CancelCommMonoid": {
+"class": true,
+"fields": [
+"toCommMonoid",
+"toIsLeftCancelMul"
+],
+"parents": {
+"toCommMonoid": "CommMonoid",
+"toIsLeftCancelMul": "IsLeftCancelMul"
+},
+"prop": false
+},
+"CancelMonoid": {
+"class": true,
+"fields": [
+"toLeftCancelMonoid",
+"toIsRightCancelMul"
+],
+"parents": {
+"toIsRightCancelMul": "IsRightCancelMul",
+"toLeftCancelMonoid": "LeftCancelMonoid"
+},
+"prop": false
+},
+"Char": {
+"class": false,
+"fields": [
+"val",
+"valid"
+],
+"parents": {},
+"prop": false
+},
+"Coe": {
+"class": true,
+"fields": [
+"coe"
+],
+"parents": {},
+"prop": false
+},
+"CoeDep": {
+"class": true,
+"fields": [
+"coe"
+],
+"parents": {},
+"prop": false
+},
+"CoeFun": {
+"class": true,
+"fields": [
+"coe"
+],
+"parents": {},
+"prop": false
+},
+"CoeHTC": {
+"class": true,
+"fields": [
+"coe"
+],
+"parents": {},
+"prop": false
+},
+"CoeHTCT": {
+"class": true,
+"fields": [
+"coe"
+],
+"parents": {},
+"prop": false
+},
+"CoeHead": {
+"class": true,
+"fields": [
+"coe"
+],
+"parents": {},
+"prop": false
+},
+"CoeOTC": {
+"class": true,
+"fields": [
+"coe"
+],
+"parents": {},
+"prop": false
+},
+"CoeOut": {
+"class": true,
+"fields": [
+"coe"
+],
+"parents": {},
+"prop": false
+},
+"CoeSort": {
+"class": true,
+"fields": [
+"coe"
+],
+"parents": {},
+"prop": false
+},
+"CoeT": {
+"class": true,
+"fields": [
+"coe"
+],
+"parents": {},
+"prop": false
+},
+"CoeTC": {
+"class": true,
+"fields": [
+"coe"
+],
+"parents": {},
+"prop": false
+},
+"CoeTail": {
+"class": true,
+"fields": [
+"coe"
+],
+"parents": {},
+"prop": false
+},
+"CoheytingAlgebra": {
+"class": true,
+"fields": [
+"toGeneralizedCoheytingAlgebra",
+"toOrderTop",
+"toHNot",
+"top_sdiff"
+],
+"parents": {
+"toGeneralizedCoheytingAlgebra": "GeneralizedCoheytingAlgebra",
+"toHNot": "HNot",
+"toOrderTop": "OrderTop"
+},
+"prop": false
+},
+"CommGroup": {
+"class": true,
+"fields": [
+"toGroup",
+"mul_comm"
+],
+"parents": {
+"toGroup": "Group"
+},
+"prop": false
+},
+"CommMagma": {
+"class": true,
+"fields": [
+"toMul",
+"mul_comm"
+],
+"parents": {
+"toMul": "Mul"
+},
+"prop": false
+},
+"CommMonoid": {
+"class": true,
+"fields": [
+"toMonoid",
+"mul_comm"
+],
+"parents": {
+"toMonoid": "Monoid"
+},
+"prop": false
+},
+"CommSemigroup": {
+"class": true,
+"fields": [
+"toSemigroup",
+"mul_comm"
+],
+"parents": {
+"toSemigroup": "Semigroup"
+},
+"prop": false
+},
+"Compl": {
+"class": true,
+"fields": [
+"compl"
+],
+"parents": {},
+"prop": false
+},
+"Complement": {
+"class": true,
+"fields": [
+"complement"
+],
+"parents": {},
+"prop": false
+},
+"ComplementedLattice": {
+"class": true,
+"fields": [
+"exists_isCompl"
+],
+"parents": {},
+"prop": true
+},
+"Congr!.Config": {
+"class": false,
+"fields": [
+"closePre",
+"closePost",
+"transparency",
+"preTransparency",
+"preferLHS",
+"partialApp",
+"sameFun",
+"maxArgs",
+"typeEqs",
+"etaExpand",
+"useCongrSimp",
+"beqEq"
+],
+"parents": {},
+"prop": false
+},
+"CongrState": {
+"class": false,
+"fields": [
+"goals",
+"patterns"
+],
+"parents": {},
+"prop": false
+},
+"DFunLike": {
+"class": true,
+"fields": [
+"coe",
+"coe_injective'"
+],
+"parents": {},
+"prop": false
+},
+"DenselyOrdered": {
+"class": true,
+"fields": [
+"dense"
+],
+"parents": {},
+"prop": true
+},
+"DistribLattice": {
+"class": true,
+"fields": [
+"toLattice",
+"le_sup_inf"
+],
+"parents": {
+"toLattice": "Lattice"
+},
+"prop": false
+},
+"Div": {
+"class": true,
+"fields": [
+"div"
+],
+"parents": {},
+"prop": false
+},
+"DivInvMonoid": {
+"class": true,
+"fields": [
+"toMonoid",
+"toInv",
+"toDiv",
+"div_eq_mul_inv",
+"zpow",
+"zpow_zero'",
+"zpow_succ'",
+"zpow_neg'"
+],
+"parents": {
+"toDiv": "Div",
+"toInv": "Inv",
+"toMonoid": "Monoid"
+},
+"prop": false
+},
+"DivInvOneMonoid": {
+"class": true,
+"fields": [
+"toDivInvMonoid",
+"inv_one"
+],
+"parents": {
+"toDivInvMonoid": "DivInvMonoid"
+},
+"prop": false
+},
+"DivisionCommMonoid": {
+"class": true,
+"fields": [
+"toDivisionMonoid",
+"mul_comm"
+],
+"parents": {
+"toDivisionMonoid": "DivisionMonoid"
+},
+"prop": false
+},
+"DivisionMonoid": {
+"class": true,
+"fields": [
+"toDivInvMonoid",
+"inv_inv",
+"mul_inv_rev",
+"inv_eq_of_mul"
+],
+"parents": {
+"toDivInvMonoid": "DivInvMonoid"
+},
+"prop": false
+},
+"Dvd": {
+"class": true,
+"fields": [
+"dvd"
+],
+"parents": {},
+"prop": false
+},
+"EStateM.Backtrackable": {
+"class": true,
+"fields": [
+"save",
+"restore"
+],
+"parents": {},
+"prop": false
+},
+"EmbeddingLike": {
+"class": true,
+"fields": [
+"injective'"
+],
+"parents": {},
+"prop": true
+},
+"EmptyCollection": {
+"class": true,
+"fields": [
+"emptyCollection"
+],
+"parents": {},
+"prop": false
+},
+"Equiv": {
+"class": false,
+"fields": [
+"toFun",
+"invFun",
+"left_inv",
+"right_inv"
+],
+"parents": {},
+"prop": false
+},
+"EquivBEq": {
+"class": true,
+"fields": [
+"toPartialEquivBEq",
+"toReflBEq"
+],
+"parents": {
+"toPartialEquivBEq": "PartialEquivBEq",
+"toReflBEq": "ReflBEq"
+},
+"prop": true
+},
+"EquivFunctor": {
+"class": true,
+"fields": [
+"map",
+"map_refl'",
+"map_trans'"
+],
+"parents": {},
+"prop": false
+},
+"EquivLike": {
+"class": true,
+"fields": [
+"coe",
+"inv",
+"left_inv",
+"right_inv",
+"coe_injective'"
+],
+"parents": {},
+"prop": false
+},
+"Equivalence": {
+"class": false,
+"fields": [
+"refl",
+"symm",
+"trans"
+],
+"parents": {},
+"prop": true
+},
+"FBinopElab.SRec": {
+"class": false,
+"fields": [
+"name",
+"args"
+],
+"parents": {},
+"prop": false
+},
+"Fact": {
+"class": true,
+"fields": [
+"out"
+],
+"parents": {},
+"prop": true
+},
+"Fin": {
+"class": false,
+"fields": [
+"val",
+"isLt"
+],
+"parents": {},
+"prop": false
+},
+"Finset": {
+"class": false,
+"fields": [
+"val",
+"nodup"
+],
+"parents": {},
+"prop": false
+},
+"Float": {
+"class": false,
+"fields": [
+"val"
+],
+"parents": {},
+"prop": false
+},
+"Float32": {
+"class": false,
+"fields": [
+"val"
+],
+"parents": {},
+"prop": false
+},
+"FloatArray": {
+"class": false,
+"fields": [
+"data"
+],
+"parents": {},
+"prop": false
+},
+"FloatSpec": {
+"class": false,
+"fields": [
+"float",
+"val",
+"lt",
+"le",
+"decLt",
+"decLe"
+],
+"parents": {},
+"prop": false
+},
+"ForIn": {
+"class": true,
+"fields": [
+"forIn"
+],
+"parents": {},
+"prop": false
+},
+"ForIn'": {
+"class": true,
+"fields": [
+"forIn'"
+],
+"parents": {},
+"prop": false
+},
+"ForM": {
+"class": true,
+"fields": [
+"forM"
+],
+"parents": {},
+"prop": false
+},
+"Function.Embedding": {
+"class": false,
+"fields": [
+"toFun",
+"inj'"
+],
+"parents": {},
+"prop": false
+},
+"Function.HasUncurry": {
+"class": true,
+"fields": [
+"uncurry"
+],
+"parents": {},
+"prop": false
+},
+"Functor": {
+"class": true,
+"fields": [
+"map",
+"mapConst"
+],
+"parents": {},
+"prop": false
+},
+"GaloisCoinsertion": {
+"class": false,
+"fields": [
+"choice",
+"gc",
+"u_l_le",
+"choice_eq"
+],
+"parents": {},
+"prop": false
+},
+"GaloisInsertion": {
+"class": false,
+"fields": [
+"choice",
+"gc",
+"le_l_u",
+"choice_eq"
+],
+"parents": {},
+"prop": false
+},
+"GeneralizedBooleanAlgebra": {
+"class": true,
+"fields": [
+"toDistribLattice",
+"toSDiff",
+"toBot",
+"sup_inf_sdiff",
+"inf_inf_sdiff"
+],
+"parents": {
+"toBot": "Bot",
+"toDistribLattice": "DistribLattice",
+"toSDiff": "SDiff"
+},
+"prop": false
+},
+"GeneralizedCoheytingAlgebra": {
+"class": true,
+"fields": [
+"toLattice",
+"toOrderBot",
+"toSDiff",
+"sdiff_le_iff"
+],
+"parents": {
+"toLattice": "Lattice",
+"toOrderBot": "OrderBot",
+"toSDiff": "SDiff"
+},
+"prop": false
+},
+"GeneralizedHeytingAlgebra": {
+"class": true,
+"fields": [
+"toLattice",
+"toOrderTop",
+"toHImp",
+"le_himp_iff"
+],
+"parents": {
+"toHImp": "HImp",
+"toLattice": "Lattice",
+"toOrderTop": "OrderTop"
+},
+"prop": false
+},
+"GetElem": {
+"class": true,
+"fields": [
+"getElem"
+],
+"parents": {},
+"prop": false
+},
+"GetElem?": {
+"class": true,
+"fields": [
+"toGetElem",
+"getElem?",
+"getElem!"
+],
+"parents": {
+"toGetElem": "GetElem"
+},
+"prop": false
+},
+"Group": {
+"class": true,
+"fields": [
+"toDivInvMonoid",
+"inv_mul_cancel"
+],
+"parents": {
+"toDivInvMonoid": "DivInvMonoid"
+},
+"prop": false
+},
+"HAdd": {
+"class": true,
+"fields": [
+"hAdd"
+],
+"parents": {},
+"prop": false
+},
+"HAnd": {
+"class": true,
+"fields": [
+"hAnd"
+],
+"parents": {},
+"prop": false
+},
+"HAndThen": {
+"class": true,
+"fields": [
+"hAndThen"
+],
+"parents": {},
+"prop": false
+},
+"HAppend": {
+"class": true,
+"fields": [
+"hAppend"
+],
+"parents": {},
+"prop": false
+},
+"HDiv": {
+"class": true,
+"fields": [
+"hDiv"
+],
+"parents": {},
+"prop": false
+},
+"HImp": {
+"class": true,
+"fields": [
+"himp"
+],
+"parents": {},
+"prop": false
+},
+"HMod": {
+"class": true,
+"fields": [
+"hMod"
+],
+"parents": {},
+"prop": false
+},
+"HMul": {
+"class": true,
+"fields": [
+"hMul"
+],
+"parents": {},
+"prop": false
+},
+"HNot": {
+"class": true,
+"fields": [
+"hnot"
+],
+"parents": {},
+"prop": false
+},
+"HOr": {
+"class": true,
+"fields": [
+"hOr"
+],
+"parents": {},
+"prop": false
+},
+"HOrElse": {
+"class": true,
+"fields": [
+"hOrElse"
+],
+"parents": {},
+"prop": false
+},
+"HPow": {
+"class": true,
+"fields": [
+"hPow"
+],
+"parents": {},
+"prop": false
+},
+"HSMul": {
+"class": true,
+"fields": [
+"hSMul"
+],
+"parents": {},
+"prop": false
+},
+"HShiftLeft": {
+"class": true,
+"fields": [
+"hShiftLeft"
+],
+"parents": {},
+"prop": false
+},
+"HShiftRight": {
+"class": true,
+"fields": [
+"hShiftRight"
+],
+"parents": {},
+"prop": false
+},
+"HSub": {
+"class": true,
+"fields": [
+"hSub"
+],
+"parents": {},
+"prop": false
+},
+"HVAdd": {
+"class": true,
+"fields": [
+"hVAdd"
+],
+"parents": {},
+"prop": false
+},
+"HXor": {
+"class": true,
+"fields": [
+"hXor"
+],
+"parents": {},
+"prop": false
+},
+"HasCompl": {
+"class": true,
+"fields": [
+"compl"
+],
+"parents": {},
+"prop": false
+},
+"HasEquiv": {
+"class": true,
+"fields": [
+"Equiv"
+],
+"parents": {},
+"prop": false
+},
+"HasSSubset": {
+"class": true,
+"fields": [
+"SSubset"
+],
+"parents": {},
+"prop": false
+},
+"HasSubset": {
+"class": true,
+"fields": [
+"Subset"
+],
+"parents": {},
+"prop": false
+},
+"Hashable": {
+"class": true,
+"fields": [
+"hash"
+],
+"parents": {},
+"prop": false
+},
+"HeytingAlgebra": {
+"class": true,
+"fields": [
+"toGeneralizedHeytingAlgebra",
+"toOrderBot",
+"toCompl",
+"himp_bot"
+],
+"parents": {
+"toCompl": "Compl",
+"toGeneralizedHeytingAlgebra": "GeneralizedHeytingAlgebra",
+"toOrderBot": "OrderBot"
+},
+"prop": false
+},
+"HomogeneousPow": {
+"class": true,
+"fields": [
+"pow"
+],
+"parents": {},
+"prop": false
+},
+"IO.AccessRight": {
+"class": false,
+"fields": [
+"read",
+"write",
+"execution"
+],
+"parents": {},
+"prop": false
+},
+"IO.CancelToken": {
+"class": false,
+"fields": [
+"ref"
+],
+"parents": {},
+"prop": false
+},
+"IO.FS.DirEntry": {
+"class": false,
+"fields": [
+"root",
+"fileName"
+],
+"parents": {},
+"prop": false
+},
+"IO.FS.Metadata": {
+"class": false,
+"fields": [
+"accessed",
+"modified",
+"byteSize",
+"type"
+],
+"parents": {},
+"prop": false
+},
+"IO.FS.Stream": {
+"class": false,
+"fields": [
+"flush",
+"read",
+"write",
+"getLine",
+"putStr",
+"isTty"
+],
+"parents": {},
+"prop": false
+},
+"IO.FS.Stream.Buffer": {
+"class": false,
+"fields": [
+"data",
+"pos"
+],
+"parents": {},
+"prop": false
+},
+"IO.FS.SystemTime": {
+"class": false,
+"fields": [
+"sec",
+"nsec"
+],
+"parents": {},
+"prop": false
+},
+"IO.FileRight": {
+"class": false,
+"fields": [
+"user",
+"group",
+"other"
+],
+"parents": {},
+"prop": false
+},
+"IO.Process.Child": {
+"class": false,
+"fields": [
+"stdin",
+"stdout",
+"stderr"
+],
+"parents": {},
+"prop": false
+},
+"IO.Process.Output": {
+"class": false,
+"fields": [
+"exitCode",
+"stdout",
+"stderr"
+],
+"parents": {},
+"prop": false
+},
+"IO.Process.SpawnArgs": {
+"class": false,
+"fields": [
+"toStdioConfig",
+"cmd",
+"args",
+"cwd",
+"env",
+"inheritEnv",
+"setsid"
+],
+"parents": {
+"toStdioConfig": "IO.Process.StdioConfig"
+},
+"prop": false
+},
+"IO.Process.StdioConfig": {
+"class": false,
+"fields": [
+"stdin",
+"stdout",
+"stderr"
+],
+"parents": {},
+"prop": false
+},
+"IO.Promise": {
+"class": false,
+"fields": [
+"prom",
+"h"
+],
+"parents": {},
+"prop": false
+},
+"ISize": {
+"class": false,
+"fields": [
+"toUSize"
+],
+"parents": {},
+"prop": false
+},
+"Iff": {
+"class": false,
+"fields": [
+"mp",
+"mpr"
+],
+"parents": {},
+"prop": true
+},
+"Inhabited": {
+"class": true,
+"fields": [
+"default"
+],
+"parents": {},
+"prop": false
+},
+"Insert": {
+"class": true,
+"fields": [
+"insert"
+],
+"parents": {},
+"prop": false
+},
+"Int16": {
+"class": false,
+"fields": [
+"toUInt16"
+],
+"parents": {},
+"prop": false
+},
+"Int32": {
+"class": false,
+"fields": [
+"toUInt32"
+],
+"parents": {},
+"prop": false
+},
+"Int64": {
+"class": false,
+"fields": [
+"toUInt64"
+],
+"parents": {},
+"prop": false
+},
+"Int8": {
+"class": false,
+"fields": [
+"toUInt8"
+],
+"parents": {},
+"prop": false
+},
+"IntCast": {
+"class": true,
+"fields": [
+"intCast"
+],
+"parents": {},
+"prop": false
+},
+"Inter": {
+"class": true,
+"fields": [
+"inter"
+],
+"parents": {},
+"prop": false
+},
+"Inv": {
+"class": true,
+"fields": [
+"inv"
+],
+"parents": {},
+"prop": false
+},
+"InvOneClass": {
+"class": true,
+"fields": [
+"toOne",
+"toInv",
+"inv_one"
+],
+"parents": {
+"toInv": "Inv",
+"toOne": "One"
+},
+"prop": false
+},
+"InvolutiveInv": {
+"class": true,
+"fields": [
+"toInv",
+"inv_inv"
+],
+"parents": {
+"toInv": "Inv"
+},
+"prop": false
+},
+"InvolutiveNeg": {
+"class": true,
+"fields": [
+"toNeg",
+"neg_neg"
+],
+"parents": {
+"toNeg": "Neg"
+},
+"prop": false
+},
+"IsAddCommutative": {
+"class": true,
+"fields": [
+"is_comm"
+],
+"parents": {},
+"prop": true
+},
+"IsAddCyclic": {
+"class": true,
+"fields": [
+"exists_zsmul_surjective"
+],
+"parents": {},
+"prop": true
+},
+"IsAddRegular": {
+"class": false,
+"fields": [
+"left",
+"right"
+],
+"parents": {},
+"prop": true
+},
+"IsAddTorsionFree": {
+"class": true,
+"fields": [
+"nsmul_right_injective"
+],
+"parents": {},
+"prop": true
+},
+"IsCancelAdd": {
+"class": true,
+"fields": [
+"toIsLeftCancelAdd",
+"toIsRightCancelAdd"
+],
+"parents": {
+"toIsLeftCancelAdd": "IsLeftCancelAdd",
+"toIsRightCancelAdd": "IsRightCancelAdd"
+},
+"prop": true
+},
+"IsCancelMul": {
+"class": true,
+"fields": [
+"toIsLeftCancelMul",
+"toIsRightCancelMul"
+],
+"parents": {
+"toIsLeftCancelMul": "IsLeftCancelMul",
+"toIsRightCancelMul": "IsRightCancelMul"
+},
+"prop": true
+},
+"IsCompl": {
+"class": false,
+"fields": [
+"disjoint",
+"codisjoint"
+],
+"parents": {},
+"prop": true
+},
+"IsCyclic": {
+"class": true,
+"fields": [
+"exists_zpow_surjective"
+],
+"parents": {},
+"prop": true
+},
+"IsDedekindFiniteAddMonoid": {
+"class": true,
+"fields": [
+"add_eq_zero_symm"
+],
+"parents": {},
+"prop": true
+},
+"IsDedekindFiniteMonoid": {
+"class": true,
+"fields": [
+"mul_eq_one_symm"
+],
+"parents": {},
+"prop": true
+},
+"IsEmpty": {
+"class": true,
+"fields": [
+"false"
+],
+"parents": {},
+"prop": true
+},
+"IsEquiv": {
+"class": true,
+"fields": [
+"toIsPreorder",
+"toSymm"
+],
+"parents": {
+"toIsPreorder": "IsPreorder",
+"toSymm": "Std.Symm"
+},
+"prop": true
+},
+"IsLeftCancelAdd": {
+"class": true,
+"fields": [
+"add_left_cancel"
+],
+"parents": {},
+"prop": true
+},
+"IsLeftCancelMul": {
+"class": true,
+"fields": [
+"mul_left_cancel"
+],
+"parents": {},
+"prop": true
+},
+"IsLinearOrder": {
+"class": true,
+"fields": [
+"toIsPartialOrder",
+"toTotal"
+],
+"parents": {
+"toIsPartialOrder": "IsPartialOrder",
+"toTotal": "Std.Total"
+},
+"prop": true
+},
+"IsMulCommutative": {
+"class": true,
+"fields": [
+"is_comm"
+],
+"parents": {},
+"prop": true
+},
+"IsMulTorsionFree": {
+"class": true,
+"fields": [
+"pow_left_injective"
+],
+"parents": {},
+"prop": true
+},
+"IsNonstrictStrictOrder": {
+"class": true,
+"fields": [
+"right_iff_left_not_left"
+],
+"parents": {},
+"prop": true
+},
+"IsOrderConnected": {
+"class": true,
+"fields": [
+"conn"
+],
+"parents": {},
+"prop": true
+},
+"IsPartialOrder": {
+"class": true,
+"fields": [
+"toIsPreorder",
+"toAntisymm"
+],
+"parents": {
+"toAntisymm": "Std.Antisymm",
+"toIsPreorder": "IsPreorder"
+},
+"prop": true
+},
+"IsPreorder": {
+"class": true,
+"fields": [
+"toRefl",
+"toIsTrans"
+],
+"parents": {
+"toIsTrans": "IsTrans",
+"toRefl": "Std.Refl"
+},
+"prop": true
+},
+"IsRegular": {
+"class": false,
+"fields": [
+"left",
+"right"
+],
+"parents": {},
+"prop": true
+},
+"IsRightCancelAdd": {
+"class": true,
+"fields": [
+"add_right_cancel"
+],
+"parents": {},
+"prop": true
+},
+"IsRightCancelMul": {
+"class": true,
+"fields": [
+"mul_right_cancel"
+],
+"parents": {},
+"prop": true
+},
+"IsStrictOrder": {
+"class": true,
+"fields": [
+"toIrrefl",
+"toIsTrans"
+],
+"parents": {
+"toIrrefl": "Std.Irrefl",
+"toIsTrans": "IsTrans"
+},
+"prop": true
+},
+"IsStrictTotalOrder": {
+"class": true,
+"fields": [
+"toIsTrichotomous",
+"toIsStrictOrder"
+],
+"parents": {
+"toIsStrictOrder": "IsStrictOrder",
+"toIsTrichotomous": "IsTrichotomous"
+},
+"prop": true
+},
+"IsStrictWeakOrder": {
+"class": true,
+"fields": [
+"toIsStrictOrder",
+"incomp_trans"
+],
+"parents": {
+"toIsStrictOrder": "IsStrictOrder"
+},
+"prop": true
+},
+"IsSymmOp": {
+"class": true,
+"fields": [
+"symm_op"
+],
+"parents": {},
+"prop": true
+},
+"IsTrans": {
+"class": true,
+"fields": [
+"trans"
+],
+"parents": {},
+"prop": true
+},
+"IsTrichotomous": {
+"class": true,
+"fields": [
+"trichotomous"
+],
+"parents": {},
+"prop": true
+},
+"IsWellFounded": {
+"class": true,
+"fields": [
+"wf"
+],
+"parents": {},
+"prop": true
+},
+"IsWellOrder": {
+"class": true,
+"fields": [
+"toIsTrichotomous",
+"toIsTrans",
+"toIsWellFounded"
+],
+"parents": {
+"toIsTrans": "IsTrans",
+"toIsTrichotomous": "IsTrichotomous",
+"toIsWellFounded": "IsWellFounded"
+},
+"prop": true
+},
+"LE": {
+"class": true,
+"fields": [
+"le"
+],
+"parents": {},
+"prop": false
+},
+"LT": {
+"class": true,
+"fields": [
+"lt"
+],
+"parents": {},
+"prop": false
+},
+"Lattice": {
+"class": true,
+"fields": [
+"toSemilatticeSup",
+"inf",
+"inf_le_left",
+"inf_le_right",
+"le_inf"
+],
+"parents": {
+"toSemilatticeSup": "SemilatticeSup"
+},
+"prop": false
+},
+"LawfulApplicative": {
+"class": true,
+"fields": [
+"toLawfulFunctor",
+"seqLeft_eq",
+"seqRight_eq",
+"pure_seq",
+"map_pure",
+"seq_pure",
+"seq_assoc"
+],
+"parents": {
+"toLawfulFunctor": "LawfulFunctor"
+},
+"prop": true
+},
+"LawfulBEq": {
+"class": true,
+"fields": [
+"toReflBEq",
+"eq_of_beq"
+],
+"parents": {
+"toReflBEq": "ReflBEq"
+},
+"prop": true
+},
+"LawfulFunctor": {
+"class": true,
+"fields": [
+"map_const",
+"id_map",
+"comp_map"
+],
+"parents": {},
+"prop": true
+},
+"LawfulGetElem": {
+"class": true,
+"fields": [
+"getElem?_def",
+"getElem!_def"
+],
+"parents": {},
+"prop": true
+},
+"LawfulHashable": {
+"class": true,
+"fields": [
+"hash_eq"
+],
+"parents": {},
+"prop": true
+},
+"LawfulMonad": {
+"class": true,
+"fields": [
+"toLawfulApplicative",
+"bind_pure_comp",
+"bind_map",
+"pure_bind",
+"bind_assoc"
+],
+"parents": {
+"toLawfulApplicative": "LawfulApplicative"
+},
+"prop": true
+},
+"LawfulMonadLift": {
+"class": true,
+"fields": [
+"monadLift_pure",
+"monadLift_bind"
+],
+"parents": {},
+"prop": true
+},
+"LawfulMonadLiftT": {
+"class": true,
+"fields": [
+"monadLift_pure",
+"monadLift_bind"
+],
+"parents": {},
+"prop": true
+},
+"LawfulSingleton": {
+"class": true,
+"fields": [
+"insert_empty_eq"
+],
+"parents": {},
+"prop": true
+},
+"Lean.Data.AC.Context": {
+"class": false,
+"fields": [
+"op",
+"assoc",
+"comm",
+"idem",
+"vars",
+"arbitrary"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Data.AC.ContextInformation": {
+"class": true,
+"fields": [
+"isNeutral",
+"isComm",
+"isIdem"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Data.AC.EvalInformation": {
+"class": true,
+"fields": [
+"arbitrary",
+"evalOp",
+"evalVar"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Data.AC.Variable": {
+"class": false,
+"fields": [
+"value",
+"neutral"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Grind.AC.Context": {
+"class": false,
+"fields": [
+"vars",
+"op"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Grind.AddCommGroup": {
+"class": true,
+"fields": [
+"toAddCommMonoid",
+"toNeg",
+"toSub",
+"neg_add_cancel",
+"sub_eq_add_neg"
+],
+"parents": {
+"toAddCommMonoid": "Lean.Grind.AddCommMonoid",
+"toNeg": "Neg",
+"toSub": "Sub"
+},
+"prop": false
+},
+"Lean.Grind.AddCommMonoid": {
+"class": true,
+"fields": [
+"toZero",
+"toAdd",
+"add_zero",
+"add_comm",
+"add_assoc"
+],
+"parents": {
+"toAdd": "Add",
+"toZero": "Zero"
+},
+"prop": false
+},
+"Lean.Grind.AddRightCancel": {
+"class": true,
+"fields": [
+"add_right_cancel"
+],
+"parents": {},
+"prop": true
+},
+"Lean.Grind.CommRing": {
+"class": true,
+"fields": [
+"toRing",
+"mul_comm"
+],
+"parents": {
+"toRing": "Lean.Grind.Ring"
+},
+"prop": false
+},
+"Lean.Grind.CommRing.Power": {
+"class": false,
+"fields": [
+"x",
+"k"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Grind.CommSemiring": {
+"class": true,
+"fields": [
+"toSemiring",
+"mul_comm"
+],
+"parents": {
+"toSemiring": "Lean.Grind.Semiring"
+},
+"prop": false
+},
+"Lean.Grind.Config": {
+"class": false,
+"fields": [
+"trace",
+"lax",
+"suggestions",
+"splits",
+"ematch",
+"gen",
+"instances",
+"matchEqs",
+"splitMatch",
+"splitIte",
+"splitIndPred",
+"splitImp",
+"canonHeartbeats",
+"ext",
+"extAll",
+"etaStruct",
+"funext",
+"lookahead",
+"verbose",
+"clean",
+"qlia",
+"mbtc",
+"zetaDelta",
+"zeta",
+"ring",
+"ringSteps",
+"linarith",
+"lia",
+"ac",
+"acSteps",
+"exp",
+"abstractProof",
+"inj",
+"order",
+"min",
+"detailed",
+"useSorry",
+"revert",
+"funCC",
+"reducible"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Grind.ConfigInteractive": {
+"class": false,
+"fields": [
+"toConfig"
+],
+"parents": {
+"toConfig": "Lean.Grind.Config"
+},
+"prop": false
+},
+"Lean.Grind.CutsatConfig": {
+"class": false,
+"fields": [
+"toNoopConfig"
+],
+"parents": {
+"toNoopConfig": "Lean.Grind.NoopConfig"
+},
+"prop": false
+},
+"Lean.Grind.ExistsAddOfLT": {
+"class": true,
+"fields": [
+"exists_add_of_le"
+],
+"parents": {},
+"prop": true
+},
+"Lean.Grind.Field": {
+"class": true,
+"fields": [
+"toCommRing",
+"toInv",
+"toDiv",
+"zpow",
+"div_eq_mul_inv",
+"zero_ne_one",
+"inv_zero",
+"mul_inv_cancel",
+"zpow_zero",
+"zpow_succ",
+"zpow_neg"
+],
+"parents": {
+"toCommRing": "Lean.Grind.CommRing",
+"toDiv": "Div",
+"toInv": "Inv"
+},
+"prop": false
+},
+"Lean.Grind.GrobnerConfig": {
+"class": false,
+"fields": [
+"toNoopConfig"
+],
+"parents": {
+"toNoopConfig": "Lean.Grind.NoopConfig"
+},
+"prop": false
+},
+"Lean.Grind.IntModule": {
+"class": true,
+"fields": [
+"toAddCommGroup",
+"nsmul",
+"zsmul",
+"zero_zsmul",
+"one_zsmul",
+"add_zsmul",
+"zsmul_natCast_eq_nsmul"
+],
+"parents": {
+"toAddCommGroup": "Lean.Grind.AddCommGroup"
+},
+"prop": false
+},
+"Lean.Grind.IsCharP": {
+"class": true,
+"fields": [
+"ofNat_ext_iff"
+],
+"parents": {},
+"prop": true
+},
+"Lean.Grind.LawfulOfScientific": {
+"class": true,
+"fields": [
+"ofScientific_def"
+],
+"parents": {},
+"prop": true
+},
+"Lean.Grind.NatModule": {
+"class": true,
+"fields": [
+"toAddCommMonoid",
+"nsmul",
+"zero_nsmul",
+"add_one_nsmul"
+],
+"parents": {
+"toAddCommMonoid": "Lean.Grind.AddCommMonoid"
+},
+"prop": false
+},
+"Lean.Grind.NoNatZeroDivisors": {
+"class": true,
+"fields": [
+"no_nat_zero_divisors"
+],
+"parents": {},
+"prop": true
+},
+"Lean.Grind.NoopConfig": {
+"class": false,
+"fields": [
+"toConfig"
+],
+"parents": {
+"toConfig": "Lean.Grind.Config"
+},
+"prop": false
+},
+"Lean.Grind.OrderedAdd": {
+"class": true,
+"fields": [
+"add_le_left_iff"
+],
+"parents": {},
+"prop": true
+},
+"Lean.Grind.OrderedRing": {
+"class": true,
+"fields": [
+"toOrderedAdd",
+"zero_lt_one",
+"mul_lt_mul_of_pos_left",
+"mul_lt_mul_of_pos_right"
+],
+"parents": {
+"toOrderedAdd": "Lean.Grind.OrderedAdd"
+},
+"prop": true
+},
+"Lean.Grind.Ring": {
+"class": true,
+"fields": [
+"toSemiring",
+"toNeg",
+"toSub",
+"intCast",
+"zsmul",
+"neg_add_cancel",
+"sub_eq_add_neg",
+"neg_zsmul",
+"zsmul_natCast_eq_nsmul",
+"intCast_ofNat",
+"intCast_neg"
+],
+"parents": {
+"toNeg": "Neg",
+"toSemiring": "Lean.Grind.Semiring",
+"toSub": "Sub"
+},
+"prop": false
+},
+"Lean.Grind.Semiring": {
+"class": true,
+"fields": [
+"toAdd",
+"toMul",
+"natCast",
+"ofNat",
+"nsmul",
+"npow",
+"add_zero",
+"add_comm",
+"add_assoc",
+"mul_assoc",
+"mul_one",
+"one_mul",
+"left_distrib",
+"right_distrib",
+"zero_mul",
+"mul_zero",
+"pow_zero",
+"pow_succ",
+"ofNat_succ",
+"ofNat_eq_natCast",
+"nsmul_eq_natCast_mul"
+],
+"parents": {
+"toAdd": "Add",
+"toMul": "Mul"
+},
+"prop": false
+},
+"Lean.Grind.ToInt": {
+"class": true,
+"fields": [
+"toInt",
+"toInt_inj",
+"toInt_mem"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Grind.ToInt.Add": {
+"class": true,
+"fields": [
+"toInt_add"
+],
+"parents": {},
+"prop": true
+},
+"Lean.Grind.ToInt.Div": {
+"class": true,
+"fields": [
+"toInt_div"
+],
+"parents": {},
+"prop": true
+},
+"Lean.Grind.ToInt.LE": {
+"class": true,
+"fields": [
+"le_iff"
+],
+"parents": {},
+"prop": true
+},
+"Lean.Grind.ToInt.LT": {
+"class": true,
+"fields": [
+"lt_iff"
+],
+"parents": {},
+"prop": true
+},
+"Lean.Grind.ToInt.Mod": {
+"class": true,
+"fields": [
+"toInt_mod"
+],
+"parents": {},
+"prop": true
+},
+"Lean.Grind.ToInt.Mul": {
+"class": true,
+"fields": [
+"toInt_mul"
+],
+"parents": {},
+"prop": true
+},
+"Lean.Grind.ToInt.Neg": {
+"class": true,
+"fields": [
+"toInt_neg"
+],
+"parents": {},
+"prop": true
+},
+"Lean.Grind.ToInt.OfNat": {
+"class": true,
+"fields": [
+"toInt_ofNat"
+],
+"parents": {},
+"prop": true
+},
+"Lean.Grind.ToInt.Pow": {
+"class": true,
+"fields": [
+"toInt_pow"
+],
+"parents": {},
+"prop": true
+},
+"Lean.Grind.ToInt.Sub": {
+"class": true,
+"fields": [
+"toInt_sub"
+],
+"parents": {},
+"prop": true
+},
+"Lean.Grind.ToInt.Zero": {
+"class": true,
+"fields": [
+"toInt_zero"
+],
+"parents": {},
+"prop": true
+},
+"Lean.Macro.Context": {
+"class": false,
+"fields": [
+"methods",
+"quotContext",
+"currMacroScope",
+"currRecDepth",
+"maxRecDepth",
+"ref"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Macro.Methods": {
+"class": false,
+"fields": [
+"expandMacro?",
+"getCurrNamespace",
+"hasDecl",
+"resolveNamespace",
+"resolveGlobalName"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Macro.State": {
+"class": false,
+"fields": [
+"macroScope",
+"traceMsgs",
+"expandedMacroDecls"
+],
+"parents": {},
+"prop": false
+},
+"Lean.MacroScopesView": {
+"class": false,
+"fields": [
+"name",
+"imported",
+"ctx",
+"scopes"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Meta.ApplyConfig": {
+"class": false,
+"fields": [
+"newGoals",
+"synthAssignedInstances",
+"allowSynthFailures",
+"approx"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Meta.DSimp.Config": {
+"class": false,
+"fields": [
+"zeta",
+"beta",
+"eta",
+"etaStruct",
+"iota",
+"proj",
+"decide",
+"autoUnfold",
+"failIfUnchanged",
+"unfoldPartialApp",
+"zetaDelta",
+"index",
+"zetaUnused",
+"zetaHave"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Meta.ExtractLetsConfig": {
+"class": false,
+"fields": [
+"proofs",
+"types",
+"implicits",
+"descend",
+"underBinder",
+"usedOnly",
+"merge",
+"useContext",
+"onlyGivenNames",
+"preserveBinderNames",
+"lift"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Meta.FastIsEmpty": {
+"class": true,
+"fields": [
+"inst"
+],
+"parents": {},
+"prop": true
+},
+"Lean.Meta.FastSubsingleton": {
+"class": true,
+"fields": [
+"inst"
+],
+"parents": {},
+"prop": true
+},
+"Lean.Meta.LiftLetsConfig": {
+"class": false,
+"fields": [
+"toExtractLetsConfig"
+],
+"parents": {
+"toExtractLetsConfig": "Lean.Meta.ExtractLetsConfig"
+},
+"prop": false
+},
+"Lean.Meta.Omega.OmegaConfig": {
+"class": false,
+"fields": [
+"splitDisjunctions",
+"splitNatSub",
+"splitNatAbs",
+"splitMinMax"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Meta.RefinedDiscrTree": {
+"class": false,
+"fields": [
+"root",
+"tries"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Meta.RefinedDiscrTree.ExprInfo": {
+"class": false,
+"fields": [
+"expr",
+"bvars",
+"lctx",
+"localInsts",
+"cfg"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Meta.RefinedDiscrTree.LazyEntry": {
+"class": false,
+"fields": [
+"previous",
+"stack",
+"mctx",
+"labelledStars?",
+"computedKeys"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Meta.RefinedDiscrTree.MatchResult": {
+"class": false,
+"fields": [
+"elts"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Meta.RefinedDiscrTree.ModuleDiscrTreeRef": {
+"class": false,
+"fields": [
+"ref"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Meta.RefinedDiscrTree.PreDiscrTree": {
+"class": false,
+"fields": [
+"root",
+"tries"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Meta.RefinedDiscrTree.Trie": {
+"class": false,
+"fields": [
+"values",
+"star",
+"labelledStars",
+"children",
+"pending"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Meta.Rewrite.Config": {
+"class": false,
+"fields": [
+"transparency",
+"offsetCnstrs",
+"occs",
+"newGoals"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Meta.Simp.Config": {
+"class": false,
+"fields": [
+"maxSteps",
+"maxDischargeDepth",
+"contextual",
+"memoize",
+"singlePass",
+"zeta",
+"beta",
+"eta",
+"etaStruct",
+"iota",
+"proj",
+"decide",
+"arith",
+"autoUnfold",
+"dsimp",
+"failIfUnchanged",
+"ground",
+"unfoldPartialApp",
+"zetaDelta",
+"index",
+"implicitDefEqProofs",
+"zetaUnused",
+"catchRuntime",
+"zetaHave",
+"letToHave",
+"congrConsts",
+"bitVecOfNat",
+"warnExponents",
+"suggestions"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Meta.Simp.ConfigCtx": {
+"class": false,
+"fields": [
+"toConfig"
+],
+"parents": {
+"toConfig": "Lean.Meta.Simp.Config"
+},
+"prop": false
+},
+"Lean.Meta.Simp.NormCastConfig": {
+"class": false,
+"fields": [
+"toConfig"
+],
+"parents": {
+"toConfig": "Lean.Meta.Simp.Config"
+},
+"prop": false
+},
+"Lean.Module": {
+"class": false,
+"fields": [
+"header",
+"commands"
+],
+"parents": {},
+"prop": false
+},
+"Lean.MonadNameGenerator": {
+"class": true,
+"fields": [
+"getNGen",
+"setNGen"
+],
+"parents": {},
+"prop": false
+},
+"Lean.MonadQuotation": {
+"class": true,
+"fields": [
+"toMonadRef",
+"getCurrMacroScope",
+"getContext",
+"withFreshMacroScope"
+],
+"parents": {
+"toMonadRef": "Lean.MonadRef"
+},
+"prop": false
+},
+"Lean.MonadRef": {
+"class": true,
+"fields": [
+"getRef",
+"withRef"
+],
+"parents": {},
+"prop": false
+},
+"Lean.NameGenerator": {
+"class": false,
+"fields": [
+"namePrefix",
+"idx"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Omega.Constraint": {
+"class": false,
+"fields": [
+"lowerBound",
+"upperBound"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Omega.LinearCombo": {
+"class": false,
+"fields": [
+"const",
+"coeffs"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Order.CCPO": {
+"class": true,
+"fields": [
+"toPartialOrder",
+"has_csup"
+],
+"parents": {
+"toPartialOrder": "Lean.Order.PartialOrder"
+},
+"prop": false
+},
+"Lean.Order.CompleteLattice": {
+"class": true,
+"fields": [
+"toPartialOrder",
+"has_sup"
+],
+"parents": {
+"toPartialOrder": "Lean.Order.PartialOrder"
+},
+"prop": false
+},
+"Lean.Order.MonoBind": {
+"class": true,
+"fields": [
+"bind_mono_left",
+"bind_mono_right"
+],
+"parents": {},
+"prop": true
+},
+"Lean.Order.PartialOrder": {
+"class": true,
+"fields": [
+"rel",
+"rel_refl",
+"rel_trans",
+"rel_antisymm"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Parser.Category": {
+"class": false,
+"fields": [],
+"parents": {},
+"prop": false
+},
+"Lean.Parser.Tactic.DecideConfig": {
+"class": false,
+"fields": [
+"kernel",
+"native",
+"zetaReduce",
+"revert"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Parser.Tactic.LibrarySearchConfig": {
+"class": false,
+"fields": [
+"grind",
+"try?",
+"star",
+"all"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Quote": {
+"class": true,
+"fields": [
+"quote"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Syntax.SepArray": {
+"class": false,
+"fields": [
+"elemsAndSeps"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Syntax.TSepArray": {
+"class": false,
+"fields": [
+"elemsAndSeps"
+],
+"parents": {},
+"prop": false
+},
+"Lean.TSyntax": {
+"class": false,
+"fields": [
+"raw"
+],
+"parents": {},
+"prop": false
+},
+"Lean.Try.Config": {
+"class": false,
+"fields": [
+"main",
+"name",
+"targetOnly",
+"max",
+"missing",
+"only",
+"harder",
+"merge",
+"wrapWithBy"
+],
+"parents": {},
+"prop": false
+},
+"LeftCancelMonoid": {
+"class": true,
+"fields": [
+"toMonoid",
+"toIsLeftCancelMul"
+],
+"parents": {
+"toIsLeftCancelMul": "IsLeftCancelMul",
+"toMonoid": "Monoid"
+},
+"prop": false
+},
+"LeftCancelSemigroup": {
+"class": true,
+"fields": [
+"toSemigroup",
+"toIsLeftCancelMul"
+],
+"parents": {
+"toIsLeftCancelMul": "IsLeftCancelMul",
+"toSemigroup": "Semigroup"
+},
+"prop": false
+},
+"LeftCommutative": {
+"class": true,
+"fields": [
+"left_comm"
+],
+"parents": {},
+"prop": true
+},
+"LinearOrder": {
+"class": true,
+"fields": [
+"toPartialOrder",
+"toMin",
+"toMax",
+"toOrd",
+"le_total",
+"toDecidableLE",
+"toDecidableEq",
+"toDecidableLT",
+"min_def",
+"max_def",
+"compare_eq_compareOfLessAndEq"
+],
+"parents": {
+"toMax": "Max",
+"toMin": "Min",
+"toOrd": "Ord",
+"toPartialOrder": "PartialOrder"
+},
+"prop": false
+},
+"LowerSet": {
+"class": false,
+"fields": [
+"carrier",
+"lower'"
+],
+"parents": {},
+"prop": false
+},
+"MProd": {
+"class": false,
+"fields": [
+"fst",
+"snd"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.AssertNotExist.AssertExists": {
+"class": false,
+"fields": [
+"isDecl",
+"givenName",
+"modName"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Meta.FunProp.Config": {
+"class": false,
+"fields": [
+"maxTransitionDepth",
+"maxSteps"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Meta.FunProp.Context": {
+"class": false,
+"fields": [
+"config",
+"constToUnfold",
+"disch",
+"transitionDepth"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Meta.FunProp.FunPropDecl": {
+"class": false,
+"fields": [
+"funPropName",
+"path",
+"funArgId"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Meta.FunProp.FunPropDecls": {
+"class": false,
+"fields": [
+"decls"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Meta.FunProp.FunctionData": {
+"class": false,
+"fields": [
+"lctx",
+"insts",
+"fn",
+"args",
+"mainVar",
+"mainArgs"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Meta.FunProp.FunctionTheorem": {
+"class": false,
+"fields": [
+"funPropName",
+"thmOrigin",
+"funOrigin",
+"mainArgs",
+"appliedArgs",
+"priority",
+"form"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Meta.FunProp.FunctionTheorems": {
+"class": false,
+"fields": [
+"theorems"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Meta.FunProp.GeneralTheorem": {
+"class": false,
+"fields": [
+"funPropName",
+"thmName",
+"keys",
+"priority"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Meta.FunProp.GeneralTheorems": {
+"class": false,
+"fields": [
+"theorems"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Meta.FunProp.LambdaTheorem": {
+"class": false,
+"fields": [
+"funPropName",
+"thmName",
+"thmArgs"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Meta.FunProp.LambdaTheorems": {
+"class": false,
+"fields": [
+"theorems"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Meta.FunProp.Mor.App": {
+"class": false,
+"fields": [
+"coe",
+"fn",
+"arg"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Meta.FunProp.Mor.Arg": {
+"class": false,
+"fields": [
+"expr",
+"coe"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Meta.FunProp.Result": {
+"class": false,
+"fields": [
+"proof"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Meta.FunProp.State": {
+"class": false,
+"fields": [
+"cache",
+"failureCache",
+"numSteps",
+"msgLog",
+"morTheorems",
+"transitionTheorems"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Notation3.MatchState": {
+"class": false,
+"fields": [
+"vars",
+"scopeState",
+"foldState"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.PrintSorries.State": {
+"class": false,
+"fields": [
+"visited",
+"sorries",
+"sorryMsgs"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Tactic.Choose.ChooseArg": {
+"class": false,
+"fields": [
+"ref",
+"name",
+"expectedType?"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Tactic.GCongr.ForwardExt": {
+"class": false,
+"fields": [
+"eval"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Tactic.GCongr.GCongrKey": {
+"class": false,
+"fields": [
+"relName",
+"head",
+"arity"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Tactic.GCongr.GCongrLemma": {
+"class": false,
+"fields": [
+"key",
+"declName",
+"mainSubgoals",
+"numHyps",
+"prio",
+"numVarying"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Tactic.GRewrite.Config": {
+"class": false,
+"fields": [
+"toConfig",
+"useRewrite",
+"implicationHyp"
+],
+"parents": {
+"toConfig": "Lean.Meta.Rewrite.Config"
+},
+"prop": false
+},
+"Mathlib.Tactic.GRewriteResult": {
+"class": false,
+"fields": [
+"eNew",
+"impProof",
+"mvarIds"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Tactic.GuessName.GuessNameData": {
+"class": false,
+"fields": [
+"nameDict",
+"abbreviationDict"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Tactic.LibraryRewrite.Rewrite": {
+"class": false,
+"fields": [
+"symm",
+"proof",
+"replacement",
+"stringLength",
+"extraGoals",
+"makesNewMVars"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Tactic.LibraryRewrite.RewriteInterface": {
+"class": false,
+"fields": [
+"symm",
+"tactic",
+"replacement",
+"replacementString",
+"extraGoals",
+"prettyLemma",
+"lemmaType",
+"makesNewMVars"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Tactic.LibraryRewrite.RewriteLemma": {
+"class": false,
+"fields": [
+"name",
+"symm"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Tactic.MkIff.Shape": {
+"class": false,
+"fields": [
+"variablesKept",
+"neqs"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Tactic.Push.Config": {
+"class": false,
+"fields": [
+"distrib"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Tactic.Tauto.Config": {
+"class": false,
+"fields": [],
+"parents": {},
+"prop": false
+},
+"Mathlib.Tactic.Tauto.DistribNotState": {
+"class": false,
+"fields": [
+"fvars",
+"currentGoal"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Tactic.TermCongr.CongrResult": {
+"class": false,
+"fields": [
+"lhs",
+"rhs",
+"pf?"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Tactic.Translate.ArgInfo": {
+"class": false,
+"fields": [
+"reorder",
+"relevantArg"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Tactic.Translate.Config": {
+"class": false,
+"fields": [
+"trace",
+"tgt",
+"doc",
+"allowAutoName",
+"reorder?",
+"relevantArg?",
+"attrs",
+"dontTranslate",
+"ref",
+"existing",
+"self",
+"none"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Tactic.Translate.TranslateData": {
+"class": false,
+"fields": [
+"ignoreArgsAttr",
+"argInfoAttr",
+"doTranslateAttr",
+"translations",
+"attrName",
+"changeNumeral",
+"isDual",
+"guessNameData"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Tactic.WLOGResult": {
+"class": false,
+"fields": [
+"reductionGoal",
+"reductionFVarIds",
+"hypothesisGoal",
+"hypothesisFVarId",
+"revertedFVarIds"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.Tactic.withResetServerInfo.Result": {
+"class": false,
+"fields": [
+"result?",
+"msgs",
+"trees"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.TacticAnalysis.ComplexConfig": {
+"class": false,
+"fields": [
+"out",
+"ctx",
+"trigger",
+"test",
+"tell"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.TacticAnalysis.Config": {
+"class": false,
+"fields": [
+"run"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.TacticAnalysis.Entry": {
+"class": false,
+"fields": [
+"declName",
+"optionName"
+],
+"parents": {},
+"prop": false
+},
+"Mathlib.TacticAnalysis.Pass": {
+"class": false,
+"fields": [
+"toConfig",
+"opt"
+],
+"parents": {
+"toConfig": "Mathlib.TacticAnalysis.Config"
+},
+"prop": false
+},
+"Mathlib.TacticAnalysis.TacticNode": {
+"class": false,
+"fields": [
+"ctxI",
+"tacI",
+"mayFail"
+],
+"parents": {},
+"prop": false
+},
+"Max": {
+"class": true,
+"fields": [
+"max"
+],
+"parents": {},
+"prop": false
+},
+"Membership": {
+"class": true,
+"fields": [
+"mem"
+],
+"parents": {},
+"prop": false
+},
+"Min": {
+"class": true,
+"fields": [
+"min"
+],
+"parents": {},
+"prop": false
+},
+"Mod": {
+"class": true,
+"fields": [
+"mod"
+],
+"parents": {},
+"prop": false
+},
+"Monad": {
+"class": true,
+"fields": [
+"toApplicative",
+"toBind"
+],
+"parents": {
+"toApplicative": "Applicative",
+"toBind": "Bind"
+},
+"prop": false
+},
+"MonadControl": {
+"class": true,
+"fields": [
+"stM",
+"liftWith",
+"restoreM"
+],
+"parents": {},
+"prop": false
+},
+"MonadControlT": {
+"class": true,
+"fields": [
+"stM",
+"liftWith",
+"restoreM"
+],
+"parents": {},
+"prop": false
+},
+"MonadEval": {
+"class": true,
+"fields": [
+"monadEval"
+],
+"parents": {},
+"prop": false
+},
+"MonadEvalT": {
+"class": true,
+"fields": [
+"monadEval"
+],
+"parents": {},
+"prop": false
+},
+"MonadExcept": {
+"class": true,
+"fields": [
+"throw",
+"tryCatch"
+],
+"parents": {},
+"prop": false
+},
+"MonadExceptOf": {
+"class": true,
+"fields": [
+"throw",
+"tryCatch"
+],
+"parents": {},
+"prop": false
+},
+"MonadFinally": {
+"class": true,
+"fields": [
+"tryFinally'"
+],
+"parents": {},
+"prop": false
+},
+"MonadFunctor": {
+"class": true,
+"fields": [
+"monadMap"
+],
+"parents": {},
+"prop": false
+},
+"MonadFunctorT": {
+"class": true,
+"fields": [
+"monadMap"
+],
+"parents": {},
+"prop": false
+},
+"MonadLift": {
+"class": true,
+"fields": [
+"monadLift"
+],
+"parents": {},
+"prop": false
+},
+"MonadLiftT": {
+"class": true,
+"fields": [
+"monadLift"
+],
+"parents": {},
+"prop": false
+},
+"MonadReader": {
+"class": true,
+"fields": [
+"read"
+],
+"parents": {},
+"prop": false
+},
+"MonadReaderOf": {
+"class": true,
+"fields": [
+"read"
+],
+"parents": {},
+"prop": false
+},
+"MonadShareCommon": {
+"class": true,
+"fields": [
+"withShareCommon"
+],
+"parents": {},
+"prop": false
+},
+"MonadState": {
+"class": true,
+"fields": [
+"get",
+"set",
+"modifyGet"
+],
+"parents": {},
+"prop": false
+},
+"MonadStateOf": {
+"class": true,
+"fields": [
+"get",
+"set",
+"modifyGet"
+],
+"parents": {},
+"prop": false
+},
+"MonadWithReader": {
+"class": true,
+"fields": [
+"withReader"
+],
+"parents": {},
+"prop": false
+},
+"MonadWithReaderOf": {
+"class": true,
+"fields": [
+"withReader"
+],
+"parents": {},
+"prop": false
+},
+"Monoid": {
+"class": true,
+"fields": [
+"toSemigroup",
+"toOne",
+"one_mul",
+"mul_one",
+"npow",
+"npow_zero",
+"npow_succ"
+],
+"parents": {
+"toOne": "One",
+"toSemigroup": "Semigroup"
+},
+"prop": false
+},
+"MonoidHom": {
+"class": false,
+"fields": [
+"toOneHom",
+"map_mul'"
+],
+"parents": {
+"toOneHom": "OneHom"
+},
+"prop": false
+},
+"MonoidHomClass": {
+"class": true,
+"fields": [
+"toMulHomClass",
+"toOneHomClass"
+],
+"parents": {
+"toMulHomClass": "MulHomClass",
+"toOneHomClass": "OneHomClass"
+},
+"prop": true
+},
+"Mul": {
+"class": true,
+"fields": [
+"mul"
+],
+"parents": {},
+"prop": false
+},
+"MulHom": {
+"class": false,
+"fields": [
+"toFun",
+"map_mul'"
+],
+"parents": {},
+"prop": false
+},
+"MulHomClass": {
+"class": true,
+"fields": [
+"map_mul"
+],
+"parents": {},
+"prop": true
+},
+"MulOne": {
+"class": true,
+"fields": [
+"toOne",
+"toMul"
+],
+"parents": {
+"toMul": "Mul",
+"toOne": "One"
+},
+"prop": false
+},
+"MulOneClass": {
+"class": true,
+"fields": [
+"toMulOne",
+"one_mul",
+"mul_one"
+],
+"parents": {
+"toMulOne": "MulOne"
+},
+"prop": false
+},
+"Nat.AtLeastTwo": {
+"class": true,
+"fields": [
+"prop"
+],
+"parents": {},
+"prop": true
+},
+"Nat.Linear.ExprCnstr": {
+"class": false,
+"fields": [
+"eq",
+"lhs",
+"rhs"
+],
+"parents": {},
+"prop": false
+},
+"Nat.Linear.PolyCnstr": {
+"class": false,
+"fields": [
+"eq",
+"lhs",
+"rhs"
+],
+"parents": {},
+"prop": false
+},
+"NatCast": {
+"class": true,
+"fields": [
+"natCast"
+],
+"parents": {},
+"prop": false
+},
+"NatPow": {
+"class": true,
+"fields": [
+"pow"
+],
+"parents": {},
+"prop": false
+},
+"NeZero": {
+"class": true,
+"fields": [
+"out"
+],
+"parents": {},
+"prop": true
+},
+"Neg": {
+"class": true,
+"fields": [
+"neg"
+],
+"parents": {},
+"prop": false
+},
+"NegZeroClass": {
+"class": true,
+"fields": [
+"toZero",
+"toNeg",
+"neg_zero"
+],
+"parents": {
+"toNeg": "Neg",
+"toZero": "Zero"
+},
+"prop": false
+},
+"NoBotOrder": {
+"class": true,
+"fields": [
+"exists_not_ge"
+],
+"parents": {},
+"prop": true
+},
+"NoMaxOrder": {
+"class": true,
+"fields": [
+"exists_gt"
+],
+"parents": {},
+"prop": true
+},
+"NoMinOrder": {
+"class": true,
+"fields": [
+"exists_lt"
+],
+"parents": {},
+"prop": true
+},
+"NoTopOrder": {
+"class": true,
+"fields": [
+"exists_not_le"
+],
+"parents": {},
+"prop": true
+},
+"NonScalar": {
+"class": false,
+"fields": [
+"val"
+],
+"parents": {},
+"prop": false
+},
+"Nontrivial": {
+"class": true,
+"fields": [
+"exists_pair_ne"
+],
+"parents": {},
+"prop": true
+},
+"OfNat": {
+"class": true,
+"fields": [
+"ofNat"
+],
+"parents": {},
+"prop": false
+},
+"OfScientific": {
+"class": true,
+"fields": [
+"ofScientific"
+],
+"parents": {},
+"prop": false
+},
+"One": {
+"class": true,
+"fields": [
+"one"
+],
+"parents": {},
+"prop": false
+},
+"OneHom": {
+"class": false,
+"fields": [
+"toFun",
+"map_one'"
+],
+"parents": {},
+"prop": false
+},
+"OneHomClass": {
+"class": true,
+"fields": [
+"map_one"
+],
+"parents": {},
+"prop": true
+},
+"OrElse": {
+"class": true,
+"fields": [
+"orElse"
+],
+"parents": {},
+"prop": false
+},
+"OrOp": {
+"class": true,
+"fields": [
+"or"
+],
+"parents": {},
+"prop": false
+},
+"Ord": {
+"class": true,
+"fields": [
+"compare"
+],
+"parents": {},
+"prop": false
+},
+"OrderBot": {
+"class": true,
+"fields": [
+"toBot",
+"bot_le"
+],
+"parents": {
+"toBot": "Bot"
+},
+"prop": false
+},
+"OrderHom": {
+"class": false,
+"fields": [
+"toFun",
+"monotone'"
+],
+"parents": {},
+"prop": false
+},
+"OrderIsoClass": {
+"class": true,
+"fields": [
+"map_le_map_iff"
+],
+"parents": {},
+"prop": true
+},
+"OrderTop": {
+"class": true,
+"fields": [
+"toTop",
+"le_top"
+],
+"parents": {
+"toTop": "Top"
+},
+"prop": false
+},
+"PLift": {
+"class": false,
+"fields": [
+"down"
+],
+"parents": {},
+"prop": false
+},
+"PProd": {
+"class": false,
+"fields": [
+"fst",
+"snd"
+],
+"parents": {},
+"prop": false
+},
+"PSigma": {
+"class": false,
+"fields": [
+"fst",
+"snd"
+],
+"parents": {},
+"prop": false
+},
+"PULift": {
+"class": false,
+"fields": [
+"down"
+],
+"parents": {},
+"prop": false
+},
+"PartialEquivBEq": {
+"class": true,
+"fields": [
+"symm",
+"trans"
+],
+"parents": {},
+"prop": true
+},
+"PartialOrder": {
+"class": true,
+"fields": [
+"toPreorder",
+"le_antisymm"
+],
+"parents": {
+"toPreorder": "Preorder"
+},
+"prop": false
+},
+"Pow": {
+"class": true,
+"fields": [
+"pow"
+],
+"parents": {},
+"prop": false
+},
+"Preorder": {
+"class": true,
+"fields": [
+"toLE",
+"toLT",
+"le_refl",
+"le_trans",
+"lt_iff_le_not_ge"
+],
+"parents": {
+"toLE": "LE",
+"toLT": "LT"
+},
+"prop": false
+},
+"Prod": {
+"class": false,
+"fields": [
+"fst",
+"snd"
+],
+"parents": {},
+"prop": false
+},
+"Pure": {
+"class": true,
+"fields": [
+"pure"
+],
+"parents": {},
+"prop": false
+},
+"RandomGen": {
+"class": true,
+"fields": [
+"range",
+"next",
+"split"
+],
+"parents": {},
+"prop": false
+},
+"Rat": {
+"class": false,
+"fields": [
+"num",
+"den",
+"den_nz",
+"reduced"
+],
+"parents": {},
+"prop": false
+},
+"ReflBEq": {
+"class": true,
+"fields": [
+"rfl"
+],
+"parents": {},
+"prop": true
+},
+"RelEmbedding": {
+"class": false,
+"fields": [
+"toEmbedding",
+"map_rel_iff'"
+],
+"parents": {
+"toEmbedding": "Function.Embedding"
+},
+"prop": false
+},
+"RelHom": {
+"class": false,
+"fields": [
+"toFun",
+"map_rel'"
+],
+"parents": {},
+"prop": false
+},
+"RelHomClass": {
+"class": true,
+"fields": [
+"map_rel"
+],
+"parents": {},
+"prop": true
+},
+"RelIso": {
+"class": false,
+"fields": [
+"toEquiv",
+"map_rel_iff'"
+],
+"parents": {
+"toEquiv": "Equiv"
+},
+"prop": false
+},
+"RelLowerSet": {
+"class": false,
+"fields": [
+"carrier",
+"isRelLowerSet'"
+],
+"parents": {},
+"prop": false
+},
+"RelUpperSet": {
+"class": false,
+"fields": [
+"carrier",
+"isRelUpperSet'"
+],
+"parents": {},
+"prop": false
+},
+"Repr": {
+"class": true,
+"fields": [
+"reprPrec"
+],
+"parents": {},
+"prop": false
+},
+"ReprAtom": {
+"class": true,
+"fields": [],
+"parents": {},
+"prop": false
+},
+"ReprTuple": {
+"class": true,
+"fields": [
+"reprTuple"
+],
+"parents": {},
+"prop": false
+},
+"RightCancelMonoid": {
+"class": true,
+"fields": [
+"toMonoid",
+"toIsRightCancelMul"
+],
+"parents": {
+"toIsRightCancelMul": "IsRightCancelMul",
+"toMonoid": "Monoid"
+},
+"prop": false
+},
+"RightCancelSemigroup": {
+"class": true,
+"fields": [
+"toSemigroup",
+"toIsRightCancelMul"
+],
+"parents": {
+"toIsRightCancelMul": "IsRightCancelMul",
+"toSemigroup": "Semigroup"
+},
+"prop": false
+},
+"RightCommutative": {
+"class": true,
+"fields": [
+"right_comm"
+],
+"parents": {},
+"prop": true
+},
+"SDiff": {
+"class": true,
+"fields": [
+"sdiff"
+],
+"parents": {},
+"prop": false
+},
+"SMul": {
+"class": true,
+"fields": [
+"smul"
+],
+"parents": {},
+"prop": false
+},
+"SProd": {
+"class": true,
+"fields": [
+"sprod"
+],
+"parents": {},
+"prop": false
+},
+"ST.Out": {
+"class": false,
+"fields": [
+"val",
+"state"
+],
+"parents": {},
+"prop": false
+},
+"ST.Ref": {
+"class": false,
+"fields": [
+"ref",
+"h"
+],
+"parents": {},
+"prop": false
+},
+"STWorld": {
+"class": true,
+"fields": [],
+"parents": {},
+"prop": false
+},
+"SelectInsertParams": {
+"class": false,
+"fields": [
+"pos",
+"goals",
+"selectedLocations",
+"replaceRange"
+],
+"parents": {},
+"prop": false
+},
+"SelectInsertParamsClass": {
+"class": true,
+"fields": [
+"pos",
+"goals",
+"selectedLocations",
+"replaceRange"
+],
+"parents": {},
+"prop": false
+},
+"Semigroup": {
+"class": true,
+"fields": [
+"toMul",
+"mul_assoc"
+],
+"parents": {
+"toMul": "Mul"
+},
+"prop": false
+},
+"SemilatticeInf": {
+"class": true,
+"fields": [
+"toPartialOrder",
+"inf",
+"inf_le_left",
+"inf_le_right",
+"le_inf"
+],
+"parents": {
+"toPartialOrder": "PartialOrder"
+},
+"prop": false
+},
+"SemilatticeSup": {
+"class": true,
+"fields": [
+"toPartialOrder",
+"sup",
+"le_sup_left",
+"le_sup_right",
+"sup_le"
+],
+"parents": {
+"toPartialOrder": "PartialOrder"
+},
+"prop": false
+},
+"Sep": {
+"class": true,
+"fields": [
+"sep"
+],
+"parents": {},
+"prop": false
+},
+"Seq": {
+"class": true,
+"fields": [
+"seq"
+],
+"parents": {},
+"prop": false
+},
+"SeqLeft": {
+"class": true,
+"fields": [
+"seqLeft"
+],
+"parents": {},
+"prop": false
+},
+"SeqRight": {
+"class": true,
+"fields": [
+"seqRight"
+],
+"parents": {},
+"prop": false
+},
+"SetLike": {
+"class": true,
+"fields": [
+"coe",
+"coe_injective'"
+],
+"parents": {},
+"prop": false
+},
+"Setoid": {
+"class": true,
+"fields": [
+"r",
+"iseqv"
+],
+"parents": {},
+"prop": false
+},
+"ShareCommon.StateFactoryBuilder": {
+"class": false,
+"fields": [
+"Map",
+"mkMap",
+"mapFind?",
+"mapInsert",
+"Set",
+"mkSet",
+"setFind?",
+"setInsert"
+],
+"parents": {},
+"prop": false
+},
+"ShareCommon.StateFactoryImpl": {
+"class": false,
+"fields": [
+"Map",
+"Set",
+"mkState",
+"mapFind?",
+"mapInsert",
+"setFind?",
+"setInsert"
+],
+"parents": {},
+"prop": false
+},
+"ShiftLeft": {
+"class": true,
+"fields": [
+"shiftLeft"
+],
+"parents": {},
+"prop": false
+},
+"ShiftRight": {
+"class": true,
+"fields": [
+"shiftRight"
+],
+"parents": {},
+"prop": false
+},
+"Sigma": {
+"class": false,
+"fields": [
+"fst",
+"snd"
+],
+"parents": {},
+"prop": false
+},
+"Simps.AutomaticProjectionData": {
+"class": false,
+"fields": [
+"className",
+"isNotation",
+"findArgs"
+],
+"parents": {},
+"prop": false
+},
+"Simps.Config": {
+"class": false,
+"fields": [
+"isSimp",
+"attrs",
+"simpRhs",
+"typeMd",
+"rhsMd",
+"fullyApplied",
+"notRecursive",
+"debug",
+"nameStem"
+],
+"parents": {},
+"prop": false
+},
+"Simps.ParsedProjectionData": {
+"class": false,
+"fields": [
+"strName",
+"strStx",
+"newName",
+"newStx",
+"isDefault",
+"isPrefix",
+"expr?",
+"projNrs",
+"isCustom"
+],
+"parents": {},
+"prop": false
+},
+"Simps.ProjectionData": {
+"class": false,
+"fields": [
+"name",
+"expr",
+"projNrs",
+"isDefault",
+"isPrefix"
+],
+"parents": {},
+"prop": false
+},
+"Singleton": {
+"class": true,
+"fields": [
+"singleton"
+],
+"parents": {},
+"prop": false
+},
+"SizeOf": {
+"class": true,
+"fields": [
+"sizeOf"
+],
+"parents": {},
+"prop": false
+},
+"Star": {
+"class": true,
+"fields": [
+"star"
+],
+"parents": {},
+"prop": false
+},
+"Std.Antisymm": {
+"class": true,
+"fields": [
+"antisymm"
+],
+"parents": {},
+"prop": true
+},
+"Std.Associative": {
+"class": true,
+"fields": [
+"assoc"
+],
+"parents": {},
+"prop": true
+},
+"Std.Asymm": {
+"class": true,
+"fields": [
+"asymm"
+],
+"parents": {},
+"prop": true
+},
+"Std.Commutative": {
+"class": true,
+"fields": [
+"comm"
+],
+"parents": {},
+"prop": true
+},
+"Std.Format.MonadPrettyFormat": {
+"class": true,
+"fields": [
+"pushOutput",
+"pushNewline",
+"currColumn",
+"startTag",
+"endTags"
+],
+"parents": {},
+"prop": false
+},
+"Std.IdempotentOp": {
+"class": true,
+"fields": [
+"idempotent"
+],
+"parents": {},
+"prop": true
+},
+"Std.Identity": {
+"class": true,
+"fields": [
+"toLeftIdentity"
+],
+"parents": {
+"toLeftIdentity": "Std.LeftIdentity"
+},
+"prop": true
+},
+"Std.Internal.LawfulMonadLiftBindFunction": {
+"class": true,
+"fields": [
+"liftBind_pure",
+"liftBind_bind"
+],
+"parents": {},
+"prop": true
+},
+"Std.Internal.LawfulMonadLiftFunction": {
+"class": true,
+"fields": [
+"lift_pure",
+"lift_bind"
+],
+"parents": {},
+"prop": true
+},
+"Std.Irrefl": {
+"class": true,
+"fields": [
+"irrefl"
+],
+"parents": {},
+"prop": true
+},
+"Std.IsLinearOrder": {
+"class": true,
+"fields": [
+"toIsPartialOrder",
+"le_total"
+],
+"parents": {
+"toIsPartialOrder": "Std.IsPartialOrder"
+},
+"prop": true
+},
+"Std.IsLinearPreorder": {
+"class": true,
+"fields": [
+"toIsPreorder",
+"le_total"
+],
+"parents": {
+"toIsPreorder": "Std.IsPreorder"
+},
+"prop": true
+},
+"Std.IsPartialOrder": {
+"class": true,
+"fields": [
+"toIsPreorder",
+"le_antisymm"
+],
+"parents": {
+"toIsPreorder": "Std.IsPreorder"
+},
+"prop": true
+},
+"Std.IsPreorder": {
+"class": true,
+"fields": [
+"le_refl",
+"le_trans"
+],
+"parents": {},
+"prop": true
+},
+"Std.Iterators.FilterMap": {
+"class": false,
+"fields": [
+"inner"
+],
+"parents": {},
+"prop": false
+},
+"Std.Iterators.Finite": {
+"class": true,
+"fields": [
+"wf"
+],
+"parents": {},
+"prop": true
+},
+"Std.Iterators.FinitenessRelation": {
+"class": false,
+"fields": [
+"rel",
+"wf",
+"subrelation"
+],
+"parents": {},
+"prop": false
+},
+"Std.Iterators.Flatten": {
+"class": false,
+"fields": [
+"it₁",
+"it₂"
+],
+"parents": {},
+"prop": false
+},
+"Std.Iterators.Iter": {
+"class": false,
+"fields": [
+"internalState"
+],
+"parents": {},
+"prop": false
+},
+"Std.Iterators.Iter.Partial": {
+"class": false,
+"fields": [
+"it"
+],
+"parents": {},
+"prop": false
+},
+"Std.Iterators.Iter.Total": {
+"class": false,
+"fields": [
+"it"
+],
+"parents": {},
+"prop": false
+},
+"Std.Iterators.IterM": {
+"class": false,
+"fields": [
+"internalState"
+],
+"parents": {},
+"prop": false
+},
+"Std.Iterators.IterM.Partial": {
+"class": false,
+"fields": [
+"it"
+],
+"parents": {},
+"prop": false
+},
+"Std.Iterators.IterM.TerminationMeasures.Finite": {
+"class": false,
+"fields": [
+"it"
+],
+"parents": {},
+"prop": false
+},
+"Std.Iterators.IterM.TerminationMeasures.Productive": {
+"class": false,
+"fields": [
+"it"
+],
+"parents": {},
+"prop": false
+},
+"Std.Iterators.IterM.Total": {
+"class": false,
+"fields": [
+"it"
+],
+"parents": {},
+"prop": false
+},
+"Std.Iterators.Iterator": {
+"class": true,
+"fields": [
+"IsPlausibleStep",
+"step"
+],
+"parents": {},
+"prop": false
+},
+"Std.Iterators.IteratorAccess": {
+"class": true,
+"fields": [
+"nextAtIdx?"
+],
+"parents": {},
+"prop": false
+},
+"Std.Iterators.IteratorCollect": {
+"class": true,
+"fields": [
+"toArrayMapped"
+],
+"parents": {},
+"prop": false
+},
+"Std.Iterators.IteratorLoop": {
+"class": true,
+"fields": [
+"forIn"
+],
+"parents": {},
+"prop": false
+},
+"Std.Iterators.IteratorLoop.WithWF": {
+"class": false,
+"fields": [
+"it",
+"acc"
+],
+"parents": {},
+"prop": false
+},
+"Std.Iterators.LawfulDeterministicIterator": {
+"class": true,
+"fields": [
+"isPlausibleStep_eq_eq"
+],
+"parents": {},
+"prop": true
+},
+"Std.Iterators.LawfulIteratorCollect": {
+"class": true,
+"fields": [
+"lawful_toArrayMapped"
+],
+"parents": {},
+"prop": true
+},
+"Std.Iterators.LawfulIteratorLoop": {
+"class": true,
+"fields": [
+"lawful"
+],
+"parents": {},
+"prop": true
+},
+"Std.Iterators.ListIterator": {
+"class": false,
+"fields": [
+"list"
+],
+"parents": {},
+"prop": false
+},
+"Std.Iterators.PostconditionT": {
+"class": false,
+"fields": [
+"Property",
+"operation"
+],
+"parents": {},
+"prop": false
+},
+"Std.Iterators.Productive": {
+"class": true,
+"fields": [
+"wf"
+],
+"parents": {},
+"prop": true
+},
+"Std.Iterators.ProductivenessRelation": {
+"class": false,
+"fields": [
+"rel",
+"wf",
+"subrelation"
+],
+"parents": {},
+"prop": false
+},
+"Std.Iterators.Take": {
+"class": false,
+"fields": [
+"countdown",
+"inner",
+"finite"
+],
+"parents": {},
+"prop": false
+},
+"Std.Iterators.ToIterator": {
+"class": true,
+"fields": [
+"iterMInternal"
+],
+"parents": {},
+"prop": false
+},
+"Std.Iterators.Types.Attach": {
+"class": false,
+"fields": [
+"inner",
+"invariant"
+],
+"parents": {},
+"prop": false
+},
+"Std.Iterators.Types.ULiftIterator": {
+"class": false,
+"fields": [
+"inner"
+],
+"parents": {},
+"prop": false
+},
+"Std.LawfulBEqCmp": {
+"class": true,
+"fields": [
+"compare_eq_iff_beq"
+],
+"parents": {},
+"prop": true
+},
+"Std.LawfulCommIdentity": {
+"class": true,
+"fields": [
+"toLawfulIdentity"
+],
+"parents": {
+"toLawfulIdentity": "Std.LawfulIdentity"
+},
+"prop": true
+},
+"Std.LawfulEqCmp": {
+"class": true,
+"fields": [
+"toReflCmp",
+"eq_of_compare"
+],
+"parents": {
+"toReflCmp": "Std.ReflCmp"
+},
+"prop": true
+},
+"Std.LawfulIdentity": {
+"class": true,
+"fields": [
+"toIdentity",
+"toLawfulLeftIdentity",
+"toLawfulRightIdentity"
+],
+"parents": {
+"toIdentity": "Std.Identity",
+"toLawfulLeftIdentity": "Std.LawfulLeftIdentity",
+"toLawfulRightIdentity": "Std.LawfulRightIdentity"
+},
+"prop": true
+},
+"Std.LawfulLeftIdentity": {
+"class": true,
+"fields": [
+"toLeftIdentity",
+"left_id"
+],
+"parents": {
+"toLeftIdentity": "Std.LeftIdentity"
+},
+"prop": true
+},
+"Std.LawfulOrderBEq": {
+"class": true,
+"fields": [
+"beq_iff_le_and_ge"
+],
+"parents": {},
+"prop": true
+},
+"Std.LawfulOrderInf": {
+"class": true,
+"fields": [
+"le_min_iff"
+],
+"parents": {},
+"prop": true
+},
+"Std.LawfulOrderLT": {
+"class": true,
+"fields": [
+"lt_iff"
+],
+"parents": {},
+"prop": true
+},
+"Std.LawfulOrderLeftLeaningMax": {
+"class": true,
+"fields": [
+"max_eq_left",
+"max_eq_right"
+],
+"parents": {},
+"prop": true
+},
+"Std.LawfulOrderLeftLeaningMin": {
+"class": true,
+"fields": [
+"min_eq_left",
+"min_eq_right"
+],
+"parents": {},
+"prop": true
+},
+"Std.LawfulOrderMax": {
+"class": true,
+"fields": [
+"toMaxEqOr",
+"toLawfulOrderSup"
+],
+"parents": {
+"toLawfulOrderSup": "Std.LawfulOrderSup",
+"toMaxEqOr": "Std.MaxEqOr"
+},
+"prop": true
+},
+"Std.LawfulOrderMin": {
+"class": true,
+"fields": [
+"toMinEqOr",
+"toLawfulOrderInf"
+],
+"parents": {
+"toLawfulOrderInf": "Std.LawfulOrderInf",
+"toMinEqOr": "Std.MinEqOr"
+},
+"prop": true
+},
+"Std.LawfulOrderOrd": {
+"class": true,
+"fields": [
+"isLE_compare",
+"isGE_compare"
+],
+"parents": {},
+"prop": true
+},
+"Std.LawfulOrderSup": {
+"class": true,
+"fields": [
+"max_le_iff"
+],
+"parents": {},
+"prop": true
+},
+"Std.LawfulRightIdentity": {
+"class": true,
+"fields": [
+"toRightIdentity",
+"right_id"
+],
+"parents": {
+"toRightIdentity": "Std.RightIdentity"
+},
+"prop": true
+},
+"Std.LeftIdentity": {
+"class": true,
+"fields": [],
+"parents": {},
+"prop": true
+},
+"Std.LinearOrderPackage": {
+"class": true,
+"fields": [
+"toLinearPreorderPackage",
+"le_antisymm",
+"toMin",
+"toMax",
+"toLawfulOrderMin",
+"toLawfulOrderMax"
+],
+"parents": {
+"toLawfulOrderMax": "Std.LawfulOrderMax",
+"toLawfulOrderMin": "Std.LawfulOrderMin",
+"toLinearPreorderPackage": "Std.LinearPreorderPackage",
+"toMax": "Max",
+"toMin": "Min"
+},
+"prop": false
+},
+"Std.LinearPreorderPackage": {
+"class": true,
+"fields": [
+"toPreorderPackage",
+"toOrd",
+"toLawfulOrderOrd",
+"le_total"
+],
+"parents": {
+"toLawfulOrderOrd": "Std.LawfulOrderOrd",
+"toOrd": "Ord",
+"toPreorderPackage": "Std.PreorderPackage"
+},
+"prop": false
+},
+"Std.MaxEqOr": {
+"class": true,
+"fields": [
+"max_eq_or"
+],
+"parents": {},
+"prop": true
+},
+"Std.MinEqOr": {
+"class": true,
+"fields": [
+"min_eq_or"
+],
+"parents": {},
+"prop": true
+},
+"Std.OrientedCmp": {
+"class": true,
+"fields": [
+"eq_swap"
+],
+"parents": {},
+"prop": true
+},
+"Std.PRange.InfinitelyUpwardEnumerable": {
+"class": true,
+"fields": [
+"isSome_succ?"
+],
+"parents": {},
+"prop": true
+},
+"Std.PRange.LawfulUpwardEnumerable": {
+"class": true,
+"fields": [
+"ne_of_lt",
+"succMany?_zero",
+"succMany?_add_one"
+],
+"parents": {},
+"prop": true
+},
+"Std.PRange.LawfulUpwardEnumerableLE": {
+"class": true,
+"fields": [
+"le_iff"
+],
+"parents": {},
+"prop": true
+},
+"Std.PRange.LawfulUpwardEnumerableLT": {
+"class": true,
+"fields": [
+"lt_iff"
+],
+"parents": {},
+"prop": true
+},
+"Std.PRange.LawfulUpwardEnumerableLeast?": {
+"class": true,
+"fields": [
+"least?_le"
+],
+"parents": {},
+"prop": true
+},
+"Std.PRange.Least?": {
+"class": true,
+"fields": [
+"least?"
+],
+"parents": {},
+"prop": false
+},
+"Std.PRange.LinearlyUpwardEnumerable": {
+"class": true,
+"fields": [
+"eq_of_succ?_eq"
+],
+"parents": {},
+"prop": true
+},
+"Std.PRange.UpwardEnumerable": {
+"class": true,
+"fields": [
+"succ?",
+"succMany?"
+],
+"parents": {},
+"prop": false
+},
+"Std.Packages.LinearOrderOfLEArgs": {
+"class": false,
+"fields": [
+"toLinearPreorderOfLEArgs",
+"le_antisymm",
+"min",
+"max",
+"min_eq",
+"max_eq"
+],
+"parents": {
+"toLinearPreorderOfLEArgs": "Std.Packages.LinearPreorderOfLEArgs"
+},
+"prop": false
+},
+"Std.Packages.LinearOrderOfOrdArgs": {
+"class": false,
+"fields": [
+"toLinearPreorderOfOrdArgs",
+"eq_of_compare",
+"min",
+"max",
+"min_eq",
+"max_eq"
+],
+"parents": {
+"toLinearPreorderOfOrdArgs": "Std.Packages.LinearPreorderOfOrdArgs"
+},
+"prop": false
+},
+"Std.Packages.LinearPreorderOfLEArgs": {
+"class": false,
+"fields": [
+"toPreorderOfLEArgs",
+"ord",
+"le_total",
+"isLE_compare",
+"isGE_compare"
+],
+"parents": {
+"toPreorderOfLEArgs": "Std.Packages.PreorderOfLEArgs"
+},
+"prop": false
+},
+"Std.Packages.LinearPreorderOfOrdArgs": {
+"class": false,
+"fields": [
+"ord",
+"transOrd",
+"le",
+"lawfulOrderOrd",
+"decidableLE",
+"lt",
+"lt_iff",
+"decidableLT",
+"beq",
+"beq_iff"
+],
+"parents": {},
+"prop": false
+},
+"Std.Packages.PartialOrderOfLEArgs": {
+"class": false,
+"fields": [
+"toPreorderOfLEArgs",
+"le_antisymm"
+],
+"parents": {
+"toPreorderOfLEArgs": "Std.Packages.PreorderOfLEArgs"
+},
+"prop": false
+},
+"Std.Packages.PreorderOfLEArgs": {
+"class": false,
+"fields": [
+"le",
+"decidableLE",
+"lt",
+"beq",
+"lt_iff",
+"decidableLT",
+"beq_iff_le_and_ge",
+"le_refl",
+"le_trans"
+],
+"parents": {},
+"prop": false
+},
+"Std.PartialOrderPackage": {
+"class": true,
+"fields": [
+"toPreorderPackage",
+"le_antisymm"
+],
+"parents": {
+"toPreorderPackage": "Std.PreorderPackage"
+},
+"prop": false
+},
+"Std.PreorderPackage": {
+"class": true,
+"fields": [
+"toLE",
+"toLT",
+"toBEq",
+"toLawfulOrderLT",
+"toLawfulOrderBEq",
+"toIsPreorder",
+"decidableLE",
+"decidableLT"
+],
+"parents": {
+"toBEq": "BEq",
+"toIsPreorder": "Std.IsPreorder",
+"toLE": "LE",
+"toLT": "LT",
+"toLawfulOrderBEq": "Std.LawfulOrderBEq",
+"toLawfulOrderLT": "Std.LawfulOrderLT"
+},
+"prop": false
+},
+"Std.Queue": {
+"class": false,
+"fields": [
+"eList",
+"dList"
+],
+"parents": {},
+"prop": false
+},
+"Std.Range": {
+"class": false,
+"fields": [
+"start",
+"stop",
+"step",
+"step_pos"
+],
+"parents": {},
+"prop": false
+},
+"Std.Rcc": {
+"class": false,
+"fields": [
+"lower",
+"upper"
+],
+"parents": {},
+"prop": false
+},
+"Std.Rcc.HasRcoIntersection": {
+"class": true,
+"fields": [
+"intersection"
+],
+"parents": {},
+"prop": false
+},
+"Std.Rcc.LawfulRcoIntersection": {
+"class": true,
+"fields": [
+"mem_intersection_iff"
+],
+"parents": {},
+"prop": true
+},
+"Std.Rcc.Sliceable": {
+"class": true,
+"fields": [
+"mkSlice"
+],
+"parents": {},
+"prop": false
+},
+"Std.Rci": {
+"class": false,
+"fields": [
+"lower"
+],
+"parents": {},
+"prop": false
+},
+"Std.Rci.HasRcoIntersection": {
+"class": true,
+"fields": [
+"intersection"
+],
+"parents": {},
+"prop": false
+},
+"Std.Rci.LawfulRcoIntersection": {
+"class": true,
+"fields": [
+"mem_intersection_iff"
+],
+"parents": {},
+"prop": true
+},
+"Std.Rci.Sliceable": {
+"class": true,
+"fields": [
+"mkSlice"
+],
+"parents": {},
+"prop": false
+},
+"Std.Rco": {
+"class": false,
+"fields": [
+"lower",
+"upper"
+],
+"parents": {},
+"prop": false
+},
+"Std.Rco.HasRcoIntersection": {
+"class": true,
+"fields": [
+"intersection"
+],
+"parents": {},
+"prop": false
+},
+"Std.Rco.LawfulRcoIntersection": {
+"class": true,
+"fields": [
+"mem_intersection_iff"
+],
+"parents": {},
+"prop": true
+},
+"Std.Rco.Sliceable": {
+"class": true,
+"fields": [
+"mkSlice"
+],
+"parents": {},
+"prop": false
+},
+"Std.Refl": {
+"class": true,
+"fields": [
+"refl"
+],
+"parents": {},
+"prop": true
+},
+"Std.ReflCmp": {
+"class": true,
+"fields": [
+"compare_self"
+],
+"parents": {},
+"prop": true
+},
+"Std.Ric": {
+"class": false,
+"fields": [
+"upper"
+],
+"parents": {},
+"prop": false
+},
+"Std.Ric.HasRcoIntersection": {
+"class": true,
+"fields": [
+"intersection"
+],
+"parents": {},
+"prop": false
+},
+"Std.Ric.LawfulRcoIntersection": {
+"class": true,
+"fields": [
+"mem_intersection_iff"
+],
+"parents": {},
+"prop": true
+},
+"Std.Ric.Sliceable": {
+"class": true,
+"fields": [
+"mkSlice"
+],
+"parents": {},
+"prop": false
+},
+"Std.RightIdentity": {
+"class": true,
+"fields": [],
+"parents": {},
+"prop": true
+},
+"Std.Rii": {
+"class": false,
+"fields": [],
+"parents": {},
+"prop": false
+},
+"Std.Rii.Sliceable": {
+"class": true,
+"fields": [
+"mkSlice"
+],
+"parents": {},
+"prop": false
+},
+"Std.Rio": {
+"class": false,
+"fields": [
+"upper"
+],
+"parents": {},
+"prop": false
+},
+"Std.Rio.HasRcoIntersection": {
+"class": true,
+"fields": [
+"intersection"
+],
+"parents": {},
+"prop": false
+},
+"Std.Rio.LawfulRcoIntersection": {
+"class": true,
+"fields": [
+"mem_intersection_iff"
+],
+"parents": {},
+"prop": true
+},
+"Std.Rio.Sliceable": {
+"class": true,
+"fields": [
+"mkSlice"
+],
+"parents": {},
+"prop": false
+},
+"Std.Roc": {
+"class": false,
+"fields": [
+"lower",
+"upper"
+],
+"parents": {},
+"prop": false
+},
+"Std.Roc.HasRcoIntersection": {
+"class": true,
+"fields": [
+"intersection"
+],
+"parents": {},
+"prop": false
+},
+"Std.Roc.LawfulRcoIntersection": {
+"class": true,
+"fields": [
+"mem_intersection_iff"
+],
+"parents": {},
+"prop": true
+},
+"Std.Roc.Sliceable": {
+"class": true,
+"fields": [
+"mkSlice"
+],
+"parents": {},
+"prop": false
+},
+"Std.Roi": {
+"class": false,
+"fields": [
+"lower"
+],
+"parents": {},
+"prop": false
+},
+"Std.Roi.HasRcoIntersection": {
+"class": true,
+"fields": [
+"intersection"
+],
+"parents": {},
+"prop": false
+},
+"Std.Roi.LawfulRcoIntersection": {
+"class": true,
+"fields": [
+"mem_intersection_iff"
+],
+"parents": {},
+"prop": true
+},
+"Std.Roi.Sliceable": {
+"class": true,
+"fields": [
+"mkSlice"
+],
+"parents": {},
+"prop": false
+},
+"Std.Roo": {
+"class": false,
+"fields": [
+"lower",
+"upper"
+],
+"parents": {},
+"prop": false
+},
+"Std.Roo.HasRcoIntersection": {
+"class": true,
+"fields": [
+"intersection"
+],
+"parents": {},
+"prop": false
+},
+"Std.Roo.LawfulRcoIntersection": {
+"class": true,
+"fields": [
+"mem_intersection_iff"
+],
+"parents": {},
+"prop": true
+},
+"Std.Roo.Sliceable": {
+"class": true,
+"fields": [
+"mkSlice"
+],
+"parents": {},
+"prop": false
+},
+"Std.Rxc.HasSize": {
+"class": true,
+"fields": [
+"size"
+],
+"parents": {},
+"prop": false
+},
+"Std.Rxc.IsAlwaysFinite": {
+"class": true,
+"fields": [
+"finite"
+],
+"parents": {},
+"prop": true
+},
+"Std.Rxc.Iterator": {
+"class": false,
+"fields": [
+"next",
+"upperBound"
+],
+"parents": {},
+"prop": false
+},
+"Std.Rxc.LawfulHasSize": {
+"class": true,
+"fields": [
+"size_eq_zero_of_not_le",
+"size_eq_one_of_succ?_eq_none",
+"size_eq_succ_of_succ?_eq_some"
+],
+"parents": {},
+"prop": true
+},
+"Std.Rxi.HasSize": {
+"class": true,
+"fields": [
+"size"
+],
+"parents": {},
+"prop": false
+},
+"Std.Rxi.IsAlwaysFinite": {
+"class": true,
+"fields": [
+"finite"
+],
+"parents": {},
+"prop": true
+},
+"Std.Rxi.Iterator": {
+"class": false,
+"fields": [
+"next"
+],
+"parents": {},
+"prop": false
+},
+"Std.Rxi.LawfulHasSize": {
+"class": true,
+"fields": [
+"size_eq_one_of_succ?_eq_none",
+"size_eq_succ_of_succ?_eq_some"
+],
+"parents": {},
+"prop": true
+},
+"Std.Rxo.HasSize": {
+"class": true,
+"fields": [
+"size"
+],
+"parents": {},
+"prop": false
+},
+"Std.Rxo.IsAlwaysFinite": {
+"class": true,
+"fields": [
+"finite"
+],
+"parents": {},
+"prop": true
+},
+"Std.Rxo.Iterator": {
+"class": false,
+"fields": [
+"next",
+"upperBound"
+],
+"parents": {},
+"prop": false
+},
+"Std.Rxo.LawfulHasSize": {
+"class": true,
+"fields": [
+"size_eq_zero_of_not_le",
+"size_eq_one_of_succ?_eq_none",
+"size_eq_succ_of_succ?_eq_some"
+],
+"parents": {},
+"prop": true
+},
+"Std.Slice": {
+"class": false,
+"fields": [
+"internalRepresentation"
+],
+"parents": {},
+"prop": false
+},
+"Std.Slice.Internal.ListSliceData": {
+"class": true,
+"fields": [
+"list",
+"stop"
+],
+"parents": {},
+"prop": false
+},
+"Std.Slice.Internal.SubarrayData": {
+"class": false,
+"fields": [
+"array",
+"start",
+"stop",
+"start_le_stop",
+"stop_le_array_size"
+],
+"parents": {},
+"prop": false
+},
+"Std.Slice.LawfulSliceSize": {
+"class": true,
+"fields": [
+"finite",
+"lawful"
+],
+"parents": {},
+"prop": true
+},
+"Std.Slice.Self": {
+"class": true,
+"fields": [
+"eq"
+],
+"parents": {},
+"prop": true
+},
+"Std.Slice.SliceSize": {
+"class": true,
+"fields": [
+"size"
+],
+"parents": {},
+"prop": false
+},
+"Std.Stream": {
+"class": true,
+"fields": [
+"next?"
+],
+"parents": {},
+"prop": false
+},
+"Std.Symm": {
+"class": true,
+"fields": [
+"symm"
+],
+"parents": {},
+"prop": true
+},
+"Std.ToFormat": {
+"class": true,
+"fields": [
+"format"
+],
+"parents": {},
+"prop": false
+},
+"Std.ToStream": {
+"class": true,
+"fields": [
+"toStream"
+],
+"parents": {},
+"prop": false
+},
+"Std.Total": {
+"class": true,
+"fields": [
+"total"
+],
+"parents": {},
+"prop": true
+},
+"Std.TransCmp": {
+"class": true,
+"fields": [
+"toOrientedCmp",
+"isLE_trans"
+],
+"parents": {
+"toOrientedCmp": "Std.OrientedCmp"
+},
+"prop": true
+},
+"Std.Trichotomous": {
+"class": true,
+"fields": [
+"trichotomous"
+],
+"parents": {},
+"prop": true
+},
+"StdGen": {
+"class": false,
+"fields": [
+"s1",
+"s2"
+],
+"parents": {},
+"prop": false
+},
+"String": {
+"class": false,
+"fields": [
+"toByteArray",
+"isValidUTF8"
+],
+"parents": {},
+"prop": false
+},
+"String.Legacy.Iterator": {
+"class": false,
+"fields": [
+"s",
+"i"
+],
+"parents": {},
+"prop": false
+},
+"String.Pos": {
+"class": false,
+"fields": [
+"offset",
+"isValid"
+],
+"parents": {},
+"prop": false
+},
+"String.Pos.Down": {
+"class": false,
+"fields": [
+"inner"
+],
+"parents": {},
+"prop": false
+},
+"String.Pos.Raw": {
+"class": false,
+"fields": [
+"byteIdx"
+],
+"parents": {},
+"prop": false
+},
+"String.Pos.Raw.IsValid": {
+"class": false,
+"fields": [
+"le_rawEndPos",
+"isValidUTF8_extract_zero"
+],
+"parents": {},
+"prop": true
+},
+"String.Pos.Raw.IsValidForSlice": {
+"class": false,
+"fields": [
+"le_rawEndPos",
+"isValid_offsetBy"
+],
+"parents": {},
+"prop": true
+},
+"String.Pos.Splits": {
+"class": false,
+"fields": [
+"eq_append",
+"offset_eq_rawEndPos"
+],
+"parents": {},
+"prop": true
+},
+"String.Slice": {
+"class": false,
+"fields": [
+"str",
+"startInclusive",
+"endExclusive",
+"startInclusive_le_endExclusive"
+],
+"parents": {},
+"prop": false
+},
+"String.Slice.ByteIterator": {
+"class": false,
+"fields": [
+"s",
+"offset"
+],
+"parents": {},
+"prop": false
+},
+"String.Slice.Pattern.BackwardCharPredSearcher": {
+"class": false,
+"fields": [
+"currPos",
+"needle"
+],
+"parents": {},
+"prop": false
+},
+"String.Slice.Pattern.BackwardCharSearcher": {
+"class": false,
+"fields": [
+"currPos",
+"needle"
+],
+"parents": {},
+"prop": false
+},
+"String.Slice.Pattern.BackwardPattern": {
+"class": true,
+"fields": [
+"endsWith",
+"dropSuffix?"
+],
+"parents": {},
+"prop": false
+},
+"String.Slice.Pattern.ForwardCharPredSearcher": {
+"class": false,
+"fields": [
+"currPos"
+],
+"parents": {},
+"prop": false
+},
+"String.Slice.Pattern.ForwardCharSearcher": {
+"class": false,
+"fields": [
+"currPos"
+],
+"parents": {},
+"prop": false
+},
+"String.Slice.Pattern.ForwardPattern": {
+"class": true,
+"fields": [
+"startsWith",
+"dropPrefix?"
+],
+"parents": {},
+"prop": false
+},
+"String.Slice.Pattern.ToBackwardSearcher": {
+"class": true,
+"fields": [
+"toSearcher"
+],
+"parents": {},
+"prop": false
+},
+"String.Slice.Pattern.ToForwardSearcher": {
+"class": true,
+"fields": [
+"toSearcher"
+],
+"parents": {},
+"prop": false
+},
+"String.Slice.Pos": {
+"class": false,
+"fields": [
+"offset",
+"isValidForSlice"
+],
+"parents": {},
+"prop": false
+},
+"String.Slice.Pos.Down": {
+"class": false,
+"fields": [
+"inner"
+],
+"parents": {},
+"prop": false
+},
+"String.Slice.Pos.Splits": {
+"class": false,
+"fields": [
+"eq_append",
+"offset_eq_rawEndPos"
+],
+"parents": {},
+"prop": true
+},
+"String.Slice.PosIterator": {
+"class": false,
+"fields": [
+"currPos"
+],
+"parents": {},
+"prop": false
+},
+"String.Slice.RevByteIterator": {
+"class": false,
+"fields": [
+"s",
+"offset",
+"hinv"
+],
+"parents": {},
+"prop": false
+},
+"String.Slice.RevPosIterator": {
+"class": false,
+"fields": [
+"currPos"
+],
+"parents": {},
+"prop": false
+},
+"String.ToSlice": {
+"class": true,
+"fields": [
+"toSlice"
+],
+"parents": {},
+"prop": false
+},
+"Sub": {
+"class": true,
+"fields": [
+"sub"
+],
+"parents": {},
+"prop": false
+},
+"SubNegMonoid": {
+"class": true,
+"fields": [
+"toAddMonoid",
+"toNeg",
+"toSub",
+"sub_eq_add_neg",
+"zsmul",
+"zsmul_zero'",
+"zsmul_succ'",
+"zsmul_neg'"
+],
+"parents": {
+"toAddMonoid": "AddMonoid",
+"toNeg": "Neg",
+"toSub": "Sub"
+},
+"prop": false
+},
+"SubNegZeroMonoid": {
+"class": true,
+"fields": [
+"toSubNegMonoid",
+"neg_zero"
+],
+"parents": {
+"toSubNegMonoid": "SubNegMonoid"
+},
+"prop": false
+},
+"SubarrayIterator": {
+"class": false,
+"fields": [
+"xs"
+],
+"parents": {},
+"prop": false
+},
+"Subsingleton": {
+"class": true,
+"fields": [
+"allEq"
+],
+"parents": {},
+"prop": true
+},
+"Substring.Raw": {
+"class": false,
+"fields": [
+"str",
+"startPos",
+"stopPos"
+],
+"parents": {},
+"prop": false
+},
+"SubtractionCommMonoid": {
+"class": true,
+"fields": [
+"toSubtractionMonoid",
+"add_comm"
+],
+"parents": {
+"toSubtractionMonoid": "SubtractionMonoid"
+},
+"prop": false
+},
+"SubtractionMonoid": {
+"class": true,
+"fields": [
+"toSubNegMonoid",
+"neg_neg",
+"neg_add_rev",
+"neg_eq_of_add"
+],
+"parents": {
+"toSubNegMonoid": "SubNegMonoid"
+},
+"prop": false
+},
+"Subtype": {
+"class": false,
+"fields": [
+"val",
+"property"
+],
+"parents": {},
+"prop": false
+},
+"System.FilePath": {
+"class": false,
+"fields": [
+"toString"
+],
+"parents": {},
+"prop": false
+},
+"Task": {
+"class": false,
+"fields": [
+"get"
+],
+"parents": {},
+"prop": false
+},
+"Thunk": {
+"class": false,
+"fields": [
+"fn"
+],
+"parents": {},
+"prop": false
+},
+"ToBool": {
+"class": true,
+"fields": [
+"toBool"
+],
+"parents": {},
+"prop": false
+},
+"ToString": {
+"class": true,
+"fields": [
+"toString"
+],
+"parents": {},
+"prop": false
+},
+"Top": {
+"class": true,
+"fields": [
+"top"
+],
+"parents": {},
+"prop": false
+},
+"Trans": {
+"class": true,
+"fields": [
+"trans"
+],
+"parents": {},
+"prop": false
+},
+"TypeName": {
+"class": true,
+"fields": [
+"data"
+],
+"parents": {},
+"prop": false
+},
+"UInt16": {
+"class": false,
+"fields": [
+"toBitVec"
+],
+"parents": {},
+"prop": false
+},
+"UInt32": {
+"class": false,
+"fields": [
+"toBitVec"
+],
+"parents": {},
+"prop": false
+},
+"UInt64": {
+"class": false,
+"fields": [
+"toBitVec"
+],
+"parents": {},
+"prop": false
+},
+"UInt8": {
+"class": false,
+"fields": [
+"toBitVec"
+],
+"parents": {},
+"prop": false
+},
+"ULift": {
+"class": false,
+"fields": [
+"down"
+],
+"parents": {},
+"prop": false
+},
+"USize": {
+"class": false,
+"fields": [
+"toBitVec"
+],
+"parents": {},
+"prop": false
+},
+"Union": {
+"class": true,
+"fields": [
+"union"
+],
+"parents": {},
+"prop": false
+},
+"Unique": {
+"class": true,
+"fields": [
+"toInhabited",
+"uniq"
+],
+"parents": {
+"toInhabited": "Inhabited"
+},
+"prop": false
+},
+"UpperSet": {
+"class": false,
+"fields": [
+"carrier",
+"upper'"
+],
+"parents": {},
+"prop": false
+},
+"VAdd": {
+"class": true,
+"fields": [
+"vadd"
+],
+"parents": {},
+"prop": false
+},
+"VSub": {
+"class": true,
+"fields": [
+"vsub"
+],
+"parents": {},
+"prop": false
+},
+"Vector": {
+"class": false,
+"fields": [
+"toArray",
+"size_toArray"
+],
+"parents": {},
+"prop": false
+},
+"Vector.Mem": {
+"class": false,
+"fields": [
+"val"
+],
+"parents": {},
+"prop": true
+},
+"Vector.Perm": {
+"class": false,
+"fields": [
+"toArray"
+],
+"parents": {},
+"prop": true
+},
+"WellFoundedRelation": {
+"class": true,
+"fields": [
+"rel",
+"wf"
+],
+"parents": {},
+"prop": false
+},
+"XorOp": {
+"class": true,
+"fields": [
+"xor"
+],
+"parents": {},
+"prop": false
+},
+"Zero": {
+"class": true,
+"fields": [
+"zero"
+],
+"parents": {},
+"prop": false
+},
+"ZeroHom": {
+"class": false,
+"fields": [
+"toFun",
+"map_zero'"
+],
+"parents": {},
+"prop": false
+},
+"ZeroHomClass": {
+"class": true,
+"fields": [
+"map_zero"
+],
+"parents": {},
+"prop": true
+}
+}
+}

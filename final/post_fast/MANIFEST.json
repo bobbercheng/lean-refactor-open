@@ -1,0 +1,100 @@
+{
+ "status": "POST-HOC, not part of any upload",
+ "base_tag": "open-run3-post-final-sub43-20261104",
+ "base_commit": "d472214bbb2e98f04aac2da3a1361cd1477bce56",
+ "measured_runs": {
+  "fullV7m1s": "input sha256 0664621d (run 3's export, not shipped)",
+  "T0b": "input sha256 609af35b (the pick at 45.25 h, not shipped)",
+  "W1": "input sha256 609af35b (T0b's input), post_stage.sh as shipped"
+ },
+ "not_shipped_origins": {
+  "run_T0.sh": "db92b0e2b75c3ff924ff3abeeb1462330b19198d560c86fe9acb6f5d77c4dfe0",
+  "launch_T0b.sh": "1066294e84030626689bf4cf16a878b77d9649c0e6c7cd48e96085398912f282",
+  "run_v7s.sh": "978e2f759cd13a501f4e2be58d6a73570e941f7a3ca62f96a1f85463b1cad0a3",
+  "launch_v7m1s.sh": "cd23c39ee835f89140cc1136e6c183f8295fb022bf8d7a2690eb0806d133cc7b"
+ },
+ "files": [
+  {
+   "path": "README.md",
+   "sha256": "4e7d2102d057e9e71519ffdb1b959f95586839b293cb44906aba66e564249eab",
+   "origin": "tag file plus a short first section and three corrections in section Post-step"
+  },
+  {
+   "path": "harness/open_package.py",
+   "sha256": "2752b69327737cd70f1e56cc617f1f348866d3674513a98ed720575729641ab2",
+   "origin": "tag file, +5 -3: flag --no-end-stages"
+  },
+  {
+   "path": "harness/open_post.py",
+   "sha256": "4f157a0541f529f9606f10d1fea712d3bbee03c201f3623bb7d644edd63f024d",
+   "origin": "post-code-v7 (a25416f5 + v7m merge); one docstring line redacted, as at the tag; same syntax tree apart from the docstring",
+   "measured_sha256": "14dac17ba7b4455f5ac7e850f1cb346ca22ccd769513a804bfd6659c9fe0ab2f"
+  },
+  {
+   "path": "harness/post/hintgrind.py",
+   "sha256": "2da771b81a75f0d0b3612f406f5575f535901f025a524d9cc0ba212d3ff469e3",
+   "origin": "post-code-v7 (a25416f5 + v6 gate and cache); one comment line redacted; same syntax tree",
+   "measured_sha256": "acc2c3e637bbca1da9a9661bced44b7f7780d6ee1855dcec1d8e4f2ae22ff76c"
+  },
+  {
+   "path": "post_fast/merge_post.py",
+   "sha256": "3d36e1732e2fab93ec51c8c49de62605fb73ef2727921e18b3fb8378d330f9c7",
+   "origin": "new"
+  },
+  {
+   "path": "post_fast/merge_warm.py",
+   "sha256": "2c7a289dc75734b873b421e31db47295e09a6bda3130c4c1cc58fb1663285a4a",
+   "origin": "v7s scripts of fullV7m1s and T0b; byte-identical"
+  },
+  {
+   "path": "post_fast/pf_drive.py",
+   "sha256": "39962488382237034f04aa1770d9aeaa3f4518bd9d582b2027fde5c2e50bc357",
+   "origin": "v7s scripts of fullV7m1s and T0b; byte-identical"
+  },
+  {
+   "path": "post_fast/pf_svc.py",
+   "sha256": "78dac1d4af3fd0c2fe573ce5c2db7b4b8bd749769302598ea1678decf14461d8",
+   "origin": "v7s scripts of fullV7m1s and T0b; byte-identical"
+  },
+  {
+   "path": "post_fast/pf_worker.py",
+   "sha256": "5aa2a3c0a99cbdbc0482e85a4100a9d82172671072a874267b6dcdc954d77868",
+   "origin": "v7s scripts of fullV7m1s and T0b; byte-identical"
+  },
+  {
+   "path": "post_fast/post_stage.sh",
+   "sha256": "2f976cb5a69368649518b8bbab72825f1bb856475ff2c2141741f880b9c91b4f",
+   "origin": "new; run_T0.sh with launch_T0b.sh's values except the input rule in place of the per-row files, its paths as arguments, the picks as the input, the stop from the job clock, plus guards and merges"
+  },
+  {
+   "path": "post_fast/prefix_backend.py",
+   "sha256": "f9dcb659631a9ad223247e7e24c70b6c46d549ca03c46262dcafe1b3ecdd9b59",
+   "origin": "v7s scripts of fullV7m1s and T0b; byte-identical"
+  },
+  {
+   "path": "post_fast/prefix_server/driver.lean.in",
+   "sha256": "27a63173236520cdd0f1f15def5a115dafd1843e0638dcf448939fabe0725522",
+   "origin": "v7s scripts of fullV7m1s and T0b; byte-identical"
+  },
+  {
+   "path": "post_fast/prefix_server/psrv.c",
+   "sha256": "2597f400d5ec68da2c4d9e1ebb5e7618bca48f2851d51d661f069798396ed205",
+   "origin": "v7s scripts of fullV7m1s and T0b; byte-identical"
+  },
+  {
+   "path": "post_fast/snapshot.py",
+   "sha256": "47b658fdeab5df498dd0fd557810a8da2a13454b43af3a24767d44deb257a613",
+   "origin": "v7s scripts of fullV7m1s and T0b; byte-identical"
+  },
+  {
+   "path": "run.sh",
+   "sha256": "50420cf1cb2809abc0da0a1b933d6c08d098b0106f00322cbd82e594b5b8a482",
+   "origin": "tag file, +13 -1: the switch, the flag, the post block, saved gains put back after export"
+  },
+  {
+   "path": "../README.md",
+   "sha256": "be41ed073e7b9fb2753ee079b797b29ec58e447efd410e993e8cb2fd299c9f9e",
+   "origin": "root README of the tag plus a short note; outside the zip"
+  }
+ ]
+}

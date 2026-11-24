@@ -94,18 +94,163 @@ check before `DONE`). The model, its prompts, the serving setup, the schedule an
 `post_fast/MANIFEST.json` are unchanged and describe the earlier files: the files listed here no longer match the sha256 values
 those two manifests give for them.
 
+### Axiom guard at export (added 2026-11-24, after the held-out test)
+
+Labels: (M) measured, (C) computed from measured values, (E) estimate.
+
+**What it does.** At the end of the job, after the post stage's last merge, and in `run.sh export`, after the merge,
+`harness/axiom_guard.py` compiles every row's proof once per listed toolchain with `#print axioms` forced (unmeasured, `warn.sorry`
+on, also inside `module` files), through the package's own `scorer/compile.py`. It prints the plain and the namespace-qualified name,
+as the verifier that found the flaw does, and reads the union of the two lists (the verifier keeps the last one, which a qualified
+name that resolves to another constant could make clean). For the reference proof's reading, which sets what is allowed (below), it
+takes what both lists hold (their intersection), so such a name cannot widen what is allowed either. The kernel guard's last check
+runs after it, unchanged.
+
+**The rule.** It is the rule of the export's own axiom audit (`audit_proof` in `harness/open_package.py`: an axiom that the row's
+reference proof also depends on is allowed), per toolchain, and it fails closed where that audit keeps the proof. A toolchain reads
+*bad* when it shows Lean's sorry message on the declaration's lines or text that can hide that message, whatever the reference proof
+reads; or an axiom outside `propext`, `Classical.choice` and `Quot.sound` (`sorryAx`, `Lean.ofReduceBool`, ...) that the reference
+proof's own reading on the same toolchain does not show. When that reading is not available (not read in time, an error, a timeout,
+no axiom list, a sorry message or an error in the reference's declaration, a row without a reference proof), nothing beyond the three
+is allowed and the toolchain reads *bad*. The export audit calls that case "unknown" and keeps the proof; the guard cannot, because a
+row it does not read keeps its proof. A proof that reads such an axiom while its own compile timed out or reports an error in the
+declaration reads *bad* too. A toolchain reads *ok* with those three axioms (or none), or with axioms that the reference proof reads
+there too (the allowance: "axioms as the reference proof"), with no sorry message, no error and no timeout. Otherwise it is *not
+read*: by construction (on v4.27.0 the print gives no list inside a `module` file), or for lack of time, a timeout, an error in the
+declaration or a failed compile. A row passes when no toolchain reads bad and at least one reads ok; a toolchain that is not read never
+passes a row on its own. The other differences from the export audit: the guard judges every axiom outside the three, not only
+`sorryAx`; a reference reading with Lean's sorry message on its own declaration allows nothing (the audit counts it as the reference
+depending on `sorry`); and the reference proof, as the last candidate, must pass its own reading (the audit never judges it). What
+the allowance gives up: on a toolchain where the reference proof itself reads `sorryAx` (a lemma of the library proved by `sorry`,
+held-out row 25), a proof whose own value became `sorry` (held-out row 42's fault) passes too, because `#print axioms` cannot tell
+the two apart. The export audit has the same limit.
+
+**The reference's reading.** The reference proof is read the same way (forced print, both names), but only for a (row, toolchain)
+on which another proof of the row reads an axiom outside the three in a complete reading. It is read once per (row, toolchain) for the
+whole run (the proof, its earlier proofs and the reference as a candidate share that reading), and ahead of every other reading.
+Until it comes, that toolchain reads *bad* (fail closed), so the row's earlier proofs are queued at once, behind it, and read while it
+is read; the row is decided at the end on every reading that came. On a row whose proof the reference then allows (row 25), those
+earlier proofs were read for nothing: one round of compiles. As the last candidate, the reference passes on axioms by
+construction (its own axioms are the allowance), but only with a complete reading of its own: no sorry message on its declaration, no
+text that can hide it, and no timeout or error together with an axiom outside the three. `logs/axiom_guard.log` names each toolchain
+that passed only through the allowance, with the reference's axioms (`ONLY THROUGH THE ALLOWANCE`). `logs/axiom_guard.json` gives,
+per toolchain, `allowance_used` and, where the proof's reading needed the reference's, `reference_reading` (`read`, or why it is not
+available), `reference_axioms` and `reference_allows` (both only for a reading in full). The summary line counts the rows that pass
+only through the reference proof's axioms, and the (row, toolchain) pairs that needed the reference's reading and how many of those
+readings came in full.
+
+**Why.** The held-out test of the post stage (66 library problems outside the 60 final problems, 2026-11-24) found one output that
+compiles with no Lean message at all while `#print axioms` reads `sorryAx` alone: the proof's value is `sorry` (1 of 66 rows (M)).
+The post stage's gate reads compile errors and sorry messages, not axioms, so it adopted that step. The guard sits outside the post
+stage: the seven scripts that ran the measurements (`post_fast/post_stage.sh`, `pf_drive.py`, `pf_svc.py`, `pf_worker.py`,
+`prefix_backend.py`, `snapshot.py`, `merge_post.py`) are unchanged, fingerprint `916734a742e664be` (the sha256 of each file, one
+per line in this order, then the sha256 of those lines, first 16 hex digits; `tests/test_axiom_guard.py` recomputes it). The post
+stage's output on the 60 final problems (stored mean 81.466) was read the same way on 2026-11-24: standard axioms on every (row,
+toolchain) pair where the print runs, 117 of 127; the other 10 are v4.27.0 toolchains of Strata rows whose v4.31.0 toolchain reads
+standard axioms (M). That read's list of findings has 16 entries: those 10, and 6 pairs of rows 31, 32 and 38 (v4.30.0 and
+v4.31.0) where the plain compile shows a sorry message. That message is the library's own, in the file before the declaration; the
+forced print on those 6 pairs reads standard axioms and no sorry message on the declaration's lines, which is all the guard reads
+(M). Under the guard's rule every row of that file passes, and no proof in it reads an axiom outside the three, so no reference
+proof is read: the guard leaves the file unchanged and exits 0 (C: that read kept the last print's list, the guard reads both;
+`--no-write` below measures it on a node with the environments).
+
+**A row that fails** is set back to the newest earlier proof of the row that passes the same check, tried in this order: the post
+stage's input (`proofs.picks.jsonl`), the agent stage's export (`proofs.export.jsonl`, which `run.sh` copies before the post stage
+starts and after the export of `run.sh export`), the row's reference proof (stored score 33.33). In a fresh job the first two hold the
+same proofs; on a resumed job the post stage's input already holds its earlier gains. `run.sh` does not copy a `proofs.jsonl` that is
+still the post stage's last merge (a re-run whose driver wrote no new export) over `proofs.export.jsonl`. With `LRA_POST_ROUTE=off`
+neither file is made, and a failing row gets its reference proof. The file is rewritten by rename, only if it still holds what the
+guard read (otherwise nothing is written and the guard reports "not checked"), and its first content is kept once as
+`proofs.jsonl.axiom-guard`. The same rows of `proofs.merged.jsonl` (the post stage's merged rows, which a resumed job and
+`run.sh export` merge back) are set back the same way, so the failing proof does not return; its first content is kept once as
+`proofs.merged.jsonl.axiom-guard`. `logs/axiom_guard.log` names each replaced row with its old and new stored score and the reading
+that failed, and ends with the stored mean before and after; `logs/axiom_guard.json` holds every reading (no proof text), and says
+`running` until the guard ends and `off` when it was off. A proof with a reading against it is never written. The one exception is a
+row whose reference proof does not pass its own reading (a sorry message on its declaration, or a reading that failed or did not come
+in time): when no proof of that row passes, it gets the reference proof, the last proof left, and the exit status says so. A lemma of
+the library proved by `sorry` does not make a row fail: the reference proof reads that `sorryAx` too, so a proof that reads no other
+axiom passes through the allowance. A row set back only because the reference's reading was not available (not read in time, an
+error, a timeout, ...) is named apart in the summary line (`N of them only because the reference proof's reading was not
+available`) and in `set_back_for_want_of_reference`, with exit 0 as for any row set back to a proof that passes. Its proof may be
+sound. When it came from the post stage, `run.sh export` does not bring it back, because `proofs.merged.jsonl` is set back too; its
+line stays in `proofs.merged.jsonl.axiom-guard` (the file before the guard first wrote it). To keep it, put that line back into
+`proofs.merged.jsonl` and run `bash run.sh export` with a larger `LRA_AXIOM_GUARD_S`.
+
+**Read order and time.** The budget is `LRA_AXIOM_GUARD_S`, default 420 s. The reference's readings for the allowance come before
+all others. The rows whose proof differs from the agent stage's export
+(the rows the post stage changed: only those can carry a step its gate let through) are read first, newest toolchain first, then the
+earlier proofs of a row that failed (or waits for the reference's reading), then their older toolchains; the other rows follow. The compiles run in parallel, one per
+physical core and at most 48 (the memory gate still admits each), each for at most 300 s and none started past the budget. The guard
+stops reading 30 s after its budget, then decides and writes. In the job it runs after the post stage has stopped (60 s before the
+clock's end), inside the 600 s safety margin (`LRA_SAFETY_S`): its budget is cut so that, with those 30 s, the stop that `timeout`
+sends 30 s later and the kill 10 s after that, the guard has ended 120 s before the allocation does (the clock's end +
+`LRA_SAFETY_S`, and never later than 48 h after the clock's start). A run started on a clock that was already over (`LRA_RESUME=1`
+after the clock ran out: a recovery) gives it its full budget, as `run.sh export` does.
+
+**When a row is not read in full.** A row that was not read keeps its proof, because nothing was read against it, and that proof can
+still rest on `sorry`: only the log and the exit code say so. A row that passes on one toolchain while another was not read for lack
+of time, a timeout or an error keeps its proof the same way. Setting such rows back would drop the post stage's gain on each of them
+(on a node where every reading fails, all the rows it changed: 57 of the 60 final rows, back to the picks' 78.77 from 81.466 (M)),
+for a fault seen on 1 of 66 held-out rows and on 0 of the 60 final rows (M). A row that failed but whose earlier proofs were not read
+gets its reference proof. In all these cases the log names the rows, and the job (or `run.sh export`) prints `DONE` and ends with
+exit code 5 instead of 0 (an earlier failure code, the driver's, the export's or the kernel guard's 4, is kept): `proofs.jsonl` is the
+output, and `bash run.sh export` with a larger `LRA_AXIOM_GUARD_S` completes the reading.
+
+**Cost (E).** About 0.5 to 1.5 min for the 60 final rows (127 readings, 3 rounds of at most 48 compiles) on a 64-core node, plus one
+compile per (row, toolchain) where a proof reads an axiom outside the three (the reference's reading; none on the 60 final rows (C)),
+and one round of compiles per row that fails or waits for that reading; CPU only. Basis: the export's own sorry audit compiled the same 127 (row, toolchain) pairs, 4 at a
+time, in 158 to 244 s on four earlier pilot runs of the 60 rows (M), about 5 to 8 s per compile (C); the held-out verifier read 66
+rows (a plain compile, the forced print and the meter each) in 69 s at 32 threads (M). The slowest single compile is the main
+unknown; it is cut at 300 s.
+
+**Turning it off.** `LRA_AXIOM_GUARD=off`, for debugging only: the job logs `axiom guard: OFF` (also in `logs/axiom_guard.log`) and
+reads no axioms. `run.sh check` rejects any other value than `on` or `off`, and a budget that is not a whole number of seconds
+written without a leading zero; it warns when the guard is off and when `LRA_SAFETY_S` is under 300 s (the guard then reads little
+or nothing, and the job ends with exit code 5). By hand, on any proofs file:
+```bash
+"$LRA_PYTHON" harness/axiom_guard.py runs/final/proofs.jsonl --rows "$LRA_SETUP_ROWS" --no-write   # read and report only
+"$LRA_PYTHON" harness/axiom_guard.py runs/final/proofs.jsonl --rows "$LRA_SETUP_ROWS" --budget 1800  # set failing rows back, in place
+```
+Exit 0: every row passes and every toolchain of the proof it keeps was read (one not read by construction aside); 3: some row was not
+read in full, has a reference proof that does not pass, or is missing from the file (named); 1: not checked.
+
+**What it does not change.** The post stage's gate still does not read axioms: within a run the stage can build on such a step, and
+the export sets the row back. The export's own axiom audit (in `harness/open_package.py`) is unchanged; the guard uses its rule, with
+the differences above (it fails closed). A proofs file promoted from the interim proofs when the job is cut short has been through
+neither check (below).
+
+**Expected results (C from the readings of 2026-11-24, to be measured on the node).** On the post stage's output on the 60 final
+rows (stored mean 81.466): exit 0, 60 pass, no row set back, 127 readings, no reference proof read (all read standard axioms), 10
+toolchains not read by construction, the file unchanged. On the held-out output (66 rows, one toolchain each, v4.34.0): row 42 (the
+output reads `sorryAx` alone with no Lean message; its reference proof, the post stage's input on that row, reads the standard three)
+reads bad and is set back to the post stage's input, stored 69.21 -> 33.33; row 25 (its reference proof reads `sorryAx` itself, a
+library lemma proved by `sorry`, and so does the output) passes through the allowance and keeps its proof, provided the reference's
+reading comes in full; rows 22 and 45 (a sorry message elsewhere in the file, outside the declaration) pass on the standard three.
+Then the exit code is 0, the summary reads `66 rows: 65 pass, 1 read BAD, 1 set back`, `1 pass only through the reference proof's
+axioms`, `2 (row, toolchain) pair(s) needed the reference proof's reading, 2 read in full`, and the stored mean goes 56.8164 ->
+56.2727 (-35.88/66 = -0.5436). Row 42's chain of 10 adopted steps (the verifier's forced print of the start and of the text after
+each step, on v4.34.0): the start (step 0) and steps 1-6 read the standard three and pass, with no reference reading; steps 7-10
+read `sorryAx` alone, with no Lean message, and read bad against the reference's standard three. Files: new
+`harness/axiom_guard.py` and `tests/test_axiom_guard.py` (no Lean: the compile layer is replaced by stand-ins); `run.sh` changed by
+added lines and one changed comment line. `EXPORT.json`, `post_fast/MANIFEST.json` and `HARNESS_COMMIT` are unchanged.
+
 ## The fast post stage in `run.sh`
 
 `run.sh` now runs our fast post stage inside the job by default, in place of the end stage, the dialect step and normalize. The stage
 starts from the agent stage's picks and stops 60 s before job end. Every 5 minutes and at the end it puts the rows that rose into
 `proofs.jsonl` by atomic rename, so that file is the job's output. No 48 h job has run this route. `LRA_POST_ROUTE=off` restores the
-job. The rest of this file and `REPLICATE.md` describe the job as at tag `open-run3-post-final-sub43-20261104`, which stays the
+job, with the kernel guard and the axiom guard (on that route a row that the axiom guard sets back gets its reference proof). The rest of this file and `REPLICATE.md` describe the job as at tag `open-run3-post-final-sub43-20261104`, which stays the
 replication of sub43. `post_fast/MANIFEST.json` lists every changed file; `run.sh`, `harness/open_package.py` and
 `docs/open_package_readme.md` no longer match their sha256 in `EXPORT.json`.
 
 On this route:
 
-- `summary.json` describes the picks, not the final `proofs.jsonl`. The final stored mean is in the last line of `logs/post_stage.log`.
+- `summary.json` describes the picks, not the final `proofs.jsonl`. The final stored mean is in the last line of `logs/post_stage.log`,
+  or, when the axiom guard set a row back, in the last line of `logs/axiom_guard.log`.
+- `--target` of `post_fast/pf_drive.py` (default 82.556, the stored mean of our seven real post-step passes) and of
+  `post_fast/snapshot.py` is a reporting field only: it fills `target` and `first_reached_target_s` (the time to reach that mean) in
+  their summaries. It never stops the stage and never decides a row; the stage stops on its cap from the job clock (`--cap`), and
+  `post_fast/post_stage.sh` passes no `--target`.
 - The fast directory (`LRA_FAST_DIR`) holds the whole post stage, not only locks. It needs room, and its path must stay under about 85
   bytes: a longer path skips the stage, and the job ends on the picks.
 - The stage's prefix servers need a C compiler (`gcc` or `cc`). Without one, compiles run fresh and the stage is slower.
@@ -291,8 +436,12 @@ Settings for setup.sh (all optional):
    the normalize step, and the export in the last 15 min. The exact command is saved in `runs/final/RUN_CMD`.
 5. **Interim proofs.** Every hour, `runs/final/interim/proofs.jsonl` is written. It is the package's own export, with the axiom audit
    off and no compiles (`infra/orgserver/snapshot.py`).
-6. **End.** After the export, the server is stopped and run.sh prints `DONE: .../proofs.jsonl`. Its exit code is 0 when the proofs file
-   exists. A driver that fails with more than 20 min left on the clock is restarted on the same clock, at most 3 times
+6. **End.** After the export, the server is stopped, the post stage and the axiom guard run, and run.sh prints `DONE: .../proofs.jsonl`.
+   Its exit code is 0 when the proofs file exists and the axiom guard read every row in full and every row passes. It is 5, after
+   `DONE`, when the guard could not read some row in full (time, an error) or a row has no proof that passes: `proofs.jsonl` is still
+   the output, the rows are named in `logs/axiom_guard.log`, and `bash run.sh export` with a larger `LRA_AXIOM_GUARD_S` completes the
+   reading (section "Axiom guard at export"). It is 4, `FAILED (kernel guard)` and no `DONE`, when `proofs.jsonl` holds a proof with a
+   debug option. A driver that fails with more than 20 min left on the clock is restarted on the same clock, at most 3 times
    (`LRA_DRIVER_RESTARTS`), after all of its processes are gone. It resumes every row from its saved state.
 
 The exact server commands per runtime (`PKG` is the package directory, `WS` the work directory, and the same paths are used inside the
@@ -323,7 +472,8 @@ exec bash /path/to/package/run.sh
 
 run.sh takes the job's start and end from `squeue`, so the clock matches the allocation. `exec` makes run.sh the batch shell. Then the
 optional `USR1` warning (`--signal=B:USR1@1800`) refreshes the interim proofs, and Slurm's `SIGTERM` at the time limit promotes them
-(below).
+(below). A job that ends with exit code 5 (step 6: `DONE` printed, some row not read in full for axioms) is recorded by Slurm as
+FAILED, though `runs/final/proofs.jsonl` is its output; `logs/axiom_guard.log` names the rows.
 
 ### Settings for run.sh (all optional)
 
@@ -334,6 +484,7 @@ optional `USR1` warning (`--signal=B:USR1@1800`) refreshes the interim proofs, a
 | `LRA_RESUME` | 0 | 1: continue the clock saved in the output directory even from another job, or after it ran out (then only the end stage and the export run) |
 | `LRA_JOB_ID` | the scheduler's | the job id run.sh stamps and compares (default: `SLURM_JOB_ID`, `PBS_JOBID`, `LSB_JOBID` or `FLUX_JOB_ID`) |
 | `LRA_SAFETY_S` | 600 | seconds kept back from the end of the allocation |
+| `LRA_AXIOM_GUARD` / `LRA_AXIOM_GUARD_S` | on / 420 | the axiom guard at export (section "Axiom guard at export"): `off` for debugging only / its time budget in whole seconds (in the job, cut to fit the safety margin) |
 | `LRA_WORKERS` / `LRA_COMPILE_SLOTS` | package defaults | sessions at once (default 11) / end-stage compile slots (default: a third of the CPUs, one per 8 GB, within 3-32) |
 | `LRA_EXTRA` | empty | more `harness/open_package.py` flags (`docs/open_package_readme.md`) |
 | `LRA_BASE_URL` | empty | an OpenAI-compatible server that is already running (serving `glm-5.3-flash`); run.sh starts none |
@@ -357,10 +508,14 @@ cores and 256 GB the defaults apply unchanged.
 `runs/final/proofs.jsonl` is written by the export in the last 15 minutes of the clock. If the job is killed earlier:
 
 - run.sh traps `SIGTERM` / `SIGINT`. It writes the interim proofs and copies them to `runs/final/proofs.jsonl`, but only if the export
-  has not written that file. Then it stops the driver, its sessions and the server.
+  has not written that file. Then it stops the driver, its sessions and the server. A file promoted this way has been through neither
+  the export's axiom audit nor the axiom guard (the log says so): run `bash run.sh export` (both) before using it. A job killed during
+  the post stage or the axiom guard leaves a whole `proofs.jsonl` (every write is a rename) whose last rows may not be read for
+  axioms; `bash run.sh export` reads them.
 - `runs/final/interim/proofs.jsonl` always holds the bests as of the last hour, in the same format.
 - `bash run.sh export` writes `runs/final/proofs.jsonl` from everything the job saved. It also runs the axiom audit of each pick, for at
-  most a few minutes once the clock has run out.
+  most a few minutes once the clock has run out, merges the post stage's saved rows back, and runs the axiom guard (at most
+  `LRA_AXIOM_GUARD_S`, 420 s, plus about a minute).
 - Restart inside the same Slurm job: the same `bash run.sh`. It continues the clock in `runs/final`, and each row resumes from its
   saved state. Restart in a NEW job (the first one died): `LRA_RESUME=1 bash run.sh` continues the same clock (it ends no later
   than the new allocation); without `LRA_RESUME=1` the new job moves `runs/final` aside and starts over.

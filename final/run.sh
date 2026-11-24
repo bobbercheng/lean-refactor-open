@@ -20,13 +20,25 @@
 # own, unless the allocation is smaller than the node), LRA_EXTRA (more open_package.py flags), LRA_BASE_URL (an already running
 # OpenAI-compatible server: no server is started), LRA_FAST_DIR, LRA_VLLM_PORT, LRA_SERVER_WAIT_S, LRA_SNAPSHOT_S, LRA_DRY=1 (print the
 # commands, start nothing).
-# LRA_POST_ROUTE=off: no fast post stage, the job as it was at tag open-run3-post-final-sub43-20261104 (with the kernel guard below).
+# LRA_POST_ROUTE=off: no fast post stage, the job as it was at tag open-run3-post-final-sub43-20261104 (with the kernel guard and the
+# axiom guard below; on that route a row that the axiom guard sets back gets its reference proof).
 # Kernel guard (2026-11-24; harness/kernel_guard.py): no proof that sets a `set_option debug.*` option is accepted, kept or written.
 # LRA_DEBUG_ROWS=reference: when a resumed run's saved state (or the post stage's input) holds such a proof, the row is set back to the
 # benchmark's reference proof before the stage starts; without it the driver and the post stage stop and name the rows.
 # A proofs.jsonl (or interim/proofs.jsonl) that a run of an earlier version left in a resumed OUT and that holds such a proof is moved
 # aside (<file>.debug-rows.<job start>) before the driver starts, so it never stands as this job's output; and the job (and `run.sh
 # export`) ends FAILED with exit code 4, not DONE, if OUT/proofs.jsonl holds such a proof at the end. The rows: logs/kernel_guard.log.
+# Axiom guard (2026-11-24; harness/axiom_guard.py): after the post stage's last merge (and in `run.sh export`, after the merge), before
+# the kernel guard's last check, a forced `#print axioms` of every row's proof on its toolchains. A row whose proof shows Lean's sorry
+# message, or reads sorryAx (or another axiom outside propext, Classical.choice, Quot.sound) that the row's reference proof does not read
+# on the same toolchain (or whose reference reading is not available: fail closed), is set back to its newest earlier proof that passes:
+# proofs.picks.jsonl (the post stage's input), proofs.export.jsonl (the agent stage's export, copied before the post stage), else the
+# reference proof. Budget LRA_AXIOM_GUARD_S (420 s); at the job's end the guard process ends at least 120 s before the allocation (the
+# clock's end + LRA_SAFETY_S, at most 48 h after its start), and a run started on a clock already over (LRA_RESUME=1) gives it the full
+# budget, as `run.sh export` does. A row not read in full keeps its proof (nothing was read against it; it may still rest on sorry), and
+# the job (or `run.sh export`) then prints DONE and ends with exit code 5, not 0: proofs.jsonl is the output, and `run.sh export` with a
+# larger LRA_AXIOM_GUARD_S completes the reading. LRA_AXIOM_GUARD=off skips the guard (debugging only). The rows: logs/axiom_guard.log;
+# the full report: logs/axiom_guard.json.
 set -u
 T_START=$(date +%s)   # first: the job clock never starts later than this line
 [ "${BASH_VERSINFO[0]:-0}" -ge 4 ] || { echo "run.sh needs bash 4 or newer (this is ${BASH_VERSION:-not bash})" >&2; exit 2; }
@@ -124,6 +136,11 @@ W=${LRA_WORKERS:-$WORKERS}; S=${LRA_COMPILE_SLOTS:-$SLOTS}
 [ -n "$S" ] && SIZING+=(--compile-slots "$S")
 lra_log "preflight: $CPUS CPU(s) usable of $NODE_CPUS, ${MEM_AVAIL_GB} GB available${CGROUP_LIMIT_GB:+, cgroup limit ${CGROUP_LIMIT_GB} GB}; locks in $FAST; ${SIZING[*]:-package default sizing (11 workers, auto compile slots)}"
 case "${LRA_DEBUG_ROWS:-fail}" in fail|reference) ;; *) fail "LRA_DEBUG_ROWS must be fail or reference (got '$LRA_DEBUG_ROWS')";; esac
+case "${LRA_AXIOM_GUARD:-on}" in on|off) ;; *) fail "LRA_AXIOM_GUARD must be on or off (got '$LRA_AXIOM_GUARD')";; esac
+[[ "${LRA_AXIOM_GUARD_S:-420}" =~ ^(0|[1-9][0-9]*)$ ]] || fail "LRA_AXIOM_GUARD_S must be a whole number of seconds, without a leading zero (got '$LRA_AXIOM_GUARD_S')"
+[ "${LRA_AXIOM_GUARD:-on}" != off ] || lra_log "WARNING: LRA_AXIOM_GUARD=off: no row's axioms are read at the end (debugging only)"
+[ "$MODE" = export ] || [[ ! "${LRA_SAFETY_S:-600}" =~ ^[0-9]+ ]] || [ $((10#${BASH_REMATCH[0]})) -ge 300 ] \
+  || lra_log "WARNING: LRA_SAFETY_S=$LRA_SAFETY_S: the axiom guard runs in this margin after the post stage and needs about 300 s of it; with less it reads little or nothing and the job ends with exit code 5"
 if [ "$MODE" = check ]; then
   [ -z "$FAILS" ] || lra_die "run.sh check: ${FAILS#; }"
   lra_log "CHECK OK"; exit 0
@@ -135,14 +152,44 @@ EXTRA=()
 [ -z "${LRA_DEBUG_ROWS:-}" ] || EXTRA+=(--debug-rows "$LRA_DEBUG_ROWS")   # kernel guard: fail (default) | reference
 # kernel guard on one proofs file, which it only reads: 0 = no line sets a debug option; 2 = some do (their names go to the log)
 kg_file() { "$PY" harness/kernel_guard.py "$1" --rows "$ROWS" >> "$LOGD/kernel_guard.log" 2>&1; }
+# axiom guard on the final proofs file $1, in at most $2 s in all (empty: no limit but its own budget). Its budget is LRA_AXIOM_GUARD_S,
+# cut to $2 - 70 s: it stops reading by the budget + 30 s and then decides and writes; `timeout` stops it at the budget + 60 s and kills it
+# 10 s later. AGRC: 0 = every row read and passes (a row whose proof read sorryAx was set back to an earlier proof that passes: named in
+# the log); 3 = some row not read in full (it keeps its proof: nothing was read against it) or with no passing proof; anything else = not
+# checked. The job's exit code is 5 instead of 0 when AGRC is not 0.
+AGRC=0
+ag_file() {
+  local log=$LOGD/axiom_guard.log rep=$LOGD/axiom_guard.json
+  if [ "${LRA_AXIOM_GUARD:-on}" = off ]; then
+    lra_log "axiom guard: OFF (LRA_AXIOM_GUARD=off): $1 was not read for axioms"
+    echo "$(date -u +%FT%TZ) axiom guard: OFF (LRA_AXIOM_GUARD=off): $1 was not read for axioms" >> "$log"
+    echo "{\"status\": \"off\", \"rc\": null, \"at\": \"$(date -u +%FT%TZ)\"}" > "$rep"
+    return 0
+  fi
+  [ -f "$1" ] || return 0
+  local b=$((10#${LRA_AXIOM_GUARD_S:-420}))
+  if [ -n "${2:-}" ] && [ $(($2 - 70)) -lt "$b" ]; then b=$(($2 - 70)); fi
+  [ "$b" -ge 0 ] || b=0
+  timeout --foreground -k 10 $((b + 60)) "$PY" harness/axiom_guard.py "$1" --rows "$ROWS" --budget "$b" --report "$rep" >> "$log" 2>&1
+  AGRC=$?
+  local last; last=$(grep -a 'axiom guard: \(OK\|NOT EVERY ROW\)' "$log" | tail -n 1 | cut -d' ' -f2-)
+  case "$AGRC" in
+    0) lra_log "$last";;
+    3) lra_log "WARNING (axiom guard): not every row of $1 was read in full for axioms within $b s and passes (a row not read keeps its proof, which may rest on sorry; a row with no passing proof has its reference proof): $last";;
+    *) lra_log "WARNING (axiom guard): $1 was not checked for axioms (rc $AGRC; $log)";;
+  esac
+}
 if [ "$MODE" = export ]; then
   run "$PY" harness/open_package.py export --rows "$ROWS" --heartbeats "$HBS" --out "$OUT" ${SIZING[@]+"${SIZING[@]}"} ${EXTRA[@]+"${EXTRA[@]}"}
   RC=$?
+  [ "$DRY" = 1 ] || [ "$RC" != 0 ] || [ ! -f "$OUT/proofs.jsonl" ] || cp -f "$OUT/proofs.jsonl" "$OUT/proofs.export.jsonl"   # axiom guard: the agent stage's export, a fallback
   [ "${LRA_POST_ROUTE:-fast}" = off ] || [ ! -f "$OUT/proofs.merged.jsonl" ] || run "$PY" post_fast/merge_post.py "$OUT/proofs.merged.jsonl" "$ROWS" "$OUT/proofs.jsonl"   # the export wrote the picks: the saved gains return
+  [ "$DRY" = 1 ] || ag_file "$OUT/proofs.jsonl" ""   # axiom guard (its full budget): after the merge, before the kernel guard's check
   if [ "$DRY" != 1 ] && [ -f "$OUT/proofs.jsonl" ]; then   # kernel guard: a file of an earlier version that this export did not replace
     kg_file "$OUT/proofs.jsonl"
     [ $? != 2 ] || { lra_log "FAILED (kernel guard): $OUT/proofs.jsonl holds a proof with a debug option, which disables kernel checking and is not allowed (rows in $LOGD/kernel_guard.log). The export did not replace this file; it is not this version's output"; RC=4; }
   fi
+  [ "$RC" != 0 ] || [ "$AGRC" = 0 ] || { lra_log "exit code 5 (axiom guard): $OUT/proofs.jsonl is written, but not every row of it was read in full for axioms and passes ($LOGD/axiom_guard.log); run.sh export with a larger LRA_AXIOM_GUARD_S completes the reading"; RC=5; }
   exit "$RC"
 fi
 
@@ -177,6 +224,7 @@ stop_all() {
 on_signal() {
   lra_log "signal $1: interim proofs, then stopping (proofs: $OUT/proofs.jsonl)"
   snapshot --promote; tail -n 1 "$OUT/logs/snapshot.log"
+  lra_log "WARNING: a proofs.jsonl promoted from the interim proofs has had neither the export's axiom audit nor the axiom guard: run 'bash run.sh export' (both) before using it"
   stop_all; exit 143
 }
 trap 'on_signal TERM' TERM
@@ -242,12 +290,23 @@ done
 stop_all
 # the fast post stage, with vLLM stopped: it stops at JOB_END - 60 and replaces proofs.jsonl by rename, rows only rising
 if [ "${LRA_POST_ROUTE:-fast}" != off ] && [ -f "$OUT/proofs.jsonl" ]; then
+  # the axiom guard's second fallback, the agent stage's export; a proofs.jsonl that is still the post stage's last merge (a re-run whose
+  # driver wrote no new export) is not one, and the copy made from the export stays
+  cmp -s "$OUT/proofs.jsonl" "$OUT/proofs.merged.jsonl" || cp -f "$OUT/proofs.jsonl" "$OUT/proofs.export.jsonl" \
+    || lra_log "WARNING: no copy of the agent stage's export (the axiom guard's second fallback)"
   bash post_fast/post_stage.sh "$OUT" "$ROWS" "$HBS" "$FAST/post-$$" "$JOB_END" >> "$OUT/logs/post_stage.log" 2>&1 &
   POST=$!
   trap 'kill -TERM "$POST" 2> /dev/null' TERM INT   # a signal stops the post stage and its merge still runs; USR1 stays: promote never replaces proofs.jsonl
   while kill -0 "$POST" 2> /dev/null; do wait "$POST"; done   # a trap interrupts wait: wait again
   lra_log "post stage: $(tail -n 1 "$OUT/logs/post_stage.log")"
 fi
+# the axiom guard, after the post stage's last merge and before the kernel guard's last check: it runs in the clock's safety margin
+# (LRA_SAFETY_S) and ends at least 120 s before the allocation does, taken as the clock's end + LRA_SAFETY_S and never later than 48 h
+# after the clock's start. A run started on a clock already over (LRA_RESUME=1: a recovery, like `run.sh export`) gives it its full budget.
+SAF=${LRA_SAFETY_S:-600}; SAF=${SAF%%.*}; [[ "$SAF" =~ ^[0-9]+$ ]] || SAF=600; SAF=$((10#$SAF))
+AEND=$((JOB_END + SAF)); [ "$AEND" -le $((START + 172800)) ] || AEND=$((START + 172800))
+if [ "$JOB_END" -le "$T_START" ]; then ag_file "$OUT/proofs.jsonl" ""
+else ag_file "$OUT/proofs.jsonl" $((AEND - 120 - $(date +%s))); fi
 KRC=0; [ ! -f "$OUT/proofs.jsonl" ] || { kg_file "$OUT/proofs.jsonl"; KRC=$?; }
 if [ "$KRC" = 2 ]; then   # kernel guard: never DONE on a file that holds a proof with a debug option
   lra_log "FAILED (kernel guard): $OUT/proofs.jsonl holds a proof with a debug option, which disables kernel checking and is not allowed (rows in $LOGD/kernel_guard.log); it is not this job's output"; RC=4
@@ -256,4 +315,5 @@ elif [ -f "$OUT/proofs.jsonl" ]; then
 else
   lra_log "FAILED: no proofs file (logs in $OUT/logs, $OUT/driver.log)"; RC=${RC:-1}; [ "$RC" = 0 ] && RC=1
 fi
+[ "$RC" != 0 ] || [ "${AGRC:-0}" = 0 ] || { lra_log "exit code 5 (axiom guard): $OUT/proofs.jsonl is the output, but not every row of it was read in full for axioms and passes ($LOGD/axiom_guard.log); run.sh export with a larger LRA_AXIOM_GUARD_S completes the reading"; RC=5; }
 exit "$RC"

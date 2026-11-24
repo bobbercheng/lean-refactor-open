@@ -32,6 +32,30 @@ docstrings). The `sub43` code zip holds the unredacted `d4_implied.py`, `kskip.p
 `MANIFEST.json` gives the unredacted sha256 of `main`'s `open_post.py` and `hintgrind.py` as `measured_sha256`. Apart from these
 lines, the post-step's files and `final/post_fast/` keep their comments and docstrings.
 
+## Changes in this version (2026-11-24)
+
+Our entry is the runner-up of the open-source track (announced by the organizers on 2026-11-23). Four proofs of our final upload
+`sub43` carry `set_option debug.skipKernelTC true in`; the option disables the kernel's check, so they are not verified proofs, and
+one of the four is not a valid proof with the check on. The Arena submission itself cannot be changed.
+
+Since 2026-11-24, `final/` on `main` is the code described above without the kernel-skip operator and with a guard that rejects
+every proof that sets a `debug.*` option, at every stage and at export:
+
+- `final/harness/post/kskip.py` is deleted. The notes above about `kskip.py` (its redacted docstring lines, the unredacted file in
+  the `sub43` code zip) apply to the tag `open-run3-post-final-sub43-20261104` and to the zip, not to `main`.
+- `final/harness/kernel_guard.py` and `final/tests/test_kernel_guard.py` are new.
+- The files changed on 2026-11-24 are listed in [`final/README.md`](final/README.md), section "Changes in this version
+  (2026-11-24)". Nine of them are files of official run 3's export, which until then were on `main` byte for byte as the run
+  shipped them: `harness/agent.py`, `harness/batch_screen.py`, `harness/endstage.py`, `harness/endstage_r10.py`,
+  `harness/funind.py`, `harness/hb_tool_eval.py`, `harness/leantools.py`, `harness/workbench.py` (in each, only the import of the
+  forbidden check, which now comes from the guard module; in the two end-stage files also the guard module's entry in the list of
+  files that make the end stage's recorded code identity) and `infra/orgserver/orgtools.py` (the interim file's promotion).
+  `final/scorer/forbidden.py` is unchanged: it stays an exact copy of the Arena's forbidden list.
+- `final/EXPORT.json` and `final/post_fast/MANIFEST.json` are unchanged. They describe the files of the export and of 2026-11-09;
+  the files changed on 2026-11-24 no longer match their sha256 values.
+
+The code of `sub43` as submitted stays at the tag `open-run3-post-final-sub43-20261104` and in the code zip.
+
 ## Edits for public release (2026-10-28)
 
 The history of this repository was rewritten on 2026-10-28, before it was made public. Every commit keeps its date and content,

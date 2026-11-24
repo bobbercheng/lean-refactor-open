@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
-"""Open post-step (2026-11-03 ~12:15 UTC, "Trio + Q5 kernel-skip"; branch open-post): a $0, model-free, deterministic,
+"""Open post-step (first version 2026-11-03 ~12:15 UTC; branch open-post): a $0, model-free, deterministic,
 accept-gated pass over a finished open-package export. Input: <out>/proofs.jsonl (the export) and the package's --rows / --heartbeats
 files; output: <out>/proofs.post.jsonl (one line per row, in the same order; a row the pass did not improve keeps its input line byte for
 byte) and <out>/post_report.json; work files under <out>/post/. <out>/proofs.jsonl is never written.
 
+  kernel guard  (2026-11-24, harness/kernel_guard.py) the first version's kernel-skip op `kskip`, which put `set_option
+            debug.skipKernelTC true in` before a closing `decide +kernel`, is removed: it is in no op order, mode or flag. The option
+            disables the kernel's check, so a proof with it is not a verified proof. No candidate that sets a `debug.*` option passes
+            the gate, and no such proof is kept from the input: an input row whose proof sets one stops the step with the row's name
+            (--debug-rows fail, the default) or is replaced by the row's reference proof before the step starts (--debug-rows
+            reference); the output is checked once more before it is written.
   ops       (harness/post/; each reads only the proof, the statement and the row's own environment: no row name, table or proof text)
     implied     the closed line's bet D4 rule R1 with its point-free spellings (D4P): a `decide`-family closer decides the hypothesis Q of a
                 library theorem `Q -> P` (or `P <-> Q`) found by an env query, instead of the goal P
@@ -11,10 +17,8 @@ byte) and <out>/post_report.json; work files under <out>/post/. <out>/proofs.jso
                 the hint's environment siblings (env query), plus its pure trims
     closerprep  bet D4C: `conv_rhs => reduce` (or lhs / both) before a `decide`-family closer, alone and jointly with a ddmin drop of
                 the simp-family list before it (proposals chosen by a one-file measured query, harness/post/d4_measure.py)
-    kskip       (harness/post/kskip.py) a closing `decide +kernel` -> `set_option debug.skipKernelTC true in decide +kernel` in place,
-                and ` by` / `unfold P` / that line, P the head predicate of the statement
   v2 ops    (length tools v2, branch open-post-v2, 2026-11-03; generic, model-free, each reads only the proof, the statement and the
-            row's own environment; an op runs (sites, queries, readings) only when it is in ORDER; --ops v1 = the four ops above only)
+            row's own environment; an op runs (sites, queries, readings) only when it is in ORDER; --ops v1 = the three ops above only)
     hintgrind   (harness/post/hintgrind.py + spans.py) a tactic span (case region, arm, have body, block suffix) replaced by the one
                 closer Lean prints for it (`grind? [H]`, `simp_all? [H]`, `simp? [H]`, region forms; H = the constants the span writes,
                 resolved by an env query), probed on the oldest pin, screened by a one-file heartbeat reading
@@ -46,6 +50,7 @@ byte) and <out>/post_report.json; work files under <out>/post/. <out>/proofs.jso
                 structural deletions: a step repeated across the goals of a flat goal list -> one `any_goals T` (hoist); preparation steps
                 (stepdrop) or runs of steps before a block's closer (rundrop) dropped; `have` / `obtain` steps whose names are never used
                 again dropped (scaffold); an unneeded split dropped (armfold); a proof with a kernel-unchecked closer has no site
+                (the kernel guard lets no such proof in; the ops' own check stays as a second line of defence)
     opus_goalmerge (harness/post/opus_goalmerge.py) parallel goal blocks merged into one combinator (`<;>`, `all_goals`, `iterate`),
                 keyed on Lean's goal count (one traced compile), screened in one file
     opus_patfuse (harness/post/opus_patfuse.py) pure pattern fusions (`subst` / `cases` steps -> `rfl` / anonymous-constructor patterns)
@@ -122,15 +127,15 @@ byte) and <out>/post_report.json; work files under <out>/post/. <out>/proofs.jso
   gate      a candidate is adopted only when ALL hold, against the current proof measured on the same meter (harness/endstage.Meter,
             the end stage's direct path: the scorer's own heartbeat measurement on the primary pin, the official reference heartbeats,
             no local table): it starts with the row's exact statement followed by `:=` (scorer.tokenize.split_declaration); it passes
-            scorer/forbidden.check_forbidden (unchanged: `set_option debug.skipKernelTC` is not on the Space list, nothing else is
-            allowed); its primary reading scores higher (exact score); it compiles on EVERY pin of the row (Z 100); a fresh paired
+            the Arena's forbidden list (scorer/forbidden.check_forbidden, an unchanged copy) and the kernel guard (no `set_option
+            debug.*`; harness/kernel_guard.py); its primary reading scores higher (exact score); it compiles on EVERY pin of the row (Z 100); a fresh paired
             re-reading of the current proof and the candidate, back to back, still passes scorer.accept.decide with the worse candidate
             reading against the better current one and a strictly higher exact score; its rounded score is above the input's stored
             score; and the export's own `#print axioms` sorry audit (harness/open_package.audit_proof) reads it clean. Anything else,
             an exception, a timeout or a budget stop included, leaves the row's current proof as it is (never harm).
   search    per row: a pure pre-check (no op has a site: no compile at all); else the input measured on every pin, then up to PASSES
             passes: every op's candidates on the current proof (env queries on the primary pin), read on the primary pin in op order
-            (kskip, implied, closerprep, inlineeq; at most READS[op] each; inlineeq's candidates go through the one-file measured
+            (implied, closerprep, inlineeq, then the later ops; at most READS[op] each; inlineeq's candidates go through the one-file measured
             screen first when there are more than SCREEN_MIN), the best primary reading that passes is confirmed (pins, paired
             re-reading, audit) and adopted, the next one tried when it fails; a pass that adopts nothing ends the row. Budgets: ROW_COMPILES
             compiles and ROW_SECONDS per row, --seconds for the whole step (no row starts after it; a running row stops at its next
@@ -153,6 +158,7 @@ byte) and <out>/post_report.json; work files under <out>/post/. <out>/proofs.jso
             Its op is `merge:<op>+<op>...` (no spaces; the adoption log line keeps its form).
     python3 harness/open_post.py --rows R.jsonl --heartbeats H.jsonl --out OUT [--jobs N] [--seconds S] [--problems NAME ...]
     python3 harness/open_post.py --rows R.jsonl --heartbeats H.jsonl --out OUT --long [--long-seconds S] [--jobs N] [--problems NAME ...]
+    either form: [--debug-rows reference]   an input row whose proof sets a debug option becomes the row's reference proof (kernel guard)
 Run by harness/open_package.py `post` (and `run --post on`, after the run's export) with the package environment (LRA_LOCAL_REF none,
 the sorry guard, compile slots); standalone it sets the same itself."""
 from __future__ import annotations
@@ -165,7 +171,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-V1_ORDER = ("kskip", "implied", "closerprep", "inlineeq")
+V1_ORDER = ("implied", "closerprep", "inlineeq")   # 2026-11-24: the kernel-skip op `kskip` is removed (module docstring, "kernel guard")
 V2_OPS = ("hintgrind", "projpath", "lexsurf", "jointres", "t4ind", "ctorsearch")
 # post-step v3 (branch open-post-v3, 2026-11-04): research-lane ops ported unchanged, each with the lane interface (has_sites / query /
 # candidates; harness/post/<op>.py), appended after the v2 ops and wired through _lane_has_site / _gen_lane (fault-isolated like v2's)
@@ -190,7 +196,7 @@ V5L_OPS = ("argon_calcstep", "sonnet_argdrop", "argon_haveopt", "opus_bulletflat
 V5_OPS = ("v5_cse", "v5_altcases", "v5_deferhave", "hb_smartunfold")
 LANE_OPS = V3_OPS + V4_OPS + V5L_OPS + V5_OPS
 ORDER = V4_ORDER + V5L_OPS + V5_OPS
-READS = {"kskip": 4, "implied": 12, "closerprep": 3, "inlineeq": 6,   # primary readings per op and pass
+READS = {"implied": 12, "closerprep": 3, "inlineeq": 6,   # primary readings per op and pass
          "hintgrind": 8, "projpath": 6, "lexsurf": 6, "jointres": 4, "t4ind": 4, "ctorsearch": 4,
          "argon_funind": 4, "argon_hbelab": 8, "argon_hpcert": 8, "sonnet_listdrop": 8, "sonnet_lintdrop": 8,
          "opus_hoist": 4, "opus_stepdrop": 4, "opus_rundrop": 4, "opus_scaffold": 4, "opus_armfold": 4,
@@ -259,19 +265,18 @@ class Budget:
 
 # ------------------------------------------------------------------------------------------------------------------------------ ops
 def _mods():
-    from harness.post import d4_implied as I, d4_inlineeq as Q, d4_closerprep as CP, d4_measure as MS, kskip as KS
-    return I, Q, CP, MS, KS
+    from harness.post import d4_implied as I, d4_inlineeq as Q, d4_closerprep as CP, d4_measure as MS
+    return I, Q, CP, MS
 
 
 def sites(proof: str, statement: str) -> dict:
     """Which ops have a site in `proof` (pure: no compile)."""
     from scorer.tokenize import split_declaration
-    I, Q, CP, MS, KS = _mods()
+    I, Q, CP, MS = _mods()
     body = split_declaration(proof, statement)
     if body is None:
         return {}
     out = {
-        "kskip": lambda: bool(KS.candidates(proof, statement)),
         "implied": lambda: I.query_text(proof, statement) is not None,
         "closerprep": lambda: bool(CP.closer_sites(body)) and MS.renamed(statement, 0) is not None,
         "inlineeq": lambda: Q.query_text(proof, statement) is not None or bool(Q.candidates(proof, statement, ctx={})),
@@ -326,14 +331,12 @@ def generate(proof: str, statement: str, run, versions, exchange, compile_s, log
     """{op: [candidate {"op", "decl", "note"}]} on `proof`; run(text, version) is the charged env-query compile. Only the ops in ORDER;
     a v2 op's own fault proposes nothing for that op (budget stops propagate). row_ctx: per-row facts of the row's own environment
     ({"in_mods": row_mods(row, primary pin)}); inc_hb: the current proof's heartbeats."""
-    I, Q, CP, MS, KS = _mods()
+    I, Q, CP, MS = _mods()
     from scorer.tokenize import split_declaration
     body = split_declaration(proof, statement)
     out: dict = {}
-    ctx: dict = {}
     if "implied" in ORDER and I.query_text(proof, statement) is not None:
         got = I.query(proof, statement, run, versions=versions, stats={}, log=log_fn) or {}
-        ctx.update(got)
         out["implied"] = I.candidates(proof, statement, ctx=dict(got, opt_in=list(IMPLIED_OPT_IN)))
     if "closerprep" in ORDER and body is not None and CP.closer_sites(body) and MS.renamed(statement, 0) is not None:
         cctx = {"compile_s": compile_s, "exchange": exchange}
@@ -343,8 +346,6 @@ def generate(proof: str, statement: str, run, versions, exchange, compile_s, log
         qt = Q.query_text(proof, statement)
         got = (Q.query(proof, statement, run, versions=versions, stats={}, log=log_fn) or {}) if qt is not None else {}
         out["inlineeq"] = Q.candidates(proof, statement, exchange=exchange, ctx=got)
-    if "kskip" in ORDER:
-        out["kskip"] = KS.candidates(proof, statement, ctx=ctx)
     say = log_fn or (lambda *a: None)
     for name, fn in (("hintgrind", lambda: _gen_hintgrind(proof, statement, run, versions, exchange, compile_s, say, inc_hb)),
                      ("projpath", lambda: _gen_projpath(proof, statement, run, versions, exchange, compile_s, say)),
@@ -465,8 +466,9 @@ def attached_in(meter) -> str:
 
 
 def static_ok(decl: str, statement: str) -> str | None:
-    """None when the candidate starts with the exact statement + `:=` and passes the forbidden check, else the reason."""
-    from scorer.forbidden import check_forbidden
+    """None when the candidate starts with the exact statement + `:=` and passes the forbidden check (the Arena's list, then the
+    kernel guard: harness/kernel_guard.check_forbidden), else the reason."""
+    from harness.kernel_guard import check_forbidden
     from scorer.tokenize import split_declaration
     if split_declaration(decl, statement) is None or not decl.startswith(statement):
         return "statement differs"
@@ -478,7 +480,7 @@ def screen(cands: list, statement: str, inc_body: str, run, exchange, compile_s,
     """inlineeq's candidates through d4_measure's one-file batches (the closed D4C query's measurement): the incumbent first in every
     file as the control; the candidates predicted to read higher (heartbeats saved minus tokens added at the exchange rate), best first,
     at most `keep`. A file whose control does not read leaves its candidates unscreened (they follow the screened ones, in order)."""
-    I, Q, CP, MS, KS = _mods()
+    I, Q, CP, MS = _mods()
     from scorer.tokenize import split_declaration
     if MS.renamed(statement, 0) is None:
         return cands[:keep], {"screened": False, "why": "not a theorem / lemma statement"}
@@ -882,7 +884,8 @@ def long_config() -> dict:
 
 def _post_step(rows_path, hbs_path, out, *, jobs: int = 2, seconds: float = SECONDS, row_seconds: float = ROW_SECONDS,
                row_compiles: int = ROW_COMPILES, problems=None, input_path=None, scratch=None, audit="default", meter_factory=None,
-               now=time.time, long_cfg: dict | None = None) -> dict:
+               now=time.time, long_cfg: dict | None = None, debug_rows: str = "fail") -> dict:
+    from harness import kernel_guard as KG
     out = Path(out)
     t0 = now()
     deadline = t0 + float(seconds)
@@ -890,6 +893,12 @@ def _post_step(rows_path, hbs_path, out, *, jobs: int = 2, seconds: float = SECO
     raw_lines = [l for l in inp.read_text().splitlines() if l.strip()]
     recs = [json.loads(l) for l in raw_lines]
     rows, hbs = load_inputs(rows_path, hbs_path)
+    # kernel guard: an input row whose proof sets a debug option is not kept (fail: KG.DebugOptionError names the rows before anything
+    # is written; reference: the row's line becomes its reference proof, and the step then works on that)
+    recs, replaced = KG.check_input(recs, rows, debug_rows, f"post-step input {inp}")
+    for k in replaced:
+        raw_lines[k] = json.dumps(recs[k], ensure_ascii=False)
+        log(f"row#{k:02d} {str(recs[k].get('name'))[:48]}: the input proof set a debug option; replaced by the reference proof (kernel guard)")
     work = out / WORK_DIR; work.mkdir(parents=True, exist_ok=True)
     scratch = Path(scratch) if scratch else Path(os.environ.get("LRA_HBTOOL_SCRATCH") or
                                                   ROOT / "probe/hbtool/.scratch" / f"post-{hashlib.sha256(str(out.resolve()).encode()).hexdigest()[:10]}")
@@ -954,6 +963,7 @@ def _post_step(rows_path, hbs_path, out, *, jobs: int = 2, seconds: float = SECO
             adopted += 1; gain += float(r.get("gain") or 0.0)
         else:
             lines.append(line)
+    KG.assert_clean([json.loads(l) for l in lines], f"post-step output {out / POST_FILE}")   # kernel guard: never written out
     text = "".join(l + "\n" for l in lines)
     tmp = out / (POST_FILE + ".tmp"); tmp.write_text(text); os.replace(tmp, out / POST_FILE)
     before = [float(r["stored_score"]) for r in recs if isinstance(r.get("stored_score"), (int, float))]
@@ -970,7 +980,8 @@ def _post_step(rows_path, hbs_path, out, *, jobs: int = 2, seconds: float = SECO
            "config": {"order": list(ORDER), "reads": {k: READS[k] for k in ORDER}, "screen_min": SCREEN_MIN, "passes": PASSES, "row_compiles": int(row_compiles),
                       "row_seconds": float(row_seconds), "seconds": float(seconds), "jobs": int(jobs), "implied_opt_in": list(IMPLIED_OPT_IN),
                       "problems": sorted(want) if want else None} | ({"long": long_cfg} if long_cfg else {})
-                     | ({"merge": {"max": MERGE_MAX, "gap": MERGE_GAP}} if merge_on() else {}),
+                     | ({"merge": {"max": MERGE_MAX, "gap": MERGE_GAP}} if merge_on() else {})
+                     | ({"debug_rows_replaced": [recs[k].get("name") for k in replaced]} if replaced else {}),
            "rows": [{x: v for x, v in (results.get(k) or {}).items() if x not in ("decisions", "proof")} for k in range(len(recs))],
            "at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
     (out / REPORT_FILE).write_text(json.dumps(rep, indent=1, ensure_ascii=False))
@@ -992,9 +1003,13 @@ def main(argv=None) -> int:
     ap.add_argument("--row-compiles", type=int, default=ROW_COMPILES)
     ap.add_argument("--problems", nargs="*", default=None)
     ap.add_argument("--keep-local-ref", action="store_true", help="keep the local reference-heartbeat table (dev rows only)")
-    ap.add_argument("--ops", default="all", help="'all' (default: v1 + v2 + v3 + v4 + v5 ops), 'v1' (kskip, implied, closerprep, inlineeq "
+    ap.add_argument("--ops", default="all", help="'all' (default: v1 + v2 + v3 + v4 + v5 ops), 'v1' (implied, closerprep, inlineeq "
                                                  "only), 'v2' (v1 + v2 ops), 'v3' (v1 + v2 + v3 ops), 'v4' (v1 + v2 + v3 + v4 ops) or a "
                                                  "comma-separated subset of ORDER")
+    ap.add_argument("--debug-rows", choices=("fail", "reference"), default="fail",
+                    help="kernel guard (harness/kernel_guard.py): an input row whose proof sets a `set_option debug.*` option (it disables "
+                         "kernel checking) is never kept. fail (default): stop before anything is written and name the rows; reference: "
+                         "replace each such row by the benchmark's reference proof before the step starts")
     a = ap.parse_args(argv)
     if a.long and a.seconds is not None:
         ap.error("--long takes the step wall from --long-seconds, not --seconds")
@@ -1020,8 +1035,13 @@ def main(argv=None) -> int:
     git_trust(os.environ)
     if not a.keep_local_ref:
         os.environ["LRA_LOCAL_REF"] = "none"
-    post_step(a.rows, a.heartbeats, a.out, jobs=a.jobs, seconds=a.long_seconds if a.long else a.seconds, row_seconds=a.row_seconds,
-              row_compiles=a.row_compiles, problems=a.problems, input_path=a.input, long=a.long)
+    from harness.kernel_guard import DebugOptionError
+    try:
+        post_step(a.rows, a.heartbeats, a.out, jobs=a.jobs, seconds=a.long_seconds if a.long else a.seconds, row_seconds=a.row_seconds,
+                  row_compiles=a.row_compiles, problems=a.problems, input_path=a.input, long=a.long, debug_rows=a.debug_rows)
+    except DebugOptionError as e:
+        log(f"REFUSED (kernel guard): {e}")
+        return 2
     return 0
 
 

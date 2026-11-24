@@ -381,16 +381,43 @@ def _alive(pid: int) -> bool:
 
 
                                                                                                                                        
+def _debug_rows(path: Path) -> list:
+    """Kernel guard (2026-11-24; harness/kernel_guard.py): the names of the lines of a proofs file whose proof sets a `set_option
+    debug.*` option (a file that does not parse is read as one text)."""
+    if str(ROOT) not in sys.path:
+        sys.path.insert(0, str(ROOT))
+    from harness.kernel_guard import debug_option, debug_rows, read_jsonl
+    try:
+        return debug_rows(read_jsonl(path))
+    except ValueError:
+        return ["(a line that does not parse)"] if debug_option(path.read_text(errors="replace")) else []
+
+
 def promote(out: Path) -> str:
-    """OUT/interim/proofs.jsonl becomes OUT/proofs.jsonl only if the latter does not exist (link: atomic, never over the export)."""
+    """OUT/interim/proofs.jsonl becomes OUT/proofs.jsonl only if the latter does not exist (link: atomic, never over the export).
+    Kernel guard: an interim file with a proof that sets a debug option (left by a run of an earlier version) is never promoted. An
+    existing proofs.jsonl that holds such a proof is not this version's export (the export writes none): it is not replaced here, and
+    the answer says so. run.sh moves such a file aside before the driver starts and never ends DONE on one."""
     src, dst = out / "interim" / "proofs.jsonl", out / "proofs.jsonl"
     if dst.exists():
+        try:
+            bad = _debug_rows(dst)
+        except OSError:
+            bad = []
+        if bad:
+            return (f"kept, but NOT a valid output (kernel guard): proofs.jsonl exists and holds {len(bad)} proof(s) with a `set_option "
+                    f"debug.*` option, which disables kernel checking and is not allowed (a file of an earlier version): "
+                    f"{', '.join(map(str, bad))}; nothing promoted over it")
         return "kept: proofs.jsonl exists (the export ran)"
     if not src.exists():
         return "nothing: no interim proofs.jsonl"
     tmp = out / f".proofs.interim.{os.getpid()}"
     shutil.copyfile(src, tmp)
     try:
+        bad = _debug_rows(tmp)
+        if bad:
+            return (f"refused (kernel guard): the interim proofs.jsonl holds {len(bad)} proof(s) with a `set_option debug.*` option, which "
+                    f"disables kernel checking and is not allowed: {', '.join(map(str, bad))}; nothing promoted")
         os.link(tmp, dst)
         res = f"promoted: {src} -> {dst}"
     except FileExistsError:

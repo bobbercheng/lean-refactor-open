@@ -27,7 +27,7 @@ from harness.post import d4_measure as MS  # noqa: E402
 from scorer.tokenize import count_tokens  # noqa: E402
 
 MARK = "LRAOPUS"
-UNCHECKED = "skipKernelTC"   # a kernel-unchecked closer (the kskip op's): edits before it are not judged by Lean; no site
+UNCHECKED = "skipKernelTC"   # a kernel-unchecked closer: edits before it are not judged by Lean; no site (second line of defence: the kernel guard, harness/kernel_guard.py, lets no such proof in)
 
 
 def selfref(statement: str, body: str, i: int) -> str:

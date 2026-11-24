@@ -13,9 +13,12 @@ no longer needs (a generalisation of opus_scaffold from `have` / `obtain` to eve
             stepdrop:del    one site removed (largest saving first)
   screen    query(): the single deletions (largest first) in at most 2 d4_measure files (the incumbent the control); only the ones
             predicted to read higher are proposed, and their joint first.
-  unchecked  a proof that contains `debug.skipKernelTC` (the kskip op's closer) has NO site by default: its `decide +kernel` is
+  unchecked  a proof that contains `debug.skipKernelTC` has NO site by default: its `decide +kernel` is
             not checked by the kernel, so dropping the steps before it "succeeds" without the goal being decided (MEASURED on
             open_r2post PauliMatrix row: +12.37 row points from such a drop). Opt in: ALLOW_UNCHECKED = True.
+            2026-11-24: the kernel-skip op that wrote this closer is removed and the kernel guard (harness/kernel_guard.py) lets no
+            proof with a debug option into the step or through its gate, so this check is a second line of defence (the opt-in
+            could only propose candidates the gate rejects).
 Pure text plus the row's own environment. No row name, table or proof text."""
 from __future__ import annotations
 

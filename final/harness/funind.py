@@ -37,7 +37,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
-from scorer.forbidden import check_forbidden              
+from harness.kernel_guard import check_forbidden              
 from scorer.tokenize import count_tokens, split_declaration              
 
 FAMILY = "funind"

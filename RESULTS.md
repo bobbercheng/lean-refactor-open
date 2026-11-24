@@ -3,10 +3,24 @@
 The record behind the summary in [`README.md`](README.md): our final upload, every upload on the final benchmark, our three official
 runs and our warm-up results. The disclosures for these results are in [`DISCLOSURES.md`](DISCLOSURES.md).
 
+## Changes in this version (2026-11-24)
+
+- **Official result.** Our entry is the runner-up of the open-source track (announced by the organizers on 2026-11-23).
+- **The score below includes unverified proofs.** Four proofs of `sub43` carry `set_option debug.skipKernelTC true in`. The option
+  disables the kernel's check of the declaration, so these four are not verified proofs, and one of them is not a valid proof with
+  the check on. In the table of uploads below, `sub29` to `sub43` each carry four proofs with the option and `sub26` carries one
+  (written by the model), so their leaderboard scores include such proofs. The Arena submission itself cannot be changed.
+- **The code.** In `final/` on `main` the kernel-skip operator `kskip` is removed, and a proof that sets any `debug.*` option is
+  rejected at every stage and at export ([`final/README.md`](final/README.md), section "Changes in this version (2026-11-24)").
+  Where this page says that `final/` is the code of `sub43`, read: that code without the operator and with the guard. The unchanged
+  code of `sub43` is the tag `open-run3-post-final-sub43-20261104`. `final/post_fast/MANIFEST.json` describes the files of
+  2026-11-09; the files changed on 2026-11-24 are listed in `final/README.md`.
+
 ## Final result
 
-**Our final open-track upload is `sub43` (2026-11-04 11:25:51 UTC): leaderboard score 82.55 (L 65.60, H 82.06, Z 100), first place
-on the open-track leaderboard at the deadline (2026-11-04 11:59 UTC).**
+**Official result: runner-up of the open-source track (announced by the organizers on 2026-11-23).** Our final open-track upload is
+`sub43` (2026-11-04 11:25:51 UTC). Its leaderboard score at the deadline (2026-11-04 11:59 UTC) was 82.55 (L 65.60, H 82.06,
+Z 100). That score includes four proofs that are not kernel-checked; one of the four is not a valid proof with the kernel check on.
 
 | | |
 |---|---|
@@ -16,8 +30,10 @@ on the open-track leaderboard at the deadline (2026-11-04 11:59 UTC).**
 | Replicate | that tag's [`final/README.md`](https://github.com/bobbercheng/lean-refactor-open/blob/open-run3-post-final-sub43-20261104/final/README.md) (sections "This folder and our code zip" and "Post-step", with "Pass 6" and "Pass 7") and [`final/REPLICATE.md`](https://github.com/bobbercheng/lean-refactor-open/blob/open-run3-post-final-sub43-20261104/final/REPLICATE.md) (step by step, with our numbers) |
 
 The disclosures for this upload are in [`DISCLOSURES.md`](DISCLOSURES.md), section "The final upload": a kernel skip on 4 rows, one of
-which is not a valid proof with the kernel check on (about 0.16 of the stored mean); elaborator options on 14 rows; and a post-step
-developed on the final benchmark.
+which is not a valid proof with the kernel check on (about 0.16 of the stored mean for that one row with the option kept on all
+four; about 1.12 of the 60-row mean for the four rows against kernel-checked proofs of them, 81.44 against 82.56 on our meter, a
+variant that was never uploaded and never scored by the Arena); elaborator options on 14 rows; and a post-step developed on the
+final benchmark.
 
 All our uploads on the 60-problem final benchmark, under username `Vexorium` (the leaderboard shows a team's latest upload):
 

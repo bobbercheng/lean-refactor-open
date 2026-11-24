@@ -15,7 +15,7 @@ if str(ROOT) not in sys.path:
 from harness import funind as FI  # noqa: E402
 from harness.post import d4_kit as K  # noqa: E402
 from harness.post import d4_measure as MS  # noqa: E402
-from scorer.forbidden import check_forbidden  # noqa: E402
+from harness.kernel_guard import check_forbidden  # noqa: E402
 from scorer.tokenize import count_tokens, split_declaration  # noqa: E402
 
 FAMILY = "argon_funind"

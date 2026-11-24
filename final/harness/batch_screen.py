@@ -400,7 +400,8 @@ class BatchScreener:
     def screenable(self, text: str) -> str | None:
         """None when `text` can go into a batch, else why not (it then goes to the measurement unscreened)."""
         from scorer.compile import SORRY_SWITCH_RE
-        from scorer.forbidden import check_forbidden, strip_lean_comments
+        from harness.kernel_guard import check_forbidden
+        from scorer.forbidden import strip_lean_comments
         from scorer.tokenize import split_declaration
         body = split_declaration(text, self.statement)
         if body is None:

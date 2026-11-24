@@ -1,5 +1,25 @@
 # Replicating our open-track upload: run 3 + post-step
 
+## Changes in this version (2026-11-24)
+
+Our entry is the runner-up of the open-source track (announced by the organizers on 2026-11-23). Four proofs of our submission
+`sub43` carry `set_option debug.skipKernelTC true in`. The option disables the kernel's check of the declaration, so these four
+are not verified proofs, and one of them is not a valid proof with the check on. The Arena submission itself cannot be changed.
+
+In this version the kernel-skip operator `kskip` is removed from the post-step and from the fast post stage, and a proof that sets
+any `debug.*` option is rejected at every stage and at export (`README.md`, section "Changes in this version (2026-11-24)").
+
+This page still describes how `sub43` was made, with the earlier version of the code. For that file, use the tag
+`open-run3-post-final-sub43-20261104`. With this version the steps run as written, with these differences:
+
+- Step 3: the post-step has 40 ops, without `kskip`, so `--ops v3` runs 23 ops and `--ops v4` runs 28. The passes cannot reproduce
+  `sub43`'s lines on the four rows named in step 4, and the stored means printed on this page are those of the earlier version.
+- Step 3 on an export of the earlier version (the export of our run 3 has one line with the option, written by the model): the
+  post-step stops and names the row. Add `--debug-rows reference` to the pass 1 command to start that row from the benchmark's
+  reference proof instead. A job run with this version writes no such line.
+- Step 4: the check script now also runs the kernel guard, so it fails on a file with such a proof (on `sub43`'s file it names the
+  four rows). This version writes no such proof, so on its output `grep -c 'debug.skipKernelTC' runs/post7/upload.jsonl` prints 0.
+
 **Fast post stage.** `run.sh` in this folder now runs the fast post stage inside the job by default
 (`README.md`, first section), so no separate post-process is needed after `run.sh`: skip step 3. `runs/final/proofs.jsonl` is then the
 job's output: take its `{"name", "proof"}` lines as the upload file (section "If the job is cut short" has the command) and give that
@@ -205,7 +225,7 @@ LRA_HBTOOL_SLOTS=32 "$LRA_PYTHON" harness/open_post.py --rows "$LRA_SETUP_ROWS" 
 "$LRA_PYTHON" - "$LRA_SETUP_ROWS" runs/post7/upload.jsonl <<'PY'
 import json, sys
 sys.path.insert(0, ".")
-from scorer.forbidden import check_forbidden
+from harness.kernel_guard import check_forbidden   # the Arena's forbidden list, then the kernel guard (2026-11-24)
 from scorer.tokenize import split_declaration
 rows = [json.loads(l) for l in open(sys.argv[1]) if l.strip()]
 up = [json.loads(l) for l in open(sys.argv[2]) if l.strip()]
@@ -215,7 +235,7 @@ assert all(sorted(u) == ["name", "proof"] for u in up), "a line is not {name, pr
 bad = [r["name"] for r, u in zip(rows, up) if split_declaration(u["proof"], r["statement"]) is None]
 assert not bad, f"does not start with the row's exact statement and ':=': {bad}"
 hits = [(u["name"], check_forbidden(u["proof"])) for u in up if check_forbidden(u["proof"])]
-assert not hits, f"the package's forbidden-construct check (scorer/forbidden.py): {hits}"
+assert not hits, f"the package's forbidden-construct check (scorer/forbidden.py, then harness/kernel_guard.py): {hits}"
 print("UPLOAD FILE OK")
 PY
 grep -c 'debug.skipKernelTC' runs/post7/upload.jsonl    # rows whose proof skips the kernel check (README, "About debug.skipKernelTC")

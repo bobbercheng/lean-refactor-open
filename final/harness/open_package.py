@@ -224,7 +224,7 @@ METHOD_FLAGS_RETIRED_OFF = ("off", None)
                                                                                                                                        
                                                                                                                                         
                                                                                                                                              
-NORMALIZE_FILES = ("harness/__init__.py", "harness/normalize.py", "harness/leantools.py", "probe/verify_candidates.py", "scorer/__init__.py",
+NORMALIZE_FILES = ("harness/__init__.py", "harness/normalize.py", "harness/leantools.py", "harness/kernel_guard.py", "probe/verify_candidates.py", "scorer/__init__.py",
                    "scorer/compile.py", "scorer/forbidden.py", "scorer/memgate.py", "scorer/score.py", "scorer/tokenize.py")
 
 
@@ -2382,14 +2382,15 @@ def proof_sha(proof: str) -> str:
 
 
 def check_forbidden_ok(proof: str) -> bool:
-    from scorer.forbidden import check_forbidden
+    """The Arena's forbidden list, then the kernel guard (no `set_option debug.*`): harness/kernel_guard.check_forbidden."""
+    from harness.kernel_guard import check_forbidden
     return check_forbidden(proof) is None
 
 
 def export_candidate(row: dict, end_out: dict | None, best: dict | None) -> tuple[str, dict, str]:
     """(source, record, proof) the export picks before the normalize step: the end stage's output when it passed the forbidden-pattern
 """
-    from scorer.forbidden import check_forbidden
+    from harness.kernel_guard import check_forbidden
     cands = [("end", end_out or {}), ("agent", best or {}), ("seed", {"proof": row["src"], "score": 33.33})]
     for src, c in cands:
         proof = (c.get("proof") or "").rstrip()
@@ -2406,7 +2407,7 @@ def normalize_records(out: Path) -> dict:
 def normalized_choice(row: dict, rec: dict | None) -> str | None:
     """The normalized proof of a normalize.jsonl line when export may take it: status improved, the proof starts with the row's exact
 """
-    from scorer.forbidden import check_forbidden
+    from harness.kernel_guard import check_forbidden
     from scorer.tokenize import split_declaration
     if not rec or rec.get("status") != "improved":
         return None
@@ -2597,10 +2598,65 @@ def sorry_blind(row: dict) -> bool:
 
 
 def write_proofs(out: Path, recs: list) -> None:
-    """proofs.jsonl written whole and renamed into place: a reader (or a stop mid-write) never sees a torn file."""
+    """proofs.jsonl written whole and renamed into place: a reader (or a stop mid-write) never sees a torn file. Kernel guard
+    (harness/kernel_guard.py): a record whose proof sets a `set_option debug.*` option raises DebugOptionError with the row's name,
+    and nothing is written."""
+    from harness.kernel_guard import assert_clean
+    assert_clean(recs, f"export {out / 'proofs.jsonl'}")
     tmp = out / "proofs.jsonl.tmp"
     tmp.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in recs))
     os.replace(tmp, out / "proofs.jsonl")
+
+
+KERNEL_GUARD_RC = 4   # the driver's exit code when kernel_guard_start refuses: run.sh stops the job instead of restarting the driver
+
+
+class KernelGuardRefused(SystemExit):
+    """kernel_guard_start's refusal: logged, then exit code KERNEL_GUARD_RC."""
+
+    def __init__(self, msg: str):
+        super().__init__(KERNEL_GUARD_RC)
+        self.msg = msg
+        log("REFUSED (kernel guard): " + msg)
+
+    def __str__(self) -> str:
+        return self.msg
+
+
+def kernel_guard_start(a, names: list[str], rows: dict, out: Path) -> list[str]:
+    """Kernel guard at the start of every command (2026-11-24; harness/kernel_guard.py). A rows file whose reference proof sets a
+    `set_option debug.*` option is refused. A row whose saved best sets one (the state of a run of an earlier version) is refused
+    too, with the rows' names; with --debug-rows reference its best is set back to the row's start (the reference proof, 33.33) before
+    any stage starts: state.json is kept once as state.json.debug-rows, attempts and notes stay. Returns the rows set back. A refusal
+    is KernelGuardRefused (exit code KERNEL_GUARD_RC): nothing was changed and nothing is exported."""
+    from harness import kernel_guard as KG
+    seeds = [n for n in names if KG.debug_option(rows[n].get("src"))]
+    if seeds:
+        raise KernelGuardRefused(f"the reference proof of {len(seeds)} row(s) of {a.rows} sets a `set_option debug.*` option, which "
+                                 f"disables kernel checking; this package cannot export such a row: {', '.join(seeds)}. Leave these rows "
+                                 f"out (--problems).")
+    work = Path(out) / "work"
+    bad = [n for n in names if KG.debug_option((state_of(work, n).get("best") or {}).get("proof"))]
+    if not bad:
+        return []
+    if getattr(a, "debug_rows", "fail") != "reference":
+        raise KernelGuardRefused(f"the saved best of {len(bad)} row(s) under {work} sets a `set_option debug.*` option, which disables "
+                                 f"kernel checking and is not allowed: {', '.join(bad)}. This version does not keep such a proof. Pass "
+                                 f"--debug-rows reference (LRA_DEBUG_ROWS=reference for run.sh) to set these rows back to the "
+                                 f"benchmark's reference proof before the stage starts.")
+    for n in bad:
+        d = work / safe(n); p = d / "state.json"
+        st = json.loads(p.read_text())
+        keep = d / "state.json.debug-rows"
+        if not keep.exists():
+            keep.write_bytes(p.read_bytes())
+        st["best"] = {"score": 33.33, "proof": None, "tokens": rows[n]["proof_length"], "heartbeats": None}
+        atomic_write(p, json.dumps(st, ensure_ascii=False, indent=1))
+        for f in ("best.lean", "candidate.lean"):
+            if (d / f).exists():
+                atomic_write(d / f, (rows[n]["src"] or "").rstrip() + "\n")
+        log(f"kernel guard: {n[:60]}: the saved best set a debug option; the row starts again from the reference proof")
+    return bad
 
 
 def export(a, names: list[str], rows: dict, deadline: float | None = None) -> dict:
@@ -2838,6 +2894,11 @@ def build_parser() -> argparse.ArgumentParser:
                     help="P3: per model call, how long a refused / failed connection waits for the server without using an attempt")
     ap.add_argument("--no-audit", dest="audit", action="store_false", default=True,
                     help="section S off: no axiom audit at export (the guard env stays); default: every row's proof audited on every pin")
+    ap.add_argument("--debug-rows", choices=("fail", "reference"), default="fail",
+                    help="kernel guard (2026-11-24; harness/kernel_guard.py): no proof that sets a `set_option debug.*` option is accepted, "
+                         "kept or exported (the option disables kernel checking). When a row's saved best sets one (the state of a run of an "
+                         "earlier version): fail (default) stops at the start and names the rows; reference sets each such row back to the "
+                         "benchmark's reference proof before the stage starts")
     ap.add_argument("--schedule", choices=SCHEDULES, default=DEFAULT_SCHEDULE,
                     help="P5: agent-stage order after every row's first session: room (default: most (100 - best) / (sessions + 1) first, "
                          "x0.3 after 3 flat sessions in a row) or ladder (fewest sessions, then row order; the order before 2026-10-28)")
@@ -2865,6 +2926,7 @@ def main(argv=None) -> int:
             raise SystemExit(f"--problems: not in the rows file: {unknown}")
         names = [n for n in names if n in set(a.problems)]
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True); (out / "logs").mkdir(exist_ok=True)
+    kernel_guard_start(a, names, rows, out)
     clk_p = out / "clock.json"
     if a.started_at is None and clk_p.exists():                                           
         a.started_at = json.loads(clk_p.read_text())["started_at"]

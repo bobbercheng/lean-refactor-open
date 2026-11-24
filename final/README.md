@@ -6,6 +6,94 @@ stage (CPU only) then searches mechanical rewrites of each row's best proof, and
 proof only if it scores higher; end-stage and normalizer edits must also compile on no fewer listed toolchains than before. The output is
 one proof per row. Nothing calls a hosted model, and no stored proofs are used: everything starts from the seed proofs in your rows file.
 
+## Changes in this version (2026-11-24)
+
+**Official result.** Our entry is the runner-up of the open-source track (announced by the organizers on 2026-11-23).
+
+**Why this version exists.** `set_option debug.skipKernelTC true in` disables the kernel's check of a declaration, so a proof that
+carries it is not a verified proof. Four proofs of our competition submission `sub43` carry it, and one of the four is not a valid
+proof with the check on. The Arena submission itself cannot be changed. This version of the code no longer writes, accepts or keeps
+such a proof.
+
+**What changed.**
+
+- **The kernel-skip operator is removed.** The post-step's op `kskip` put the option in front of a closing `decide +kernel`. It is in
+  no op order, mode or flag of the post-step (`harness/open_post.py`: `--ops all`, `v1` to `v4`, any comma list) or of the fast post
+  stage (`post_fast/`), and `harness/post/kskip.py` is deleted. The post-step has 40 ops; `--ops v1` runs `implied`, `closerprep`
+  and `inlineeq`. Every other op is unchanged.
+- **One guard rejects every debug option.** `harness/kernel_guard.py` holds one predicate. It rejects a proof text that sets any
+  `debug.*` option with `set_option` (any option name, any spacing, a comment between the words, inside a chain of `set_option .. in`
+  or `open .. in` lines) or that names `skipKernelTC`. Its main rule reads one token and no comment: an option name is one
+  identifier, so the predicate rejects every text that holds the name `debug.` (or `«debug».`) at the start of an identifier,
+  wherever it stands. A proof that uses a local name `debug` with a projection (`debug.1`), or that holds `debug.` in a comment or
+  a string, is therefore rejected too; none of the 60 released reference proofs does. The predicate takes time linear in the text.
+  It does not reject elaborator options such as `smartUnfolding` or
+  `backward.isDefEq.*`: the kernel still checks the final proof term with them. `scorer/forbidden.py` stays an exact copy of the
+  Arena's forbidden list; every gate of the package now calls that list and then the guard
+  (`harness/kernel_guard.check_forbidden`), so a proof with a debug option is handled like one that fails the Arena's list.
+- **Where the guard runs.**
+  - Agent stage: the model's check tools (`lean_check`, the variant, batch and mining tools). The candidate is not compiled or
+    banked, and the model reads `forbidden construct: set_option debug.* (the option disables kernel checking and is not allowed)`.
+  - In-run end stages: the end stage, its r10 rounds and dialect pass, the normalize step, and the write-back of a polished proof
+    into a row's best.
+  - Post-step and fast post stage: every adoption (`open_post.static_ok`, which `post_fast/pf_worker.py` runs unchanged), the
+    merged candidates, and the merges into `proofs.jsonl` (`post_fast/merge_post.py`).
+  - Output: the export (`harness/open_package.py`), the interim proofs file and its promotion, the post-step's
+    `proofs.post.jsonl` and the fast stage's merged file. If a proof with a debug option reaches a writer, the writer stops, names
+    the row and writes nothing.
+- **Inputs from the earlier version.** A stage that reads a proof with a debug option does not keep it. By default it stops before
+  it changes anything and names the rows:
+  - the post-step and the fast post stage, when a line of their input file sets a debug option (the export of our run 3 has one such
+    line, written by the model);
+  - the driver (`run.sh`, `harness/open_package.py`), when the saved best of a row of a resumed run sets one: it exits with code 4
+    before any stage starts, and `run.sh` ends the job there instead of restarting the driver. (A rows file whose own reference
+    proof sets a debug option is always refused; the released rows have none.)
+
+  A resumed run can also find a `proofs.jsonl` (or `interim/proofs.jsonl`) of the earlier version in its output folder. If such a
+  file holds a proof with a debug option, `run.sh` moves it aside before the driver starts (`proofs.jsonl.debug-rows.<job start>`;
+  the rows are named in `logs/kernel_guard.log`), so the file cannot stand as the job's output when the job is cut short before its
+  own export. At its end `run.sh` checks `proofs.jsonl` once more: on such a file the job ends `FAILED (kernel guard)` with exit
+  code 4, never `DONE`; `run.sh export` does the same. The model-free end stages (`LRA_POST_ROUTE=off`, or the end pipeline) refuse
+  to resume over end-stage rows that the earlier version made, because their recorded code identity differs (it now includes the
+  guard module): use a new output folder for such a run.
+
+  With `--debug-rows reference` (`harness/open_post.py`, `post_fast/pf_drive.py`, `harness/open_package.py`) or
+  `LRA_DEBUG_ROWS=reference` in the environment (`run.sh`, `post_fast/post_stage.sh`), each such row is replaced by the benchmark's
+  reference proof (stored score 33.33) before the stage starts, and the stage then works on that. `run.sh` accepts only `fail` and
+  `reference` for `LRA_DEBUG_ROWS`; `run.sh check` reports any other value. No older proof of the row is
+  searched for. `harness/open_post.py` and `post_fast/pf_drive.py` never write their input file. Where a file or a saved state is
+  rewritten in place (`post_fast/post_stage.sh` on `proofs.jsonl`, the driver on a row's `state.json`), its earlier content is kept
+  beside it (`proofs.jsonl.debug-rows`, `state.json.debug-rows`). The same check on any proofs file:
+  ```bash
+  "$LRA_PYTHON" harness/kernel_guard.py runs/final/proofs.jsonl --rows "$LRA_SETUP_ROWS"                          # exit 2 and the rows' names, or exit 0
+  "$LRA_PYTHON" harness/kernel_guard.py runs/final/proofs.jsonl --rows "$LRA_SETUP_ROWS" --debug-rows reference   # replace them, in place
+  ```
+- **Tests.** `tests/test_kernel_guard.py` checks the predicate, the op tables and command-line choices, every gate named above,
+  the handling of old inputs and the kernel-guard lines of `run.sh`. It starts no Lean and no model: `python3 -B -m unittest
+  discover -s tests -v` from this folder.
+
+**What the rest of this file describes.** The sections below, `REPLICATE.md` and `docs/open_package_readme.md` describe the earlier
+version, the code of `sub43`: a post-step of 41 ops with `kskip` first, and no guard. That code stays at tag
+`open-run3-post-final-sub43-20261104`. Run with this version, the commands below do not reproduce `sub43`: the op does not run, and a
+proof with the option is refused. Where a section below says that a file is byte for byte the run's or the tag's, the files listed
+next are the exceptions.
+
+**Files changed on 2026-11-24.** New: `harness/kernel_guard.py`, `tests/test_kernel_guard.py`. Deleted: `harness/post/kskip.py`.
+Changed, the import of the forbidden check only (it now comes from the guard module): `harness/agent.py`, `harness/leantools.py`,
+`harness/workbench.py`, `harness/endstage.py`, `harness/endstage_r10.py`, `harness/hb_tool_eval.py`, `harness/hb_tool_candidates.py`,
+`harness/batch_screen.py`, `harness/funind.py`, `harness/post/argon_calcstep.py`, `harness/post/argon_funind.py`,
+`harness/post/argon_haveopt.py`, `harness/post/argon_hbsimp.py`; in `harness/endstage.py` and `harness/endstage_r10.py` the guard
+module is also in the list of files that make the end stage's recorded code identity. Changed, comments only: `harness/post/opus_stepdrop.py`,
+`harness/post/opus_screen.py`, `harness/post/opus_bulletflat.py` (their own check that a proof with a kernel-unchecked closer has no
+site stays, as a second line of defence). Changed in code: `harness/open_post.py` (the op removed, the guard in the gate, the input
+check, `--debug-rows`), `harness/open_package.py` (the guard in the export's picks and writer, the check at the start,
+`--debug-rows`), `post_fast/pf_worker.py` and `post_fast/pf_drive.py` (the op removed; the input check and `--debug-rows`),
+`post_fast/merge_post.py`, `post_fast/post_stage.sh`, `infra/orgserver/orgtools.py` (the promotion of the interim file) and `run.sh`
+(`LRA_DEBUG_ROWS` and its check, the stop on the driver's refusal, the move of an earlier version's proofs file out of the way, the
+check before `DONE`). The model, its prompts, the serving setup, the schedule and every other op are unchanged. `EXPORT.json` and
+`post_fast/MANIFEST.json` are unchanged and describe the earlier files: the files listed here no longer match the sha256 values
+those two manifests give for them.
+
 ## The fast post stage in `run.sh`
 
 `run.sh` now runs our fast post stage inside the job by default, in place of the end stage, the dialect step and normalize. The stage
@@ -342,8 +430,9 @@ a command of its own that runs after `bash run.sh` has ended; `run.sh` does not 
 that small changes after a run need no rerun as long as the README documents how to run the system, which this section does. The
 step's 41 ops propose rewrites of a row's proof, and every candidate is measured like an end-stage candidate:
 
-- `kskip`: when the proof's last tactic is `decide +kernel`, `set_option debug.skipKernelTC true in` goes in front of it, in place
-  (`kskip:inplace`), or the body becomes `unfold P` and that line, P the head predicate of the statement (`kskip:unfold`).
+- `kskip` (earlier version; removed on 2026-11-24, so this version's step has 40 ops): when the proof's last tactic was `decide
+  +kernel`, `set_option debug.skipKernelTC true in` went in front of it, in place (`kskip:inplace`), or the body became `unfold P`
+  and that line, P the head predicate of the statement (`kskip:unfold`).
 - `implied` (our closed track's end-stage rule D4 R1, with D4P's point-free spellings): a `decide`-family closer decides the
   hypothesis Q of a library theorem `Q -> P` (or `P <-> Q`) that a query of the row's environment finds, instead of the goal P.
 - `closerprep` (D4C): `conv_rhs => reduce` (or lhs / both) before a `decide`-family closer, alone and together with a minimal drop of
@@ -502,7 +591,8 @@ current proof's better one and a strictly higher score; its rounded score is abo
 audit (`harness/open_package.audit_proof`: `#print axioms` with `warn.sorry` forced on) reads it clean. Anything else, an exception or
 a timeout included, leaves the row's current proof as it is; a budget stop (the row's compiles or wall, the step's wall) keeps the
 last proof the row has confirmed through this whole gate, or its line byte for byte when there is none. A row where no op has a site
-is not compiled. Per row: at most 3 passes over the ops (in the order kskip, implied, closerprep, inlineeq, hintgrind, projpath,
+is not compiled. Per row: at most 3 passes over the ops (in the order kskip (earlier version; removed on 2026-11-24, with the
+first of the reading limits below), implied, closerprep, inlineeq, hintgrind, projpath,
 lexsurf, jointres, t4ind, ctorsearch, argon_funind, argon_hbelab, argon_hpcert, sonnet_listdrop, sonnet_lintdrop, opus_hoist,
 opus_stepdrop, opus_rundrop, opus_scaffold, opus_armfold, opus_goalmerge, opus_patfuse, sonnet_surface, sol_harvest, v4_unhyg,
 hb_hotctl, v4_patelide, v4_rescreen, hb_hotelab, argon_calcstep, sonnet_argdrop, argon_haveopt, opus_bulletflat, argon_bindelide,
@@ -519,14 +609,14 @@ by default; a final long pass for rows whose compiles are slow) the gate above b
 default wall 5,400 s (an explicit `--row-seconds` wins) and the pass's wall `--long-seconds` (default 7,200 s; `--seconds` is refused
 with `--long`); the ops, their order and readings, the passes, the compile budget, the read cut and the gate are unchanged.
 
-**About `debug.skipKernelTC`.** The option makes Lean skip the kernel's check of the declaration, so the decision that `decide
+**About `debug.skipKernelTC`.** (This paragraph and the next describe the earlier version and our upload. The op `kskip` was removed
+on 2026-11-24, and this version rejects every proof with the option: section "Changes in this version (2026-11-24)".) The option makes
+Lean skip the kernel's check of the declaration, so the decision that `decide
 +kernel` leaves to the kernel is not checked: with the option, a false decidable proposition is accepted too (our test with Lean
 v4.32.0, v4.34.1 and v4.35.0-rc3: `2 + 2 = 5` by `decide +kernel` fails; with the option it compiles and `#print axioms` lists no
-axiom, so the audit above cannot tell). The option is neither on the Arena's forbidden list (the Space's list as of 2026-10-28) nor in
-`scorer/forbidden.py`, and the Arena compiled and graded the kernel-skipped rows of our uploads (open and closed tracks, 2026-11-03).
-The step adds the option only in front of a closing `decide +kernel` that the input proof already has, so each statement it
-kernel-skips also has a kernel-checked proof in the run's own output: its line in `runs/final/proofs.jsonl`, which compiles on every
-listed toolchain. Run 3's own output can hold proofs with the option too: our probe export of it on 2026-11-03 (~05:50 UTC) held one,
+axiom, so the audit above cannot tell).
+The step added the option only in front of a closing `decide +kernel` that the input proof already had. Run 3's own output can hold
+proofs with the option too: our probe export of it on 2026-11-03 (~05:50 UTC) held one,
 `FTheory.SU5.ChargeSpectrum.isPhenoClosedQ10_viableCharges` (`unfold` + the option before `decide +kernel`), written by the run's own
 model in one of its sessions. The step adds no second option to such a line (its `kskip` op has no site there); its other ops can
 still rewrite the rest of that proof through the same gate (on run 2's export, a second pass's `jointres` rewrote a row whose option
@@ -538,9 +628,9 @@ twice) the second pass's `sonnet_listdrop` deleted `apply GaussianInt.toComplex_
 goal; +0.37 row points); the same row of run 2 + the previous version of this step fails it too (an `inlineeq` rewrite). The other
 rows with the option passed the re-check in every file we checked. The option itself is worth about +0.85 on the 60-row mean on that
 snapshot (FTheory Q5 and Q10 about +22 points each, the two PauliMatrix rows about +3 each, against their best fully kernel-checked
-proofs). The run's own Q10 line has no kernel-checked twin in the output (its kernel-checked alternative in the run scored 43.34). We
-knowingly keep these proofs as the step produces them (no guard, no re-check in the step) and disclose them here and in our report
-(decision of 2026-11-04).
+proofs). The run's own Q10 line has no kernel-checked twin in the output (its kernel-checked alternative in the run scored 43.34).
+The earlier version kept these proofs as the step produced them, with no guard and no re-check (decision of 2026-11-04). This version
+rejects them (section "Changes in this version (2026-11-24)").
 
 **One kernel-skipped proof of our upload fails the kernel check.** We re-checked every distinct kernel-skipped proof of our five
 passes with its closer `set_option debug.skipKernelTC true in decide +kernel` replaced by a plain `decide +kernel`, on the row's
@@ -550,7 +640,9 @@ broke it were made after the option was in place (paragraph above), by the step'
 `jointres:joint` (77.40, which fails the re-check too); pass 4: `sonnet_listdrop:verified`, `jointres:joint`, `jointres:joint` (85.14,
 which fails the re-check too); pass 5: `sonnet_listdrop:verified` (86.19). The row's last kernel-valid form is the one of passes 1 and
 2 (76.68), which passes the re-check. With the last kernel-valid form in place of the uploaded line, the 60-row stored mean would be
-0.159 lower (82.3155 instead of 82.4740). The other three kernel-skipped lines of our upload pass the re-check:
+0.159 lower (82.3155 instead of 82.4740); that figure keeps the option on all four lines. Against a variant of the upload in which
+all four rows carry kernel-checked proofs, the 60-row mean is about 1.12 lower (81.44 against 82.56 on our meter; that variant was
+never uploaded, so the Arena never scored it). The other three kernel-skipped lines of our upload pass the re-check:
 `FTheory.SU5.ChargeSpectrum.isPhenoClosedQ5_viableCharges` (72.18), `FTheory.SU5.ChargeSpectrum.isPhenoClosedQ10_viableCharges`
 (72.19, the run's own line) and `PauliMatrix.pauliContrDown_mul_pauliContr_mul_pauliContrDown` (80.57). The step itself does not
 re-check with the kernel. We keep our upload as the step produced it and disclose this row here and in our report (decision of
@@ -674,7 +766,8 @@ LRA_HBTOOL_SLOTS=32 "$LRA_PYTHON" harness/open_post.py --rows "$LRA_SETUP_ROWS" 
   environments' `LRAScratch/` directories, as the job's own compiles do; its compile-slot and memory-gate locks go to the node-local
   directory that `run.sh` also picks (the `FAST=` line). `--problems NAME ...` restricts it to some rows (a smoke test). `--ops`
   chooses the ops: `all` (the default: every op of `harness/open_post.ORDER`, the fourth and fifth versions' included), `v1` (the
-  first version's 4 ops: kskip, implied, closerprep, inlineeq), `v2` (those and the second version's 6 ops: hintgrind, projpath,
+  first version's 4 ops: kskip, implied, closerprep, inlineeq; `kskip` is the earlier version's and was removed on 2026-11-24, so
+  `v1` now runs 3 ops and every larger choice one op fewer), `v2` (those and the second version's 6 ops: hintgrind, projpath,
   lexsurf, jointres, t4ind, ctorsearch), `v3` (those and the third version's 14 ops, argon_funind to sol_harvest: the step's third
   version), `v4` (those and the fourth version's 5 ops, v4_unhyg to hb_hotelab: the step's fourth version) or a comma-separated
   subset. `ulimit -n 65536` raises the shell's open-file limit for the step: 41 ops on every row at once hold more files open than the

@@ -12,7 +12,8 @@ next arm, goal-order sensitive tactics).
             bulletflat:last   the LAST arm of a group only (it focuses the only remaining goal of the group)
   screen    query(): through harness/post/opus_screen.py (measured, else plain) when there are >= 2 candidates; only the predicted-up
             ones are proposed, best first.
-  unchecked a proof with a kernel-unchecked closer (kskip's `debug.skipKernelTC`) has no site.
+  unchecked a proof with a kernel-unchecked closer (`debug.skipKernelTC`) has no site (second line of defence: the kernel guard,
+            harness/kernel_guard.py, lets no such proof in).
 Pure text plus the row's own environment. No row name, table or proof text."""
 
 # provenance: research lane gaplane-opus (worktree lra-gl-opus), commit 2822f68, ported into open-post-v5-lanes (2026-11-04) unchanged

@@ -604,8 +604,9 @@ class SpecBudget:
 
 
 def op_tasks(proof, statement, run, versions, exchange, compile_s, say, inc_hb, row_ctx):
-    """open_post.generate's per-op calls, one callable per op (implied + kskip together), in ORDER, with its lane-reserve rule."""
-    I, Q, CP, MS, KS = P._mods()
+    """open_post.generate's per-op calls, one callable per op, in ORDER, with its lane-reserve rule (2026-11-24: the kernel-skip op
+    `kskip` is removed from open_post and from here)."""
+    I, Q, CP, MS = P._mods()
     from scorer.tokenize import split_declaration
     body = split_declaration(proof, statement)
     order = P.ORDER
@@ -937,24 +938,21 @@ class _NextBudget:
 
 def sn_parts(order, proof, statement, run, versions, exchange, compile_s, inc_hb, row_ctx, reserve_fn) -> list:
     """open_post.generate (a25416f5) split into parts that can run in parallel: [(name, fn -> {op: candidates})], the ops of `order`
-    only, each op's calls and candidate post-processing exactly as generate() makes them (implied + kskip together: kskip reads
-    implied's query), the lane reserve rule evaluated now (generate() evaluates it when the op's turn comes)."""
-    I, Q, CP, MS, KS = P._mods()
+    only, each op's calls and candidate post-processing exactly as generate() makes them, the lane reserve rule evaluated now
+    (generate() evaluates it when the op's turn comes). 2026-11-24: the kernel-skip op `kskip`, which ran in implied's part, is removed."""
+    I, Q, CP, MS = P._mods()
     from scorer.tokenize import split_declaration
     body = split_declaration(proof, statement)
     say = (lambda *a: None)
     parts = []
-    if "implied" in order or "kskip" in order:
-        def f_ik():
-            out, ctx = {}, {}
-            if "implied" in order and I.query_text(proof, statement) is not None:
+    if "implied" in order:
+        def f_i():
+            out = {}
+            if I.query_text(proof, statement) is not None:
                 got = I.query(proof, statement, run, versions=versions, stats={}, log=say) or {}
-                ctx.update(got)
                 out["implied"] = I.candidates(proof, statement, ctx=dict(got, opt_in=list(P.IMPLIED_OPT_IN)))
-            if "kskip" in order:
-                out["kskip"] = KS.candidates(proof, statement, ctx=ctx)
             return out
-        parts.append(("implied+kskip", f_ik))
+        parts.append(("implied", f_i))
     if "closerprep" in order and body is not None and CP.closer_sites(body) and MS.renamed(statement, 0) is not None:
         def f_cp():
             cctx = {"compile_s": compile_s, "exchange": exchange}

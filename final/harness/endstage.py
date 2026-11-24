@@ -124,7 +124,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from scorer.accept import HB_EPS, decide, exact_score              
-from scorer.forbidden import check_forbidden              
+from harness.kernel_guard import check_forbidden              
 from scorer.score import compat_pct, hb_pct_local, len_pct              
 from scorer.tokenize import count_tokens, split_declaration              
 from probe.verify_candidates import newest_first              
@@ -1747,7 +1747,7 @@ def read_pool(files) -> list[dict]:
 
 CODE_FILES = ("harness/endstage.py", "harness/sweep.py", "harness/hb_rewrite.py", "harness/lint_delete.py", "harness/normalize.py",
               "harness/hb_polish.py", "harness/gap_rules.py", "harness/batch_screen.py", "harness/hb_tool_eval.py", "harness/tools/*.py",
-              "harness/tools/tables/*.json", "scorer/*.py", "harness/census.py", "harness/open_config.py", "probe/open_rederive/opentables.py",
+              "harness/tools/tables/*.json", "scorer/*.py", "harness/kernel_guard.py", "harness/census.py", "harness/open_config.py", "probe/open_rederive/opentables.py",
               "probe/open_rederive/ops.py", "probe/open_rederive/tables/*.json")
 
 

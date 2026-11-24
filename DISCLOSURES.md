@@ -3,6 +3,22 @@
 What our open-track results rest on and what this public repository leaves out. The results themselves are in
 [`RESULTS.md`](RESULTS.md); the package and its settings in [`final/README.md`](final/README.md).
 
+## Changes in this version (2026-11-24)
+
+- **Official result.** Our entry is the runner-up of the open-source track (announced by the organizers on 2026-11-23).
+- **Four submitted proofs are not verified proofs.** Four proofs of our final upload `sub43` carry `set_option debug.skipKernelTC
+  true in`. The option disables the kernel's check of the declaration, so a proof that carries it is not a verified proof. One of
+  the four is not a valid proof with the check on. Our leaderboard score of 82.55 includes these four proofs. The Arena submission
+  itself cannot be changed.
+- **The operator is removed and the option is rejected.** In `final/` on `main`, the post-step's kernel-skip operator `kskip` is
+  removed from the post-step and from the fast post stage. A proof that sets any `debug.*` option is rejected at every stage (the
+  model's check tools, the end stages, every adoption of the post-step and of the fast post stage, the merges) and at export, by
+  one guard, `final/harness/kernel_guard.py`. A stage that reads such a proof from an earlier export or run stops and names the
+  problems, or replaces each of them by the benchmark's reference proof when asked to. Details:
+  [`final/README.md`](final/README.md), section "Changes in this version (2026-11-24)".
+- **The sections below** describe the final upload and the earlier version of the code (tag
+  `open-run3-post-final-sub43-20261104`).
+
 ## The final upload (`sub43`)
 
 Details are in `final/README.md` of the tag [`open-run3-post-final-sub43-20261104`](https://github.com/bobbercheng/lean-refactor-open/blob/open-run3-post-final-sub43-20261104/final/README.md), section "Post-step".
@@ -10,10 +26,12 @@ Details are in `final/README.md` of the tag [`open-run3-post-final-sub43-2026110
 - **Kernel skip on 4 rows.** Four lines carry `set_option debug.skipKernelTC true in` in front of a closing `decide +kernel`
   (FTheory `isPhenoClosedQ5_viableCharges` and `isPhenoClosedQ10_viableCharges`, and two PauliMatrix rows). The Q10 line was written
   by the run's own model; the post-step's `kskip` op added the other three. The option makes Lean skip the kernel's check of the
-  declaration. It is not on the Arena's forbidden list, and the Arena graded these rows. One of the four,
+  declaration, so these four lines are not verified proofs. One of the four,
   `PauliMatrix.pauliContr_mul_pauliContrDown_mul_pauliContr`, is **not** a valid proof with the kernel check on: post-step edits made
-  after the option was in place broke it. With its last kernel-valid form, the 60-row stored mean would be about 0.16 lower. The
-  other three pass a re-check with a plain `decide +kernel`. We kept these lines knowingly and disclose them.
+  after the option was in place broke it. With its last kernel-valid form, the 60-row stored mean would be about 0.16 lower; that
+  figure keeps the option on all four lines. Against a variant of the upload in which all four rows carry kernel-checked proofs, the
+  60-row mean is about 1.12 lower (81.44 against 82.56 on our meter; that variant was never uploaded, so the Arena never scored
+  it). The other three pass a re-check with a plain `decide +kernel`. We knew this before the deadline and submitted the file.
 - **Elaborator options on 14 rows.** The op `hb_smartunfold` adds `set_option smartUnfolding false in` and `backward.isDefEq.*`
   options where they save heartbeats. These options are sound: the kernel still checks the final proof term.
 - **The post-step was developed on the final benchmark** after its release. Most of its ops came from agent sessions of closed

@@ -20,6 +20,10 @@ recorded); summary.json and the merged proofs.post.jsonl are written as usual. A
 stopped counts as completed. Note: snapshot.py reads adoptions from the logs, so a capped pass's logged adoptions count there (a
 deadline stop at the cap keeps them); the merged output here keeps only completed passes. A stopped worker's compiles already running
 in pf_svc run on until run_full.sh stops the service, which then kills them (pf_svc's termination handler).
+KERNEL GUARD (2026-11-24; harness/kernel_guard.py): the kernel-skip op `kskip` is gone from every pass kind (open_post.py). An input
+row whose proof sets a `set_option debug.*` option is never kept: --debug-rows fail (default) exits 2 before any worker starts and
+names the rows; --debug-rows reference replaces each such row by the benchmark's reference proof (stored 33.33) before pass 1. The
+merged output is checked once more before it is written.
 """
 from __future__ import annotations
 
@@ -50,6 +54,10 @@ ap.add_argument("--cap-grace", type=float, default=30.0, help="--cap: seconds be
 ap.add_argument("--next-ops", action="store_true",
                 help="(POST-HOC v7/specnext) give each worker PF_NEXT_OPS=<kind>:<row_s>:<s> of the row's next pass (pf_worker (6) cross "
                      "branches); default off (no such variable)")
+ap.add_argument("--debug-rows", choices=("fail", "reference"), default="fail",
+                help="kernel guard (2026-11-24; harness/kernel_guard.py): an input row whose proof sets a `set_option debug.*` option "
+                     "(it disables kernel checking) is never kept. fail (default): exit 2 before any worker starts and name the rows; "
+                     "reference: replace each such row by the benchmark's reference proof before the first pass")
 a = ap.parse_args()
 for _k in ("code", "rows", "heartbeats", "input", "out", "sock", "worker", "weights"):   # workers run with cwd = --code
     if getattr(a, _k):
@@ -92,7 +100,26 @@ def same_cfg(prev, nxt) -> bool:
     return prev["kind"] == nxt["kind"] and nxt["row_seconds"] == prev["row_seconds"] and nxt["seconds"] == prev["seconds"]
 
 
-recs = [json.loads(l) for l in Path(a.input).read_text().splitlines() if l.strip()]
+INPUT_SHA = hashlib.sha256(Path(a.input).read_bytes()).hexdigest()
+raw = [l for l in Path(a.input).read_text().splitlines() if l.strip()]
+recs = [json.loads(l) for l in raw]
+# kernel guard (2026-11-24): no input proof that sets a debug option is kept. fail: stop here, naming the rows; reference: those rows
+# start from the benchmark's reference proof (the workers then read <out>/input.kernel-guard.jsonl: every other line byte for byte)
+sys.path.insert(0, a.code)
+from harness import kernel_guard as KG   # noqa: E402
+try:
+    recs, _rep = KG.check_input(recs, {r["name"]: r for r in KG.read_jsonl(a.rows)}, a.debug_rows, f"fast post stage input {a.input}")
+except KG.DebugOptionError as e:
+    log(f"REFUSED (kernel guard): {e}")
+    print(f"[pf_drive] REFUSED (kernel guard): {e}", file=sys.stderr, flush=True)
+    sys.exit(2)
+REPLACED = [recs[k]["name"] for k in _rep]
+if _rep:
+    for k in _rep:
+        raw[k] = json.dumps(recs[k], ensure_ascii=False)
+    (OUT / "input.kernel-guard.jsonl").write_text("".join(l + "\n" for l in raw))
+    a.input = str(OUT / "input.kernel-guard.jsonl")
+    log(f"kernel guard: {len(REPLACED)} input row(s) set a debug option and start from the reference proof: {REPLACED}")
 weights = json.loads(Path(a.weights).read_text()) if a.weights else {}
 want = set(a.problems) if a.problems else None
 PL = threading.Lock()
@@ -219,14 +246,22 @@ with ThreadPoolExecutor(len(recs)) as ex:
     list(ex.map(run_row, order))
 stop.set()
 lines = [json.dumps(final[k], ensure_ascii=False) for k in range(len(recs))]
+try:   # kernel guard: the merged output is checked once more before it is written
+    KG.assert_clean([final[k] for k in range(len(recs))], f"fast post stage output {OUT / 'proofs.post.jsonl'}")
+except KG.DebugOptionError as e:
+    log(f"REFUSED (kernel guard): {e}")
+    print(f"[pf_drive] REFUSED (kernel guard): {e}", file=sys.stderr, flush=True)
+    sys.exit(2)
 (OUT / "proofs.post.jsonl").write_text("".join(l + "\n" for l in lines))
 before = [float(r["stored_score"]) for r in recs if isinstance(r.get("stored_score"), (int, float))]
 after = [float(final[k]["stored_score"]) for k in range(len(recs)) if isinstance(final[k].get("stored_score"), (int, float))]
 summ = {"wall_seconds": round(time.time() - T0, 1), "rows": len(recs), "stored_mean_before": round(statistics.mean(before), 4),
         "stored_mean_after": round(statistics.mean(after), 4), "passes": a.passes, "skip_no_site": a.skip_no_site, "wall": a.wall,
         "output_sha256": hashlib.sha256((OUT / "proofs.post.jsonl").read_bytes()).hexdigest(),
-        "input_sha256": hashlib.sha256(Path(a.input).read_bytes()).hexdigest(),
+        "input_sha256": INPUT_SHA,   # the file given as --input, as it was read
         "statuses": {}, "pass_ends": {}}
+if REPLACED:
+    summ["debug_rows_replaced"] = REPLACED   # kernel guard, --debug-rows reference: stored_mean_before counts them at 33.33
 for ev in timeline:
     summ["statuses"][ev["status"]] = summ["statuses"].get(ev["status"], 0) + 1
     summ["pass_ends"][str(ev["pass_"])] = max(summ["pass_ends"].get(str(ev["pass_"]), 0), ev["t_end"])

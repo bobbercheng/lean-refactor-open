@@ -7,11 +7,14 @@ compiles on every listed toolchain.
 
 One open-weight model writes every proof: GLM-5.3-Flash (AWQ W4A16), served with vLLM on 4 x A100 80 GB. It runs many short, resumed,
 tool-using sessions per problem. Model-free CPU stages then search mechanical rewrites of each problem's best proof. Every replacement
-passes one gate: the exact statement, no forbidden pattern, no `sorry`, a compile on no fewer listed toolchains than the current proof,
-and a higher score on our meter. No hosted model is called during a run, and no model was trained or fine-tuned.
+passes one gate: the exact statement, no forbidden pattern, no `set_option debug.*` option, no `sorry`, a compile on no fewer listed
+toolchains than the current proof, and a higher score on our meter. No hosted model is called during a run, and no model was trained
+or fine-tuned.
 
-**Final result:** upload `sub43`, leaderboard score **82.55** (L 65.60, H 82.06, Z 100), first place on the open-track leaderboard at
-the deadline (2026-11-04 11:59 UTC).
+**Official result:** runner-up of the open-source track (announced by the organizers on 2026-11-23). Our final upload `sub43`
+scored **82.55** (L 65.60, H 82.06, Z 100) on the open-track leaderboard at the deadline (2026-11-04 11:59 UTC). That score includes
+four proofs that are not kernel-checked, and one of the four is not a valid proof with the kernel check on (section "Changes in this
+version (2026-11-24)" below).
 
 ![Figure 1: the submitted pipeline](docs/figure1.png)
 
@@ -22,6 +25,30 @@ current bests in the run's trace, polished bests included. Flat: last 3 sessions
 - **Code of the final upload:** tag
   [`open-run3-post-final-sub43-20261104`](https://github.com/bobbercheng/lean-refactor-open/tree/open-run3-post-final-sub43-20261104).
 - **Results, all uploads and our official runs:** [`RESULTS.md`](RESULTS.md). **Disclosures:** [`DISCLOSURES.md`](DISCLOSURES.md).
+
+## Changes in this version (2026-11-24)
+
+- **The kernel-skip operator is removed.** The post-step's op `kskip` put `set_option debug.skipKernelTC true in` in front of a
+  closing `decide +kernel`. It is gone from the post-step and from the fast post stage: no op order, mode or flag runs it.
+- **Proofs that set a debug option are rejected at every stage and at export.** One guard, `final/harness/kernel_guard.py`, rejects
+  any proof text with a `set_option debug.*` option. It runs wherever a proof can become a problem's best or be written out: the
+  model's check tools in the agent stage (the candidate is refused, and the model reads that the option disables kernel checking and
+  is not allowed), the model-free end stages and their write-back, every adoption of the post-step and of the fast post stage, the
+  merges, and the export. The export stops and names the problem if such a proof reaches it. Elaborator options such as
+  `smartUnfolding` and `backward.isDefEq.*` are not affected: the kernel still checks the proof with them.
+- **Inputs from the earlier version.** A stage that reads a proof with a debug option (an earlier export, or the saved state of an
+  earlier run) stops and names the problems. `LRA_DEBUG_ROWS=reference` replaces each such proof by the benchmark's reference proof
+  before the stage starts.
+- **Why.** The option disables the kernel's check of the declaration, so a proof that carries it is not a verified proof. Four
+  proofs of our competition submission `sub43` carry it, and one of the four is not a valid proof with the check on. The Arena
+  submission itself cannot be changed.
+- **What describes the earlier version.** The tag `open-run3-post-final-sub43-20261104` stays the code of `sub43`. The text about
+  how `sub43` was made ([`RESULTS.md`](RESULTS.md), [`DISCLOSURES.md`](DISCLOSURES.md), the section "Post-step" of
+  [`final/README.md`](final/README.md), [`final/REPLICATE.md`](final/REPLICATE.md)) describes that version; with this version's
+  code those commands do not reproduce `sub43`.
+
+The details, the files changed and the tests are in [`final/README.md`](final/README.md), section "Changes in this version
+(2026-11-24)".
 
 ## Run it on the full benchmark (60 problems)
 
@@ -56,7 +83,7 @@ LRA_EXTRA="--automation-card on --automation-card-min-ref-tokens 1000" bash run.
 
 - **The fast post stage.** On `main`, `run.sh` runs our fast post stage inside the job by default, in place of the end stage, so
   `runs/final/proofs.jsonl` is already the post-processed output. No 48 h job has run this route yet. `LRA_POST_ROUTE=off` in front of
-  the `run.sh` command runs the job as at the final upload's tag.
+  the `run.sh` command runs the job as at the final upload's tag, with the kernel guard of 2026-11-24 (section above).
 - **Cost.** Node time only: setup plus the 48 h job. Our run 3 used an on-demand 4 x A100 80 GB SXM4 box at $4.504 per hour, so the job
   was about $216 of node time.
 - **To replicate `sub43` itself.** Use the tag `open-run3-post-final-sub43-20261104`: the same setup and job, then seven passes of the

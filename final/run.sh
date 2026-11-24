@@ -20,7 +20,13 @@
 # own, unless the allocation is smaller than the node), LRA_EXTRA (more open_package.py flags), LRA_BASE_URL (an already running
 # OpenAI-compatible server: no server is started), LRA_FAST_DIR, LRA_VLLM_PORT, LRA_SERVER_WAIT_S, LRA_SNAPSHOT_S, LRA_DRY=1 (print the
 # commands, start nothing).
-# LRA_POST_ROUTE=off: no fast post stage, the job as it was at tag open-run3-post-final-sub43-20261104.
+# LRA_POST_ROUTE=off: no fast post stage, the job as it was at tag open-run3-post-final-sub43-20261104 (with the kernel guard below).
+# Kernel guard (2026-11-24; harness/kernel_guard.py): no proof that sets a `set_option debug.*` option is accepted, kept or written.
+# LRA_DEBUG_ROWS=reference: when a resumed run's saved state (or the post stage's input) holds such a proof, the row is set back to the
+# benchmark's reference proof before the stage starts; without it the driver and the post stage stop and name the rows.
+# A proofs.jsonl (or interim/proofs.jsonl) that a run of an earlier version left in a resumed OUT and that holds such a proof is moved
+# aside (<file>.debug-rows.<job start>) before the driver starts, so it never stands as this job's output; and the job (and `run.sh
+# export`) ends FAILED with exit code 4, not DONE, if OUT/proofs.jsonl holds such a proof at the end. The rows: logs/kernel_guard.log.
 set -u
 T_START=$(date +%s)   # first: the job clock never starts later than this line
 [ "${BASH_VERSINFO[0]:-0}" -ge 4 ] || { echo "run.sh needs bash 4 or newer (this is ${BASH_VERSION:-not bash})" >&2; exit 2; }
@@ -117,6 +123,7 @@ W=${LRA_WORKERS:-$WORKERS}; S=${LRA_COMPILE_SLOTS:-$SLOTS}
 [ -n "$W" ] && SIZING+=(--workers "$W")
 [ -n "$S" ] && SIZING+=(--compile-slots "$S")
 lra_log "preflight: $CPUS CPU(s) usable of $NODE_CPUS, ${MEM_AVAIL_GB} GB available${CGROUP_LIMIT_GB:+, cgroup limit ${CGROUP_LIMIT_GB} GB}; locks in $FAST; ${SIZING[*]:-package default sizing (11 workers, auto compile slots)}"
+case "${LRA_DEBUG_ROWS:-fail}" in fail|reference) ;; *) fail "LRA_DEBUG_ROWS must be fail or reference (got '$LRA_DEBUG_ROWS')";; esac
 if [ "$MODE" = check ]; then
   [ -z "$FAILS" ] || lra_die "run.sh check: ${FAILS#; }"
   lra_log "CHECK OK"; exit 0
@@ -125,10 +132,17 @@ EXTRA=()
 # shellcheck disable=SC2206
 [ -n "${LRA_EXTRA:-}" ] && EXTRA=(${LRA_EXTRA})
 [ "${LRA_POST_ROUTE:-fast}" = off ] || EXTRA+=(--no-end-stages)   # the end stages give way to the fast post stage
+[ -z "${LRA_DEBUG_ROWS:-}" ] || EXTRA+=(--debug-rows "$LRA_DEBUG_ROWS")   # kernel guard: fail (default) | reference
+# kernel guard on one proofs file, which it only reads: 0 = no line sets a debug option; 2 = some do (their names go to the log)
+kg_file() { "$PY" harness/kernel_guard.py "$1" --rows "$ROWS" >> "$LOGD/kernel_guard.log" 2>&1; }
 if [ "$MODE" = export ]; then
   run "$PY" harness/open_package.py export --rows "$ROWS" --heartbeats "$HBS" --out "$OUT" ${SIZING[@]+"${SIZING[@]}"} ${EXTRA[@]+"${EXTRA[@]}"}
   RC=$?
   [ "${LRA_POST_ROUTE:-fast}" = off ] || [ ! -f "$OUT/proofs.merged.jsonl" ] || run "$PY" post_fast/merge_post.py "$OUT/proofs.merged.jsonl" "$ROWS" "$OUT/proofs.jsonl"   # the export wrote the picks: the saved gains return
+  if [ "$DRY" != 1 ] && [ -f "$OUT/proofs.jsonl" ]; then   # kernel guard: a file of an earlier version that this export did not replace
+    kg_file "$OUT/proofs.jsonl"
+    [ $? != 2 ] || { lra_log "FAILED (kernel guard): $OUT/proofs.jsonl holds a proof with a debug option, which disables kernel checking and is not allowed (rows in $LOGD/kernel_guard.log). The export did not replace this file; it is not this version's output"; RC=4; }
+  fi
   exit "$RC"
 fi
 
@@ -188,6 +202,15 @@ CMD=("$PY" harness/open_package.py run --rows "$ROWS" --heartbeats "$HBS" --out 
      --started-at "$START" --job-seconds "$JOB" ${SIZING[@]+"${SIZING[@]}"} ${EXTRA[@]+"${EXTRA[@]}"})
 if [ "$DRY" = 1 ]; then run "${CMD[@]}"; exit 0; fi   # a dry run writes nothing into OUT (it may be another run's)
 printf '%q ' "${CMD[@]}" > "$OUT/RUN_CMD"; echo >> "$OUT/RUN_CMD"
+# kernel guard: a proofs file that a run of an earlier version left in OUT (a resumed job) and that holds a proof with a debug option is
+# moved aside before the driver starts. Without this, a job that does not reach its own export would end with that file as its output
+# (the promotion of the interim file never replaces an existing proofs.jsonl).
+for f in "$OUT/proofs.jsonl" "$OUT/interim/proofs.jsonl"; do
+  [ -f "$f" ] || continue
+  kg_file "$f"; [ $? = 2 ] || continue
+  mv "$f" "$f.debug-rows.$START" || { stop_all; lra_die "kernel guard: $f holds a proof with a debug option and cannot be moved aside"; }
+  lra_log "kernel guard: $f held a proof with a debug option (a file of an earlier version; rows in $LOGD/kernel_guard.log): moved to $f.debug-rows.$START"
+done
 ( while sleep "${LRA_SNAPSHOT_S:-3600}"; do snapshot; done ) &
 SNAP=$!
 lra_log "driver: $(cat "$OUT/RUN_CMD")"
@@ -199,6 +222,10 @@ while :; do
   while kill -0 "$DRIVER" 2> /dev/null; do wait "$DRIVER"; RC=$?; done   # a USR1 trap interrupts wait: wait again
   DRIVER=""
   lra_log "driver exited (rc $RC)"
+  if [ "$RC" = 4 ]; then   # kernel guard: the driver refused the saved state (or the rows file) at its start; no stage ran, nothing is exported
+    stop_all
+    lra_die "the driver refused to start (kernel guard): see the REFUSED line in $OUT/driver.log. LRA_DEBUG_ROWS=reference sets a row whose saved best sets a debug option back to the reference proof"
+  fi
   LEFT=$((JOB_END - $(date +%s)))
   # a driver that failed with time left is restarted on the same clock (it resumes every row from its saved state), after every process
   # of the failed one is gone (no row ever has two sessions in flight); at most LRA_DRIVER_RESTARTS (3), never in the last 20 min
@@ -221,7 +248,10 @@ if [ "${LRA_POST_ROUTE:-fast}" != off ] && [ -f "$OUT/proofs.jsonl" ]; then
   while kill -0 "$POST" 2> /dev/null; do wait "$POST"; done   # a trap interrupts wait: wait again
   lra_log "post stage: $(tail -n 1 "$OUT/logs/post_stage.log")"
 fi
-if [ -f "$OUT/proofs.jsonl" ]; then
+KRC=0; [ ! -f "$OUT/proofs.jsonl" ] || { kg_file "$OUT/proofs.jsonl"; KRC=$?; }
+if [ "$KRC" = 2 ]; then   # kernel guard: never DONE on a file that holds a proof with a debug option
+  lra_log "FAILED (kernel guard): $OUT/proofs.jsonl holds a proof with a debug option, which disables kernel checking and is not allowed (rows in $LOGD/kernel_guard.log); it is not this job's output"; RC=4
+elif [ -f "$OUT/proofs.jsonl" ]; then
   lra_log "DONE: $OUT/proofs.jsonl ($(grep -c . "$OUT/proofs.jsonl") rows); summary $OUT/summary.json"
 else
   lra_log "FAILED: no proofs file (logs in $OUT/logs, $OUT/driver.log)"; RC=${RC:-1}; [ "$RC" = 0 ] && RC=1

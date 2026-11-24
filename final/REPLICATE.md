@@ -19,6 +19,12 @@ This page still describes how `sub43` was made, with the earlier version of the 
   reference proof instead. A job run with this version writes no such line.
 - Step 4: the check script now also runs the kernel guard, so it fails on a file with such a proof (on `sub43`'s file it names the
   four rows). This version writes no such proof, so on its output `grep -c 'debug.skipKernelTC' runs/post7/upload.jsonl` prints 0.
+- Step 2 and `bash run.sh export` (added later on 2026-11-24): on either route the job now ends with the axiom guard (`README.md`,
+  section "Axiom guard at export"), which reads every row's axioms and sets a failing row back to an earlier proof that passes.
+  When a row is not read in full for axioms (for example on a freshly started node), the job prints `DONE` and ends with exit code
+  5 instead of 0; `bash run.sh export` with a larger `LRA_AXIOM_GUARD_S` completes the reading. Steps 3 and 4 do not run the guard;
+  to read a proofs file by hand without writing it: `"$LRA_PYTHON" harness/axiom_guard.py runs/post7/proofs.post.jsonl --rows
+  "$LRA_SETUP_ROWS" --no-write`.
 
 **Fast post stage.** `run.sh` in this folder now runs the fast post stage inside the job by default
 (`README.md`, first section), so no separate post-process is needed after `run.sh`: skip step 3. `runs/final/proofs.jsonl` is then the
@@ -126,7 +132,8 @@ LRA_EXTRA="--automation-card on --automation-card-min-ref-tokens 1000" bash run.
   the pinned image (~16 min, on the clock), then runs the driver `harness/open_package.py run` until the clock's end; the export of
   the best proof per row runs in the last 15 min. The clock is 48 h minus a 10 min margin (README, "Step 2", Clock), and never longer
   than a Slurm allocation.
-- It ends with `DONE: <this folder>/runs/final/proofs.jsonl (60 rows); summary <this folder>/runs/final/summary.json` and exit code 0.
+- It ends with `DONE: <this folder>/runs/final/proofs.jsonl (60 rows); summary <this folder>/runs/final/summary.json` and exit code 0
+  (with this version, exit code 5 when the axiom guard did not read every row in full: section "Changes in this version" above).
 - `runs/final/RUN_CMD` holds the exact driver command; `LRA_DRY=1 LRA_EXTRA="--automation-card on --automation-card-min-ref-tokens
   1000" bash run.sh` prints the server and driver commands without starting anything.
 - Every hour `runs/final/interim/proofs.jsonl` holds the bests so far (same format).

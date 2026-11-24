@@ -91,8 +91,10 @@ check, `--debug-rows`), `harness/open_package.py` (the guard in the export's pic
 `post_fast/merge_post.py`, `post_fast/post_stage.sh`, `infra/orgserver/orgtools.py` (the promotion of the interim file) and `run.sh`
 (`LRA_DEBUG_ROWS` and its check, the stop on the driver's refusal, the move of an earlier version's proofs file out of the way, the
 check before `DONE`). The model, its prompts, the serving setup, the schedule and every other op are unchanged. `EXPORT.json` and
-`post_fast/MANIFEST.json` are unchanged and describe the earlier files: the files listed here no longer match the sha256 values
-those two manifests give for them.
+`HARNESS_COMMIT` are unchanged and describe the export: those of the files listed here that `EXPORT.json` records no longer match
+its sha256 values (the post-step, the fast post stage and the new files are not in it). `post_fast/MANIFEST.json` is refreshed to
+this version's sha256 values, and `REVISIONS.json` lists every file that differs from `EXPORT.json`'s record or is not in it
+(section "Axiom guard at export" below, last paragraph).
 
 ### Axiom guard at export (added 2026-11-24, after the held-out test)
 
@@ -141,7 +143,9 @@ readings came in full.
 
 **Why.** The held-out test of the post stage (66 library problems outside the 60 final problems, 2026-11-24) found one output that
 compiles with no Lean message at all while `#print axioms` reads `sorryAx` alone: the proof's value is `sorry` (1 of 66 rows (M)).
-The post stage's gate reads compile errors and sorry messages, not axioms, so it adopted that step. The guard sits outside the post
+The post stage's gate runs the export's axiom audit, which skips the axiom print inside a Lean `module` file and there checks only
+for compile errors and Lean's sorry message; every held-out row is in such a file, so the gate adopted that step. The guard sits
+outside the post
 stage: the seven scripts that ran the measurements (`post_fast/post_stage.sh`, `pf_drive.py`, `pf_svc.py`, `pf_worker.py`,
 `prefix_backend.py`, `snapshot.py`, `merge_post.py`) are unchanged, fingerprint `916734a742e664be` (the sha256 of each file, one
 per line in this order, then the sha256 of those lines, first 16 hex digits; `tests/test_axiom_guard.py` recomputes it). The post
@@ -151,8 +155,8 @@ standard axioms (M). That read's list of findings has 16 entries: those 10, and 
 v4.31.0) where the plain compile shows a sorry message. That message is the library's own, in the file before the declaration; the
 forced print on those 6 pairs reads standard axioms and no sorry message on the declaration's lines, which is all the guard reads
 (M). Under the guard's rule every row of that file passes, and no proof in it reads an axiom outside the three, so no reference
-proof is read: the guard leaves the file unchanged and exits 0 (C: that read kept the last print's list, the guard reads both;
-`--no-write` below measures it on a node with the environments).
+proof is read: the guard leaves the file unchanged and exits 0 (C from that read, which kept the last print's list while the guard
+reads both; measured on 2026-11-24 with `--no-write`: exit 0, the file unchanged, "Results" below (M)).
 
 **A row that fails** is set back to the newest earlier proof of the row that passes the same check, tried in this order: the post
 stage's input (`proofs.picks.jsonl`), the agent stage's export (`proofs.export.jsonl`, which `run.sh` copies before the post stage
@@ -196,12 +200,16 @@ gets its reference proof. In all these cases the log names the rows, and the job
 exit code 5 instead of 0 (an earlier failure code, the driver's, the export's or the kernel guard's 4, is kept): `proofs.jsonl` is the
 output, and `bash run.sh export` with a larger `LRA_AXIOM_GUARD_S` completes the reading.
 
-**Cost (E).** About 0.5 to 1.5 min for the 60 final rows (127 readings, 3 rounds of at most 48 compiles) on a 64-core node, plus one
-compile per (row, toolchain) where a proof reads an axiom outside the three (the reference's reading; none on the 60 final rows (C)),
-and one round of compiles per row that fails or waits for that reading; CPU only. Basis: the export's own sorry audit compiled the same 127 (row, toolchain) pairs, 4 at a
-time, in 158 to 244 s on four earlier pilot runs of the 60 rows (M), about 5 to 8 s per compile (C); the held-out verifier read 66
-rows (a plain compile, the forced print and the meter each) in 69 s at 32 threads (M). The slowest single compile is the main
-unknown; it is cut at 300 s.
+**Cost (M, 2026-11-24, Azure F80as_v7, 80 cores; the guard's defaults, 48 compiles at once, a budget of 420 s and 300 s per
+compile, unless stated).** On the 60 final rows (127 readings): 41 s (the tier C file) and 51 s (the post stage's output, 16
+compiles at once) with the files of the Lean environments in memory; on the post stage's output with the page cache dropped first,
+216 s (48 at once) and 225 s (16), these two with a budget of 1800 s and 900 s per compile. On the first read of the environments
+after the VM was started from a deallocated state (E: most likely the cloud disk itself read for the first time), 88 of 127
+readings hit the 300 s compile timeout and 41 of 60 rows were not read within 420 s: exit 3, every row kept as it was (in a job:
+exit code 5). The next read, of the tier C file, still had 21 compile timeouts and left 11 rows not read (398 s, exit 3); a later
+read of the post stage's output took 193 s and read every row (exit 0). At the end of a job the environments have been read by the
+stages before it; on a freshly started node, run `bash run.sh export` again or raise `LRA_AXIOM_GUARD_S`. One more compile is needed per (row, toolchain) where a proof reads an axiom outside the three (the
+reference's reading; none on the 60 final rows), and one round of compiles per row that fails; CPU only.
 
 **Turning it off.** `LRA_AXIOM_GUARD=off`, for debugging only: the job logs `axiom guard: OFF` (also in `logs/axiom_guard.log`) and
 reads no axioms. `run.sh check` rejects any other value than `on` or `off`, and a budget that is not a whole number of seconds
@@ -214,25 +222,31 @@ or nothing, and the job ends with exit code 5). By hand, on any proofs file:
 Exit 0: every row passes and every toolchain of the proof it keeps was read (one not read by construction aside); 3: some row was not
 read in full, has a reference proof that does not pass, or is missing from the file (named); 1: not checked.
 
-**What it does not change.** The post stage's gate still does not read axioms: within a run the stage can build on such a step, and
-the export sets the row back. The export's own axiom audit (in `harness/open_package.py`) is unchanged; the guard uses its rule, with
+**What it does not change.** The post stage's gate is unchanged: inside a `module` file it still reads no axioms, so within a run the
+stage can build on such a step, and the export sets the row back. The export's own axiom audit (in `harness/open_package.py`) is unchanged; the guard uses its rule, with
 the differences above (it fails closed). A proofs file promoted from the interim proofs when the job is cut short has been through
 neither check (below).
 
-**Expected results (C from the readings of 2026-11-24, to be measured on the node).** On the post stage's output on the 60 final
-rows (stored mean 81.466): exit 0, 60 pass, no row set back, 127 readings, no reference proof read (all read standard axioms), 10
-toolchains not read by construction, the file unchanged. On the held-out output (66 rows, one toolchain each, v4.34.0): row 42 (the
-output reads `sorryAx` alone with no Lean message; its reference proof, the post stage's input on that row, reads the standard three)
-reads bad and is set back to the post stage's input, stored 69.21 -> 33.33; row 25 (its reference proof reads `sorryAx` itself, a
-library lemma proved by `sorry`, and so does the output) passes through the allowance and keeps its proof, provided the reference's
-reading comes in full; rows 22 and 45 (a sorry message elsewhere in the file, outside the declaration) pass on the standard three.
-Then the exit code is 0, the summary reads `66 rows: 65 pass, 1 read BAD, 1 set back`, `1 pass only through the reference proof's
-axioms`, `2 (row, toolchain) pair(s) needed the reference proof's reading, 2 read in full`, and the stored mean goes 56.8164 ->
-56.2727 (-35.88/66 = -0.5436). Row 42's chain of 10 adopted steps (the verifier's forced print of the start and of the text after
-each step, on v4.34.0): the start (step 0) and steps 1-6 read the standard three and pass, with no reference reading; steps 7-10
-read `sorryAx` alone, with no Lean message, and read bad against the reference's standard three. Files: new
-`harness/axiom_guard.py` and `tests/test_axiom_guard.py` (no Lean: the compile layer is replaced by stand-ins); `run.sh` changed by
-added lines and one changed comment line. `EXPORT.json`, `post_fast/MANIFEST.json` and `HARNESS_COMMIT` are unchanged.
+**Results (M, 2026-11-24, the same node; the guard run on copies with `--no-write`, and once writing a copy).** On the post stage's
+output on the 60 final rows (stored mean 81.466; the output the 2026-11-24 measurement produced): exit 0, 60 pass, no row set back,
+127 readings, no reference proof read (all read standard axioms), 10 toolchains not read by construction, the file unchanged. On the
+tier C file of the report (stored mean 81.4367): the same, exit 0, 60 pass, unchanged. On the held-out output (66 rows, one
+toolchain each, v4.34.0): row 42 (the output reads `sorryAx` alone with no Lean message; its reference proof, the post stage's input
+on that row, reads the standard three) reads bad and is set back to the post stage's input, stored 69.21 -> 33.33; row 25 (its
+reference proof reads `sorryAx` itself, a library lemma proved by `sorry`, and so does the output) passes through the allowance and
+keeps its proof; rows 22 and 45 (a sorry message elsewhere in the file, outside the declaration) pass on the standard three. The
+exit code is 0, the summary reads `66 rows: 65 pass, 1 read BAD, 1 set back`, `1 pass only through the reference proof's axioms`,
+`2 (row, toolchain) pair(s) needed the reference proof's reading, 2 read in full`, and the stored mean goes 56.8164 -> 56.2727
+(-35.88/66 = -0.5436); written on a copy, only row 42's line changed, in `proofs.jsonl` and in `proofs.merged.jsonl`. Row 42's chain
+of 10 adopted steps (the verifier's forced print of the start and of the text after each step, on v4.34.0): the start (step 0) and
+steps 1-6 read the standard three and pass, with no reference reading; steps 7-10 read `sorryAx` alone, with no Lean message, and
+read bad against the reference's standard three, and the row is set back. A budget of 20 s ends in 39 s with exit 3, no Lean process
+left. Files: new `harness/axiom_guard.py` and `tests/test_axiom_guard.py` (no Lean: the compile layer is replaced by stand-ins);
+`run.sh` changed by added lines and one changed comment line. `EXPORT.json` and `HARNESS_COMMIT` are unchanged: they describe the
+export the package was built from (`246ff1f1`). `post_fast/MANIFEST.json` is refreshed to this version's files, and `REVISIONS.json`
+(new) lists what changed after that export: the commits of 2026-11-24 and their tags, the fingerprint of the seven post-stage
+scripts, the measured numbers (`../RESULTS.md`, section "Revised package, measured (2026-11-24)") and the sha256 of every file that
+differs from `EXPORT.json`'s record or is not in it.
 
 ## The fast post stage in `run.sh`
 
@@ -241,7 +255,8 @@ starts from the agent stage's picks and stops 60 s before job end. Every 5 minut
 `proofs.jsonl` by atomic rename, so that file is the job's output. No 48 h job has run this route. `LRA_POST_ROUTE=off` restores the
 job, with the kernel guard and the axiom guard (on that route a row that the axiom guard sets back gets its reference proof). The rest of this file and `REPLICATE.md` describe the job as at tag `open-run3-post-final-sub43-20261104`, which stays the
 replication of sub43. `post_fast/MANIFEST.json` lists every changed file; `run.sh`, `harness/open_package.py` and
-`docs/open_package_readme.md` no longer match their sha256 in `EXPORT.json`.
+`docs/open_package_readme.md` no longer match their sha256 in `EXPORT.json` (since 2026-11-24 more files differ from it:
+`REVISIONS.json` lists them all).
 
 On this route:
 

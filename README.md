@@ -7,9 +7,10 @@ compiles on every listed toolchain.
 
 One open-weight model writes every proof: GLM-5.3-Flash (AWQ W4A16), served with vLLM on 4 x A100 80 GB. It runs many short, resumed,
 tool-using sessions per problem. Model-free CPU stages then search mechanical rewrites of each problem's best proof. Every replacement
-passes one gate: the exact statement, no forbidden pattern, no `set_option debug.*` option, no `sorry`, a compile on no fewer listed
-toolchains than the current proof, and a higher score on our meter. No hosted model is called during a run, and no model was trained
-or fine-tuned.
+passes one gate: the exact statement, no forbidden pattern, no `set_option debug.*` option, no `sorry` message, a compile on no fewer
+listed toolchains than the current proof, and a higher score on our meter. A proof can rest on `sorry` without any message; since
+2026-11-24 an axiom guard at export reads every exported proof's axioms (section "Changes in this version (2026-11-24)" below). No
+hosted model is called during a run, and no model was trained or fine-tuned.
 
 **Official result:** runner-up of the open-source track (announced by the organizers on 2026-11-23). Our final upload `sub43`
 scored **82.55** (L 65.60, H 82.06, Z 100) on the open-track leaderboard at the deadline (2026-11-04 11:59 UTC). That score includes
@@ -24,6 +25,11 @@ current bests in the run's trace, polished bests included. Flat: last 3 sessions
 - **Report:** [OpenReview](https://openreview.net/forum?id=cvXHNZWtn8) ([PDF](https://openreview.net/pdf?id=cvXHNZWtn8)).
 - **Code of the final upload:** tag
   [`open-run3-post-final-sub43-20261104`](https://github.com/bobbercheng/lean-refactor-open/tree/open-run3-post-final-sub43-20261104).
+- **Code of this version (2026-11-24):** tag
+  [`open-camready-20261124`](https://github.com/bobbercheng/lean-refactor-open/tree/open-camready-20261124) (the published code,
+  with the axiom guard; its release holds a ZIP of `final/`). The code we measured on 2026-11-24 is tag
+  [`open-camready-measured-20261124`](https://github.com/bobbercheng/lean-refactor-open/tree/open-camready-measured-20261124)
+  (commit `82f6f2d`).
 - **Results, all uploads and our official runs:** [`RESULTS.md`](RESULTS.md). **Disclosures:** [`DISCLOSURES.md`](DISCLOSURES.md).
 
 ## Changes in this version (2026-11-24)
@@ -46,9 +52,33 @@ current bests in the run's trace, polished bests included. Flat: last 3 sessions
   how `sub43` was made ([`RESULTS.md`](RESULTS.md), [`DISCLOSURES.md`](DISCLOSURES.md), the section "Post-step" of
   [`final/README.md`](final/README.md), [`final/REPLICATE.md`](final/REPLICATE.md)) describes that version; with this version's
   code those commands do not reproduce `sub43`.
+- **An axiom guard at export (added after the held-out test below).** At the end of the job and in `run.sh export`,
+  `final/harness/axiom_guard.py` compiles every problem's proof on its listed toolchains with `#print axioms` forced. A proof that
+  shows Lean's sorry message on its declaration, or uses an axiom beyond `propext`, `Classical.choice`, `Quot.sound` and those of
+  the problem's reference proof on the same toolchain (such as `sorryAx`), is set back to the problem's newest earlier proof that
+  passes. Details: [`final/README.md`](final/README.md#axiom-guard-at-export-added-2026-11-24-after-the-held-out-test).
+- **Measured (2026-11-24; (M) measured, (C) computed).** Details in [`RESULTS.md`](RESULTS.md#revised-package-measured-2026-11-24).
+  - *The revised post stage on the 60 final problems (tier B).* One 85-minute run on the submitted run's picks, with the one
+    kernel-skipped proof the model wrote replaced by the run's best kernel-checked proof of that problem: stored mean 81.47 from
+    78.77 (M). A fresh read of all 60 output proofs with the kernel on: 81.47, 60 of 60 pass, only the standard axioms wherever the
+    axiom print runs (M). No output proof sets a `debug.*` option.
+  - *A held-out test, registered before its run.* The same stage, one 85-minute run on 66 library problems it was never developed
+    on. On the 27 registered problems (start proofs from our pre-release rewrite chain; 26 read), the mean gain with the kernel on is
+    +16.70 a proof (SE 1.55; 40.85 -> 57.55), all 26 improved and none fell: HELD-OUT GAIN SHOWN (M). These start proofs are much
+    weaker than the final problems' (40.85 against 78.77), so the test does not say how much of the in-sample gain would hold. The
+    registered reader stopped with NO VERDICT on one output outside the registered problems: the stage adopted a step after which
+    that proof's value is `sorry`, with no Lean message. The axiom guard above sets such a row back at export; run on that output,
+    it set the row back. The stage's gate itself is unchanged, a row the guard cannot read in time keeps its proof (the job then
+    ends with exit code 5), and on a problem whose reference proof itself rests on a library lemma proved by `sorry`, the guard
+    cannot tell such a proof from one that only uses that lemma
+    ([`final/README.md`](final/README.md#axiom-guard-at-export-added-2026-11-24-after-the-held-out-test)).
+  - *Measured code and published code.* The measured code is tag `open-camready-measured-20261124` (commit `82f6f2d`); the
+    published code is tag `open-camready-20261124`, which adds the axiom guard. The seven post-stage scripts are byte-identical at
+    both tags (fingerprint `916734a742e664be`) (C), and the axiom guard, run on the measured output, changed no proof: 60 of 60 pass
+    (M).
 
 The details, the files changed and the tests are in [`final/README.md`](final/README.md), section "Changes in this version
-(2026-11-24)".
+(2026-11-24)"; [`final/REVISIONS.json`](final/REVISIONS.json) lists every change after the export the package was built from.
 
 ## Run it on the full benchmark (60 problems)
 
@@ -98,8 +128,8 @@ LRA_EXTRA="--automation-card on --automation-card-min-ref-tokens 1000" bash run.
 
 | Document | What it holds |
 |---|---|
-| [`RESULTS.md`](RESULTS.md) | the final upload (proof file and code ZIP hashes), every upload on the final benchmark, our three official runs, our warm-up results, and what each folder and tag holds |
-| [`DISCLOSURES.md`](DISCLOSURES.md) | the final upload's kernel skip on 4 rows (one of them is not a valid proof with the kernel check on) and elaborator options on 14 rows; how the post-step and the harness were developed; isolation; what was removed for public release |
+| [`RESULTS.md`](RESULTS.md) | the final upload (proof file and code ZIP hashes), every upload on the final benchmark, our three official runs, our warm-up results, what each folder and tag holds, and the revised package's measurements of 2026-11-24 (tier B, the tier C re-check, the held-out test, the axiom guard) |
+| [`DISCLOSURES.md`](DISCLOSURES.md) | the final upload's kernel skip on 4 rows (one of them is not a valid proof with the kernel check on) and elaborator options on 14 rows; how the post-step and the harness were developed, the post-step's provenance and its share of the gain; isolation; what was removed for public release |
 | [`final/README.md`](final/README.md) | the package reference: requirements, setup, the job, every setting, the fast post stage, and the post-step and its ops |
 | [`final/REPLICATE.md`](final/REPLICATE.md) | step-by-step replication, with expected output, wall time and cost per step, and our own numbers |
 | [`final/docs/open_package_readme.md`](final/docs/open_package_readme.md) | the package's technical appendix: stages, flags and measurements |

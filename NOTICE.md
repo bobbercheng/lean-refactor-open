@@ -29,8 +29,9 @@ Changed for public release: decision attributions are removed or reworded in doc
 `final/harness/post/d4_implied.py`, `kskip.py` and `projpath.py` (as at the `sub43` tag) and in one comment of
 `final/harness/post/hintgrind.py`, one or two lines per file; these edits leave the code unchanged (same syntax tree apart from
 docstrings). The `sub43` code zip holds the unredacted `d4_implied.py`, `kskip.py`, `projpath.py` and the tag's `open_post.py`;
-`MANIFEST.json` gives the unredacted sha256 of `main`'s `open_post.py` and `hintgrind.py` as `measured_sha256`. Apart from these
-lines, the post-step's files and `final/post_fast/` keep their comments and docstrings.
+`MANIFEST.json` gives the unredacted sha256 of the `open_post.py` and `hintgrind.py` of 2026-11-09 as `measured_sha256` (section
+"Changes in this version (2026-11-24)" below). Apart from these lines, the post-step's files and `final/post_fast/` keep their
+comments and docstrings.
 
 ## Changes in this version (2026-11-24)
 
@@ -51,8 +52,23 @@ every proof that sets a `debug.*` option, at every stage and at export:
   forbidden check, which now comes from the guard module; in the two end-stage files also the guard module's entry in the list of
   files that make the end stage's recorded code identity) and `infra/orgserver/orgtools.py` (the interim file's promotion).
   `final/scorer/forbidden.py` is unchanged: it stays an exact copy of the Arena's forbidden list.
-- `final/EXPORT.json` and `final/post_fast/MANIFEST.json` are unchanged. They describe the files of the export and of 2026-11-09;
-  the files changed on 2026-11-24 no longer match their sha256 values.
+- The axiom guard at export, added later on 2026-11-24 (commit `d2d6e3c`): `final/harness/axiom_guard.py` and
+  `final/tests/test_axiom_guard.py` are new, and `final/run.sh` gained the lines that run it (and one changed comment line). The
+  seven scripts of the fast post stage that ran the measurements of 2026-11-24 are unchanged by it.
+- `final/EXPORT.json` and `final/HARNESS_COMMIT` are unchanged: they still describe the export the package was built from (package
+  `246ff1f1`). Those of the files changed since then that `EXPORT.json` records no longer match its sha256 values; the post-step,
+  the fast post stage and the new files are not in it.
+  `final/REVISIONS.json` (new) lists what changed after that export: the commits of 2026-11-24 with their tags, the fingerprint of
+  the seven post-stage scripts, the measured numbers with the sha256 prefixes of their inputs and outputs, and the sha256 of every
+  file under `final/` that differs from `EXPORT.json`'s record or is not in it (no file of the record is gone).
+- `final/post_fast/MANIFEST.json` is refreshed: its sha256 values are those of this version's files, it lists the files changed on
+  2026-11-24 (it still lists every file that differs from tag `open-run3-post-final-sub43-20261104`), and it names the two runs
+  measured on 2026-11-24. Its `measured_sha256` values (of `harness/open_post.py` and `harness/post/hintgrind.py`) are the
+  unredacted files that its earlier measured runs (`fullV7m1s`, `T0b`, `W1`) used; the runs of 2026-11-24 used the files in this
+  repository.
+- Tags: `open-camready-measured-20261124` is the code we measured on 2026-11-24 (commit `82f6f2d`: the kernel-skip op removed,
+  the kernel guard); `open-camready-20261124` is this version (the axiom guard and this release's documents and records), and its
+  release holds a ZIP of `final/`.
 
 The code of `sub43` as submitted stays at the tag `open-run3-post-final-sub43-20261104` and in the code zip.
 

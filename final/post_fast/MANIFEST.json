@@ -1,10 +1,13 @@
 {
  "base_tag": "open-run3-post-final-sub43-20261104",
  "base_commit": "dd4758a77792b8dd461f76c776e22e0224a34585",
+ "revised_tag": "open-camready-20261124",
  "measured_runs": {
   "fullV7m1s": "input sha256 0664621d (run 3's export, not shipped)",
   "T0b": "input sha256 609af35b (the pick at 45.25 h, not shipped)",
-  "W1": "input sha256 609af35b (T0b's input), post_stage.sh as shipped"
+  "W1": "input sha256 609af35b (T0b's input), post_stage.sh as shipped",
+  "tierB_20261124": "input sha256 3043ed87 (the pick at 45.25 h with the model's kernel-skipped proof replaced by the run's best kernel-checked one, not shipped), post_stage.sh of tag open-camready-measured-20261124 (82f6f2d), 85-minute cap; output 414daf5b, stored mean 81.4660, fresh read with the kernel on 81.4651, 60 of 60 rows (../RESULTS.md, 'Revised package, measured (2026-11-24)')",
+  "heldout_20261124": "input sha256 1df14289 (start proofs of 66 library rows outside the final benchmark, not shipped; rows e1264c23, reference heartbeats 3809b6e5), post_stage.sh of tag open-camready-measured-20261124 (82f6f2d), 85-minute cap; output e6bb3863, stored mean 37.4195 -> 56.8164; registered line on T-primary: HELD-OUT GAIN SHOWN (../RESULTS.md)"
  },
  "not_shipped_origins": {
   "run_T0.sh": "db92b0e2b75c3ff924ff3abeeb1462330b19198d560c86fe9acb6f5d77c4dfe0",
@@ -15,13 +18,13 @@
  "files": [
   {
    "path": "README.md",
-   "sha256": "330d1b4602337860d859a24bd4f7675af1fab18cb6b9fdfac680894206133ef0",
-   "origin": "tag file plus a short first section, three corrections in section Post-step and one in the opening paragraph"
+   "sha256": "a0159aac11aefcb6770513934dbd68211a29ef5b40c18a6812872fe3607fbb3b",
+   "origin": "tag file plus a short first section, three corrections in section Post-step and one in the opening paragraph; 2026-11-24: the sections 'Changes in this version (2026-11-24)' (82f6f2d) and 'Axiom guard at export' (d2d6e3c) at the top, and the sentences on EXPORT.json, this file and REVISIONS.json (release commit)"
   },
   {
    "path": "REPLICATE.md",
-   "sha256": "ecf9585b7920f33e290a9ca6f139d024a2258fbc198d07a4043c59eca48a384f",
-   "origin": "tag file plus a short note at the top, the same point in step 3, the overview row and the upload line"
+   "sha256": "cefe7be1910fbb7748c0909bcdd92cc1544122cd143ffd66b05618ddd0c6d760",
+   "origin": "tag file plus a short note at the top, the same point in step 3, the overview row and the upload line; 2026-11-24 (82f6f2d): a section 'Changes in this version (2026-11-24)' at the top, and the kernel guard in step 4's check of the upload file; release commit: the axiom guard at the job's end and its exit code 5 in that section and in step 2"
   },
   {
    "path": "docs/open_package_readme.md",
@@ -30,13 +33,13 @@
   },
   {
    "path": "harness/open_package.py",
-   "sha256": "2752b69327737cd70f1e56cc617f1f348866d3674513a98ed720575729641ab2",
-   "origin": "tag file, +5 -3: flag --no-end-stages"
+   "sha256": "b6689c83e09ea56eda8d8f5205774c5ce3b63779dfc87bbbca428b73ac5138fc",
+   "origin": "tag file, +5 -3: flag --no-end-stages; 2026-11-24 (82f6f2d): the kernel guard in the export's picks and writer, the check at the start, --debug-rows"
   },
   {
    "path": "harness/open_post.py",
-   "sha256": "4f157a0541f529f9606f10d1fea712d3bbee03c201f3623bb7d644edd63f024d",
-   "origin": "post-code-v7 (a25416f5 + v7m merge); one docstring line redacted, as at the tag; same syntax tree apart from the docstring",
+   "sha256": "7723661fa1cb317efb1b37d2b3a45b30b673b0b544d434cdda962ade176d1bf8",
+   "origin": "post-code-v7 (a25416f5 + v7m merge); one docstring line redacted, as at the tag; same syntax tree apart from the docstring; 2026-11-24 (82f6f2d): the kskip op removed, the kernel guard in the gate, the input check, --debug-rows; measured_sha256 is the unredacted file of 2026-11-09 that runs fullV7m1s, T0b and W1 used; the runs of 2026-11-24 used this file",
    "measured_sha256": "14dac17ba7b4455f5ac7e850f1cb346ca22ccd769513a804bfd6659c9fe0ab2f"
   },
   {
@@ -47,8 +50,8 @@
   },
   {
    "path": "post_fast/merge_post.py",
-   "sha256": "3d36e1732e2fab93ec51c8c49de62605fb73ef2727921e18b3fb8378d330f9c7",
-   "origin": "new"
+   "sha256": "f5d774ee7ff8499c67467431fae449700094f03349cc1bf18e6ab398551e076f",
+   "origin": "new; 2026-11-24 (82f6f2d): the kernel guard in the merges; one of the seven measured scripts (fingerprint 916734a742e664be)"
   },
   {
    "path": "post_fast/merge_warm.py",
@@ -57,8 +60,8 @@
   },
   {
    "path": "post_fast/pf_drive.py",
-   "sha256": "39962488382237034f04aa1770d9aeaa3f4518bd9d582b2027fde5c2e50bc357",
-   "origin": "v7s scripts of fullV7m1s and T0b; byte-identical"
+   "sha256": "c2908008d6077aa01bbf239e8e99dffa9b9c558b0cbf523ba9b99bf50e55478d",
+   "origin": "v7s scripts of fullV7m1s and T0b; byte-identical until 2026-11-24; 2026-11-24 (82f6f2d): the kskip op removed, the input check and --debug-rows; one of the seven measured scripts (fingerprint 916734a742e664be)"
   },
   {
    "path": "post_fast/pf_svc.py",
@@ -67,13 +70,13 @@
   },
   {
    "path": "post_fast/pf_worker.py",
-   "sha256": "5aa2a3c0a99cbdbc0482e85a4100a9d82172671072a874267b6dcdc954d77868",
-   "origin": "v7s scripts of fullV7m1s and T0b; byte-identical"
+   "sha256": "c51ee7fa0941fe22fec260bb1cd7130bf536f210fc3528b73b6a1a922becd99f",
+   "origin": "v7s scripts of fullV7m1s and T0b; byte-identical until 2026-11-24; 2026-11-24 (82f6f2d): the kskip op removed; one of the seven measured scripts (fingerprint 916734a742e664be)"
   },
   {
    "path": "post_fast/post_stage.sh",
-   "sha256": "2f976cb5a69368649518b8bbab72825f1bb856475ff2c2141741f880b9c91b4f",
-   "origin": "new; run_T0.sh with launch_T0b.sh's values except the input rule in place of the per-row files, its paths as arguments, the picks as the input, the stop from the job clock, plus guards and merges"
+   "sha256": "d14b156b97d52945e6a3a9e3800c44ffc2aa3e114d50303de10f73afb65c3439",
+   "origin": "new; run_T0.sh with launch_T0b.sh's values except the input rule in place of the per-row files, its paths as arguments, the picks as the input, the stop from the job clock, plus guards and merges; 2026-11-24 (82f6f2d): LRA_DEBUG_ROWS and the kernel guard on its input; one of the seven measured scripts (fingerprint 916734a742e664be)"
   },
   {
    "path": "post_fast/prefix_backend.py",
@@ -97,23 +100,144 @@
   },
   {
    "path": "run.sh",
-   "sha256": "50420cf1cb2809abc0da0a1b933d6c08d098b0106f00322cbd82e594b5b8a482",
-   "origin": "tag file, +13 -1: the switch, the flag, the post block, saved gains put back after export"
+   "sha256": "a9e7a7854db1ee328b6db07f4d121eb441de542abb6db8c02d125824f84f7f77",
+   "origin": "tag file, +13 -1: the switch, the flag, the post block, saved gains put back after export; 2026-11-24: the kernel guard (82f6f2d) and the axiom guard at export (d2d6e3c)"
+  },
+  {
+   "path": "REVISIONS.json",
+   "sha256": null,
+   "origin": "new 2026-11-24 (release commit): what changed after the export record EXPORT.json, with the measured numbers; it holds this file's sha256, so its own sha256 is not given here"
+  },
+  {
+   "path": "harness/agent.py",
+   "sha256": "072621337fcc624ce5196e84037f4b9bfef670aa58723aff86494bbc7e410f46",
+   "origin": "export file; 2026-11-24 (82f6f2d): the import of the forbidden check, which now comes from the kernel guard module"
+  },
+  {
+   "path": "harness/axiom_guard.py",
+   "sha256": "a4745ce7fd07bfdc66d53d848c4eda34cea7109cc6468ccf01b978ce9fdeb3b3",
+   "origin": "new 2026-11-24 (d2d6e3c): the axiom guard at export"
+  },
+  {
+   "path": "harness/batch_screen.py",
+   "sha256": "992276dc6fdd3cb4f3444595eb1ae27965b03f4a1461b76fc7f5d843785b72f0",
+   "origin": "export file; 2026-11-24 (82f6f2d): the import of the forbidden check, which now comes from the kernel guard module"
+  },
+  {
+   "path": "harness/endstage.py",
+   "sha256": "a4dea20473092c5ab6589081805e46f55c95761521c801cd285f15caaa9ecfa7",
+   "origin": "export file; 2026-11-24 (82f6f2d): the import of the forbidden check, which now comes from the kernel guard module, and the guard module in the end stage's recorded code identity"
+  },
+  {
+   "path": "harness/endstage_r10.py",
+   "sha256": "0946515065051cf29587b603d1ec9fe2bfdbf292d4663518ca5b5bc725c69135",
+   "origin": "export file; 2026-11-24 (82f6f2d): the import of the forbidden check, which now comes from the kernel guard module, and the guard module in the end stage's recorded code identity"
+  },
+  {
+   "path": "harness/funind.py",
+   "sha256": "35443e87ab296eabc415e7f1937e27ace6ade6891f0350bf8eac3262a3fc21a8",
+   "origin": "export file; 2026-11-24 (82f6f2d): the import of the forbidden check, which now comes from the kernel guard module"
+  },
+  {
+   "path": "harness/hb_tool_candidates.py",
+   "sha256": "ba8ccaa1c89922857dfd12274ea1609aa72b32ade6fa3c6b9535e375a68ee43e",
+   "origin": "tag file (a module the export leaves out; post-step ops import it); 2026-11-24 (82f6f2d): the import of the forbidden check, which now comes from the kernel guard module"
+  },
+  {
+   "path": "harness/hb_tool_eval.py",
+   "sha256": "9a56e33108950f46eebff967621ee23fc9f06860b83bfabd55adbba26db7f48d",
+   "origin": "export file; 2026-11-24 (82f6f2d): the import of the forbidden check, which now comes from the kernel guard module"
+  },
+  {
+   "path": "harness/kernel_guard.py",
+   "sha256": "f7916c434dfcf39a25604bd6b351ef999a4d21a93606a3ca5164c3dde64fd6d3",
+   "origin": "new 2026-11-24 (82f6f2d): the kernel guard, one predicate that rejects any proof with a set_option debug.* option, run at every stage and at export"
+  },
+  {
+   "path": "harness/leantools.py",
+   "sha256": "a75cf67cf8f5dfe44aaa0ac99c908736a51ab7f1e09ac4d6a883a3418e02664b",
+   "origin": "export file; 2026-11-24 (82f6f2d): the import of the forbidden check, which now comes from the kernel guard module"
+  },
+  {
+   "path": "harness/post/argon_calcstep.py",
+   "sha256": "836140bcf26446059a109b68ccee7a350475775029e7f0a457ad573707251881",
+   "origin": "tag file (a25416f5); 2026-11-24 (82f6f2d): the import of the forbidden check, which now comes from the kernel guard module"
+  },
+  {
+   "path": "harness/post/argon_funind.py",
+   "sha256": "1674862c49ea1c73ff570966ea004bd4b7803f2f634186898926acf82f2fe1ed",
+   "origin": "tag file (a25416f5); 2026-11-24 (82f6f2d): the import of the forbidden check, which now comes from the kernel guard module"
+  },
+  {
+   "path": "harness/post/argon_haveopt.py",
+   "sha256": "b657800a2bcee3dda5842583b2297bb610a5ca7dab874743dec457df44529498",
+   "origin": "tag file (a25416f5); 2026-11-24 (82f6f2d): the import of the forbidden check, which now comes from the kernel guard module"
+  },
+  {
+   "path": "harness/post/argon_hbsimp.py",
+   "sha256": "f56626d28ca3f143833966b06b01a3f2d9b693379605a8a8d81d6f8916f9e7bc",
+   "origin": "tag file (a25416f5); 2026-11-24 (82f6f2d): the import of the forbidden check, which now comes from the kernel guard module"
+  },
+  {
+   "path": "harness/post/opus_bulletflat.py",
+   "sha256": "458d36b6592d9cc606749dd82ea2e55b30d8553ca9a1ea005968071e712c53e2",
+   "origin": "tag file (a25416f5); 2026-11-24 (82f6f2d): comments only"
+  },
+  {
+   "path": "harness/post/opus_screen.py",
+   "sha256": "05d45312131210f774e43d41830a7c84b11cee264cd430011fc37e2341890f44",
+   "origin": "tag file (a25416f5); 2026-11-24 (82f6f2d): comments only"
+  },
+  {
+   "path": "harness/post/opus_stepdrop.py",
+   "sha256": "f6fcd29dc15dcc8d47ce30ba0af4ccfd13863444799269d738959791ea8e0a17",
+   "origin": "tag file (a25416f5); 2026-11-24 (82f6f2d): comments only"
+  },
+  {
+   "path": "harness/workbench.py",
+   "sha256": "f5d8d36683ef92b5b087a9fab6a2093a038e0aab7acef25cf3297bcaafacfa86",
+   "origin": "export file; 2026-11-24 (82f6f2d): the import of the forbidden check, which now comes from the kernel guard module"
+  },
+  {
+   "path": "infra/orgserver/orgtools.py",
+   "sha256": "56564bf3113f1515f896fc44c8b7b91d4cdbd941ce46afc83c6ad50a9f598601",
+   "origin": "export file; 2026-11-24 (82f6f2d): the kernel guard in the promotion of the interim proofs file"
+  },
+  {
+   "path": "tests/test_axiom_guard.py",
+   "sha256": "22a31b68de151025f8417403853f4e7120b1813a8ce5a7683ab34587d1ddc9b9",
+   "origin": "new 2026-11-24 (d2d6e3c): tests of the axiom guard (no Lean); recomputes the fingerprint of the seven measured scripts"
+  },
+  {
+   "path": "tests/test_kernel_guard.py",
+   "sha256": "184325931a2dc580ca454ddcdd9493cb9612835ec0a68df3a0bf232a23f9b81b",
+   "origin": "new 2026-11-24 (82f6f2d): tests of the kernel guard (no Lean, no model)"
   },
   {
    "path": "../README.md",
-   "sha256": "c4e91f3f32d29cdbee4b6bd420c4d7d10dbb83bed156b973631fb2ae6d6e134d",
-   "origin": "root README of main; outside the zip (2026-11-09: a four-part summary, its earlier text moved to ../RESULTS.md and ../DISCLOSURES.md)"
+   "sha256": "fd75e388d02769816ed4a5e52d96bbbef2ab32613b5c78ecaed9ebf1184117fb",
+   "origin": "root README of main; outside the zip (2026-11-09: a four-part summary, its earlier text moved to ../RESULTS.md and ../DISCLOSURES.md); 2026-11-24: the official result, 'Changes in this version (2026-11-24)' with the axiom guard and the measurements, and the tags of this version"
   },
   {
    "path": "../RESULTS.md",
-   "sha256": "c4667d987ee237719fc802886203903b8a9d60cda593cf8d80762223f56a0aa3",
-   "origin": "results text moved from the root README of main (2026-11-09); outside the zip"
+   "sha256": "ed060930ebdd0f8d7bdc02531475e168f4f3ab9365dfab8fdf80681fc87a8cf1",
+   "origin": "results text moved from the root README of main (2026-11-09); outside the zip; 2026-11-24: 'Changes in this version (2026-11-24)' and the section 'Revised package, measured (2026-11-24)'"
   },
   {
    "path": "../DISCLOSURES.md",
-   "sha256": "44870b0d5991f08558bc5439ee49c3c4b1b546aac565f8121beb1c9c242d7537",
-   "origin": "disclosure text moved from the root README of main (2026-11-09); outside the zip"
+   "sha256": "747fdbec8e9a1cce17359d40b976e3210d3670b5675c2a3ba4d7802d0a30a24a",
+   "origin": "disclosure text moved from the root README of main (2026-11-09); outside the zip; 2026-11-24: 'Changes in this version (2026-11-24)' and the post-step's provenance in 'Provenance'"
+  },
+  {
+   "path": "../NOTICE.md",
+   "sha256": "2aea6f6a4106b98ac0cb3e9cbc7e5947ab30ae2fb31bb8963cf0aa6e46c5c9b7",
+   "origin": "root NOTICE.md of main; outside the zip; 2026-11-24: 'Changes in this version (2026-11-24)': the kernel guard, the axiom guard, this file, REVISIONS.json and the tags"
+  }
+ ],
+ "removed": [
+  {
+   "path": "harness/post/kskip.py",
+   "origin": "tag file (a25416f5): the kernel-skip op; deleted 2026-11-24 (82f6f2d)"
   }
  ]
 }

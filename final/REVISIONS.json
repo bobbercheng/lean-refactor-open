@@ -1,0 +1,624 @@
+{
+ "about": "What changed in final/ after the export record EXPORT.json (the export of package 246ff1f1 that official run 3 ran). EXPORT.json and HARNESS_COMMIT are unchanged and still describe that export. Paths in 'files', 'removed' and 'seven_post_scripts' are relative to final/; paths in 'changed' are relative to the repository root. Labels: (M) measured, (C) computed. The measurements are described in ../RESULTS.md, section 'Revised package, measured (2026-11-24)'.",
+ "base": {
+  "harness_commit": "246ff1f1",
+  "export_record": "EXPORT.json",
+  "export_commit": "246ff1f198b2580abd98f3b492787487553abc30",
+  "export_at": "2026-11-02T06:43:11Z",
+  "export_record_sha256": "e5768cd00e4587616c16f519d9e24f527fe5b2ce502b93e6cfbebb994c0c3b63",
+  "export_n_files": 102
+ },
+ "revisions": [
+  {
+   "commit": "82f6f2d",
+   "commit_full": "82f6f2d154bbcc301fe9b51b286cad9dcac42bf2",
+   "date": "2026-11-24",
+   "what": "the kernel-skip op kskip removed from the post-step and the fast post stage; one kernel guard (harness/kernel_guard.py) rejects any proof with a set_option debug.* option at every stage and at export; inputs of the earlier version are refused or replaced by the reference proof (--debug-rows, LRA_DEBUG_ROWS); the documents state the official result. This is the code of every measurement below",
+   "tag": "open-camready-measured-20261124",
+   "changed": [
+    "DISCLOSURES.md",
+    "NOTICE.md",
+    "README.md",
+    "RESULTS.md",
+    "final/README.md",
+    "final/REPLICATE.md",
+    "final/harness/agent.py",
+    "final/harness/batch_screen.py",
+    "final/harness/endstage.py",
+    "final/harness/endstage_r10.py",
+    "final/harness/funind.py",
+    "final/harness/hb_tool_candidates.py",
+    "final/harness/hb_tool_eval.py",
+    "final/harness/kernel_guard.py",
+    "final/harness/leantools.py",
+    "final/harness/open_package.py",
+    "final/harness/open_post.py",
+    "final/harness/post/argon_calcstep.py",
+    "final/harness/post/argon_funind.py",
+    "final/harness/post/argon_haveopt.py",
+    "final/harness/post/argon_hbsimp.py",
+    "final/harness/post/kskip.py",
+    "final/harness/post/opus_bulletflat.py",
+    "final/harness/post/opus_screen.py",
+    "final/harness/post/opus_stepdrop.py",
+    "final/harness/workbench.py",
+    "final/infra/orgserver/orgtools.py",
+    "final/post_fast/merge_post.py",
+    "final/post_fast/pf_drive.py",
+    "final/post_fast/pf_worker.py",
+    "final/post_fast/post_stage.sh",
+    "final/run.sh",
+    "final/tests/test_kernel_guard.py"
+   ]
+  },
+  {
+   "commit": "d2d6e3c",
+   "commit_full": "d2d6e3c1524a441eb162722ecad5a6597c37e657",
+   "date": "2026-11-24",
+   "what": "the axiom guard at export (harness/axiom_guard.py, tests/test_axiom_guard.py, run.sh): every exported proof's axioms are read on its toolchains, and a row that fails is set back to its newest earlier proof that passes; the seven post-stage scripts unchanged",
+   "tag": null,
+   "in_tag": "open-camready-20261124",
+   "changed": [
+    "final/README.md",
+    "final/harness/axiom_guard.py",
+    "final/run.sh",
+    "final/tests/test_axiom_guard.py"
+   ]
+  },
+  {
+   "commit": null,
+   "date": "2026-11-24",
+   "what": "documentation and records of this release: README.md, RESULTS.md, DISCLOSURES.md, NOTICE.md, final/README.md, final/REPLICATE.md, final/post_fast/MANIFEST.json refreshed, this file",
+   "tag": "open-camready-20261124",
+   "release": "open-camready-20261124 (a ZIP of final/)",
+   "changed": [
+    "DISCLOSURES.md",
+    "NOTICE.md",
+    "README.md",
+    "RESULTS.md",
+    "final/README.md",
+    "final/REPLICATE.md",
+    "final/REVISIONS.json",
+    "final/post_fast/MANIFEST.json"
+   ]
+  }
+ ],
+ "seven_post_scripts": {
+  "files": [
+   "post_fast/post_stage.sh",
+   "post_fast/pf_drive.py",
+   "post_fast/pf_svc.py",
+   "post_fast/pf_worker.py",
+   "post_fast/prefix_backend.py",
+   "post_fast/snapshot.py",
+   "post_fast/merge_post.py"
+  ],
+  "sha256": {
+   "post_fast/post_stage.sh": "d14b156b97d52945e6a3a9e3800c44ffc2aa3e114d50303de10f73afb65c3439",
+   "post_fast/pf_drive.py": "c2908008d6077aa01bbf239e8e99dffa9b9c558b0cbf523ba9b99bf50e55478d",
+   "post_fast/pf_svc.py": "78dac1d4af3fd0c2fe573ce5c2db7b4b8bd749769302598ea1678decf14461d8",
+   "post_fast/pf_worker.py": "c51ee7fa0941fe22fec260bb1cd7130bf536f210fc3528b73b6a1a922becd99f",
+   "post_fast/prefix_backend.py": "f9dcb659631a9ad223247e7e24c70b6c46d549ca03c46262dcafe1b3ecdd9b59",
+   "post_fast/snapshot.py": "47b658fdeab5df498dd0fd557810a8da2a13454b43af3a24767d44deb257a613",
+   "post_fast/merge_post.py": "f5d774ee7ff8499c67467431fae449700094f03349cc1bf18e6ab398551e076f"
+  },
+  "fingerprint": "916734a742e664be",
+  "how": "cd final/post_fast && for f in post_stage.sh pf_drive.py pf_svc.py pf_worker.py prefix_backend.py snapshot.py merge_post.py; do sha256sum \"$f\" | cut -d' ' -f1; done | sha256sum | cut -c1-16",
+  "same_at": [
+   "82f6f2d (open-camready-measured-20261124)",
+   "d2d6e3c",
+   "open-camready-20261124"
+  ],
+  "note": "the scripts that ran tier B and the held-out test; tests/test_axiom_guard.py recomputes the fingerprint"
+ },
+ "measured": {
+  "machine": "Azure F80as_v7 (AMD EPYC 9V45, 80 cores, one thread per core); the post stage pinned to 64 cores",
+  "tierB_20261124": {
+   "what": "post_fast/post_stage.sh of 82f6f2d, once, on the 60 final problems",
+   "cap_s": 5100,
+   "start": "2026-11-24T01:58:02Z",
+   "end": "2026-11-24T03:23:03Z",
+   "wall_s": 5101,
+   "stage_rc": 0,
+   "input": {
+    "what": "run 3's picks at 45.25 h (W1's input, stored mean 79.2505) with the model's kernel-skipped proof of FTheory.SU5.ChargeSpectrum.isPhenoClosedQ10_viableCharges replaced by the run's best kernel-checked proof of it (stored 43.34)",
+    "sha256_prefix": "3043ed87cc1a",
+    "stored_mean": 78.769667,
+    "fresh_mean_exact": 78.778929
+   },
+   "output": {
+    "sha256_prefix": "414daf5b2616",
+    "stored_mean": 81.466,
+    "gain": 2.696333,
+    "rows_changed": 57,
+    "rows_rose": 57,
+    "rows_fell": 0,
+    "adoptions": 352,
+    "rows_with_adoptions": 57,
+    "lines_with_debug_option": 0,
+    "kskip_adoptions": 0,
+    "gate_audit_of_last_step": {
+     "clean": 17,
+     "skipped": 40,
+     "not_run": 3,
+     "note": "skipped: the axiom print skipped on at least one toolchain (a Lean module file), the sorry message checked there; not_run: the 3 unchanged rows"
+    }
+   },
+   "fresh_read_output": {
+    "fresh_mean_exact": 81.465149,
+    "fresh_mean_2dp": 81.466333,
+    "rows_read": 60,
+    "rows": 60,
+    "pairs": 127,
+    "pairs_with_axiom_list": 117,
+    "pairs_standard_axioms": 117,
+    "listed_items": 16,
+    "listed_rows": 13,
+    "listed": "10 v4.27.0 toolchains of Strata rows (no axiom list inside a module file); 6 pairs of 3 ArkLib rows with a sorry message of another declaration of the same library file"
+   },
+   "curve_stored_mean_at_s": {
+    "600": 80.2742,
+    "1200": 80.9437,
+    "1800": 81.2077,
+    "2400": 81.3568,
+    "3000": 81.4402,
+    "3600": 81.4625,
+    "4200": 81.4653,
+    "4800": 81.466,
+    "5100": 81.466
+   },
+   "tierc_level": 81.4367,
+   "tierc_level_first_reached_s": 2911,
+   "last_adoption_s": 4678,
+   "four_kernel_skip_problems_input_output": {
+    "FTheory.SU5.ChargeSpectrum.isPhenoClosedQ5_viableCharges": [
+     42.89,
+     49.99
+    ],
+    "FTheory.SU5.ChargeSpectrum.isPhenoClosedQ10_viableCharges": [
+     43.34,
+     49.99
+    ],
+    "PauliMatrix.pauliContrDown_mul_pauliContr_mul_pauliContrDown": [
+     73.52,
+     76.71
+    ],
+    "PauliMatrix.pauliContr_mul_pauliContrDown_mul_pauliContr": [
+     65.52,
+     67.28
+    ]
+   },
+   "four_problems_row_points": 18.7,
+   "four_problems_of_mean": 0.312,
+   "vs_W1": {
+    "W1": "the first version's reference run (2026-11-06/07, before the stage's first release on 2026-11-07): the same picks with the model's kernel-skipped proof kept, kernel-skip op on, 85-minute cap; stored only",
+    "W1_input_stored_mean": 79.2505,
+    "W1_stored_mean": 82.5992,
+    "W1_adoptions": 357,
+    "W1_rows_with_adoptions": 56,
+    "other_56_rows_gain_of_mean_tierB": 2.3847,
+    "other_56_rows_gain_of_mean_W1": 2.3985,
+    "rows_equal": 50,
+    "rows_higher_tierB": 3,
+    "rows_higher_W1": 3,
+    "largest_difference": "Vlasov.transportedIntegral_continuousOn, 0.92 row points lower in tier B (0.015 of the mean, more than the whole gap); the other five rows that differ net about +0.0015 of the mean for tier B"
+   },
+   "provenance_split_by_adopting_op": {
+    "closed_proof": {
+     "ops": 31,
+     "adoptions": 251,
+     "row_points": 130.351,
+     "of_mean": 2.1725,
+     "share": 0.809
+    },
+    "aggregate": {
+     "ops": 8,
+     "adoptions": 63,
+     "row_points": 19.796,
+     "of_mean": 0.3299,
+     "share": 0.123
+    },
+    "none": {
+     "ops": 1,
+     "adoptions": 6,
+     "row_points": 1.546,
+     "of_mean": 0.0258,
+     "share": 0.01
+    },
+    "mixed": {
+     "adoptions": 32,
+     "row_points": 9.407,
+     "of_mean": 0.1567,
+     "share": 0.058
+    },
+    "total_row_points": 161.1,
+    "total_of_mean": 2.685,
+    "rows_stored_gain_sum": 161.78,
+    "rest": "0.68 row points: the stage's own readings at each adoption against the rows' stored scores"
+   },
+   "proofs_archive_sha256_prefix": "4eb60cecb722 (a private copy; the proofs are not published)"
+  },
+  "tierC_recheck_20261124": {
+   "what": "the tier C file of the report (kernel-checked variant of sub43, never uploaded), one fresh read with the kernel on, the same check as tier B's output",
+   "stored_mean": 81.436667,
+   "fresh_mean_exact": 81.421726,
+   "fresh_mean_2dp": 81.422333,
+   "rows_read": 60,
+   "rows": 60,
+   "pairs": 127,
+   "listed_items": 16
+  },
+  "heldout_20261124": {
+   "registered": "2026-11-24T02:42:23Z, the commit time of the registration in our private development repository (not independently timestamped), before any start proof of the test was read on the VM and before the stage was run on these rows",
+   "known_before_registration": "one earlier test's results on these rows (2026-11-23): the pre-release chain's gain, and the gain of other rules run on top of it (+1.59 on the 27 T-primary rows); by that test's records no op of the post stage had been run on them",
+   "named_rows": {
+    "25": "ProximityGap.all_affine_elements_close (ArkLib)",
+    "42": "OracleVerifier.simulateLiftContextQueryImpl (ArkLib)"
+   },
+   "gate_audit_on_output": "the gate's axiom audit skipped the axiom print (a Lean module file) on all 66 rows and checked only for Lean's sorry message",
+   "declared_not_readable": {
+    "at": "2026-11-24T03:34:46Z",
+    "rows": [
+     25
+    ],
+    "why": "start proof reads sorryAx, and so does the library's own reference proof"
+   },
+   "run": {
+    "code": "82f6f2d",
+    "cap_s": 5100,
+    "start": "2026-11-24T03:34:57Z",
+    "end": "2026-11-24T04:59:59Z",
+    "wall_s": 5102,
+    "stage_rc": 0
+   },
+   "rows": 66,
+   "libraries": {
+    "ArkLib": 40,
+    "PhysLib": 20,
+    "Strata": 5,
+    "CSLib": 1
+   },
+   "sharing_folder_or_namespace": 14,
+   "inputs_sha256_prefix": {
+    "rows": "e1264c236087",
+    "reference_heartbeats": "3809b6e53df8",
+    "input": "1df14289456b",
+    "manifest": "e79fca9f2251"
+   },
+   "output_sha256_prefix": "e6bb386355f9",
+   "stored_mean_input": 37.419545,
+   "stored_mean_output": 56.816364,
+   "fresh_mean_output_exact": 56.816314,
+   "rows_changed": 66,
+   "rows_fell": 0,
+   "lines_with_debug_option": 0,
+   "subsets": {
+    "T-primary": {
+     "rows": 27,
+     "start_stored_mean": 40.6904
+    },
+    "T-other": {
+     "rows": 9,
+     "start_stored_mean": 41.2389
+    },
+    "R": {
+     "rows": 30,
+     "start_stored_mean": 33.33
+    }
+   },
+   "result_fresh": {
+    "T-primary": {
+     "read": 26,
+     "of": 27,
+     "mean_gain": 16.695,
+     "se": 1.5483,
+     "mean_minus_2se": 13.5984,
+     "improved": 26,
+     "fell": 0,
+     "start": 40.8504,
+     "final": 57.5454
+    },
+    "T-primary, no folder or namespace shared": {
+     "read": 22,
+     "of": 22,
+     "mean_gain": 16.0827,
+     "se": 1.7195,
+     "mean_minus_2se": 12.6438,
+     "improved": 22,
+     "fell": 0,
+     "start": 41.2864,
+     "final": 57.3691
+    },
+    "T-other": {
+     "read": 9,
+     "of": 9,
+     "mean_gain": 13.8067,
+     "se": 2.3701,
+     "mean_minus_2se": 9.0664,
+     "improved": 9,
+     "fell": 0,
+     "start": 41.2367,
+     "final": 55.0433
+    },
+    "R": {
+     "read": 29,
+     "of": 30,
+     "mean_gain": 23.1338,
+     "se": 2.1357,
+     "mean_minus_2se": 18.8623,
+     "improved": 29,
+     "fell": 0,
+     "start": 33.3455,
+     "final": 56.4793
+    },
+    "all": {
+     "read": 64,
+     "of": 66,
+     "mean_gain": 19.2064,
+     "se": 1.3146,
+     "mean_minus_2se": 16.5773,
+     "improved": 64,
+     "fell": 0,
+     "start": 37.5041,
+     "final": 56.7105
+    }
+   },
+   "se": "row bootstrap, 2000 resamples, seed 20261124",
+   "registered_line": "HELD-OUT GAIN SHOWN",
+   "reader_exit": "NO VERDICT (exit 2): row 42 (R), output axioms ['sorryAx'] alone with no Lean message; its cause was written down before the line was read",
+   "provenance_share_merged_split_equally": {
+    "T-primary": {
+     "closed_proof": 0.865,
+     "aggregate": 0.111,
+     "none": 0.023
+    },
+    "all": {
+     "closed_proof": 0.895,
+     "aggregate": 0.088,
+     "none": 0.017
+    }
+   },
+   "proofs_archive_sha256_prefix": "506ac550f521 (a private copy; the proofs are not published)"
+  },
+  "axiom_guard_20261124": {
+   "guard_sha256_prefix": "a4745ce7fd07",
+   "note": "harness/axiom_guard.py of d2d6e3c, run on copies; defaults: 48 compiles at once, budget 420 s, 300 s per compile",
+   "runs": [
+    {
+     "file": "tier B output",
+     "sha256_prefix": "414daf5b2616",
+     "state": "first read after a start from a deallocated state",
+     "jobs": 48,
+     "budget_s": 420,
+     "seconds": 424.9,
+     "rc": 3,
+     "pass": 19,
+     "bad": 0,
+     "not_read": 41,
+     "set_back": 0,
+     "compile_timeouts": 88,
+     "readings": 127
+    },
+    {
+     "file": "tier C file",
+     "state": "next read",
+     "jobs": 48,
+     "budget_s": 420,
+     "seconds": 398.3,
+     "rc": 3,
+     "pass": 49,
+     "bad": 0,
+     "not_read": 11,
+     "set_back": 0,
+     "compile_timeouts": 21,
+     "readings": 127
+    },
+    {
+     "file": "held-out output",
+     "sha256_prefix": "e6bb386355f9",
+     "jobs": 48,
+     "budget_s": 420,
+     "seconds": 94.6,
+     "rc": 0,
+     "pass": 65,
+     "bad": 1,
+     "not_read": 0,
+     "set_back": 1,
+     "set_back_rows": [
+      42
+     ],
+     "passed_by_allowance_rows": [
+      25
+     ],
+     "reference_readings": 2,
+     "reference_readings_complete": 2,
+     "stored_mean_before": 56.8164,
+     "stored_mean_after": 56.2727,
+     "readings": 69
+    },
+    {
+     "file": "held-out output, written on a copy",
+     "jobs": 48,
+     "budget_s": 420,
+     "seconds": 22.0,
+     "rc": 0,
+     "pass": 65,
+     "bad": 1,
+     "set_back": 1,
+     "lines_changed": "row 42 only, in proofs.jsonl and proofs.merged.jsonl",
+     "stored_mean_before": 56.8164,
+     "stored_mean_after": 56.2727
+    },
+    {
+     "file": "row 42's chain, start and 10 steps, each alone",
+     "result": "start and steps 1-6 pass; steps 7-10 read sorryAx alone and are set back"
+    },
+    {
+     "file": "tier B output",
+     "jobs": 48,
+     "budget_s": 20,
+     "seconds": 39.4,
+     "rc": 3,
+     "pass": 44,
+     "not_read": 16,
+     "note": "a short budget; no Lean process left after it; the file unchanged"
+    },
+    {
+     "file": "tier B output",
+     "jobs": 48,
+     "budget_s": 420,
+     "seconds": 193.3,
+     "rc": 0,
+     "pass": 60,
+     "bad": 0,
+     "not_read": 0,
+     "set_back": 0,
+     "pins_not_read_structural": 10,
+     "readings": 127
+    },
+    {
+     "file": "tier C file",
+     "jobs": 48,
+     "budget_s": 420,
+     "seconds": 41.0,
+     "rc": 0,
+     "pass": 60,
+     "bad": 0,
+     "not_read": 0,
+     "set_back": 0,
+     "pins_not_read_structural": 10,
+     "readings": 127
+    },
+    {
+     "file": "tier B output",
+     "state": "page cache dropped first",
+     "jobs": 48,
+     "budget_s": 1800,
+     "timeout_s": 900,
+     "seconds": 215.7,
+     "rc": 0,
+     "pass": 60,
+     "not_read": 0,
+     "set_back": 0
+    },
+    {
+     "file": "tier B output",
+     "state": "page cache dropped first",
+     "jobs": 16,
+     "budget_s": 1800,
+     "timeout_s": 900,
+     "seconds": 225.2,
+     "rc": 0,
+     "pass": 60,
+     "not_read": 0,
+     "set_back": 0
+    },
+    {
+     "file": "tier B output",
+     "jobs": 16,
+     "budget_s": 420,
+     "seconds": 50.5,
+     "rc": 0,
+     "pass": 60,
+     "not_read": 0,
+     "set_back": 0
+    }
+   ],
+   "summary": "on tier B's output and on the tier C file the guard changed no proof (60 of 60 pass when every row was read); on the held-out output it set row 42 back, 69.21 -> 33.33"
+  }
+ },
+ "files": {
+  "EXPORT.json": "e5768cd00e4587616c16f519d9e24f527fe5b2ce502b93e6cfbebb994c0c3b63",
+  "HARNESS_COMMIT": "77f37d4b15fa1b2bf4dc846e77153cd24cb53feea0a02c28959b42e7319644e5",
+  "README.md": "a0159aac11aefcb6770513934dbd68211a29ef5b40c18a6812872fe3607fbb3b",
+  "REPLICATE.md": "cefe7be1910fbb7748c0909bcdd92cc1544122cd143ffd66b05618ddd0c6d760",
+  "data/official/heartbeats.jsonl": "2d777f145d0c4bf0fe66c4825b0fb590b57be75c0aa2ebec9e20f9ddcd56688b",
+  "data/official/rows.jsonl": "d53690b057f9972f44643678ee6b5eee7a66f56e1a7d2678a2e5ff47fadbd682",
+  "docs/open_package_readme.md": "54f7d85562af404def4a4971ebe58007d088b0513f45addb095bb9b6f9314f0d",
+  "harness/agent.py": "072621337fcc624ce5196e84037f4b9bfef670aa58723aff86494bbc7e410f46",
+  "harness/axiom_guard.py": "a4745ce7fd07bfdc66d53d848c4eda34cea7109cc6468ccf01b978ce9fdeb3b3",
+  "harness/batch_screen.py": "992276dc6fdd3cb4f3444595eb1ae27965b03f4a1461b76fc7f5d843785b72f0",
+  "harness/endstage.py": "a4dea20473092c5ab6589081805e46f55c95761521c801cd285f15caaa9ecfa7",
+  "harness/endstage_r10.py": "0946515065051cf29587b603d1ec9fe2bfdbf292d4663518ca5b5bc725c69135",
+  "harness/funind.py": "35443e87ab296eabc415e7f1937e27ace6ade6891f0350bf8eac3262a3fc21a8",
+  "harness/hb_tool_candidates.py": "ba8ccaa1c89922857dfd12274ea1609aa72b32ade6fa3c6b9535e375a68ee43e",
+  "harness/hb_tool_eval.py": "9a56e33108950f46eebff967621ee23fc9f06860b83bfabd55adbba26db7f48d",
+  "harness/hb_tool_extra.py": "6c51476f27564449c7e0ae5a3c53bf3f1ee646d494d3f3389c61325adb31e172",
+  "harness/kernel_guard.py": "f7916c434dfcf39a25604bd6b351ef999a4d21a93606a3ca5164c3dde64fd6d3",
+  "harness/leantools.py": "a75cf67cf8f5dfe44aaa0ac99c908736a51ab7f1e09ac4d6a883a3418e02664b",
+  "harness/open_package.py": "b6689c83e09ea56eda8d8f5205774c5ce3b63779dfc87bbbca428b73ac5138fc",
+  "harness/open_post.py": "7723661fa1cb317efb1b37d2b3a45b30b673b0b544d434cdda962ade176d1bf8",
+  "harness/post/__init__.py": "a55b102e0ab01abbf495786dade4a342974a94fd377c6cd777e622ab5d14fa98",
+  "harness/post/argon_bindelide.py": "d05208c4e688b7f14f80b63a23bc2398d6d56219b4c78882a212c82c0fdf17d8",
+  "harness/post/argon_calcstep.py": "836140bcf26446059a109b68ccee7a350475775029e7f0a457ad573707251881",
+  "harness/post/argon_funind.py": "1674862c49ea1c73ff570966ea004bd4b7803f2f634186898926acf82f2fe1ed",
+  "harness/post/argon_haveopt.py": "b657800a2bcee3dda5842583b2297bb610a5ca7dab874743dec457df44529498",
+  "harness/post/argon_hbelab.py": "d376e49d6d7d7da24733496a4628f0f59d34c00b3d4a06034d646c933f75d976",
+  "harness/post/argon_hbsimp.py": "f56626d28ca3f143833966b06b01a3f2d9b693379605a8a8d81d6f8916f9e7bc",
+  "harness/post/argon_hpcert.py": "1536a18dd452bcd388798a9a3d760400c01315463bbf68f2aff1da6b41552501",
+  "harness/post/ctorsearch.py": "61125742eb1e2f4e99ef744772671f0ae574ac2ca235ac3c920e902fed8cc579",
+  "harness/post/d3_simpconst.py": "597c751c9eb9f4991e5ac452654741d8fdc692ac0f24f02d80b590bb331884d5",
+  "harness/post/d4_closerprep.py": "b21a7d55a42f270dfc7ca8a6efc378b539d4d5c1d664dd7a038a11036d578403",
+  "harness/post/d4_implied.py": "8fc6743b482e57917646be916b48674cc14d5602fb418f75bb399fdc54893a0c",
+  "harness/post/d4_inlineeq.py": "c27e6a3d9a2775e0ab0f8981446de75c5ae26a85c8134224b2e450a7f0d3415a",
+  "harness/post/d4_kit.py": "abed3202317009ce6ff0feb70a79c4801b8d4521854c88509ebc749e21807e71",
+  "harness/post/d4_measure.py": "e8bd50ad4596ba6f4d4a91adaff1d37304860b555d423335a95b2ed09ac7b0dc",
+  "harness/post/hb_hotctl.py": "65ab46ee04e09bfc65548ddb0d5d1d434b05a783469e66fcc76dd0dab48f0b09",
+  "harness/post/hb_hotelab.py": "1a299358003c9018ac17e139552c5c876031f614b598555a42e5fbf20e337ca7",
+  "harness/post/hb_smartunfold.py": "d4eecba874a2b38cc0c1bc641fa6e849deed813ee2c10eb48ec44d5bec248ff0",
+  "harness/post/hintgrind.py": "2da771b81a75f0d0b3612f406f5575f535901f025a524d9cc0ba212d3ff469e3",
+  "harness/post/joint.py": "096ca97e9d67656906e90de7a4aca7c5abbe087dfc8f551820458bd2e6e780a9",
+  "harness/post/jointres.py": "f4fa7430a6feb033a722380446d77debac82a54e428e2179b9430cef113bbc66",
+  "harness/post/lexsurf.py": "41378d0b9c01642ad53c9ec397b1dba546e213c6605061fabcc4da8ba851c315",
+  "harness/post/opus_armfold.py": "174dfb0722410e15085cf2a9188abe6a8377e5ef2f8e8de7567f5319d0f8b9a7",
+  "harness/post/opus_bulletflat.py": "458d36b6592d9cc606749dd82ea2e55b30d8553ca9a1ea005968071e712c53e2",
+  "harness/post/opus_goalmerge.py": "79a6152c689569700ecb2802cdefbee7dbbd9bba5eb4a0ac8eae8a167d4c000a",
+  "harness/post/opus_hoist.py": "624f2ef9b526cc1463f12651eedab6c01f92534aa8e41ecf07c2ee6ca09bc753",
+  "harness/post/opus_patfuse.py": "0e8820193df9bb8d372117b5c954c134f7c08a7e5341354142f9f2b8dc5e3fac",
+  "harness/post/opus_rundrop.py": "abc2cc6f329786e62a5dc6b1eff28f2e338e4dacaa58f9d963c7f1715cfa5d4d",
+  "harness/post/opus_scaffold.py": "ec182e4bec24f53b08a340cec0fefaec1babcca220bdf5ca27ec46d42b4396f3",
+  "harness/post/opus_screen.py": "05d45312131210f774e43d41830a7c84b11cee264cd430011fc37e2341890f44",
+  "harness/post/opus_stepdrop.py": "f6fcd29dc15dcc8d47ce30ba0af4ccfd13863444799269d738959791ea8e0a17",
+  "harness/post/opus_stepdrop2.py": "2399124aeb2a68e88e30980207fe5a460436d730da4af938448dcbc9bee18d73",
+  "harness/post/projpath.py": "fcab7299c0fd254a28ed0cf538aefe1e2f8ff95addaaaedaf1df3b31d24e1673",
+  "harness/post/sol_factterms.py": "d4b3b304f01674173b726d0f0742e09b2bf40f3366c34c466d5ed78424eb496c",
+  "harness/post/sol_harvest.py": "19f7bc2b389b19b23481609af96880d14f43b5b58aa19b9b9e42b1bce01aaf54",
+  "harness/post/sol_hintheads.py": "52eaad017ea4940d31b3fc5fee7324d71f85ffaf36264bdb07e97c96d545b48b",
+  "harness/post/sol_probe.py": "8adda529bb2400ef0ba8e624bf200c8e5efeb362bde56a25072e417bd07080ec",
+  "harness/post/sol_simphints.py": "8a9ef8e939ae6c72cdd1041f977cad81f147a539e31cc075e266333a4f0b8eb0",
+  "harness/post/sol_simpprune.py": "acab2d698aa9d44b9290f36534855b34c7af3930a047d7c6e7e2c12bda301a3a",
+  "harness/post/sonnet_argdrop.py": "0226c3db1d91f2f2d024a9a3003ce17e1198def2e256afe94b993a6c7ebb2493",
+  "harness/post/sonnet_lintdrop.py": "7b45422698d0113b1ff4d11d5ba05319fb841a8f9ac0713356325142f7f03d94",
+  "harness/post/sonnet_listdrop.py": "2f6c77ac395213c37e8965a7fe1149560f61b4c148abce6a909607ad88a122a3",
+  "harness/post/sonnet_surface.py": "4dda64d6dfafad512005b571de8a0a77360b6d5104a07bef48a43999b7fb2c51",
+  "harness/post/sonnet_surface2.py": "f283d6de75f4186cb8906d0f8be38d3f05b08efd4a941368c17063ebfc7fdfd5",
+  "harness/post/spans.py": "6d82dc3332a5693ec8695f724eb6b79116405aa8aff196fb03ea74945a133838",
+  "harness/post/t4ind.py": "6b3d1a8113c29126a1a8e19c34f8a42d62069e426e4a3c2a202ff7b6197bace7",
+  "harness/post/v4_patelide.py": "386a3dff8d3a501854068210abb2615ba1c8f12eea123df0c13ce3bc4e24fb78",
+  "harness/post/v4_rescreen.py": "39a8c10f43f7264e68b6000baae5b82062724e1b7747341a9b951ca625663e21",
+  "harness/post/v4_unhyg.py": "2360e53501094794e79a508fe0643cafb1f46877d53efdd3155a2b5ce41ec5fc",
+  "harness/post/v5_altcases.py": "7906d01776886c8bd2cd4ae2d5e6f72c1a1c6ae08801b42bfdd65b8f2a0fbd73",
+  "harness/post/v5_cse.py": "4455398e59a6a7846221af2ef3c06480c9f0b3414ae2b53d676fd039ee86d617",
+  "harness/post/v5_deferhave.py": "cd7a87e2dfb35833313e1ffa9752f4e627a3bed010f8dce2109624241d6f7eac",
+  "harness/workbench.py": "f5d8d36683ef92b5b087a9fab6a2093a038e0aab7acef25cf3297bcaafacfa86",
+  "infra/orgserver/orgtools.py": "56564bf3113f1515f896fc44c8b7b91d4cdbd941ce46afc83c6ad50a9f598601",
+  "post_fast/MANIFEST.json": "f3c864ca569f3e0a5717281934402302d49230c0af8eda698bb9244124b1b153",
+  "post_fast/merge_post.py": "f5d774ee7ff8499c67467431fae449700094f03349cc1bf18e6ab398551e076f",
+  "post_fast/merge_warm.py": "2c7a289dc75734b873b421e31db47295e09a6bda3130c4c1cc58fb1663285a4a",
+  "post_fast/pf_drive.py": "c2908008d6077aa01bbf239e8e99dffa9b9c558b0cbf523ba9b99bf50e55478d",
+  "post_fast/pf_svc.py": "78dac1d4af3fd0c2fe573ce5c2db7b4b8bd749769302598ea1678decf14461d8",
+  "post_fast/pf_worker.py": "c51ee7fa0941fe22fec260bb1cd7130bf536f210fc3528b73b6a1a922becd99f",
+  "post_fast/post_stage.sh": "d14b156b97d52945e6a3a9e3800c44ffc2aa3e114d50303de10f73afb65c3439",
+  "post_fast/prefix_backend.py": "f9dcb659631a9ad223247e7e24c70b6c46d549ca03c46262dcafe1b3ecdd9b59",
+  "post_fast/prefix_server/driver.lean.in": "27a63173236520cdd0f1f15def5a115dafd1843e0638dcf448939fabe0725522",
+  "post_fast/prefix_server/psrv.c": "2597f400d5ec68da2c4d9e1ebb5e7618bca48f2851d51d661f069798396ed205",
+  "post_fast/snapshot.py": "47b658fdeab5df498dd0fd557810a8da2a13454b43af3a24767d44deb257a613",
+  "run.sh": "a9e7a7854db1ee328b6db07f4d121eb441de542abb6db8c02d125824f84f7f77",
+  "tests/test_axiom_guard.py": "22a31b68de151025f8417403853f4e7120b1813a8ce5a7683ab34587d1ddc9b9",
+  "tests/test_kernel_guard.py": "184325931a2dc580ca454ddcdd9493cb9612835ec0a68df3a0bf232a23f9b81b"
+ },
+ "removed": [],
+ "not_hashed_here": [
+  "REVISIONS.json (this file)"
+ ]
+}

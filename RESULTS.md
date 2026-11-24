@@ -36,7 +36,7 @@ our meter, (length % + heartbeat % + toolchain %) / 3 against the row's referenc
 | Measured code | tag `open-camready-measured-20261124`, commit `82f6f2d` of this repository: the kernel-skip op removed, the kernel guard at every stage and at export |
 | Published code | tag `open-camready-20261124`: the measured code, the axiom guard at export (commit `d2d6e3c`; [`final/README.md`](final/README.md#axiom-guard-at-export-added-2026-11-24-after-the-held-out-test)) and this release's documents and records |
 | The post stage | the seven scripts that ran every measurement below (`final/post_fast/`: `post_stage.sh`, `pf_drive.py`, `pf_svc.py`, `pf_worker.py`, `prefix_backend.py`, `snapshot.py`, `merge_post.py`) are byte-identical at both tags: fingerprint `916734a742e664be` (the sha256 of each file, one per line in this order, then the sha256 of those lines, first 16 hex digits; `final/tests/test_axiom_guard.py` recomputes it) (C). The post-step's ops that they run (`final/harness/open_post.py`, `final/harness/post/`) are the same at both commits too |
-| Records | [`final/REVISIONS.json`](final/REVISIONS.json): the numbers of this section with the sha256 prefixes of the inputs and outputs, and the sha256 of every file that differs from the export record `final/EXPORT.json`. Not in this repository: the proofs themselves (inputs and outputs), the held-out test's registration (a commit in our private development repository, not independently timestamped), its 66 rows, the fresh-read verifier and the registered reader. `final/harness/axiom_guard.py` reads axioms the way that verifier does (a forced `#print axioms` of the plain and the namespace-qualified name) |
+| Records | [`final/REVISIONS.json`](final/REVISIONS.json): the numbers of this section with the sha256 prefixes of the inputs and outputs, and the sha256 of every file that differs from the export record `final/EXPORT.json`. Not in this repository: the proofs themselves (inputs and outputs), except the tier C file ([`proofs/tier-c/`](proofs/tier-c/README.md)), the held-out test's registration (a commit in our private development repository, not independently timestamped), its 66 rows, the fresh-read verifier and the registered reader. `final/harness/axiom_guard.py` reads axioms the way that verifier does (a forced `#print axioms` of the plain and the namespace-qualified name) |
 
 ### Tier B: the revised post stage on the 60 final problems
 
@@ -91,7 +91,9 @@ the rows' stored scores (C).
 The tier C file is the kernel-checked variant of our upload in the report: `sub43`'s proofs with the four kernel-skipped ones
 replaced by kernel-checked proofs from a separate post-step chain without the kernel-skip op (stored mean 81.4367 on our meter;
 never uploaded, so the Arena never scored it). One fresh read, the same check as for tier B's output: **81.4217** (81.4223 from
-scores rounded to 2 decimals), 60 of 60 rows, with the same 16 listed items and nothing else (M).
+scores rounded to 2 decimals), 60 of 60 rows, with the same 16 listed items and nothing else (M). The file itself is in this
+repository since 2026-11-24: [`proofs/tier-c/`](proofs/tier-c/README.md) (sha256 `391c880ae869...`; also an asset of the release
+`open-camready-20261124`).
 
 ### Held-out test, registered before its run
 
@@ -233,7 +235,8 @@ All our uploads on the 60-problem final benchmark, under username `Vexorium` (th
 | `sub42` | 11-04 10:49 | 82.51 (L 65.51, H 82.00, Z 100) | plus pass 6 (the same command) |
 | `sub43` | 11-04 11:25 | **82.55** (L 65.60, H 82.06, Z 100) | plus pass 7 (the same command): **our final upload** |
 
-The run records and the uploaded proof files are not in this repository.
+The run records and the uploaded proof files are not in this repository. The one file of our proofs of the final problems here is the tier
+C file, which was never uploaded ([`proofs/tier-c/`](proofs/tier-c/README.md)).
 
 ## What this repository holds
 
@@ -246,6 +249,7 @@ was `main`'s `final/` until 2026-11-08, is the `final/` of tag [`open-final-prob
 | Folder | What it is |
 |---|---|
 | [`final/`](final/README.md) | **The code of our final upload `sub43`, with the fast post stage (released benchmark, 60 problems).** The release export of official run 3's package `246ff1f1` (`setup.sh`, `run.sh`, harness, scorer, model-free end stage; `final/EXPORT.json`), the post-step `final/harness/open_post.py` and `final/harness/post/` (development commit `a25416f5`, with additions that only the fast post stage turns on), the fast post stage in `final/post_fast/`, which `run.sh` runs by default, and the 60 released rows in `final/data/official/rows.jsonl`. [`final/post_fast/MANIFEST.json`](final/post_fast/MANIFEST.json) lists every file that differs from the tag [`open-run3-post-final-sub43-20261104`](https://github.com/bobbercheng/lean-refactor-open/tree/open-run3-post-final-sub43-20261104), the code of our final upload (section "Final result" above). **Run 2's package** (the release export `2dcf255f` of run 2's code `748d964c`), with our run orchestration on a rented vast.ai box (`official_run/`) and the environment fixes we applied on that box (`official_run/env_fixes/`), is the `final/` of the tag [`open-final-probe-20261102`](https://github.com/bobbercheng/lean-refactor-open/tree/open-final-probe-20261102/final); the exact export is the tag `open-run2-exact-748d964c`. |
+| [`proofs/tier-c/`](proofs/tier-c/README.md) | **The tier C proof file** (added 2026-11-24): the kernel-checked variant of `sub43` that the report's tier C counts (60 proofs, never uploaded), with its sha256 and what was measured on it (on our meter, in sample: the post-step's ops were developed on these problems) |
 | [`warmup/`](warmup/README.md) | **The last warm-up rehearsal** (15 warm-up problems, p85 / p85b, Oct 30 to Nov 1): the package export that ran, the scripts that rented, ran, watched and stopped the boxes, and the environment setup. Scripts and configs only, no run outputs. |
 
 The earlier warm-up material (the Oct 6-13 A100 line: run data, trajectories and per-problem state; 82.03, 82.29 with the normalizer

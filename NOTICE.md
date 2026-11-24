@@ -11,6 +11,7 @@ The following material was not written by us. It keeps its own terms, and the li
 | Lean source files of upstream libraries (ArkLib, Strata, cslib, PhysLean), copied as problem context | `**/context.lean`, the per-problem state folders and run trajectories (tag `open-warmup-a100-line-20261101`) | the upstream projects' licenses; the copied files keep their copyright headers (Apache 2.0 where stated) |
 | Competition problems, seed proofs, reference proofs and heartbeat data (incl. PutnamBench statements); LeanPool development rows | `**/data/benchmark_*.jsonl`, `final/data/official/rows.jsonl`, `**/data/leanpool_dev/*.jsonl`, problem statements and seed proofs in run records | the competition organizers' and the original sources' terms |
 | Model outputs (GLM-5.3-Flash, AWQ W4A16) | run trajectories, logs and the per-problem state (tag `open-warmup-a100-line-20261101`) | recorded as produced; the model's license terms apply |
+| Our proofs of the 60 final problems (the tier C file) | `proofs/tier-c/proofs.jsonl` | text that starts from the competition's seed proofs (the upstream libraries' proofs: their licenses, Apache 2.0 where stated; one row, `FTheory.SU5.ChargeSpectrum.containsPhenoCompletionsOfMinimallyAllows_viableCompletions`, is the seed proof unchanged), edited by the model in official run 3 (the model's license terms) and by our model-free end stage and post-step |
 | The model checkpoint and the serving image | referenced by name and revision in `final/infra/orgserver/`, `final/infra/vast/`, `warmup/README.md` and `warmup/package/infra/vast/`; not included | their publishers' terms |
 | Closed-model outputs (9 example pairs for the opt-in style step of run 2's package) | `harness/style_rw_open_exemplars.json` of run 2's package (tag `open-run2-exact-748d964c`) and of `warmup/package/`: withheld from the public repository (sha256 `3ed15491e0b5b09a...`); the organizers received it in the code zips of run 2's package; run 3's package has no style step | the model providers' terms; the step is opt-in and off in our runs |
 
@@ -69,6 +70,11 @@ every proof that sets a `debug.*` option, at every stage and at export:
 - Tags: `open-camready-measured-20261124` is the code we measured on 2026-11-24 (commit `82f6f2d`: the kernel-skip op removed,
   the kernel guard); `open-camready-20261124` is this version (the axiom guard and this release's documents and records), and its
   release holds a ZIP of `final/`.
+- After that tag, on 2026-11-24: the tier C proof file ([`proofs/tier-c/`](proofs/tier-c/README.md)), the first file of our proofs
+  of the final problems in this repository, also added to that release as a second asset; links to it in `README.md` and
+  `RESULTS.md`; its row in the table above and this entry; the sha256 values of the changed root documents in
+  `final/post_fast/MANIFEST.json`, and the new sha256 of `final/post_fast/MANIFEST.json` and the proof file's sha256 in
+  `final/REVISIONS.json`.
 
 The code of `sub43` as submitted stays at the tag `open-run3-post-final-sub43-20261104` and in the code zip.
 

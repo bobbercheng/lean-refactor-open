@@ -215,13 +215,13 @@
   },
   {
    "path": "../README.md",
-   "sha256": "fd75e388d02769816ed4a5e52d96bbbef2ab32613b5c78ecaed9ebf1184117fb",
-   "origin": "root README of main; outside the zip (2026-11-09: a four-part summary, its earlier text moved to ../RESULTS.md and ../DISCLOSURES.md); 2026-11-24: the official result, 'Changes in this version (2026-11-24)' with the axiom guard and the measurements, and the tags of this version"
+   "sha256": "5adca9a86ff0241402aa10499e6dd2136829f2ea5abbaf77c57c41879ca93657",
+   "origin": "root README of main; outside the zip (2026-11-09: a four-part summary, its earlier text moved to ../RESULTS.md and ../DISCLOSURES.md); 2026-11-24: the official result, 'Changes in this version (2026-11-24)' with the axiom guard and the measurements, and the tags of this version; after tag open-camready-20261124 (2026-11-24): a bullet and a Documents row for the tier C proof file"
   },
   {
    "path": "../RESULTS.md",
-   "sha256": "ed060930ebdd0f8d7bdc02531475e168f4f3ab9365dfab8fdf80681fc87a8cf1",
-   "origin": "results text moved from the root README of main (2026-11-09); outside the zip; 2026-11-24: 'Changes in this version (2026-11-24)' and the section 'Revised package, measured (2026-11-24)'"
+   "sha256": "cb842cbefd869a08d57fd9026b66c210ee34ce95b76193a1fa8d71147f4b04de",
+   "origin": "results text moved from the root README of main (2026-11-09); outside the zip; 2026-11-24: 'Changes in this version (2026-11-24)' and the section 'Revised package, measured (2026-11-24)'; after tag open-camready-20261124 (2026-11-24): links to the tier C proof file (proofs/tier-c/)"
   },
   {
    "path": "../DISCLOSURES.md",
@@ -230,8 +230,8 @@
   },
   {
    "path": "../NOTICE.md",
-   "sha256": "2aea6f6a4106b98ac0cb3e9cbc7e5947ab30ae2fb31bb8963cf0aa6e46c5c9b7",
-   "origin": "root NOTICE.md of main; outside the zip; 2026-11-24: 'Changes in this version (2026-11-24)': the kernel guard, the axiom guard, this file, REVISIONS.json and the tags"
+   "sha256": "93e02d704a10f1a62bb76b13f8629fe3d78a0f956185c892945f587e3ab0f6d0",
+   "origin": "root NOTICE.md of main; outside the zip; 2026-11-24: 'Changes in this version (2026-11-24)': the kernel guard, the axiom guard, this file, REVISIONS.json and the tags; after tag open-camready-20261124 (2026-11-24): the tier C proof file in the third-party table and in 'Changes in this version'"
   }
  ],
  "removed": [

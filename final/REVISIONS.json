@@ -66,7 +66,7 @@
    ]
   },
   {
-   "commit": null,
+   "commit": "f8f990b",
    "date": "2026-11-24",
    "what": "documentation and records of this release: README.md, RESULTS.md, DISCLOSURES.md, NOTICE.md, final/README.md, final/REPLICATE.md, final/post_fast/MANIFEST.json refreshed, this file",
    "tag": "open-camready-20261124",
@@ -80,7 +80,30 @@
     "final/REPLICATE.md",
     "final/REVISIONS.json",
     "final/post_fast/MANIFEST.json"
-   ]
+   ],
+   "commit_full": "f8f990b665ebb7de3fa2d539bd35fc2f255786f1"
+  },
+  {
+   "commit": null,
+   "date": "2026-11-24",
+   "what": "after tag open-camready-20261124: the tier C proof file (proofs/tier-c/, outside final/; also a second asset of the release open-camready-20261124), links to it in README.md, RESULTS.md and NOTICE.md, and those documents' sha256 values in post_fast/MANIFEST.json; in final/ only post_fast/MANIFEST.json and this file changed",
+   "tag": null,
+   "release": "open-camready-20261124 (second asset: the tier C proof file)",
+   "changed": [
+    "NOTICE.md",
+    "README.md",
+    "RESULTS.md",
+    "final/REVISIONS.json",
+    "final/post_fast/MANIFEST.json",
+    "proofs/tier-c/README.md",
+    "proofs/tier-c/proofs.jsonl"
+   ],
+   "outside_final": {
+    "proofs/tier-c/proofs.jsonl": {
+     "sha256": "391c880ae869678d84a93f222324807d8417f6eb66b2b7e29055dbafb4219f0a",
+     "release_asset": "vexorium-open-tier-c-proofs-20261124.jsonl (the same bytes)"
+    }
+   }
   }
  ],
  "seven_post_scripts": {
@@ -602,7 +625,7 @@
   "harness/post/v5_deferhave.py": "cd7a87e2dfb35833313e1ffa9752f4e627a3bed010f8dce2109624241d6f7eac",
   "harness/workbench.py": "f5d8d36683ef92b5b087a9fab6a2093a038e0aab7acef25cf3297bcaafacfa86",
   "infra/orgserver/orgtools.py": "56564bf3113f1515f896fc44c8b7b91d4cdbd941ce46afc83c6ad50a9f598601",
-  "post_fast/MANIFEST.json": "f3c864ca569f3e0a5717281934402302d49230c0af8eda698bb9244124b1b153",
+  "post_fast/MANIFEST.json": "3641da54d4c6ecfd405fff60be54ab70d8e3df278a327fb53261d834fb88f5dd",
   "post_fast/merge_post.py": "f5d774ee7ff8499c67467431fae449700094f03349cc1bf18e6ab398551e076f",
   "post_fast/merge_warm.py": "2c7a289dc75734b873b421e31db47295e09a6bda3130c4c1cc58fb1663285a4a",
   "post_fast/pf_drive.py": "c2908008d6077aa01bbf239e8e99dffa9b9c558b0cbf523ba9b99bf50e55478d",

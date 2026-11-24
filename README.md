@@ -76,6 +76,11 @@ current bests in the run's trace, polished bests included. Flat: last 3 sessions
     published code is tag `open-camready-20261124`, which adds the axiom guard. The seven post-stage scripts are byte-identical at
     both tags (fingerprint `916734a742e664be`) (C), and the axiom guard, run on the measured output, changed no proof: 60 of 60 pass
     (M).
+- **The tier C proof file is published.** [`proofs/tier-c/`](proofs/tier-c/README.md) holds the 60 proofs the report's tier C
+  counts (the kernel-checked variant of `sub43`, never uploaded), with its sha256; the release `open-camready-20261124` holds the
+  same file as an asset. On our meter, not the Arena's: stored 81.44, fresh read with the kernel on 81.42, 60 of 60 (M). In sample:
+  the post-step's ops were developed on these 60 problems, most after study of closed-model proofs of them
+  ([`DISCLOSURES.md`](DISCLOSURES.md), "Provenance").
 
 The details, the files changed and the tests are in [`final/README.md`](final/README.md), section "Changes in this version
 (2026-11-24)"; [`final/REVISIONS.json`](final/REVISIONS.json) lists every change after the export the package was built from.
@@ -134,6 +139,7 @@ LRA_EXTRA="--automation-card on --automation-card-min-ref-tokens 1000" bash run.
 | [`final/REPLICATE.md`](final/REPLICATE.md) | step-by-step replication, with expected output, wall time and cost per step, and our own numbers |
 | [`final/docs/open_package_readme.md`](final/docs/open_package_readme.md) | the package's technical appendix: stages, flags and measurements |
 | [`warmup/README.md`](warmup/README.md) | the last warm-up rehearsal (15 warm-up problems, Oct 30 to Nov 1): the package that ran and its scripts |
+| [`proofs/tier-c/README.md`](proofs/tier-c/README.md) | the tier C proof file: what it is, its sha256 and what was measured on it |
 | [`NOTICE.md`](NOTICE.md) | third-party material and its terms, and every edit made for public release |
 | [Report](https://openreview.net/forum?id=cvXHNZWtn8) | our technical report on OpenReview |
 

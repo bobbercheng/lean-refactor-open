@@ -195,6 +195,9 @@ unless stated ([`final/README.md`](final/README.md#axiom-guard-at-export-added-2
 | Time, 60 rows (127 readings) | 41 s (the tier C file) and 51 s (tier B's output, 16 compiles at once) with the files of the Lean environments in memory; on tier B's output with the page cache dropped first, 216 s (48 compiles at once) and 225 s (16), these two with a budget of 1800 s and 900 s per compile (no compile took over 201 s). After the VM was started from a deallocated state, the first read (tier B's output) left 41 of 60 rows not read within the 420 s budget (88 of 127 readings hit the 300 s compile timeout), and the next (the tier C file) left 11 (398 s, 21 timeouts): both exit 3, every row kept (in a job: exit code 5). A later read of tier B's output took 193 s and read every row (exit 0) |
 
 The guard changed no proof of tier B's output or of the tier C file.
+These readings, and the fresh reads above, rest on the axiom list Lean prints, which a proof text that registers its own command
+handler can make false; a text scan finds no such handler in the proofs read here (M;
+[`DISCLOSURES.md`](DISCLOSURES.md), "A limit of the axiom checks, found after publication"), so these readings stand.
 
 ## Final result
 

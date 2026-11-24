@@ -75,6 +75,9 @@ every proof that sets a `debug.*` option, at every stage and at export:
   `RESULTS.md`; its row in the table above and this entry; the sha256 values of the changed root documents in
   `final/post_fast/MANIFEST.json`, and the new sha256 of `final/post_fast/MANIFEST.json` and the proof file's sha256 in
   `final/REVISIONS.json`.
+- After that tag, a second change on 2026-11-24: a limit of the axiom checks found after publication, stated in `README.md`,
+  `DISCLOSURES.md` ("A limit of the axiom checks, found after publication"), `RESULTS.md` and `final/README.md`, and this entry; no code changed; the new sha256 values in
+  `final/post_fast/MANIFEST.json` and `final/REVISIONS.json`.
 
 The code of `sub43` as submitted stays at the tag `open-run3-post-final-sub43-20261104` and in the code zip.
 

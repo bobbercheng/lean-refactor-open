@@ -9,7 +9,8 @@ One open-weight model writes every proof: GLM-5.3-Flash (AWQ W4A16), served with
 tool-using sessions per problem. Model-free CPU stages then search mechanical rewrites of each problem's best proof. Every replacement
 passes one gate: the exact statement, no forbidden pattern, no `set_option debug.*` option, no `sorry` message, a compile on no fewer
 listed toolchains than the current proof, and a higher score on our meter. A proof can rest on `sorry` without any message; since
-2026-11-24 an axiom guard at export reads every exported proof's axioms (section "Changes in this version (2026-11-24)" below). No
+2026-11-24 an axiom guard at export reads every exported proof's axioms (section "Changes in this version (2026-11-24)" below;
+it has a limit found after publication, [`DISCLOSURES.md`](DISCLOSURES.md)). No
 hosted model is called during a run, and no model was trained or fine-tuned.
 
 **Official result:** runner-up of the open-source track (announced by the organizers on 2026-11-23). Our final upload `sub43`
@@ -56,7 +57,10 @@ current bests in the run's trace, polished bests included. Flat: last 3 sessions
   `final/harness/axiom_guard.py` compiles every problem's proof on its listed toolchains with `#print axioms` forced. A proof that
   shows Lean's sorry message on its declaration, or uses an axiom beyond `propext`, `Classical.choice`, `Quot.sound` and those of
   the problem's reference proof on the same toolchain (such as `sorryAx`), is set back to the problem's newest earlier proof that
-  passes. Details: [`final/README.md`](final/README.md#axiom-guard-at-export-added-2026-11-24-after-the-held-out-test).
+  passes. Details: [`final/README.md`](final/README.md#axiom-guard-at-export-added-2026-11-24-after-the-held-out-test). It reads
+  the axiom list Lean prints, which a proof text that registers its own command handler can make false (found after publication;
+  a text scan finds no such handler in our upload `sub43`, tiers B and C or the held-out run; no check that rejects such texts is
+  in this version: [`DISCLOSURES.md`](DISCLOSURES.md), "A limit of the axiom checks, found after publication").
 - **Measured (2026-11-24; (M) measured, (C) computed).** Details in [`RESULTS.md`](RESULTS.md#revised-package-measured-2026-11-24).
   - *The revised post stage on the 60 final problems (tier B).* One 85-minute run on the submitted run's picks, with the one
     kernel-skipped proof the model wrote replaced by the run's best kernel-checked proof of that problem: stored mean 81.47 from

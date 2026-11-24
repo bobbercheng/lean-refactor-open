@@ -127,6 +127,14 @@ the allowance gives up: on a toolchain where the reference proof itself reads `s
 held-out row 25), a proof whose own value became `sorry` (held-out row 42's fault) passes too, because `#print axioms` cannot tell
 the two apart. The export audit has the same limit.
 
+**A limit found after publication (2026-11-24).** The guard reads the axiom list that Lean prints, and so do the export audit and
+the post stage's gate where they run the print. A proof text that registers its own Lean command handler can make that list
+false, and the package's checks reject some such texts but not every one. So a proof whose unsound part draws no `sorry` message
+from Lean (for example one that rests on a lemma of the library proved by `sorry`) would pass the guard, the audit and the gate.
+Only the printed list is false: in the case we confirmed, the kernel still checked the proof and accepted it, `sorryAx` being an
+axiom. A text scan finds no such handler in the 498 proof texts listed in
+[`../DISCLOSURES.md`](../DISCLOSURES.md), "A limit of the axiom checks, found after publication". This version has no check that rejects such texts.
+
 **The reference's reading.** The reference proof is read the same way (forced print, both names), but only for a (row, toolchain)
 on which another proof of the row reads an axiom outside the three in a complete reading. It is read once per (row, toolchain) for the
 whole run (the proof, its earlier proofs and the reference as a candidate share that reading), and ahead of every other reading.

@@ -84,7 +84,7 @@
    "commit_full": "f8f990b665ebb7de3fa2d539bd35fc2f255786f1"
   },
   {
-   "commit": null,
+   "commit": "cb12bc3",
    "date": "2026-11-24",
    "what": "after tag open-camready-20261124: the tier C proof file (proofs/tier-c/, outside final/; also a second asset of the release open-camready-20261124), links to it in README.md, RESULTS.md and NOTICE.md, and those documents' sha256 values in post_fast/MANIFEST.json; in final/ only post_fast/MANIFEST.json and this file changed",
    "tag": null,
@@ -103,7 +103,24 @@
      "sha256": "391c880ae869678d84a93f222324807d8417f6eb66b2b7e29055dbafb4219f0a",
      "release_asset": "vexorium-open-tier-c-proofs-20261124.jsonl (the same bytes)"
     }
-   }
+   },
+   "commit_full": "cb12bc329441afc24db80e46e76720a9bed69540"
+  },
+  {
+   "commit": null,
+   "date": "2026-11-24",
+   "what": "after tag open-camready-20261124: a limit of the axiom checks found after publication (a proof text that registers its own command handler can make the #print axioms list false; the axiom guard reads that list, and the export audit and the post stage's gate outside module files) stated in README.md, DISCLOSURES.md, RESULTS.md, NOTICE.md and final/README.md; a text scan finds no such handler in the 498 proof texts DISCLOSURES.md lists; those documents' sha256 values in post_fast/MANIFEST.json, and this file's sha256 of README.md and post_fast/MANIFEST.json; in final/ only README.md, post_fast/MANIFEST.json and this file changed; no code changed",
+   "tag": null,
+   "release": null,
+   "changed": [
+    "DISCLOSURES.md",
+    "NOTICE.md",
+    "README.md",
+    "RESULTS.md",
+    "final/README.md",
+    "final/REVISIONS.json",
+    "final/post_fast/MANIFEST.json"
+   ]
   }
  ],
  "seven_post_scripts": {
@@ -553,7 +570,7 @@
  "files": {
   "EXPORT.json": "e5768cd00e4587616c16f519d9e24f527fe5b2ce502b93e6cfbebb994c0c3b63",
   "HARNESS_COMMIT": "77f37d4b15fa1b2bf4dc846e77153cd24cb53feea0a02c28959b42e7319644e5",
-  "README.md": "a0159aac11aefcb6770513934dbd68211a29ef5b40c18a6812872fe3607fbb3b",
+  "README.md": "867975836cfae6e90d1eecd01172bcc43e0e6b249cfe11fb52b3e9564c9d27b6",
   "REPLICATE.md": "cefe7be1910fbb7748c0909bcdd92cc1544122cd143ffd66b05618ddd0c6d760",
   "data/official/heartbeats.jsonl": "2d777f145d0c4bf0fe66c4825b0fb590b57be75c0aa2ebec9e20f9ddcd56688b",
   "data/official/rows.jsonl": "d53690b057f9972f44643678ee6b5eee7a66f56e1a7d2678a2e5ff47fadbd682",
@@ -625,7 +642,7 @@
   "harness/post/v5_deferhave.py": "cd7a87e2dfb35833313e1ffa9752f4e627a3bed010f8dce2109624241d6f7eac",
   "harness/workbench.py": "f5d8d36683ef92b5b087a9fab6a2093a038e0aab7acef25cf3297bcaafacfa86",
   "infra/orgserver/orgtools.py": "56564bf3113f1515f896fc44c8b7b91d4cdbd941ce46afc83c6ad50a9f598601",
-  "post_fast/MANIFEST.json": "3641da54d4c6ecfd405fff60be54ab70d8e3df278a327fb53261d834fb88f5dd",
+  "post_fast/MANIFEST.json": "380d5a154a7152782966c0176c286061558dc49780d48eace06fc21b29e7753a",
   "post_fast/merge_post.py": "f5d774ee7ff8499c67467431fae449700094f03349cc1bf18e6ab398551e076f",
   "post_fast/merge_warm.py": "2c7a289dc75734b873b421e31db47295e09a6bda3130c4c1cc58fb1663285a4a",
   "post_fast/pf_drive.py": "c2908008d6077aa01bbf239e8e99dffa9b9c558b0cbf523ba9b99bf50e55478d",

@@ -17,8 +17,9 @@ What our open-track results rest on and what this public repository leaves out. 
   problems, or replaces each of them by the benchmark's reference proof when asked to. Details:
   [`final/README.md`](final/README.md), section "Changes in this version (2026-11-24)".
 - **An axiom guard at export.** In a held-out test of the revised post stage, its gate let through one unsound step; an axiom
-  guard at export, added after that test, sets such a row back at export (section "Provenance" below). The measurements of the
-  revised package are in [`RESULTS.md`](RESULTS.md#revised-package-measured-2026-11-24).
+  guard at export, added after that test, sets such a row back at export (section "Provenance" below, which also states a limit
+  of the axiom checks found after publication). The measurements of the revised package are in
+  [`RESULTS.md`](RESULTS.md#revised-package-measured-2026-11-24).
 - **The post-step's provenance** is stated in full in section "Provenance" below: how its ops were made, their share of the gain
   in the revised package's runs, and an audit of whether the open model makes the same edits on its own.
 - **The sections below** describe the final upload and the earlier version of the code (tag
@@ -89,6 +90,20 @@ Details are in `final/README.md` of the tag [`open-run3-post-final-sub43-2026110
   (M). The gate itself is unchanged: within a run the stage can still build on such a step, and the export sets the row back. A row
   the guard cannot read in time keeps its proof (the job then ends with exit code 5), and on a toolchain where the reference proof
   itself reads `sorryAx` the guard cannot tell a proof whose own value became `sorry` from one that only uses the library's.
+- **A limit of the axiom checks, found after publication (2026-11-24).** A proof text that registers its own Lean command handler can make the axiom list that
+  `#print axioms` shows false. The axiom guard at export reads that list, and so do the export's axiom audit and the post stage's
+  gate where they run the print (outside Lean `module` files; inside them they read only the sorry message, as the bullet above
+  says). The package's checks reject some such texts but not every one. A proof whose unsound part draws no `sorry` message from
+  Lean (for example one that rests on a lemma of the library proved by `sorry`, or a value that became `sorry` with no Lean message,
+  held-out row 42's fault) could then pass all three. Only the printed list is false: in the case we confirmed, Lean's kernel still
+  checked the proof and accepted it, because `sorryAx` is an axiom. We found this in an adversarial review of further checks we are
+  building and confirmed it on one local compile (a plain file, Lean v4.31.0): the published parser reads a standard axiom alone
+  from its messages and the published checks accept the text (M); that the guard, the audit and the gate then pass it follows
+  from their code (C). A text scan for the forms that register an elaborator, macro, parser or other hook (the hook test of a check
+  not yet published) finds none in the 498 proof texts (414 distinct) of eight files (M): the tier C file, the upload `sub43`, tier
+  B's input and output, the held-out run's input and output, and the reference proofs of the 60 final and the 66 held-out
+  problems. So no reading or score reported for these files changes. A check that rejects such texts is not in the release
+  `open-camready-20261124` or on `main`; until one is, a proof text that declares or runs metaprograms is not covered by these checks.
 - **No stored proofs in the official runs:** every row starts from the seed proof in the rows file; no proof from an earlier run is
   reused.
 - **Closed-model example pairs:** the opt-in style step and its 9 encoded closed-model example pairs (two from our internal development

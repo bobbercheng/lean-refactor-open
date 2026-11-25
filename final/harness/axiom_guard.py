@@ -38,7 +38,34 @@ reading of its own on that pin: no sorry message on its declaration, no switch, 
 an axiom outside the three, and, for the row to pass, at least one pin OK.
 What the allowance gives up: on a pin where the reference proof itself reads sorryAx (a lemma of the library proved by `sorry`), a
 proof whose own value became sorry (held-out row 42's fault) passes too; `#print axioms` cannot tell the two apart (the export
-audit has the same limit).
+audit has the same limit). The finer sorry check closes that gap (below); LRA_AXIOM_GUARD_FINER=off turns it off.
+
+The finer sorry check (harness/finer_sorry.py, 2026-11-24). Only on a pin where a proof passes through the allowance with sorryAx
+among its axioms (needs_finer), two more readings are taken on that pin (finer_reading: the proof text followed by a Lean program
+instead of the prints): the proof's and the reference proof's (once per (row, pin) for the run). Each names the SORRY SOURCES of
+the declaration D: the constants of the compiled file reached from D whose own type or value names sorryAx, and the imported
+constants reached from those (not walked into) whose axioms include sorryAx; a source of the file is OWN when the compiled proof
+text declared it (its declaration range, or its nearest name prefix's, at or after the proof text's first line: D, D.go,
+D.proof_1, a helper lemma of the text, ...) or its origin is unknown (no range); a lemma of the library file's prefix is never
+OWN, also one named D.aux. The pin is OK only when the proof's sources (the union over its printed names) are a subset of the
+reference's (the intersection over its printed names) and neither side has an OWN source; else BAD. Fail closed (BAD): a finer
+reading not available (not read in time, not started, timed out, a reader error, no marker of the program, a marker that does not
+parse, a sorry message or a switch or an error in the declaration, a walk that ran out of fuel, a printed name that resolves to
+a constant of another file, axioms other than the pin's axiom reading, sorryAx with no source named, a text that can change the
+program's elaboration: finer_sorry.finer_hooks), or the reference's own sources include an OWN source (the library's proof of
+this very theorem rests on sorry: the check cannot tell a new sorry from it). (The program also refuses in a `module` file before
+v4.30; the guard never asks there: `#print axioms` itself gives no list in such a file, so the pin is not read by construction.)
+Hooks: with the check on, a text (any proof the guard reads, the reference's too) that registers an elaborator, a macro, syntax,
+a parser or delaborator, or runs code at elaboration (finer_sorry.hooks) is not compiled and reads BAD on every pin: such a text
+can fake the output of `#print axioms` and of the program alike (review 2026-11-24). The Arena's forbidden list rejects the keyword
+forms, not the attribute forms (`@[command_elab ...] private def`). Rows whose reference proof reads no sorryAx get no finer reading
+and, unless a text has such a hook, no change. Like a pin waiting for the reference's reading, a pin waiting for a finer reading
+reads BAD until it comes, so the row's earlier proofs are queued at once. The finer readings are queued with the reference's axiom
+readings, by pin: on each pin after the reference's axiom reading there and before the readings of older pins (priority (-1, pin
+index, 1 for the reference's, 2 for a proof's), for every proof of the row that needs one, earlier proofs included), ahead of
+every other reading. Limits: the frontier is the imported constant as the file's own code names it (a proof that reaches the
+library's sorry through another imported lemma than the reference does is set back, conservatively); export only (the post stage
+can still adopt such a step during the run, and setting the row back drops its sound earlier steps too).
 
 What happens to each row (guard_file):
   PASS       kept.
@@ -76,7 +103,9 @@ budget). --jobs: compiles at once (default: the physical cores, at most 48).
 exit 0: every row PASSES, and every toolchain of the proof it keeps was read (a toolchain not read by construction aside);
 exit 3: some row is NOT READ, PASSES with a toolchain that was not read (time, error), got a reference proof that did not pass, or
 is in the rows file but not in PROOFS (all named in the output; the replacements are written all the same);
-exit 1: not checked (a file cannot be read as JSONL, PROOFS changed while the guard read it, an error): nothing written."""
+exit 1: not checked (a file cannot be read as JSONL, PROOFS changed while the guard read it, an error): nothing written.
+$LRA_AXIOM_GUARD_FINER: on (default) or off; off restores the guard without the finer sorry check and its hook check exactly (the
+report says "finer": "off"); any other value keeps it on, with a warning in the log."""
 from __future__ import annotations
 
 import hashlib, heapq, itertools, json, os, signal, sys, threading, time
@@ -85,12 +114,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
+from harness import finer_sorry as FS  # noqa: E402
 from harness.option_guard import SEED_SCORE, assert_clean, check_forbidden, debug_option  # noqa: E402
 
 STD_AXIOMS = frozenset({"propext", "Classical.choice", "Quot.sound"})   # = scorer.compile.AXIOM_ALLOW
 OK, BAD, NOT_READ = "ok", "bad", "not read"                             # pin states
 PASS, FAIL = "pass", "fail"                                             # row verdicts (and NOT_READ)
 BUDGET_ENV = "LRA_AXIOM_GUARD_S"
+FINER_ENV = "LRA_AXIOM_GUARD_FINER"   # on (default) | off: the finer sorry check (harness/finer_sorry.py)
 DEFAULT_BUDGET_S = 420     # run.sh: the guard runs after the post stage, in the job's 600 s safety margin (README, "Axiom guard")
 DEFAULT_TIMEOUT_S = 300
 MAX_JOBS = 48              # compiles at once at most: the post stage's 48 slots, measured on 64 cores
@@ -135,7 +166,7 @@ def extra_axioms(reading) -> list[str]:
 def complete(reading) -> bool:
     """A complete reading: an axiom list, and no reader error, sorry message, switch, timeout or error in the declaration."""
     return (isinstance(reading, dict) and reading.get("axioms") is not None and not reading.get("error") and not reading.get("sorry_warning")
-            and not reading.get("switch") and not reading.get("timed_out") and not reading.get("decl_errors"))
+            and not reading.get("switch") and not reading.get("timed_out") and not reading.get("decl_errors") and not reading.get("hook"))
 
 
 def needs_reference(reading) -> bool:
@@ -157,6 +188,8 @@ def ref_allowance(ref) -> tuple[frozenset | None, str]:
         return None, "Lean's sorry message on its declaration"
     if ref.get("switch"):
         return None, "its text names a way to hide Lean's sorry message"
+    if ref.get("hook"):   # (only with the finer check on: with_hooks)
+        return None, str(ref["hook"])[:200]
     if ref.get("timed_out"):
         return None, "its compile timed out"
     if ref.get("axioms") is None:
@@ -172,10 +205,29 @@ def ref_allowance(ref) -> tuple[frozenset | None, str]:
     return frozenset(extra_axioms(ref)), "read"
 
 
-def pin_state(reading: dict | None, ref: dict | None = None) -> tuple[str, str]:
+def finer_switch(value: str | None = None) -> tuple[bool, str | None]:
+    """(the finer sorry check on?, a warning) from `value` (default: $LRA_AXIOM_GUARD_FINER): off only for "off"; unset, "" or "on":
+    on; any other value: on, with a warning (a typo never turns the check off)."""
+    v = os.environ.get(FINER_ENV, "") if value is None else value
+    if v.strip() == "off":
+        return False, None
+    if v.strip() in ("", "on"):
+        return True, None
+    return True, f"{FINER_ENV}={v!r} is neither on nor off: the finer sorry check stays on"
+
+
+def needs_finer(reading, ref) -> bool:
+    """A reading that passes through the allowance with sorryAx among its axioms (the reference's reading `ref` on the same pin reads
+    sorryAx too): the finer sorry check decides it. Every other reading is decided as without the check."""
+    return needs_reference(reading) and "sorryAx" in extra_axioms(reading) and pin_state(reading, ref)[0] == OK
+
+
+def pin_state(reading: dict | None, ref: dict | None = None, finer: tuple | None = None) -> tuple[str, str]:
     """(OK | BAD | NOT_READ, why) of one reading ({"axioms": list | None, "sorry_warning", "switch", "timed_out", "decl_errors",
     "error", "module"}; None = not read at all) against `ref`, the reference proof's reading on the same pin (None: not available).
-    Evidence of sorry decides first, whatever else the reading says; an axiom outside the three passes only through the allowance."""
+    Evidence of sorry decides first, whatever else the reading says; an axiom outside the three passes only through the allowance.
+    `finer`: None, the finer sorry check off (the rule as published); else (the proof's finer reading, the reference proof's finer
+    reading) on this pin, either None when not available: a pass through the allowance with sorryAx then needs the finer check."""
     if reading is None:
         return NOT_READ, "not read within the time budget"
     if reading.get("error"):
@@ -184,6 +236,8 @@ def pin_state(reading: dict | None, ref: dict | None = None) -> tuple[str, str]:
         return BAD, "Lean's sorry message on the declaration"
     if reading.get("switch"):
         return BAD, "the text names a way to hide Lean's sorry message"
+    if reading.get("hook"):   # (only with the finer check on: with_hooks; the text was not compiled)
+        return BAD, str(reading["hook"])[:200]
     axs = reading.get("axioms")
     extra = extra_axioms(reading)
     if extra:
@@ -197,6 +251,11 @@ def pin_state(reading: dict | None, ref: dict | None = None) -> tuple[str, str]:
         if outside:
             return BAD, what + ("; the reference proof reads standard axioms here" if not allowed else
                                 f"; the reference proof reads {sorted(allowed)} here, not {outside}")
+        if finer is not None and "sorryAx" in extra:
+            ok, fwhy, _f = finer_decide(reading, ref, finer)
+            if not ok:
+                return BAD, what + f"; the reference proof reads {sorted(allowed)} here, but the finer sorry check fails: {fwhy}"
+            return OK, f"axioms as the reference proof: {extra}; {fwhy}"
         return OK, f"axioms as the reference proof: {extra}"
     if reading.get("timed_out"):
         return NOT_READ, "the compile timed out"
@@ -207,10 +266,21 @@ def pin_state(reading: dict | None, ref: dict | None = None) -> tuple[str, str]:
     return OK, "standard axioms" if axs else "no axioms"
 
 
-def allowance_pins(readings: dict, refs: dict | None = None) -> list[str]:
+def finer_of(finers: dict | None, pin: str) -> tuple | None:
+    """The finer readings (proof's, reference's) of `pin` in `finers` (None: the check is off; a pin left out: neither available)."""
+    return None if finers is None else finers.get(pin, (None, None))
+
+
+def finer_decide(reading: dict | None, ref: dict | None, finer: tuple) -> tuple[bool, str, dict]:
+    """finer_sorry.decide on one pin: the finer readings `finer` (proof's, reference's), each checked against its axiom reading."""
+    axs = lambda r: r.get("axioms") if isinstance(r, dict) else None
+    return FS.decide(finer[0], finer[1], axs(reading), axs(ref))
+
+
+def allowance_pins(readings: dict, refs: dict | None = None, finers: dict | None = None) -> list[str]:
     """The pins on which a proof is OK only through the allowance (an axiom outside the three that its reference proof reads too)."""
     refs = refs or {}
-    return [v for v, r in readings.items() if extra_axioms(r) and pin_state(r, refs.get(v))[0] == OK]
+    return [v for v, r in readings.items() if extra_axioms(r) and pin_state(r, refs.get(v), finer_of(finers, v))[0] == OK]
 
 
 def structural(reading: dict | None) -> bool:
@@ -220,20 +290,25 @@ def structural(reading: dict | None) -> bool:
             and pin_state(reading)[0] == NOT_READ and not reading.get("timed_out") and not reading.get("decl_errors"))
 
 
-def classify(readings: dict, refs: dict | None = None) -> tuple[str, str, dict]:
+def classify(readings: dict, refs: dict | None = None, finers: dict | None = None) -> tuple[str, str, dict]:
     """(PASS | FAIL | NOT_READ, why, {pin: (state, why)}) of one proof from its readings {pin: reading or None}, against the reference
-    proof's readings {pin: reading or None} (None, or a pin left out: not available, so nothing beyond the three is allowed there)."""
+    proof's readings {pin: reading or None} (None, or a pin left out: not available, so nothing beyond the three is allowed there).
+    `finers`: None, the finer sorry check off; else {pin: (the proof's finer reading, the reference's)} (a pin left out: neither)."""
     refs = refs or {}
-    states = {v: pin_state(r, refs.get(v)) for v, r in readings.items()}
+    states = {v: pin_state(r, refs.get(v), finer_of(finers, v)) for v, r in readings.items()}
     bad = [f"{v}: {w}" for v, (s, w) in states.items() if s == BAD]
     if bad:
         return FAIL, "; ".join(bad), states
-    rel = allowance_pins(readings, refs)
+    rel = allowance_pins(readings, refs, finers)
     std = [v for v, (s, _) in states.items() if s == OK and v not in rel]
     unread = [f"{v}: {w}" for v, (s, w) in states.items() if s == NOT_READ]
     if std or rel:
+        def fin(v) -> str:   # what the finer sorry check found on a pin it decided (it passed: the pin is OK)
+            if finers is None or "sorryAx" not in extra_axioms(readings[v]):
+                return ""
+            return f" ({finer_decide(readings[v], refs.get(v), finer_of(finers, v))[1]})"
         why = "; ".join(([f"standard axioms on {', '.join(std)}"] if std else [])
-                        + [f"axioms as the reference proof on {v}: {extra_axioms(readings[v])}" for v in rel])
+                        + [f"axioms as the reference proof on {v}: {extra_axioms(readings[v])}{fin(v)}" for v in rel])
         return PASS, why + (f"; not read on {'; '.join(unread)}" if unread else ""), states
     return NOT_READ, "; ".join(unread) or "no toolchain to read on", states
 
@@ -283,12 +358,103 @@ def forced_reading(row: dict, proof: str, version: str, timeout: float) -> dict:
     names = list(dict.fromkeys([name, C.qualified_name(name, C.current_namespace(core))]))
     print_line = first + 1 + (mods + head).count("\n")
     r = run(head + "".join(f"set_option pp.fullNames true in\n#print axioms {n}\n" for n in names))
-    a = C.AxiomAudit(name, C.parse_axioms(r.messages, print_line), None, r, first, print_line)
-    lists = print_lists(r.messages, print_line)
+    return audit_reading(C.AxiomAudit(name, C.parse_axioms(r.messages, print_line), None, r, first, print_line), module)
+
+
+def audit_reading(a, module: bool) -> dict:
+    """A reading (the dict pin_state reads) of one compile `a` (a scorer.compile.AxiomAudit with its compile): the union of the axiom
+    lists of every `#print axioms` message at or after its print line ("lists": each print's; no print line, as in the compile of
+    the declaration alone: no list), the sorry message, the switch, the timeout and the declaration's errors. forced_reading and the
+    post stage's gate (harness/post_audit.py) both read a compile through it."""
+    r = a.compile
+    lists = print_lists(r.messages, a.print_line) if a.print_line is not None else []
     axioms = list(dict.fromkeys(x for l in lists for x in l)) if lists else None
     return {"axioms": axioms, "lists": lists, "sorry_warning": a.sorry_warning, "switch": a.switch, "timed_out": bool(r.timed_out), "module": module,
             "decl_errors": [str(e)[:160] for e in a.decl_errors][:2], "print_errors": len(a.print_errors), "prints": len(lists),
             "prints_differ": len({tuple(sorted(l)) for l in lists}) > 1, "seconds": round(r.seconds, 1)}
+
+
+def finer_reading(row: dict, proof: str, version: str, timeout: float) -> dict:
+    """One finer sorry reading of `proof` for `row` on `version` (harness/finer_sorry.py): the proof followed by the Lean program for
+    the plain and the namespace-qualified name, compiled as forced_reading compiles (unmeasured, warn.sorry on, `module` files
+    included). "markers": the program's lines (one per printed name and the declaration it resolves to), "end": its end line; or
+    "error": why there is no reading (no marker, a marker that does not parse, ...: the check then fails closed).
+    When the program does not run because the file's imports do not bring Lean's command elaborator, the reading is taken once more
+    with it imported (finer_sorry.with_lean_import; "lean_import": true), in what is left of `timeout`; the guard then checks that
+    this compile reads the same axioms as the axiom reading (finer_sorry.decide)."""
+    from scorer import compile as C
+    name = C.decl_name(row["statement"], row.get("name"))
+    if not name:
+        return {"error": "the statement declares no name to read"}
+    t0 = time.monotonic()
+    putnam = row["source"] == "putnambench"
+    if putnam:
+        core, mods, module, args = row["header"].rstrip(), "", False, ()
+    else:
+        core, mods = C.split_modifiers(C.file_prefix(row, version))
+        args = C._with_warn_sorry(C.lakefile_options(row["source"], version))
+        module = bool(C._MODULE_LINE.match(core))
+    head = proof.rstrip() + "\n\n"
+    names = list(dict.fromkeys([name, C.qualified_name(name, C.current_namespace(core))]))
+    ikey = (row["source"], version, "" if putnam else row.get("file_path"))
+
+    def attempt(c: str, tmo: int, imported: bool) -> dict:
+        nonce = FS.new_nonce()
+        first = C._first_line(c)
+        proof_line = first + 1   # the file's first line after the library file's prefix: the modifiers, then the proof text
+        program_line = first + 1 + (mods + head).count("\n")
+        text = head + FS.program(names, nonce, proof_line)
+        if putnam:
+            r = C.compile_putnam(c, text, version, count=False, timeout=tmo)
+        elif not imported:   # as forced_reading compiles
+            r = C.compile_project(row, text, version, count=False, timeout=tmo, lean_args=args)
+        else:                # the same body, with the import in the file's prefix
+            r = C._lean_in_project(row["source"], version, c.rstrip("\n") + "\n\n" + mods + text.rstrip() + "\n", args, tmo, first_line=first)
+        a = C.AxiomAudit(name, None, None, r, first, program_line)
+        out = {"sorry_warning": a.sorry_warning, "switch": a.switch, "timed_out": bool(r.timed_out), "module": module,
+               "decl_errors": [str(e)[:160] for e in a.decl_errors][:2], "program_errors": [str(e)[:160] for e in a.print_errors][:2],
+               "seconds": round(r.seconds, 1), "finer_version": FS.VERSION, "lean_import": imported}
+        parsed = FS.parse(r.messages, program_line, nonce, proof_line)
+        if "error" in parsed:
+            out["error"] = "finer reading: " + ("the compile timed out" if r.timed_out else parsed["error"]
+                                                + (f" ({out['program_errors'][0]})" if out["program_errors"] else ""))
+            return out
+        out.update(markers=parsed["markers"], end=parsed["end"], program_ms=parsed["end"].get("ms"))
+        return out
+
+    if ikey in _FINER_NEEDS_IMPORT:   # this file needed the import before in this run: compiled with it at once (one compile, not two)
+        return attempt(FS.with_lean_import(core), max(1, int(timeout)), True)
+    out = attempt(core, max(1, int(timeout)), False)
+    if not (out.get("error") and out["program_errors"] and not out["timed_out"]):
+        return out
+    left = int(timeout - (time.monotonic() - t0))
+    if STOP.is_set() or left < MIN_START_S:   # as the pool: no compile starts after a stop signal or with less than MIN_START_S left
+        out["error"] += ("; not compiled again with Lean's command elaborator imported: "
+                         + ("the guard was stopped" if STOP.is_set() else f"{max(0, left)} s left"))
+        return out
+    again = attempt(FS.with_lean_import(core), left, True)
+    again["seconds"] = round(again["seconds"] + out["seconds"], 1)
+    again["first_attempt"] = out["error"][:160]
+    if not again.get("error"):
+        _FINER_NEEDS_IMPORT.add(ikey)
+    return again
+
+
+_FINER_NEEDS_IMPORT: set = set()   # (source, version, file) whose finer reading ran only with the import (as scorer.compile._NEEDS_IMPORT)
+
+
+def with_hooks(fn, check):
+    """The reader `fn`, except that a text in which `check` (finer_sorry.hooks or finer_hooks) reads a hook is not compiled: its
+    reading is {"hook": why}, which reads BAD (evidence from the text, as the switch) and allows nothing as the reference's."""
+    def read(row, text, pin, timeout):
+        why = check(text)
+        return {"hook": why, "axioms": None, "seconds": 0.0} if why else fn(row, text, pin, timeout)
+    return read
+
+
+def no_finer_reader(row, text, pin, timeout) -> dict:
+    """The finer reader of a guard given a stand-in axiom reader and no finer one: no reading (the check fails closed), no compile."""
+    return {"error": "no finer reader (a stand-in axiom reader was given without one)"}
 
 
 def prepare_env(budget_s: float) -> None:
@@ -338,8 +504,9 @@ class Readings:
         for i in range(max(1, int(jobs))):
             threading.Thread(target=self._work, daemon=True, name=f"axiom-guard-{i}").start()
 
-    def submit(self, prio: tuple, key: tuple, row: dict, proof: str, pin: str) -> None:
-        """Queue one reading; a key is read once. A key still waiting is moved up when it is submitted again with a higher priority."""
+    def submit(self, prio: tuple, key: tuple, row: dict, proof: str, pin: str, fn=None) -> None:
+        """Queue one reading; a key is read once. A key still waiting is moved up when it is submitted again with a higher priority.
+        `fn`: the reader of this key (default: the pool's reader; the finer sorry readings have their own)."""
         with self.cv:
             if self.closed:
                 return
@@ -347,7 +514,7 @@ class Readings:
                 return
             self.queued.add(key)
             self.prio[key] = prio
-            heapq.heappush(self.heap, (prio, next(self.seq), key, row, proof, pin))
+            heapq.heappush(self.heap, (prio, next(self.seq), key, row, proof, pin, fn))
             self.cv.notify()
 
     def _work(self) -> None:
@@ -357,7 +524,7 @@ class Readings:
                     self.cv.wait()
                 if self.closed:
                     return
-                _p, _s, key, row, proof, pin = heapq.heappop(self.heap)
+                _p, _s, key, row, proof, pin, fn = heapq.heappop(self.heap)
                 if key in self.started or key in self.results:
                     continue   # the older entry of a reading that was moved up, and has been taken
                 left = self.deadline - self.clock()
@@ -368,7 +535,7 @@ class Readings:
                 self.started.add(key)
             t0 = self.clock()
             try:
-                res = self.reader(row, proof, pin, min(self.timeout_s, left))
+                res = (fn or self.reader)(row, proof, pin, min(self.timeout_s, left))
                 res = dict(res) if isinstance(res, dict) else {"error": f"the reader returned {type(res).__name__}"}
             except Exception as e:   # a reading that fails is NOT READ, never OK
                 res = {"error": f"{type(e).__name__}: {str(e)[:160]}"}
@@ -490,10 +657,16 @@ def set_back_merged(path: Path, replaced: dict, log) -> bool:
 
 
 def guard_file(proofs_path, rows_path, fallback_paths=None, *, budget_s: float = DEFAULT_BUDGET_S, timeout_s: float = DEFAULT_TIMEOUT_S,
-               jobs: int | None = None, reader=None, write: bool = True, log=print, clock=time.monotonic) -> dict:
+               jobs: int | None = None, reader=None, write: bool = True, log=print, clock=time.monotonic, finer: bool | None = None,
+               finer_reader=None) -> dict:
     """Read every row of PROOFS (see the module text), replace the rows that read BAD, write the file by rename when a row changed.
-    Returns the report; report["rc"] is the exit code. Raises OSError / ValueError when PROOFS or ROWS cannot be read."""
+    Returns the report; report["rc"] is the exit code. Raises OSError / ValueError when PROOFS or ROWS cannot be read.
+    `finer`: the finer sorry check on or off (None: $LRA_AXIOM_GUARD_FINER, finer_switch); `finer_reader`: its reader (default:
+    finer_reading when `reader` is not given; when a stand-in `reader` is given without a finer one, no_finer_reader: no finer
+    reading and no compile, so the check fails closed). With the check on, both readers are wrapped by with_hooks (a text that
+    can change what the reading prints is not compiled and reads BAD)."""
     t_start = clock()
+    stand_in = reader is not None
     path = Path(proofs_path)
     first = path.read_bytes()   # what the guard reads; the file is written only if it still holds this
     raw, recs = parse_jsonl(first, path)
@@ -527,9 +700,17 @@ def guard_file(proofs_path, rows_path, fallback_paths=None, *, budget_s: float =
     n_pins = sum(len(pins.get(r.get("name"), [])) for r in recs)
     jobs = max(1, int(jobs or min(physical_cores(), MAX_JOBS, max(1, n_pins))))
     deadline = t_start + max(0.0, float(budget_s))
+    if finer is None:
+        finer, fwarn = finer_switch()
+        if fwarn:
+            log(f"{utc()} axiom guard: WARNING: {fwarn}")
+    finer_reader = finer_reader or (no_finer_reader if stand_in else finer_reading)
+    if finer:   # a text that registers a hook is evidence on every reading (finer_sorry.hooks), and on every finer one (finer_hooks)
+        reader, finer_reader = with_hooks(reader, FS.hooks), with_hooks(finer_reader, FS.finer_hooks)
     log(f"{utc()} axiom guard: {path}: {len(recs)} rows, {n_pins} (row, toolchain) readings, {jobs} threads, budget {float(budget_s):.0f} s, "
         f"{float(timeout_s):.0f} s per compile; fallbacks: {', '.join(role_text(f[0]) for f in fallbacks) or 'none'}, then the reference proof; "
-        f"read first: the {sum(exposed.values())} row(s) whose proof differs from " + (f"{base_role}" if fallbacks else "a fallback file (none: all)"))
+        f"read first: the {sum(exposed.values())} row(s) whose proof differs from " + (f"{base_role}" if fallbacks else "a fallback file (none: all)")
+        + (f"; finer sorry check on ({FINER_ENV}; program v{FS.VERSION})" if finer else ""))
     pool = Readings(reader, jobs, deadline, timeout_s, clock)
 
     def key(name, proof, pin):
@@ -537,6 +718,15 @@ def guard_file(proofs_path, rows_path, fallback_paths=None, *, budget_s: float =
 
     owner: dict = {}          # key -> row indices whose CURRENT proof it reads
     cands_of: dict = {}       # row index -> [(role, record)], once submitted
+    texts: dict = {}          # key of an axiom reading -> the proof text it reads
+    by_pin: dict = {}         # (row name, pin) -> {key: None} of the axiom readings submitted on that pin, in order
+
+    def submit(prio, kk, row, text, v) -> None:
+        """Queue an axiom reading (the pool reads a key once)."""
+        texts[kk] = text
+        by_pin.setdefault((kk[0], v), {})[kk] = None
+        pool.submit(prio, kk, row, text, v)
+
     first_reads = []
     for k, r in enumerate(recs):
         n, ps = r.get("name"), pins.get(r.get("name"), [])
@@ -546,7 +736,7 @@ def guard_file(proofs_path, rows_path, fallback_paths=None, *, budget_s: float =
             tier = (0 if rank == 0 else 2) if exposed[k] else (3 if rank == 0 else 4)
             first_reads.append(((tier, rank, k), kk, rows[n], cur_of[k], v))
     for args in sorted(first_reads, key=lambda x: x[0]):   # in priority order: a thread that starts at once takes the first
-        pool.submit(*args)
+        submit(*args)
 
     def ref_text(n) -> str:
         return text_of((rows.get(n) or {}).get("src"))
@@ -565,6 +755,31 @@ def guard_file(proofs_path, rows_path, fallback_paths=None, *, budget_s: float =
         return {v: ref_reading(n, v, res) for v in pins.get(n, [])}
 
     ref_asked: set = set()    # (row name, pin) on which a proof other than the reference needed its reading (read once, for the whole run)
+    finer_asked: dict = {}    # key of a finer reading -> None, in the order asked (the reference's once per (row, pin) for the run)
+
+    def fkey(n, text, v):
+        return (n, sha16(text), v, "finer")
+
+    def finer_pair(n, text, v, res: dict) -> tuple:
+        """(the finer reading of `text`, the reference proof's) of row n on pin v in the results `res` (None: not read, so far)."""
+        fr = res.get(fkey(n, ref_text(n), v)) if ref_text(n).strip() else {"error": "the row has no reference proof"}
+        return res.get(fkey(n, text, v)), fr
+
+    def finer_at(n, text, v, res: dict):
+        return finer_pair(n, text, v, res) if finer else None
+
+    def finers_of(n, text, res: dict):
+        return {v: finer_pair(n, text, v, res) for v in pins.get(n, [])} if finer else None
+
+    def ask_finer(n, v, res: dict) -> None:
+        """For each proof of row n whose reading on pin v passes through the allowance with sorryAx (now that both readings are in),
+        the finer readings of the reference and of that proof on v, ahead of every other reading but the reference's axioms."""
+        rr = ref_reading(n, v, res)
+        for k2 in list(by_pin.get((n, v), {})):
+            if needs_finer(res.get(k2), rr):
+                for sub, t in ((1, ref_text(n)), (2, texts[k2])):
+                    finer_asked[fkey(n, t, v)] = None
+                    pool.submit((-1, pins[n].index(v), sub), fkey(n, t, v), rows[n], t, v, fn=finer_reader)
 
     def submit_candidates(k: int) -> None:
         if k in cands_of:
@@ -573,19 +788,24 @@ def guard_file(proofs_path, rows_path, fallback_paths=None, *, budget_s: float =
         cands_of[k] = candidates(n, rows.get(n), cur_of[k], fallbacks)
         for ci, (_role, rec) in enumerate(cands_of[k]):
             for pr, v in enumerate(pins.get(n, [])):
-                pool.submit((1, ci, pr, k), key(n, rec["proof"], v), rows[n], rec["proof"], v)
+                submit((1, ci, pr, k), key(n, rec["proof"], v), rows[n], rec["proof"], v)
 
     def on_result(kk) -> None:
+        if len(kk) != 3:   # a finer reading: the pin it decides read BAD while it was missing, so nothing more is queued for it
+            return
         n, _h, v = kk
         res = pool.results
         if needs_reference(res.get(kk)) and (n, v) not in ref_asked and ref_text(n).strip() and kk != ref_key(n, v):   # (not itself)
             ref_asked.add((n, v))   # the reference's reading on this pin, ahead of every other reading (moved up if already queued)
-            pool.submit((-1, pins[n].index(v)), ref_key(n, v), rows[n], ref_text(n), v)
+            submit((-1, pins[n].index(v)), ref_key(n, v), rows[n], ref_text(n), v)
+        if finer:
+            ask_finer(n, v, res)
         # a current proof that reads BAD on pin v has its earlier proofs read. One that waits for the reference's reading reads BAD until
         # it comes (fail closed): its earlier proofs are queued now, behind that reading, and read while it is read, not one compile
         # later (review 2026-11-24: under a tight budget they were left unread). The row is decided at the end, on every reading that came.
+        # The same for a pin that waits for its finer readings.
         for k in owner.get(kk, []):
-            if pin_state(res.get(kk), ref_reading(n, v, res))[0] == BAD:
+            if pin_state(res.get(kk), ref_reading(n, v, res), finer_at(n, cur_of[k], v, res))[0] == BAD:
                 submit_candidates(k)
 
     for k in range(len(recs)):   # a record without a proof text is no proof: its candidates are read at once
@@ -603,18 +823,59 @@ def guard_file(proofs_path, rows_path, fallback_paths=None, *, budget_s: float =
     def verdict_of(name, proof):
         if not (proof or "").strip():
             return FAIL, "the record holds no proof text", {}
-        return classify(readings_of(name, proof), refs_of(name, results))
+        return classify(readings_of(name, proof), refs_of(name, results), finers_of(name, proof, results))
 
     def allowed_on(name, proof) -> list:
         """The pins on which `proof` is OK only through the allowance."""
-        return allowance_pins(readings_of(name, proof), refs_of(name, results)) if (proof or "").strip() else []
+        return (allowance_pins(readings_of(name, proof), refs_of(name, results), finers_of(name, proof, results))
+                if (proof or "").strip() else [])
 
     def ref_axioms(name, pin):
         rr = ref_reading(name, pin, results)
         return rr.get("axioms") if isinstance(rr, dict) else None
 
-    def allowance_text(name, ps) -> str:
-        return ", ".join(f"{p} (the reference proof reads {ref_axioms(name, p)})" for p in ps)
+    def finer_fields(name, proof, pin) -> dict | None:
+        """The finer sorry check on a pin where it decides `proof` (None elsewhere, and when the check is off): the decision, why, the
+        sorry sources and OWN sources of both sides (None when that side's finer reading is not available), and the readings' times."""
+        rd = results.get(key(name, proof, pin))
+        if not finer or not (proof or "").strip() or not needs_finer(rd, ref_reading(name, pin, results)):
+            return None
+        fp, fr = finer_pair(name, proof, pin, results)
+        ok, why, f = finer_decide(rd, ref_reading(name, pin, results), (fp, fr))
+        sec = lambda x, k: x.get(k) if isinstance(x, dict) else None
+        return {"decision": OK if ok else BAD, "why": why, **f, "seconds": sec(fp, "seconds"), "reference_seconds": sec(fr, "seconds"),
+                "program_ms": sec(fp, "program_ms"), "reference_program_ms": sec(fr, "program_ms")}
+
+    def allowance_text(name, ps, proof=None) -> str:
+        def fin(p):
+            f = finer_fields(name, proof, p) if proof is not None else None
+            return f"; sorry sources {f['finer_sources']}, the reference's {f['finer_reference_sources']}" if f else ""
+        return ", ".join(f"{p} (the reference proof reads {ref_axioms(name, p)}{fin(p)})" for p in ps)
+
+    def finer_lines(k, name, proof, what) -> None:
+        """One log line per pin on which the finer sorry check decides `proof` (`what`: which proof of row k it is)."""
+        for p in pins.get(name, []):
+            f = finer_fields(name, proof, p)
+            if f:
+                log(f"{utc()} axiom guard: row {k} {name}: finer sorry check of {what} on {p}: {f['decision'].upper()}: {f['why']}; "
+                    f"its sources {f['finer_sources']} (OWN {f['finer_own']}), the reference proof's {f['finer_reference_sources']} "
+                    f"(OWN {f['finer_reference_own']})")
+
+    def for_want_of_finer(name, proof, states) -> bool:
+        """Every pin on which `proof` reads BAD reads BAD only because the reference's reading or a finer sorry reading (its own or the
+        reference's) is not available there, and at least one for want of a finer reading: the proof may be sound."""
+        if not finer or not (proof or "").strip():
+            return False
+        rd, refs = readings_of(name, proof), refs_of(name, results)
+        bad = [p for p, (s, _w) in states.items() if s == BAD]
+
+        def want_ref(p):
+            return needs_reference(rd[p]) and ref_allowance(refs.get(p))[0] is None
+
+        def want_finer(p):
+            f = finer_fields(name, proof, p)
+            return bool(f) and f["decision"] == BAD and (FS.wanting(f["finer_reading"]) or FS.wanting(f["finer_reference_reading"]))
+        return bool(bad) and all(want_ref(p) or want_finer(p) for p in bad) and any(want_finer(p) for p in bad)
 
     def ref_fields(name, pin, reading) -> dict:
         """The reference's reading on a pin where the proof's reading needed it (all None elsewhere): "read" (in full) or why it is not
@@ -634,6 +895,7 @@ def guard_file(proofs_path, rows_path, fallback_paths=None, *, budget_s: float =
         return bool(bad) and all(needs_reference(rd[p]) and ref_allowance(refs.get(p))[0] is None for p in bad)
 
     out, details, replaced, not_read, ref_floor, partial, by_allowance, ref_unavailable = list(recs), [], [], [], [], [], [], []
+    finer_unavailable = []    # rows set back only for want of a finer sorry reading (or of the reference's reading)
     for k, r in enumerate(recs):
         n = r.get("name")
         if n not in rows:
@@ -644,7 +906,11 @@ def guard_file(proofs_path, rows_path, fallback_paths=None, *, budget_s: float =
         d = {"k": k, "name": n, "verdict": v, "why": why, "proof_sha": sha16(cur_of[k]), "read_first": exposed[k],
              "pins": {p: {"state": s, "why": w, "structural": structural(got[p]) if s == NOT_READ else False, "axioms": got[p].get("axioms"),
                           "allowance_used": s == OK and bool(extra_axioms(got[p])), **ref_fields(n, p, got[p]),
-                          "prints_differ": got[p].get("prints_differ"), "seconds": got[p].get("seconds")} for p, (s, w) in states.items()}}
+                          "prints_differ": got[p].get("prints_differ"), "seconds": got[p].get("seconds"),
+                          **({"hook": got[p].get("hook"), "finer": finer_fields(n, cur_of[k], p)} if finer else {})}
+                      for p, (s, w) in states.items()}}
+        if finer and n in rows:
+            finer_lines(k, n, cur_of[k], "its proof")
         if v == NOT_READ:
             not_read.append(k)
             log(f"{utc()} axiom guard: row {k} {n}: NOT READ, kept (nothing was read against it; its proof may rest on sorry): {why}")
@@ -656,13 +922,14 @@ def guard_file(proofs_path, rows_path, fallback_paths=None, *, budget_s: float =
             if al:
                 by_allowance.append(k)
             log(f"{utc()} axiom guard: row {k} {n}: pass ({why})" + (f"; NOT READ IN FULL: {', '.join(gaps)}" if gaps else "")
-                + (f"; ONLY THROUGH THE ALLOWANCE on {allowance_text(n, al)}" if al else ""))
+                + (f"; ONLY THROUGH THE ALLOWANCE on {allowance_text(n, al, cur_of[k])}" if al else ""))
         else:
             tried, chosen = [], None
             for role, rec in cands_of.get(k) or candidates(n, rows.get(n), cur_of[k], fallbacks):
                 cv, cwhy, _ = verdict_of(n, rec["proof"])
                 tried.append({"role": role, "verdict": cv, "why": cwhy, "proof_sha": sha16(rec["proof"]), "stored_score": _stored(rec),
-                              "allowance": allowed_on(n, rec["proof"]) if cv == PASS else []})
+                              "allowance": allowed_on(n, rec["proof"]) if cv == PASS else [],
+                              **({"finer": {p: f for p in pins.get(n, []) if (f := finer_fields(n, rec["proof"], p))}} if finer else {})})
                 if cv == PASS:
                     chosen = (role, rec, cv, cwhy)
                     break
@@ -687,7 +954,7 @@ def guard_file(proofs_path, rows_path, fallback_paths=None, *, budget_s: float =
                     cwhy += f"; NOT READ IN FULL: {', '.join(gaps)}"
                 if al:
                     by_allowance.append(k)
-                    cwhy += f"; ONLY THROUGH THE ALLOWANCE on {allowance_text(n, al)}"
+                    cwhy += f"; ONLY THROUGH THE ALLOWANCE on {allowance_text(n, al, rec['proof'])}"
             note = (f"the proof read {why}; set back to {role_text(role)}" + (f" ({cwhy})" if cv == PASS else
                     f", which did not pass either ({cv}: {cwhy}): no proof of this row passes"))
             if role == "reference":
@@ -702,11 +969,15 @@ def guard_file(proofs_path, rows_path, fallback_paths=None, *, budget_s: float =
             replaced.append(k)
             if for_want_of_reference(n, cur_of[k], states):   # the proof may be sound: named apart (review 2026-11-24)
                 ref_unavailable.append(k)
+            elif for_want_of_finer(n, cur_of[k], states):
+                finer_unavailable.append(k)
             d.update(chosen=role, chosen_verdict=cv, chosen_why=cwhy, candidates=tried, old_stored_score=old_s, new_stored_score=_stored(new),
                      old_source=r.get("source"), new_source=new.get("source"), chosen_allowance=al)
             log(f"{utc()} axiom guard: row {k} {n}: FAIL ({why}) -> REPLACED by {role_text(role)}, stored {old_s} -> {_stored(new)}, source "
                 f"{r.get('source')} -> {new.get('source')}" + ("" if cv == PASS else f"; that proof did not pass either ({cv}: {cwhy})")
-                + (f"; that proof passes ONLY THROUGH THE ALLOWANCE on {allowance_text(n, al)}" if al else ""))
+                + (f"; that proof passes ONLY THROUGH THE ALLOWANCE on {allowance_text(n, al, rec['proof'])}" if al else ""))
+            if finer:
+                finer_lines(k, n, rec["proof"], f"its replacement ({role_text(role)})")
         details.append(d)
     unread_pins = sum(1 for k, d in enumerate(details) if k not in replaced for p in d["pins"].values() if p["state"] == NOT_READ)
     unread_structural = sum(1 for k, d in enumerate(details) if k not in replaced for p in d["pins"].values() if p["structural"])
@@ -730,6 +1001,18 @@ def guard_file(proofs_path, rows_path, fallback_paths=None, *, budget_s: float =
     counts = {PASS: sum(d["verdict"] == PASS for d in details), FAIL: sum(d["verdict"] == FAIL for d in details), NOT_READ: len(not_read)}
     names = lambda ks: [details[k]["name"] for k in ks]
     n_ref_complete = sum(1 for n, v in ref_asked if ref_allowance(results.get(ref_key(n, v)))[0] is not None)
+    fin, fin_tail = {}, ""
+    if finer:   # the finer sorry check's counts (the decisions on the proofs read first, kept or set back)
+        dec = [x["finer"]["decision"] for d in details for x in d["pins"].values() if x.get("finer")]
+        n_f_complete = sum(1 for fk in finer_asked if isinstance(results.get(fk), dict) and results[fk].get("markers"))
+        fin = {"finer_readings": len(finer_asked), "finer_readings_done": sum(1 for fk in finer_asked if fk in results),
+               "finer_readings_complete": n_f_complete, "finer_pins_ok": dec.count(OK), "finer_pins_bad": dec.count(BAD),
+               "set_back_for_want_of_finer_reading": names(finer_unavailable)}
+        fin_tail = (f"; finer sorry check: {len(dec)} pin(s) of the proofs read decided by it ({dec.count(OK)} OK, {dec.count(BAD)} BAD), "
+                    f"{n_f_complete} of {len(finer_asked)} finer reading(s) complete"
+                    + (f" ({len(finer_unavailable)} row(s) set back only because a finer sorry reading was not available: "
+                       f"{', '.join(map(str, fin['set_back_for_want_of_finer_reading']))}; the guard does not bring their proofs back)"
+                       if finer_unavailable else ""))
     rep = {"status": "done", "file": str(path), "rows": len(recs), "readings_planned": n_pins, "readings_done": len(results),
            "pins_not_read": unread_pins, "pins_not_read_structural": unread_structural, "jobs": jobs, "budget_s": float(budget_s),
            "timeout_s": float(timeout_s), "seconds": secs, "complete": drained, "verdicts": counts, "stored_mean_before": means[0],
@@ -737,7 +1020,8 @@ def guard_file(proofs_path, rows_path, fallback_paths=None, *, budget_s: float =
            "reference_not_passing": names(ref_floor), "missing_from_file": missing, "written": written, "merged_written": merged_written,
            "passed_by_allowance": names(by_allowance), "set_back_for_want_of_reference": names(ref_unavailable),
            "reference_readings": len(ref_asked), "reference_readings_complete": n_ref_complete,
-           "changed": changed, "write": write, "rc": rc, "at": utc(), "running_at_end": len(pool.started - set(results)), "per_row": details}
+           "changed": changed, "write": write, "rc": rc, "at": utc(), "running_at_end": len(pool.started - set(results)),
+           "finer": "on" if finer else "off", **fin, "per_row": details}
     tail = (f"{len(recs)} rows: {counts[PASS]} pass, {counts[FAIL]} read BAD, {len(replaced)} set back"
             + (f" ({', '.join(map(str, rep['replaced']))})" if replaced else "")
             + (f" ({len(ref_unavailable)} of them only because the reference proof's reading was not available: "
@@ -749,6 +1033,7 @@ def guard_file(proofs_path, rows_path, fallback_paths=None, *, budget_s: float =
             + (f", {len(missing)} of the rows file missing" if missing else "")
             + f"; {len(by_allowance)} pass only through the reference proof's axioms"
             + (f" ({', '.join(map(str, rep['passed_by_allowance']))})" if by_allowance else "")
+            + fin_tail
             + f"; stored mean {means[0]} -> {means[1]}; {len(results)} of {len(pool.queued)} readings done in {secs:.0f} s "
             + f"({len(ref_asked)} (row, toolchain) pair(s) needed the reference proof's reading, {n_ref_complete} read in full), "
             + f"{unread_pins} pin(s) of the kept proofs not read ({unread_structural} by construction); "
@@ -775,7 +1060,7 @@ def _kill_children() -> None:
             continue
 
 
-def main(argv=None, reader=None) -> int:
+def main(argv=None, reader=None, finer_reader=None) -> int:
     import argparse
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("proofs", help="a proofs file (JSONL: name, proof, stored_score, ...)")
@@ -817,7 +1102,7 @@ def main(argv=None, reader=None) -> int:
         if reader is None:
             prepare_env(budget)
         rep = guard_file(a.proofs, a.rows, a.fallback, budget_s=budget, timeout_s=a.timeout, jobs=a.jobs, reader=reader,
-                         write=not a.no_write, log=lambda s: print(s, flush=True))
+                         write=not a.no_write, log=lambda s: print(s, flush=True), finer_reader=finer_reader)
     except Exception as e:   # any failure before the write: not checked (a file that is not JSONL, a record that is not a row, ...)
         rep = not_checked(f"{type(e).__name__}: {e}")
     finally:

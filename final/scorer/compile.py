@@ -544,11 +544,36 @@ class AxiomAudit:
                 and not SORRY_WARN_RE.search(e)]
 
 
-def audit_axioms(row: dict, decl: str, version: str, *, axioms: bool = True, timeout: int = 900) -> AxiomAudit:
-    """Compile `decl` + `#print axioms <name>` (unmeasured, warn.sorry on) for the row at `version` and return the audit: the axiom list
+# The post stage's gate (harness/post_audit.py, 2026-11-24) prints the axioms inside a `module` file too, on every toolchain, as the
+# export guard's forced reading does (harness/axiom_guard.forced_reading). Before v4.30 Lean answers that print in a `module` file
+# with an error and no list (measured on v4.27.0 and v4.29.1); post_audit.gate_reading then reads the toolchain as not read by
+# construction (prints_in_module). open_post.default_audit sets GATE_MODULE_PRINT in the post stage's own processes, so that
+# audit_axioms called without `module_print` (post_fast/pf_worker.audit_warm, which warms the gate's compiles) compiles the gate's
+# text. The export's audit (harness/open_package.audit_proof) passes module_print=False: unchanged whatever the flag says.
+GATE_MODULE_PRINT = False
+MODULE_PRINT_FROM = (4, 30)
+_VERSION_RE = re.compile(r"v?(\d+)\.(\d+)")
 
 
+def prints_in_module(version: str) -> bool:
+    """`#print axioms` gives an axiom list inside a `module` file on this toolchain (v4.30 and later; a version that does not parse
+    counts as one where it does, so a forced print there with no list fails closed). Only post_audit.gate_reading's label: the print
+    itself is forced on every toolchain."""
+    m = _VERSION_RE.match(version or "")
+    return m is None or (int(m.group(1)), int(m.group(2))) >= MODULE_PRINT_FROM
 
+
+def module_file(row: dict, version: str) -> bool:
+    """The row's file at `version` is a Lean `module` file (a putnambench row never is)."""
+    return row["source"] != "putnambench" and bool(_MODULE_LINE.match(split_modifiers(file_prefix(row, version))[0]))
+
+
+def audit_axioms(row: dict, decl: str, version: str, *, axioms: bool = True, timeout: int = 900,
+                 module_print: bool | None = None) -> AxiomAudit:
+    """Compile `decl` + `#print axioms <name>` (unmeasured, warn.sorry on) for the row at `version` and return the audit (AxiomAudit).
+    `module_print`: inside a `module` file, compile the print too, on every toolchain (before v4.30 Lean answers it with an error
+    and no list), instead of the skip ("module": the compile of `decl` alone); None = GATE_MODULE_PRINT (default False: the skip,
+    as published).
 """
     name = decl_name(row["statement"], row.get("name"))
     if row["source"] == "putnambench":
@@ -559,7 +584,8 @@ def audit_axioms(row: dict, decl: str, version: str, *, axioms: bool = True, tim
         core, mods = split_modifiers(file_prefix(row, version))
         args = _with_warn_sorry(lakefile_options(row["source"], version))
         run = lambda text: compile_project(row, text, version, count=False, timeout=timeout, lean_args=args)
-        skip = "module" if _MODULE_LINE.match(core) else None
+        forced = GATE_MODULE_PRINT if module_print is None else module_print
+        skip = "module" if _MODULE_LINE.match(core) and not forced else None
     first = _first_line(core)
     skip = skip or (None if name else "no-name") or (None if axioms else "off")
     if skip:

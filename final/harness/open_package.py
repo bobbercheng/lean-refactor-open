@@ -2521,7 +2521,7 @@ def audit_proof(row: dict, proof: str, versions: list[str], seed_sorry: dict, au
 
     def tmo() -> int:
         return int(timeout if deadline is None else max(1, min(timeout, deadline - time.time())))
-    aud = audit or (lambda r, p, v: audit_axioms(r, p, v, timeout=tmo()))
+    aud = audit or (lambda r, p, v: audit_axioms(r, p, v, timeout=tmo(), module_print=False))   # the skip in `module` files, as published
     if not versions:
         return "unknown", "the row lists no pin"
     unknown, skipped = [], []

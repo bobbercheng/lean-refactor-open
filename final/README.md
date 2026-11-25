@@ -6,6 +6,43 @@ stage (CPU only) then searches mechanical rewrites of each row's best proof, and
 proof only if it scores higher; end-stage and normalizer edits must also compile on no fewer listed toolchains than before. The output is
 one proof per row. Nothing calls a hosted model, and no stored proofs are used: everything starts from the seed proofs in your rows file.
 
+## On `main` after the camera-ready (2026-11-25): the finer sorry check and the post stage's gate audit
+
+**What.** `main` is tag `open-camready-20261125` (the code that ran tier B) plus two checks, both on by default:
+- **The finer sorry check** in the axiom guard at export (`harness/finer_sorry.py`, section "Axiom guard at export"). Where a proof
+  passes only because the problem's reference proof also reads `sorryAx` on that toolchain, the guard names the `sorry` sources of
+  both and keeps the proof only if it brings in none of its own. It also refuses a proof text that registers its own Lean command
+  handler, macro, parser or similar hook (the hook check), which closes the limit found after publication (section "Axiom guard
+  at export", "A limit found after publication") for the hooks it knows.
+- **The post stage's gate audit** (`harness/post_audit.py`, section "The post stage's gate audit"): the guard's rule at each
+  adoption, with the axiom print read in `module` files from Lean v4.30 too, so the stage no longer builds on a step the guard would
+  set back (held-out row 42).
+
+**Switches.** `LRA_AXIOM_GUARD_FINER=off` and `LRA_POST_AUDIT=published` restore the guard and the gate of the tag; the tests
+compare both with copies of the tag's code (`tests/data/`). The seven post-stage scripts are unchanged (fingerprint
+`b4ac6d42002767a0`), but with the gate audit on, the stage's choices and time can differ from the tag's.
+
+**Measured (M, 2026-11-25, one session on the VM of tier B; judged by criteria written down before the runs).** The code
+measured was this change on the code of 2026-11-24, before the names of tag `open-camready-20261125`: it differs from this commit
+in wording and in the three small changes of 2026-11-25 (section "Changes in this version"), none of which reads or changes a
+proof in these runs (no input or output sets a debug option). All three runs passed:
+- *Tier B again* (the same input and the same 85-minute cap): stored mean 81.4652 (tier B: 81.4665; the bar written down before the
+  run was 81.4160), no row fell, no line sets a debug option, 352 adoptions; the guard with the finer check on: 60 of 60 rows pass,
+  nothing set back, no finer reading needed.
+- *The held-out run again* (66 rows, 85 minutes): the guard with the finer check on sets no row back. On row 42 the gate audit
+  read 18 candidates, refused the 8 that rest on `sorry`, and every text the stage adopted reads the standard axioms: the row ends
+  at 68.61, where the first run, with the gate as published, adopted the unsound step and the guard set the row back to 33.33. Row
+  25, whose reference proof rests on a library lemma proved by `sorry`: 6 adoptions, final 45.54, its sorry sources those of the
+  reference. Mean after the guard 56.17 (first run 56.27; the search differs from run to run).
+- *Checks on copies* (123 checks, none failed): the tier B output and the tier C file read as before, with no finer reading; on the
+  first held-out output row 42 is set back and row 25 kept. Cases built on row 25's problem, a proof that also uses another library
+  constant resting on `sorry` and a helper lemma resting on one: *bad* with the finer check on and refused by the new gate, *ok* with
+  the check off (the gap of the tag's guard, shown on real Lean). A proof with its own `#print axioms` handler: refused. Row 42's
+  chain: steps 0-6 pass, steps 7-10 *bad* at the guard and refused by the new gate, where the tag's gate read them `skipped`.
+
+**What it does not change.** The report's numbers (tiers A, B and C and the held-out test) were measured with the guard and the gate
+of the tag. The checks change none of the reported outputs (above).
+
 ## Changes in this version (2026-11-24)
 
 **Official result.** Our entry is the runner-up of the open-source track (announced by the organizers on 2026-11-23).
@@ -133,7 +170,7 @@ passes a row on its own. The other differences from the export audit: the guard 
 depending on `sorry`); and the reference proof, as the last candidate, must pass its own reading (the audit never judges it). What
 the allowance gives up: on a toolchain where the reference proof itself reads `sorryAx` (a lemma of the library proved by `sorry`,
 held-out row 25), a proof whose own value became `sorry` (held-out row 42's fault) passes too, because `#print axioms` cannot tell
-the two apart. The export audit has the same limit.
+the two apart. The export audit has the same limit. The finer sorry check (below, on by default) closes that gap in the guard.
 
 **A limit found after publication (2026-11-24).** The guard reads the axiom list that Lean prints, and so do the export audit and
 the post stage's gate where they run the print. A proof text that registers its own Lean command handler can make that list
@@ -141,7 +178,8 @@ false, and the package's checks reject some such texts but not every one. So a p
 from Lean (for example one that rests on a lemma of the library proved by `sorry`) would pass the guard, the audit and the gate.
 Only the printed list is false: in the case we confirmed, Lean accepted the proof, `sorryAx` being an axiom. A text scan finds no
 such handler in the 498 proof texts listed in [`../DISCLOSURES.md`](../DISCLOSURES.md), "A limit of the axiom checks, found after
-publication". This version has no check that rejects such texts.
+publication". Tag `open-camready-20261125` has no check that rejects such texts; on `main` the finer sorry check's hook check
+(below) refuses the forms it knows.
 
 **The reference's reading.** The reference proof is read the same way (forced print, both names), but only for a (row, toolchain)
 on which another proof of the row reads an axiom outside the three in a complete reading. It is read once per (row, toolchain) for the
@@ -157,9 +195,81 @@ available), `reference_axioms` and `reference_allows` (both only for a reading i
 only through the reference proof's axioms, and the (row, toolchain) pairs that needed the reference's reading and how many of those
 readings came in full.
 
+**The finer sorry check (written 2026-11-24, on `main` since 2026-11-25, after the camera-ready; `harness/finer_sorry.py`).** *What.* On a toolchain where a proof
+passes only through the allowance with `sorryAx` (the reference proof reads `sorryAx` there too), the guard compiles the proof once
+more, and the reference proof once more, each followed by a small Lean program (an `#eval` in `CommandElabM`; its text is generated
+in one versioned place, `finer_sorry.PROGRAM`, version 2). The program resolves the two printed names as `#print axioms` does (in the
+file's own scope, private names included) and names the declaration's *sorry sources*: the constants of the compiled file reached
+from it through types and values whose own type or value names `sorryAx` (its own value, its auxiliary declarations such as `D.go`,
+helper lemmas in the proof text, the library file's declarations above it), and the imported constants reached from those whose
+axioms include `sorryAx`. Imported constants are not walked into: from v4.30 Lean's axiom lists stored in the `.olean` files answer,
+before v4.30 one shared walk of the imported closure. A source of the file is OWN when the proof text declared it: its declaration
+range, or that of its nearest name prefix with one (D for `D.proof_1`), starts at or after the first line after the library file's
+prefix; a source with no range at all is OWN too. A lemma of the library's prefix is not OWN, also when it is named `D.aux`. The
+program names every identifier from the root (`_root_.…`) and opens nothing, so the file's namespaces, `open`s and declarations
+cannot change what it resolves or stop it; it runs with `maxHeartbeats 0`. The program's lines carry a random value new for each
+compile, and only lines after the proof are read, so a proof cannot *print* a line taken for the program's. *Hooks.* A proof could
+still change what the program, or `#print axioms` itself, prints by registering an elaborator first (review 2026-11-24:
+`@[command_elab Lean.Parser.Command.printAxioms] private def …` passes the Arena's forbidden list, which rejects only the keyword
+forms `elab`, `macro`, `syntax`, `notation`, and makes the print show `[propext]` for a proof resting on `sorry`; the export audit
+has the same gap, and so has the post stage's gate as published, `LRA_POST_AUDIT=published`; its default gate audit, section "The
+post stage's gate audit" below, runs the hook check). With the check on, a text in which `finer_sorry.hooks` reads such a hook (an attribute
+that registers an elaborator, macro, parser, delaborator or compiler hook, a syntax or notation declaration, code run at elaboration)
+is not compiled and reads *bad* on every toolchain, whatever its row; a finer reading is also not taken of a text that declares an
+instance, a unification hint, `deriving` or a name with `_root_` inside it (`finer_hooks`: these can change the program's
+elaboration, not Lean's compiled `#print axioms`). None of 12,310 distinct proof texts (the 60 reference proofs and the proofs of the
+measured runs, `probe/` of the development repository) has either. *Rule.* The toolchain stays *ok* if and only if the proof's
+sources (all of its printed names together) are among the reference's (those every printed name of the reference reads) and neither
+side has an OWN source; otherwise it reads *bad*. *Fail closed* (*bad*): a finer reading that is not available (not read in time, a
+timeout, an error in the declaration, Lean's sorry message, text that can hide it, a hook, no or malformed output, a walk that did
+not finish, a printed name that resolves to a constant of another file, axioms other than the axiom reading's, `sorryAx` with no
+source named), and a reference proof whose own text rests on `sorry` (a new `sorry` cannot be told from it). (In a `module` file
+before v4.30 the program refuses, but the guard never asks there: `#print axioms` itself gives no list in such a file, measured on
+v4.27.0 and v4.29.1, so the toolchain is not read by construction.) *When.* At export, inside the guard's budget and stop handling.
+The finer readings are queued with the reference's axiom readings, toolchain by toolchain: on each toolchain after the reference's
+axiom reading there and before the readings of older toolchains, for every proof of the row that needs one (earlier proofs included),
+ahead of every other reading; until they come the toolchain reads *bad*, so the row's earlier proofs are queued at once. Rows whose
+reference proof reads no `sorryAx` get no extra compile and, unless a text has a hook, no change. On the measured final outputs (tier
+B and tier C) no proof passed through the allowance, so the check would take no extra compile there; whether a final row's reference
+proof reads `sorryAx` is not measured. Where the file's imports do not bring Lean's command elaborator (LeanPool v4.35.0-rc3, a
+Strata `module` file), the program is compiled once more with it imported, as the scorer does for its measuring command; the guard
+then compiles that file with the import at once for the rest of the run, and starts no second compile after a stop signal or with
+less than 5 s left. `logs/axiom_guard.log` adds one line per toolchain the check decides, naming both sides' sources and OWN sources;
+`logs/axiom_guard.json` says `"finer": "on"`, gives per toolchain `hook` and `finer` (decision, why, both sides' sources, times) and
+counts the finer readings, the decisions and `set_back_for_want_of_finer_reading` (also named in the summary line). *Switch.*
+`LRA_AXIOM_GUARD_FINER=off` restores the guard as published (tag `open-camready-20261125`) exactly, the hook check included:
+`tests/test_finer_sorry.py` runs both on random tables and compares decisions, files, log lines and the report, which adds only
+`"finer": "off"`. Any value other than `on` or `off` keeps the check on, with a warning in the log. *Limits.* The frontier is the
+imported constant as the file names it: a proof that reaches the reference's library `sorry` through another imported lemma is set
+back (conservative). The hook check reads text: a hook it does not know is not caught. In the guard it runs at export only; the post
+stage's gate audit (section "The post stage's gate audit" below, added the same day) applies the same rule at each adoption, so a
+step this guard would read as resting on `sorry` is not adopted in the first place (where both see the same readings; a `module`
+file before v4.30 is read by neither). With the gate as published, the stage adopted one and built on it, and setting the row
+back at export also dropped its sound earlier steps (held-out row 42: 69.21 -> 33.33 though steps 1-6 were sound). *Cost.* Each decided toolchain costs two more compiles inside the
+guard's budget (`LRA_AXIOM_GUARD_S`, default 420 s): 1-10 s each for the fixtures, 12-25 s for putnambench proofs, about 140-150 s
+for a heavy one (`putnam_2019_a1`); before v4.30 the program walks the imported closure itself, about 39,500 constants in 13-15 s
+against Mathlib, while from v4.30 it reads the stored lists in milliseconds. In the end-to-end run below one replacement's second
+toolchain was cut by the budget (exit 3). *Measured (M, GB10, 2026-11-24).* Program version 2 on the fixtures of `tests/finer_lean/`
+(F1-F14: a clean proof; a library lemma proved by `sorry`; two of them; a written and a synthetic `sorry` in the proof; a synthetic
+`sorry` in a helper of the proof text; a private declaration; an imported constant resting on `sorry`; a `where` auxiliary; a
+`decreasing_by`; a library lemma named `D.aux`; a file that declares or opens names the program uses; a proof that lowers
+`maxHeartbeats`) on mathlib v4.26.0 and v4.27.0, ArkLib v4.29.0 and v4.31.0, Strata v4.29.1, Cslib v4.31.0 and v4.33.0-rc2, PhysLib
+v4.32.0 and LeanPool v4.35.0-rc3, plain and `module` files: 186 of 186 compiles as expected, each also decided against F2 and against
+itself (0 wrong); the program's own time 0-111 ms, a compile 1-41 s (the longest are an environment's first compiles). In `module`
+files from v4.30 the declaration ranges read as in plain files (F2's library lemma is not OWN); in a Strata v4.29.1 `module` file the
+program refuses, as expected. End to end with program version 1, through the package's own compile path on putnambench rows (v4.27.0
+and v4.26.0), with lemmas proved by `sorry` added to the header (where a library's prefix would be) and the reference proof using one
+of them: a proof that uses the same lemma passes (2 toolchains decided OK); a proof that uses another `sorry` lemma, and one that
+reaches `sorry` through a header definition with no sorry message on its own lines, both pass the allowance but are set back to the
+post stage's input; with `LRA_AXIOM_GUARD_FINER=off` both are kept, as by the published guard. Program version 2 on the same cases
+and pins (the same file layout, compiled with `lake env lean` in the Mathlib environments): the same lemma reads `[lra_e2e_lib]` on
+both sides and decides OK on both pins; another `sorry` lemma and the header definition read `[lra_e2e_lib2]` and `[lra_hole]` and
+decide BAD; a proof whose own value is a synthetic `sorry` reads OWN; no header lemma reads OWN. The program's own time: 14-16 s with
+39,400-39,700 imported constants walked for `putnam_1968_a1`, 1.6-2.1 s for the other two; a compile 13-162 s.
+
 **Why.** The held-out test of the post stage (66 library problems outside the 60 final problems, 2026-11-24) found one output that
 compiles with no Lean message at all while `#print axioms` reads `sorryAx` alone: the proof's value is `sorry` (1 of 66 rows (M)).
-The post stage's gate runs the export's axiom audit, which skips the axiom print inside a Lean `module` file and there checks only
+The post stage's gate as published ran the export's axiom audit, which skips the axiom print inside a Lean `module` file and there checks only
 for compile errors and Lean's sorry message; every held-out row is in such a file, so the gate adopted that step. The guard sits
 outside the post stage: the seven scripts of the post stage (`post_fast/post_stage.sh`, `pf_drive.py`, `pf_svc.py`, `pf_worker.py`,
 `prefix_backend.py`, `snapshot.py`, `merge_post.py`), fingerprint `b4ac6d42002767a0` (the sha256 of each file, one per line in this
@@ -243,13 +353,14 @@ or nothing, and the job ends with exit code 5). By hand, on any proofs file:
 Exit 0: every row passes and every toolchain of the proof it keeps was read (one not read by construction aside); 3: some row was not
 read in full, has a reference proof that does not pass, or is missing from the file (named); 1: not checked.
 
-**What it does not change.** The post stage's gate is unchanged: inside a `module` file it still reads no axioms, so within a run the
-stage can build on such a step, and the export sets the row back. The export's own axiom audit (in `harness/open_package.py`) is unchanged; the guard uses its rule, with
+**What it does not change.** The guard itself does not change the post stage's gate. The gate audit added after it (section "The post
+stage's gate audit" below, the default) does; with `LRA_POST_AUDIT=published` the gate is as published: inside a `module` file it
+reads no axioms, so within a run the stage can build on such a step, and the export sets the row back. The export's own axiom audit (in `harness/open_package.py`) is unchanged; the guard uses its rule, with
 the differences above (it fails closed). A proofs file promoted from the interim proofs when the job is cut short has been through
 neither check (below).
 
-**Results (M, 2026-11-24, the same node; the guard of tag `open-camready-20261124`, whose code differs from this version's only in
-names, comments and messages, run on copies with `--no-write`, and once writing a copy).** On the post stage's
+**Results (M, 2026-11-24, the same node; the guard of tag `open-camready-20261124`, whose code differs from that of tag
+`open-camready-20261125` only in names and comments, run on copies with `--no-write`, and once writing a copy).** On the post stage's
 output on the 60 final rows (the output of its 2026-11-24 measurement): exit 0, 60 pass, no row set back,
 127 readings, no reference proof read (all read standard axioms), 10 toolchains not read by construction, the file unchanged. On the
 tier C file of the report (stored mean 81.4367): the same, exit 0, 60 pass, unchanged. On the held-out output (66 rows, one
@@ -269,6 +380,160 @@ export the package was built from (`246ff1f1`). `post_fast/MANIFEST.json` is ref
 (new) lists what changed after that export: the commits since then and their tags, the fingerprint of the seven post-stage
 scripts, the measured numbers (`../RESULTS.md`, section "Revised package, measured (2026-11-24)") and the sha256 of every file that
 differs from `EXPORT.json`'s record or is not in it.
+
+### The post stage's gate audit (written 2026-11-24, on `main` since 2026-11-25; `harness/post_audit.py`)
+
+**What and when.** Before the post stage adopts a candidate (`harness/open_post.improve_row`, the last check of the gate below; the
+fast post stage runs the same function through `post_fast/pf_worker.py`, unchanged), `open_post.default_audit()` now returns an audit
+that applies the axiom guard's rule at each adoption, not only at export. Operator decision (b), 2026-11-24. It returns `clean`,
+`skipped`, `sorry` or `unknown`, and the gate adopts only on `clean` or `skipped`, as before. Before any compile, the finer check's
+hook scan (`finer_sorry.hooks`) reads the candidate's text; a text with a hook is `sorry` and is not compiled. Then, on every listed
+toolchain of the row, newest first, it makes one compile of the candidate with `warn.sorry` forced on and `#print axioms` under both
+names, in plain and in `module` files alike, as the guard's forced reading; the gate as published compiles no print in `module`
+files. Before v4.30 Lean answers the print in a `module` file with an error and no list (measured on v4.27.0 and v4.29.1),
+so there (`scorer.compile.prints_in_module`) the toolchain is not read by construction, as in the guard, when the reading is the
+guard's structural one (no other error in the declaration, no timeout); a print with no list from v4.30 gives `unknown`. It
+keeps the published check: Lean's sorry message, the switch, errors on the declaration's lines. The sorry message, the switch, the
+declaration's errors, the timeouts (`AUDIT_TIMEOUT_S` per compile) and the per-pin floor (`AUDIT_MIN_PIN_S`) are handled as before.
+
+**The rule.** The guard's own functions (`axiom_guard.pin_state` and what it calls) judge each toolchain's reading. The standard three
+(`propext`, `Classical.choice`, `Quot.sound`) pass. Any other axiom passes only if the row's reference proof (`src`) reads it on the
+same toolchain, taking the intersection over the reference's prints. Where `sorryAx` passes that way, the finer sorry check decides:
+the candidate's sorry sources must be the reference's. A bad reading ends the audit with `sorry`, naming the toolchain. A reading that
+is missing gives `unknown`, and the gate does not adopt. That covers the candidate's own reading, the reference's, a finer reading, a
+print with no list, a timeout, a raised error, and a toolchain the deadline left no time for.
+
+The verdicts:
+- `clean`: every toolchain was read and passes.
+- `skipped`: the toolchains not read by construction show no sorry message, and the others pass.
+
+The tests check one invariant on the same readings: what the gate accepts, the guard (finer check on) accepts. A step the gate adopts
+is therefore not set back at export for its axioms on the same readings, which is what happened to held-out row 42 under the gate as
+published. The two can still read differently: the gate allows `AUDIT_TIMEOUT_S` (600 s) per compile with no overall budget, the
+guard 300 s per compile within 420 s in all. A step that passes through the allowance needs the guard's readings of the reference on
+that toolchain (three with `sorryAx`: the reference's axioms and both finer readings) in time; a guard reading that does not come in
+time can still set the row back, its sound earlier steps included.
+
+**Cost.** A candidate that reads only the standard three makes one compile per toolchain, as the gate as published does. Other
+readings cost more:
+- **Reference readings.** These are taken only for a candidate that reads another axiom. Each is taken once per (row, toolchain,
+  sha256 of the reference) per process, shared thread-safely across the row's candidates. Kept: a complete reading, one that failed
+  on evidence (Lean's sorry message, the switch, a hook, an error Lean reported in the declaration) and one that timed out under the
+  full timeout. Every other reading (a reader error, a finer reading's "not compiled again ... s left", a timeout under a shortened
+  timeout, a compile that ended with no Lean message, a reading that raised) is taken again by the next candidate that needs it.
+- **Finer readings.** These are taken only where `sorryAx` passes through the allowance. The reference's is kept the same way; the
+  candidate's own costs one more compile. Where the file's imports do not bring
+  Lean's command elaborator (`leanpool` here), the finer reading is taken once more with that import, as in the guard: one extra
+  compile per (library, toolchain, file) per process.
+- **Neither is warmed.** These extra readings are fresh, serial `lake env lean` compiles, charged to the row's wall time: the
+  speculative warm-up compiles only the candidate's own print, the candidate's finer text carries a fresh nonce (never a memo hit),
+  and each worker process (one per row and pass of the fast stage) starts with an empty cache, so the reference's readings are taken
+  again in every pass. About 3 s each on ArkLib, about 26 s on PhysLib (prefix_backend's own figures). On held-out row 25, whose
+  reference reads `sorryAx`, every audit of a candidate that reads `sorryAx` pays them; changes of that row in the repeated held-out
+  run come from the finer rule as well as from the print in `module` files.
+- **Worst case.** No deadline is passed to the audit (as published), so one toolchain can take four compiles of up to 600 s each
+  (the candidate, the reference, the candidate's finer reading with its import retry, the reference's finer reading), where the
+  gate as published took at most 600 s. `post_fast/pf_drive.py` ends a worker after min(seconds, row seconds) + 900 s and that pass's
+  gains for the row are lost. Only rows whose candidates need the reference's or finer readings and whose compiles hang can reach
+  it; on the measured final outputs (tier B and tier C) no proof needed them (section "Axiom guard at export").
+
+The counts, with four toolchains:
+
+| Candidate | First candidate | Each later one |
+|---|---|---|
+| Standard three only | 4 compiles | 4 compiles |
+| Reads an extra axiom | 8 compiles | 4 compiles |
+| Goes through the finer check | 16 compiles | 8 compiles |
+
+As before, the audit's compiles are not charged to the row's compile budget, but they take the row's wall time. `default_audit()`
+sets `scorer.compile.GATE_MODULE_PRINT` for the process, so the fast stage's speculative warm-up (`pf_worker.audit_warm`, which
+calls `audit_axioms` without the new `module_print` argument) compiles exactly the gate's text, and its draws stay useful. The flag
+is off by default, so it changes nothing in a process that never calls `default_audit()`. The export's audit (`run.sh export`,
+`open_package.audit_proof`) passes `module_print=False` and makes the same compiles and the same choices as published, whatever the
+flag.
+
+**Switch.** `LRA_POST_AUDIT=published` restores the gate as published (`open_package.audit_proof`, the skip in `module` files, the
+flag off). Unset, empty or `guard` selects the new audit. Any other value also selects the new audit, with a `WARNING` line. The new
+audit logs `gate audit: the export guard's rule at each adoption (...)` once per process.
+
+**Measured with which gate.** Tier B (81.4665, tag `open-camready-20261125`), the held-out run and the numbers under "Results" above were
+measured with the gate as published. Tier B again and the held-out run again with this audit: section "On `main` after the
+camera-ready" at the top. When comparing,
+expect other audit labels with the same choices: about 30-33 final rows (Cslib, LeanPool, PhysLib, and ArkLib rows with a `module`
+pin from v4.33.1) move from `skipped` to `clean`; the 10 Strata rows stay `skipped` (their v4.27.0 pin), with a longer `why`; the
+post report's and decisions' `why` and verdict texts are new (the side log's keys are unchanged, `why` still cut at 300
+characters). The worker's exit line on harness modules imported after the scan also lists `harness.axiom_guard`,
+`harness.finer_sorry` and `harness.post_audit`.
+
+**Tests.** `tests/test_post_audit.py` has 41 tests and uses no Lean: the compile layer is replaced by stand-ins that build Lean's
+messages. They cover:
+- the decision table, the deadline and timeouts, and the caching, concurrent callers included, and which readings are kept;
+- the invariant, on 4,000 random tables;
+- `module` and plain files (the print forced on every toolchain, as the guard's text), toolchains not read by construction, and the
+  hook rejection;
+- row 42's chain as the guard read it: steps 0-6 `clean`, 7-10 `sorry` (`skipped` under the gate as published);
+- the warm-up's identity with the gate's text;
+- the switch, against a pinned copy of the published functions (`tests/data/post_gate_published.py.txt`): the same verdicts on
+  random tables, and the new gate accepts nothing the published one rejects;
+- the export audit unchanged against that copy, with the flag off and on;
+- the compile counts above, and the fingerprint.
+
+`tests/finer_lean/run_gate.py` (Lean, on demand) runs the new gate and the gate as published on fixtures through the package's own
+audit code. It writes the compiled files outside the environments.
+
+**Results of the Lean check (2026-11-24, this node).** All 64 cases came out as expected, in 182 compiles of 0.3-19.1 s each. The
+first compile in an environment is the slow one. The environments, each with the fixtures as plain and as `module` files where the
+library has both:
+- `cslib-v4.31.0`, plain and `module`; `cslib-v4.30.0`, `module`;
+- `physlib-v4.32.0`, plain and `module`;
+- `leanpool-v4.35.0-rc3`, `module`;
+- `strata-v4.29.1` and `strata-v4.27.0` (the final rows' oldest Strata pin), `module` (not read by construction);
+- `mathlib-v4.27.0`, the putnambench path.
+
+The fixtures, and how each gate read them:
+- **The row-42-like case.** The candidate's own value is `sorryAx _ true`, and Lean shows no message, because the library prefix sets
+  `warn.sorry` off. The new gate returns `sorry` on every toolchain that prints, `module` files from v4.30 included. The gate as
+  published returns `skipped` in those `module` files, which is row 42's hole. The same declaration made sound is `clean` under the
+  new gate (`skipped` under the published one in `module` files).
+- **A library lemma proved by `sorry` that the reference does not use.** Treated like the row-42-like case.
+- **Plain `exact sorryAx _ true`, with Lean's message.** Both gates return `sorry` everywhere.
+- **The reference and the candidate both use the library `sorry`.** The new gate returns `clean` through the finer check, in 4
+  compiles (5 on `leanpool`).
+- **The candidate also uses a second library `sorry`.** The new gate returns `sorry`. The published gate returns `clean` in plain
+  files: the allowance alone lets it through.
+- **A `printAxioms` hook.** Rejected with no compile.
+
+On `strata-v4.29.1` and `strata-v4.27.0` (`module`, before v4.30) both gates return `skipped`, with one compile each (the new gate's
+with the print, which Lean answers with an error and no list: the guard's structural reading; re-run after the review, 16 of 16
+cases, 28 compiles of 0.4-1.3 s; `cslib-v4.31.0` re-run 16 of 16), except `sorry` for the text
+with Lean's sorry message. A candidate that reads the standard three takes one compile per toolchain under both gates. On the
+real files too: the 10 final Strata rows on v4.27.0 and the 2 Strata rows of the older held-out file on v4.29.1, each with its
+reference proof as the candidate and its library file's own prefix, read `skipped` under both gates, the new gate's reading the
+guard's structural one (two print errors, nothing else), 1.0-42.1 s per audit.
+
+**Limits.**
+- A toolchain on which the row's file is a `module` file before v4.30 is not read for axioms, by the gate or by the guard: Lean
+  prints no list there, and only Lean's sorry message is read. A silent `sorry` that shows only on such a toolchain is still
+  adopted, and the guard keeps it. Rows: 10 of the 60 final rows (all Strata: v4.27.0; each also lists v4.31.0, which is read); none
+  of the 66 held-out rows of the 2026-11-24 run (every pin v4.30 or later). In the older 10-row held-out file
+  (`data/heldout/heldout.jsonl` of the development repository) 2 Strata rows list only v4.29.1, and no axiom is read for them at
+  all. Lean can read such a toolchain through a second file: the candidate's file compiled with `lean -o` into a scratch folder, then
+  a plain file that imports it and prints (review 2026-11-24, measured on v4.27.0 and v4.29.1: `sorryAx` for a silent sorry,
+  no axioms for a sound proof). That costs two compiles per such toolchain and is not built.
+- The hook scan reads text, so a hook it does not know is not caught.
+- A row-42-like case was built here from `sorryAx _ true`, with the sorry message turned off in the library prefix. It is not built
+  from error recovery: the path by which Lean gave row 42's step 7 the value `sorry` without a message was not traced. The row's own
+  chain texts are not in this folder.
+
+**Files.**
+- New: `harness/post_audit.py`, `tests/test_post_audit.py`, `tests/data/post_gate_published.py.txt`, `tests/finer_lean/run_gate.py`.
+- Changed:
+  - `harness/open_post.py`: `default_audit`, `audit_mode`, the docstring.
+  - `scorer/compile.py`: `GATE_MODULE_PRINT`, `prints_in_module`, `module_file`, and the `module_print` argument of `audit_axioms`.
+    With its defaults it compiles as published.
+  - `harness/open_package.py`: one line, the export's audit passes `module_print=False`.
+  - `harness/axiom_guard.py`: `audit_reading`, the reading that `forced_reading` built, now shared.
+- The seven post-stage scripts are unchanged: fingerprint `b4ac6d42002767a0`.
 
 ## The fast post stage in `run.sh`
 
@@ -521,6 +786,8 @@ FAILED, though `runs/final/proofs.jsonl` is its output; `logs/axiom_guard.log` n
 | `LRA_JOB_ID` | the scheduler's | the job id run.sh stamps and compares (default: `SLURM_JOB_ID`, `PBS_JOBID`, `LSB_JOBID` or `FLUX_JOB_ID`) |
 | `LRA_SAFETY_S` | 600 | seconds kept back from the end of the allocation |
 | `LRA_AXIOM_GUARD` / `LRA_AXIOM_GUARD_S` | on / 420 | the axiom guard at export (section "Axiom guard at export"): `off` for debugging only / its time budget in whole seconds (in the job, cut to fit the safety margin) |
+| `LRA_AXIOM_GUARD_FINER` | on | the axiom guard's finer sorry check (section "Axiom guard at export"): `off` restores the guard as published; another value keeps it on, with a warning |
+| `LRA_POST_AUDIT` | `guard` | the post stage's gate audit (section "The post stage's gate audit"): `published` restores the gate of tag `open-camready-20261125`; another value keeps the audit, with a warning |
 | `LRA_WORKERS` / `LRA_COMPILE_SLOTS` | package defaults | sessions at once (default 11) / end-stage compile slots (default: a third of the CPUs, one per 8 GB, within 3-32) |
 | `LRA_EXTRA` | empty | more `harness/open_package.py` flags (`docs/open_package_readme.md`) |
 | `LRA_BASE_URL` | empty | an OpenAI-compatible server that is already running (serving `glm-5.3-flash`); run.sh starts none |
@@ -775,7 +1042,9 @@ reference heartbeats file (no local table): it starts with the row's exact state
 (unchanged); its reading on the primary toolchain scores higher; it compiles on every listed toolchain (Z 100); a fresh back-to-back
 re-reading of the current proof and the candidate still passes `scorer.accept.decide` with the candidate's worse reading against the
 current proof's better one and a strictly higher score; its rounded score is above the row's stored score; and the export's own sorry
-audit (`harness/open_package.audit_proof`: `#print axioms` with `warn.sorry` forced on) reads it clean. Anything else, an exception or
+audit (`harness/open_package.audit_proof`: `#print axioms` with `warn.sorry` forced on) reads it clean (as published and in our runs;
+on `main` since 2026-11-25 the default is the gate audit of section "The post stage's gate audit", and `LRA_POST_AUDIT=published` restores
+this one). Anything else, an exception or
 a timeout included, leaves the row's current proof as it is; a budget stop (the row's compiles or wall, the step's wall) keeps the
 last proof the row has confirmed through this whole gate, or its line byte for byte when there is none. A row where no op has a site
 is not compiled. Per row: at most 3 passes over the ops (in the order implied, closerprep, inlineeq, hintgrind, projpath,

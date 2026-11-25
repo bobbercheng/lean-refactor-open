@@ -7,7 +7,8 @@
   "T0b": "input sha256 609af35b (the pick at 45.25 h, not shipped)",
   "tierB_20261124": "input sha256 3043ed87 (the pick at 45.25 h with one problem's proof replaced as in tier A, not shipped), post_stage.sh of tag open-camready-measured-20261124 (82f6f2d), 85-minute cap; output 414daf5b, stored mean 81.4660, fresh read 81.4651, 60 of 60 rows (../REVISIONS.json, measured.tierB_20261124)",
   "heldout_20261124": "input sha256 1df14289 (start proofs of 66 library rows outside the final benchmark, not shipped; rows e1264c23, reference heartbeats 3809b6e5), post_stage.sh of tag open-camready-measured-20261124 (82f6f2d; its seven post-stage scripts differ from this version's only in names, comments, messages and the --target default, which sets only the summary's time-to-target), 85-minute cap; output e6bb3863, stored mean 37.4195 -> 56.8164; registered line on T-primary: HELD-OUT GAIN SHOWN (../RESULTS.md)",
-  "tierB_20261125": "input sha256 3043ed87 (the same input), the seven scripts of this version (fingerprint b4ac6d42002767a0): stored mean 81.4665 from 78.7697 in 85 min, 57 rows changed, 0 fell; output sha256 a065894fec79"
+  "tierB_20261125": "input sha256 3043ed87 (the same input), the seven scripts of this version (fingerprint b4ac6d42002767a0): stored mean 81.4665 from 78.7697 in 85 min, 57 rows changed, 0 fell; output sha256 a065894fec79",
+  "finer_20261125": "one VM session, code of this change on the code of 2026-11-24 (before the names of 2026-11-25): tier B again on input 3043ed87: stored mean 81.4652, no row fell, guard (finer on) 60 pass; the held-out run again on input 1df14289: no row set back, row 42 68.61; checks on copies: 123 of 123"
  },
  "not_shipped_origins": {
   "run_T0.sh": "db92b0e2b75c3ff924ff3abeeb1462330b19198d560c86fe9acb6f5d77c4dfe0",
@@ -18,8 +19,8 @@
  "files": [
   {
    "path": "README.md",
-   "sha256": "a4aeb8465cd98da6afd9615c67f4c9b50f74cc59e789ed3ce5318f01cf96a1a8",
-   "origin": "tag file plus a short first section, three corrections in section Post-step and one in the opening paragraph; 2026-11-24: the sections 'Changes in this version (2026-11-24)' (82f6f2d) and 'Axiom guard at export' (d2d6e3c) at the top, and the sentences on EXPORT.json, this file and REVISIONS.json (release commit); after tag open-camready-20261124 (2026-11-24, second change): a paragraph on a limit of the axiom checks found after publication (the axiom-print fake); 2026-11-25 (tag open-camready-20261125): names and wording, and tier B measured on this version's code"
+   "sha256": "8e80cc0d54351a1bd1cd5e8384b588623f344e6e141984a3dec92b9a0df0a23e",
+   "origin": "tag file plus a short first section, three corrections in section Post-step and one in the opening paragraph; 2026-11-24: the sections 'Changes in this version (2026-11-24)' (82f6f2d) and 'Axiom guard at export' (d2d6e3c) at the top, and the sentences on EXPORT.json, this file and REVISIONS.json (release commit); after tag open-camready-20261124 (2026-11-24, second change): a paragraph on a limit of the axiom checks found after publication (the axiom-print fake); 2026-11-25 (tag open-camready-20261125): names and wording, and tier B measured on this version's code; 2026-11-25, on main after tag open-camready-20261125: the finer sorry check, the post stage's gate audit, their measurements and the settings LRA_AXIOM_GUARD_FINER and LRA_POST_AUDIT"
   },
   {
    "path": "REPLICATE.md",
@@ -33,13 +34,13 @@
   },
   {
    "path": "harness/open_package.py",
-   "sha256": "8f7db8f55b5d65d14528a9f3542f2d37f4884ed749264fd358a9b7f1c1c1f94c",
-   "origin": "tag file, +5 -3: flag --no-end-stages; 2026-11-24 (82f6f2d): the option guard in the export's picks and writer, the check at the start, --debug-rows; 2026-11-25: names, comments and messages"
+   "sha256": "4ade0f3aebc07c755ef3784a5c561d8e7c799a3b9b9d870a89e9f9a4ebd3a213",
+   "origin": "tag file, +5 -3: flag --no-end-stages; 2026-11-24 (82f6f2d): the option guard in the export's picks and writer, the check at the start, --debug-rows; 2026-11-25: names, comments and messages; 2026-11-25, on main after tag open-camready-20261125: one line, the export's audit passes module_print=False"
   },
   {
    "path": "harness/open_post.py",
-   "sha256": "a923d0f5961e5ca53b5c33788bc5b6fbfd4bda547656a89f7090cd05e193ee56",
-   "origin": "post-code-v7 (a25416f5 + v7m merge); one docstring line redacted, as at the tag; same syntax tree apart from the docstring; 2026-11-24 (82f6f2d): the option guard in the gate, the input check, --debug-rows; 2026-11-25: names, comments and messages; measured_sha256 is the unredacted file of 2026-11-09 that runs fullV7m1s and T0b used; the held-out test and the tier B run of 2026-11-24 used the file of 82f6f2d, the tier B run of 2026-11-25 this file",
+   "sha256": "be86756339edcc0f7583ee1ff9dab52651e9c2c945dbc4f437bb4844cb22d4b4",
+   "origin": "post-code-v7 (a25416f5 + v7m merge); one docstring line redacted, as at the tag; same syntax tree apart from the docstring; 2026-11-24 (82f6f2d): the option guard in the gate, the input check, --debug-rows; 2026-11-25: names, comments and messages; measured_sha256 is the unredacted file of 2026-11-09 that runs fullV7m1s and T0b used; the held-out test and the tier B run of 2026-11-24 used the file of 82f6f2d, the tier B run of 2026-11-25 this file; 2026-11-25, on main after tag open-camready-20261125: default_audit returns the gate audit of harness/post_audit.py (LRA_POST_AUDIT=published: the tag's gate), audit_mode, the docstring",
    "measured_sha256": "14dac17ba7b4455f5ac7e850f1cb346ca22ccd769513a804bfd6659c9fe0ab2f"
   },
   {
@@ -115,8 +116,8 @@
   },
   {
    "path": "harness/axiom_guard.py",
-   "sha256": "14912c75ba360d9939e1833f47a811f2262ed39bd1cf561088568c971e29372d",
-   "origin": "new 2026-11-24 (d2d6e3c): the axiom guard at export; 2026-11-25: the option guard module's name in its import and comments"
+   "sha256": "04a886fc9a9354ea78850af822c9eb468255262049fa41d163b5d054b4b28c5f",
+   "origin": "new 2026-11-24 (d2d6e3c): the axiom guard at export; 2026-11-25: the option guard module's name in its import and comments; 2026-11-25, on main after tag open-camready-20261125: the finer sorry check (LRA_AXIOM_GUARD_FINER, on by default) and the hook check, the reading shared with the gate audit (audit_reading)"
   },
   {
    "path": "harness/batch_screen.py",
@@ -235,8 +236,8 @@
   },
   {
    "path": "tests/test_axiom_guard.py",
-   "sha256": "2849b13d5559f30fddd8b8eeabac47f3f7cde43ea452349d140f538c1802b85d",
-   "origin": "new 2026-11-24 (d2d6e3c): tests of the axiom guard (no Lean); recomputes the fingerprint of the seven post-stage scripts; 2026-11-25: names, test texts and this version's fingerprint (b4ac6d42002767a0)"
+   "sha256": "59df513bf1116b76c6cda0f4cad48fc81c989115ab95ed0d2eb173df49057d65",
+   "origin": "new 2026-11-24 (d2d6e3c): tests of the axiom guard (no Lean); recomputes the fingerprint of the seven post-stage scripts; 2026-11-25: names, test texts and this version's fingerprint (b4ac6d42002767a0); 2026-11-25, on main after tag open-camready-20261125: runs with the finer check off (the tag's guard)"
   },
   {
    "path": "tests/test_option_guard.py",
@@ -245,23 +246,139 @@
   },
   {
    "path": "../README.md",
-   "sha256": "abf76e8ed39e0cfbdd151e7234af72a1c1fb3ee88028fd7f50554c69d1f6383b",
+   "sha256": "67b42a11b2c5933623957f5b6406fd6ed4738b61f9622c21c55c8b721151e0fc",
    "origin": "root README of main; outside the zip (2026-11-09: a four-part summary, its earlier text moved to ../RESULTS.md and ../DISCLOSURES.md); 2026-11-24: the official result, 'Changes in this version (2026-11-24)' with the axiom guard and the measurements, and the tags of this version; after tag open-camready-20261124 (2026-11-24): a bullet and a Documents row for the tier C proof file; after tag open-camready-20261124 (2026-11-24, second change): the axiom guard bullet names the axiom-print limit; 2026-11-25 (tag open-camready-20261125): names and wording, and tier B measured on this version's code, and this version's tag"
   },
   {
    "path": "../RESULTS.md",
-   "sha256": "54d50ddc3f8bf377a03214024b0135d4e9b4a36e931977d30801ce37de441e6f",
+   "sha256": "03c327f22b5abae4e103e7b375152e88e74138dca143d9c4e52ebd21b1e5371a",
    "origin": "results text moved from the root README of main (2026-11-09); outside the zip; 2026-11-24: 'Changes in this version (2026-11-24)' and the section 'Revised package, measured (2026-11-24)'; after tag open-camready-20261124 (2026-11-24): links to the tier C proof file (proofs/tier-c/); after tag open-camready-20261124 (2026-11-24, second change): a sentence on the axiom-print limit after the axiom guard table; 2026-11-25 (tag open-camready-20261125): names and wording, and tier B measured on this version's code (the run of 2026-11-24 kept as 'The earlier run')"
   },
   {
    "path": "../DISCLOSURES.md",
-   "sha256": "ce5930eb83eb972fa6f35abc815ded73d9c75f2edb23e84a603e0fd90782a955",
+   "sha256": "2a46b665c12e5f782d26d483dbc1da8784920b5577be9fb589cb27924624dd86",
    "origin": "disclosure text moved from the root README of main (2026-11-09); outside the zip; 2026-11-24: 'Changes in this version (2026-11-24)' and the post-step's provenance in 'Provenance'; after tag open-camready-20261124 (2026-11-24, second change): a bullet on a limit of the axiom checks found after publication (the axiom-print fake); 2026-11-25 (tag open-camready-20261125): names and wording"
   },
   {
    "path": "../NOTICE.md",
-   "sha256": "0dda92ac39faf43d6f7afeef381d59c3ed2947b9fa114382c3ff8f9c226ec669",
+   "sha256": "d619a5fd0f27963e5bee75f6b8964ab5295302799ddf96b75c4847293dcc53c5",
    "origin": "root NOTICE.md of main; outside the zip; 2026-11-24: 'Changes in this version (2026-11-24)': the option guard, the axiom guard, this file, REVISIONS.json and the tags; after tag open-camready-20261124 (2026-11-24): the tier C proof file in the third-party table and in 'Changes in this version'; after tag open-camready-20261124 (2026-11-24, second change): the second change after the tag in 'Changes in this version'; 2026-11-25 (tag open-camready-20261125): names and wording, and this version in 'Changes in this version'"
+  },
+  {
+   "path": "scorer/compile.py",
+   "sha256": "52144677e6ed66c1e04daf518d1f69bb86cb9c7ba646202ebb11eb918d544941",
+   "origin": "tag file; 2026-11-25, on main after tag open-camready-20261125: GATE_MODULE_PRINT, prints_in_module, module_file and the module_print argument of audit_axioms (with its defaults it compiles as at the tag)"
+  },
+  {
+   "path": "harness/finer_sorry.py",
+   "sha256": "ef43075f9999d5da45e85f5d01a497c7c4847896c3703c9448d29b237126fc2e",
+   "origin": "new, 2026-11-25, on main after tag open-camready-20261125: the finer sorry check (the Lean program, version 2, the sources rule, the hook check)"
+  },
+  {
+   "path": "harness/post_audit.py",
+   "sha256": "c41fd655dabfbbae3260f5782da4f07ee12c7d292f2ff56a9d2cba36dca372f2",
+   "origin": "new, 2026-11-25, on main after tag open-camready-20261125: the post stage's gate audit (the axiom guard's rule at each adoption)"
+  },
+  {
+   "path": "tests/test_finer_sorry.py",
+   "sha256": "a9b8467546d9e14c4e8479444f133f3a36888764174d96d854638ca9d275c005",
+   "origin": "new, 2026-11-25, on main after tag open-camready-20261125: tests of the finer sorry check (no Lean); the guard with the check off against the tag's guard"
+  },
+  {
+   "path": "tests/test_post_audit.py",
+   "sha256": "6bb88d0b3e9e28ba0ccbe345124c14591f28285e15958d033c770a36d850ff93",
+   "origin": "new, 2026-11-25, on main after tag open-camready-20261125: tests of the gate audit (no Lean); the switch against the tag's gate"
+  },
+  {
+   "path": "tests/data/axiom_guard_published.py.txt",
+   "sha256": "14912c75ba360d9939e1833f47a811f2262ed39bd1cf561088568c971e29372d",
+   "origin": "new, 2026-11-25, on main after tag open-camready-20261125: final/harness/axiom_guard.py at tag open-camready-20261125, verbatim (git blob 40a9b7f7)"
+  },
+  {
+   "path": "tests/data/post_gate_published.py.txt",
+   "sha256": "c09afd0f3a8e5dacb40d2dc00dee2f12be765fb93a8e6c5f7989d42813c65da4",
+   "origin": "new, 2026-11-25, on main after tag open-camready-20261125: the gate audit chain at tag open-camready-20261125, each function's text verbatim"
+  },
+  {
+   "path": "tests/finer_lean/run_fixtures.py",
+   "sha256": "beab0d4e6c1acf7284ee97d87e655bea7b4745357637f2c9c252b7dbc54ae389",
+   "origin": "new, 2026-11-25, on main after tag open-camready-20261125: the finer program on the Lean fixtures (on demand, Lean)"
+  },
+  {
+   "path": "tests/finer_lean/run_gate.py",
+   "sha256": "076079649af8c4bb1d32b6b847f87499a75e2998a19217db4c8633d0a024d55b",
+   "origin": "new, 2026-11-25, on main after tag open-camready-20261125: the new gate and the tag's gate on the fixtures (on demand, Lean)"
+  },
+  {
+   "path": "tests/finer_lean/fixtures/F1_clean.lean",
+   "sha256": "a240867f1790f1858e196934da314d6277928aec6778c8d5c815dc1231f6ae4b",
+   "origin": "new, 2026-11-25, on main after tag open-camready-20261125: a Lean fixture of the finer sorry check"
+  },
+  {
+   "path": "tests/finer_lean/fixtures/F7_private.lean",
+   "sha256": "166f7065d9d1558f61ba94763dab4cedabb0faa15bc29386bd145cbcdbbef45c",
+   "origin": "new, 2026-11-25, on main after tag open-camready-20261125: a Lean fixture of the finer sorry check"
+  },
+  {
+   "path": "tests/finer_lean/fixtures/F8_imported.lean",
+   "sha256": "fd588bb17d6e568d92cf1b98773fa724fc3360732dcba39e1573ffc19e50e6c0",
+   "origin": "new, 2026-11-25, on main after tag open-camready-20261125: a Lean fixture of the finer sorry check"
+  },
+  {
+   "path": "tests/finer_lean/fixtures/F4_own_sorry.lean",
+   "sha256": "83a421499397232d7f0fc449affc1ce236101d0937a7c65311af9390dba34ba6",
+   "origin": "new, 2026-11-25, on main after tag open-camready-20261125: a Lean fixture of the finer sorry check"
+  },
+  {
+   "path": "tests/finer_lean/fixtures/F9_where_aux.lean",
+   "sha256": "257489b65be51dcf8f14e4b693499429ff1c14f2b57181499887aa4bcd91859d",
+   "origin": "new, 2026-11-25, on main after tag open-camready-20261125: a Lean fixture of the finer sorry check"
+  },
+  {
+   "path": "tests/finer_lean/fixtures/F2_file_lemma.lean",
+   "sha256": "21636442889e44ae3efdb10c6b4c1766ec89bda0bbadfd6284fd3a1b8a47bc6b",
+   "origin": "new, 2026-11-25, on main after tag open-camready-20261125: a Lean fixture of the finer sorry check"
+  },
+  {
+   "path": "tests/finer_lean/fixtures/F3_two_lemmas.lean",
+   "sha256": "e945cd36a96dbc10c8f26cb07c61ee99dba0a3c0bfede7d10dfd9edc45eb1914",
+   "origin": "new, 2026-11-25, on main after tag open-camready-20261125: a Lean fixture of the finer sorry check"
+  },
+  {
+   "path": "tests/finer_lean/fixtures/F12_shadow_name.lean",
+   "sha256": "3143b32afbbf474149dbc0d1511cb56a24526a30c8ee96d0ae91511431b93d53",
+   "origin": "new, 2026-11-25, on main after tag open-camready-20261125: a Lean fixture of the finer sorry check"
+  },
+  {
+   "path": "tests/finer_lean/fixtures/F5_own_synthetic.lean",
+   "sha256": "ce75da39b35013e829d540a4bd1c2b508496f32074f495cbb384d4d9363fdae1",
+   "origin": "new, 2026-11-25, on main after tag open-camready-20261125: a Lean fixture of the finer sorry check"
+  },
+  {
+   "path": "tests/finer_lean/fixtures/F10_decreasing_by.lean",
+   "sha256": "6993e836d607c2e9f1b9582b98c385116a48e07cd4ae362089d9e223901dcb5f",
+   "origin": "new, 2026-11-25, on main after tag open-camready-20261125: a Lean fixture of the finer sorry check"
+  },
+  {
+   "path": "tests/finer_lean/fixtures/F13_open_namespace.lean",
+   "sha256": "45400d53c3c0ba3fe0aa93eec0bd821f50acc19cead54a404d719c3d5830757f",
+   "origin": "new, 2026-11-25, on main after tag open-camready-20261125: a Lean fixture of the finer sorry check"
+  },
+  {
+   "path": "tests/finer_lean/fixtures/F14_low_heartbeats.lean",
+   "sha256": "9d3f2b12b116953da1d4c0ee54420b3f12604f2bcf6c9af2a73843ff0ae2a007",
+   "origin": "new, 2026-11-25, on main after tag open-camready-20261125: a Lean fixture of the finer sorry check"
+  },
+  {
+   "path": "tests/finer_lean/fixtures/F11_library_dot_aux.lean",
+   "sha256": "bbd989496c6963ba4fc0b86c469e98cfc6b0ee91f85b9985dacf93aebee55dd6",
+   "origin": "new, 2026-11-25, on main after tag open-camready-20261125: a Lean fixture of the finer sorry check"
+  },
+  {
+   "path": "tests/finer_lean/fixtures/F6_helper_synthetic.lean",
+   "sha256": "08adee223fdc126e4b405d8d10e72ecad2333efc1b3a77bf2c181de6725b9b61",
+   "origin": "new, 2026-11-25, on main after tag open-camready-20261125: a Lean fixture of the finer sorry check"
   }
- ]
+ ],
+ "main_after_tag": "2026-11-25: main = tag open-camready-20261125 plus the finer sorry check and the post stage's gate audit (both on by default); the seven post-stage scripts unchanged"
 }

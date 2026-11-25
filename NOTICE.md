@@ -77,11 +77,16 @@ export (the option guard: debug options are not allowed in benchmark proofs):
   and in the root documents. The guard module is `final/harness/option_guard.py` (the option guard), its test
   `final/tests/test_option_guard.py`. In the seven post-stage scripts only names, comments, messages and the run summary's time-to-target
   changed: the default `--target` of `pf_drive.py` and `snapshot.py`, which no proof decision reads, is the tier C
-  file's stored mean, 81.4367. Their fingerprint is `b4ac6d42002767a0` (`916734a742e664be` at both tags of 2026-11-24, the one in
-  the report). `final/harness/axiom_guard.py` changed in names and comments only. Two edits reach code outside those scripts: the
+  file's stored mean, 81.4367. Their fingerprint is `b4ac6d42002767a0`, the one in the report (`916734a742e664be` at both tags of
+  2026-11-24). `final/harness/axiom_guard.py` changed in names and comments only. Two edits reach code outside those scripts: the
   option guard has one text rule fewer, which the Arena's forbidden list, run first at every gate, makes redundant (every
   `set_option debug.*` form is still rejected); and the post-step's ops give no site to a proof that sets any debug option. Tier B
   was measured on this version's code ([`RESULTS.md`](RESULTS.md), section "Tier B").
+- On 2026-11-25, after that tag, on `main`: the finer sorry check in the axiom guard (`final/harness/finer_sorry.py`) and the post
+  stage's gate audit (`final/harness/post_audit.py`), with their tests, Lean fixtures and pinned copies of the tag's guard and
+  gate (`final/tests/data/`); small changes to `final/harness/axiom_guard.py`, `open_post.py`, `open_package.py` and
+  `final/scorer/compile.py`. The seven post-stage scripts are unchanged. Measured on 2026-11-25 ([`final/README.md`](final/README.md),
+  section "On `main` after the camera-ready").
 
 The code of `sub43` as submitted stays at the tag `open-run3-post-final-sub43-20261104` and in the code zip.
 

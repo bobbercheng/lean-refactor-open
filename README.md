@@ -31,9 +31,12 @@ sessions without gain.*
   tier B. The held-out test below ran tag
   [`open-camready-measured-20261124`](https://github.com/bobbercheng/lean-refactor-open/tree/open-camready-measured-20261124)
   (commit `82f6f2d`), whose post-stage scripts differ from this version's only in names, comments, messages and the summary's `--target` default; tag
-  [`open-camready-20261124`](https://github.com/bobbercheng/lean-refactor-open/tree/open-camready-20261124), the revised package
-  the report names, adds the axiom guard at export, written after that test (its release holds a ZIP of `final/` and the tier C
+  [`open-camready-20261124`](https://github.com/bobbercheng/lean-refactor-open/tree/open-camready-20261124) adds the axiom guard at export, written after that test (its release holds a ZIP of `final/` and the tier C
   file).
+- **`main` after the camera-ready (2026-11-25):** that tag plus the finer sorry check in the axiom guard and the post stage's gate
+  audit, both on by default, so `main` can adopt different steps than the code the report measured. To reproduce the report,
+  check out the tag (or set `LRA_AXIOM_GUARD_FINER=off` and `LRA_POST_AUDIT=published`). Measured on
+  2026-11-25: [`final/README.md`](final/README.md), section "On `main` after the camera-ready".
 - **Results, all uploads and our official runs:** [`RESULTS.md`](RESULTS.md). **Disclosures:** [`DISCLOSURES.md`](DISCLOSURES.md).
 
 ## Changes in this version (2026-11-24)
@@ -74,10 +77,10 @@ sessions without gain.*
     ends with exit code 5), and on a problem whose reference proof itself rests on a library lemma proved by `sorry`, the guard
     cannot tell such a proof from one that only uses that lemma
     ([`final/README.md`](final/README.md#axiom-guard-at-export-added-2026-11-24-after-the-held-out-test)).
-  - *Code.* Tier B ran this version's code; the seven post-stage scripts' fingerprint is `b4ac6d42002767a0` (C; at both tags
-    of 2026-11-24 it is `916734a742e664be`, the one in the report). The held-out test and the report's tier B run ran the code of
+  - *Code.* Tier B ran this version's code; the seven post-stage scripts' fingerprint is `b4ac6d42002767a0` (C, the one in the report; at
+    both tags of 2026-11-24 it is `916734a742e664be`). The held-out test and the tier B run of 2026-11-24 ran the code of
     tag `open-camready-measured-20261124` (commit `82f6f2d`), whose post-stage scripts differ from this version's only in names,
-    comments and messages; the axiom guard at export came after that test. This version's edits of 2026-11-25 are listed in
+    comments, messages and the summary's `--target` default; the axiom guard at export came after that test. This version's edits of 2026-11-25 are listed in
     [`NOTICE.md`](NOTICE.md), section "Changes in this version (2026-11-24)".
 - **The tier C proof file is published.** [`proofs/tier-c/`](proofs/tier-c/README.md) holds the 60 proofs the report's tier C
   counts (the submitted file with four problems' proofs taken from a separate chain of post-step passes; never uploaded or graded),

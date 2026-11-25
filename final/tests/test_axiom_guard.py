@@ -18,11 +18,29 @@ if str(ROOT) not in sys.path:
 ROWS_FILE = ROOT / "data/official/rows.jsonl"
 os.environ.setdefault("LRA_ROWS_FILE", str(ROWS_FILE))
 os.environ.setdefault("LRA_HBS_FILE", str(ROOT / "data/official/heartbeats.jsonl"))
-
 from harness import axiom_guard as AG  # noqa: E402
 from harness import option_guard as KG  # noqa: E402
 
-ENV = dict(os.environ, PYTHONDONTWRITEBYTECODE="1")
+# These tests are the guard as published (tag open-camready-20261125), so they run with the finer sorry check off: off must restore
+# that behaviour exactly. tests/test_finer_sorry.py tests the check on, and compares off with the published guard itself. The switch
+# is set for this module's tests only (setUpModule / tearDownModule, review 2026-11-24) and for the scripts they start (ENV).
+_FINER_BEFORE = None
+
+
+def setUpModule():
+    global _FINER_BEFORE
+    _FINER_BEFORE = os.environ.get(AG.FINER_ENV)
+    os.environ[AG.FINER_ENV] = "off"
+
+
+def tearDownModule():
+    if _FINER_BEFORE is None:
+        os.environ.pop(AG.FINER_ENV, None)
+    else:
+        os.environ[AG.FINER_ENV] = _FINER_BEFORE
+
+
+ENV = dict(os.environ, PYTHONDONTWRITEBYTECODE="1", LRA_AXIOM_GUARD_FINER="off")
 STD = ["propext", "Classical.choice", "Quot.sound"]
 GOOD = {"axioms": STD}
 SORRY = {"axioms": ["sorryAx"]}

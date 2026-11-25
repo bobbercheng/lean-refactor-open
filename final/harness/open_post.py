@@ -129,7 +129,12 @@ byte) and <out>/post_report.json; work files under <out>/post/. <out>/proofs.jso
             debug.*`; harness/option_guard.py); its primary reading scores higher (exact score); it compiles on EVERY pin of the row (Z 100); a fresh paired
             re-reading of the current proof and the candidate, back to back, still passes scorer.accept.decide with the worse candidate
             reading against the better current one and a strictly higher exact score; its rounded score is above the input's stored
-            score; and the export's own `#print axioms` sorry audit (harness/open_package.audit_proof) reads it clean. Anything else,
+            score; and the gate audit (default_audit) reads it "clean" or "skipped": since 2026-11-24 the export guard's rule
+            (harness/post_audit.py: the axiom print forced on every pin, `module` files included, as the guard's forced reading; a
+            `module` file before v4.30, where Lean prints no list, is not read by construction there, as in the guard; axioms beyond
+            the three only as the row's reference proof reads them; the finer sorry check; the hook check); with
+            LRA_POST_AUDIT=published the export's own `#print axioms` sorry audit (harness/open_package.audit_proof), as published,
+            which skips the print in `module` files. Anything else,
             an exception, a timeout or a budget stop included, leaves the row's current proof as it is (never harm).
   search    per row: a pure pre-check (no op has a site: no compile at all); else the input measured on every pin, then up to PASSES
             passes: every op's candidates on the current proof (env queries on the primary pin), read on the primary pin in op order
@@ -843,12 +848,46 @@ def load_inputs(rows_path, hbs_path) -> tuple[dict, dict]:
     return rows, hbs
 
 
+AUDIT_ENV = "LRA_POST_AUDIT"   # published | guard (default): the gate's audit (default_audit)
+
+
+def audit_mode(value: str | None = None) -> tuple[str, str | None]:
+    """("published" | "guard", a warning) from `value` (default: $LRA_POST_AUDIT): "published" only for that word; unset, "" or "guard":
+    "guard"; any other value: "guard", with a warning (a typo never restores the published gate)."""
+    v = (os.environ.get(AUDIT_ENV, "") if value is None else value).strip()
+    if v == "published":
+        return "published", None
+    if v in ("", "guard"):
+        return "guard", None
+    return "guard", f"{AUDIT_ENV}={v!r} is neither published nor guard: the gate audit keeps the export guard's rule"
+
+
 def default_audit():
-    from harness.open_package import audit_proof
+    """The gate's audit (improve_row adopts a candidate iff it returns "clean" or "skipped"). Default (2026-11-24, operator decision
+    (b)): harness/post_audit.gate_audit, the export guard's rule at each adoption (the axiom print forced on every pin, `module` files
+    included; a `module` file before v4.30 prints no list and is not read by construction, as in the guard; extras only as the
+    reference proof reads them; the finer sorry check; the hook check).
+    It sets scorer.compile.GATE_MODULE_PRINT for this process, so that audit_axioms called without module_print (the fast stage's
+    speculative warm-up, post_fast/pf_worker.audit_warm) compiles the gate's own text. LRA_POST_AUDIT=published: the gate as
+    published (open_package.audit_proof, which skips the print in `module` files), the flag off."""
     from probe.verify_candidates import newest_first
+    from scorer import compile as C
+    mode, warn = audit_mode()
+    if mode == "published":
+        from harness.open_package import audit_proof
+        C.GATE_MODULE_PRINT = False
+
+        def audit(row, decl):
+            return audit_proof(row, decl, newest_first(row["version_info"]), {})
+        return audit
+    from harness import post_audit as PA
+    C.GATE_MODULE_PRINT = True
+    log(f"gate audit: the export guard's rule at each adoption (harness/post_audit.py; {AUDIT_ENV}=published restores the published gate)")
+    if warn:
+        log(f"WARNING: {warn}")
 
     def audit(row, decl):
-        return audit_proof(row, decl, newest_first(row["version_info"]), {})
+        return PA.gate_audit(row, decl, newest_first(row["version_info"]))
     return audit
 
 

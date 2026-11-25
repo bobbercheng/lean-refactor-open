@@ -32,7 +32,7 @@ against the row's reference proof; they are not board scores.
 |---|---|
 | This version | tag `open-camready-20261125`: the code that ran tier B (2026-11-25), with the axiom guard at export ([`final/README.md`](final/README.md#axiom-guard-at-export-added-2026-11-24-after-the-held-out-test)) and this release's documents and records |
 | The post stage | the seven scripts that ran tier B (`final/post_fast/`: `post_stage.sh`, `pf_drive.py`, `pf_svc.py`, `pf_worker.py`, `prefix_backend.py`, `snapshot.py`, `merge_post.py`): fingerprint `b4ac6d42002767a0` (the sha256 of each file, one per line in this order, then the sha256 of those lines, first 16 hex digits; `final/tests/test_axiom_guard.py` recomputes it) (C). The post-step's ops that they run are `final/harness/open_post.py` and `final/harness/post/` |
-| Code of 2026-11-24 | tag `open-camready-measured-20261124` (commit `82f6f2d`) ran the held-out test and the earlier tier B run below; tag `open-camready-20261124` (commit `f8f990b`, the revised package the report names) adds the axiom guard at export (commit `d2d6e3c`), which ran on the outputs below. The seven post-stage scripts are byte-identical at both tags (fingerprint `916734a742e664be`, the one in the report) and differ from this version's only in names, comments and messages; this version's `final/harness/axiom_guard.py` differs from that tag's only in names and comments. This version's edits of 2026-11-25: [`NOTICE.md`](NOTICE.md), section "Changes in this version (2026-11-24)" |
+| Code of 2026-11-24 | tag `open-camready-measured-20261124` (commit `82f6f2d`) ran the held-out test and the earlier tier B run below; tag `open-camready-20261124` (commit `f8f990b`) adds the axiom guard at export (commit `d2d6e3c`), which ran on the outputs below. The seven post-stage scripts are byte-identical at both tags (fingerprint `916734a742e664be`) and differ from this version's only in names, comments, messages and the summary's `--target` default; this version's `final/harness/axiom_guard.py` differs from that tag's only in names and comments. This version's edits of 2026-11-25: [`NOTICE.md`](NOTICE.md), section "Changes in this version (2026-11-24)" |
 | Records | [`final/REVISIONS.json`](final/REVISIONS.json): the numbers of this section with the sha256 prefixes of the inputs and outputs, and the sha256 of every file that differs from the export record `final/EXPORT.json`. Not in this repository: the proofs themselves (inputs and outputs), except the tier C file ([`proofs/tier-c/`](proofs/tier-c/README.md)), the held-out test's registration (a commit in our private development repository, not independently timestamped), its 66 rows, the fresh-read verifier and the registered reader. `final/harness/axiom_guard.py` reads axioms the way that verifier does (a forced `#print axioms` of the plain and the namespace-qualified name) |
 
 ### Tier B: the revised post stage on the 60 final problems
@@ -184,6 +184,15 @@ The guard changed no proof of the earlier tier B output or of the tier C file.
 These readings, and the fresh reads above, rest on the axiom list Lean prints, which a proof text that registers its own command
 handler can make false; a text scan finds no such handler in the proofs read here (M;
 [`DISCLOSURES.md`](DISCLOSURES.md), "A limit of the axiom checks, found after publication"), so these readings stand.
+
+### The finer sorry check on `main`, measured (2026-11-25)
+
+After the camera-ready, `main` adds the finer sorry check to the axiom guard and the guard's rule to the post stage's gate (both
+on by default; [`final/README.md`](final/README.md), section "On `main` after the camera-ready"). One VM session on 2026-11-25,
+judged by criteria written down before the runs, passed all three runs (M): tier B again, 81.4652 (bar 81.4160), no row fell,
+nothing set back; the held-out run again, no row set back, every text adopted on row 42 reads the standard axioms, row 42 ends at
+68.61 (first run: set back to 33.33); checks on copies, 123 of 123. The reported numbers above are unchanged: they were measured
+with the guard and the gate of tag `open-camready-20261125`.
 
 ## Final result
 

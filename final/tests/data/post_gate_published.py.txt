@@ -1,0 +1,114 @@
+# The post stage's gate audit chain AS PUBLISHED (tag open-camready-20261125 = 60ca342, the code tier B was measured with; the
+# same function texts as at the 2026-11-24 tags): open_post.default_audit -> open_package.audit_proof (and audit_export, the job's export audit)
+# -> scorer.compile.audit_axioms, each function's text verbatim. tests/test_post_audit.py executes them in the current modules'
+# namespaces and compares them with the current code (LRA_POST_AUDIT=published, and the export audit) on stand-in compiles.
+
+# ---- final/harness/open_post.py :: default_audit (git blob c6faae322f3a)
+def default_audit():
+    from harness.open_package import audit_proof
+    from probe.verify_candidates import newest_first
+
+    def audit(row, decl):
+        return audit_proof(row, decl, newest_first(row["version_info"]), {})
+    return audit
+
+# ---- final/harness/open_package.py :: audit_proof (git blob 39da5a28687d)
+def audit_proof(row: dict, proof: str, versions: list[str], seed_sorry: dict, audit=None, timeout: int = AUDIT_TIMEOUT_S,
+                deadline: float | None = None) -> tuple[str, str]:
+    """(clean | sorry | unknown | skipped, why) of one proof on every pin (section S): `sorry` when Lean's sorry message appears with
+
+
+"""
+    from scorer.compile import audit_axioms
+
+    def tmo() -> int:
+        return int(timeout if deadline is None else max(1, min(timeout, deadline - time.time())))
+    aud = audit or (lambda r, p, v: audit_axioms(r, p, v, timeout=tmo()))
+    if not versions:
+        return "unknown", "the row lists no pin"
+    unknown, skipped = [], []
+    for v in versions:
+        if deadline is not None and deadline - time.time() < AUDIT_MIN_PIN_S:
+            unknown.append(f"{v}: the audit deadline was reached"); continue
+        try:
+            a = aud(row, proof, v)
+        except Exception as e:                
+            unknown.append(f"{v}: {type(e).__name__}: {str(e)[:80]}"); continue
+        c = getattr(a, "compile", None)
+        if getattr(a, "switch", False) or getattr(a, "sorry_warning", False):
+            return "sorry", f"axiom audit on {v}: the declaration uses sorry (warn.sorry forced on)"
+        if c is not None and getattr(c, "timed_out", False):
+            unknown.append(f"{v}: the audit compile timed out"); continue
+        axs = getattr(a, "axioms", None)
+        if axs is not None and "sorryAx" in axs:
+            if v not in seed_sorry:
+                try:
+                    sa = aud(row, row["src"], v)
+                    seed_sorry[v] = None if getattr(sa, "axioms", None) is None else ("sorryAx" in sa.axioms or bool(getattr(sa, "sorry_warning", False)))
+                except Exception:                
+                    seed_sorry[v] = None
+            if seed_sorry[v] is False:
+                return "sorry", f"axiom audit on {v}: depends on sorryAx (the row's seed does not)"
+            if not seed_sorry[v]:
+                unknown.append(f"{v}: sorryAx without a sorry message and no seed verdict")
+            continue
+        if getattr(a, "decl_errors", None):
+            unknown.append(f"{v}: the audit compile reports errors"); continue
+        if getattr(a, "skipped", None):
+            skipped.append(v); continue
+        if axs is None:
+            unknown.append(f"{v}: no #print axioms output"); continue
+    if unknown:
+        return "unknown", "; ".join(unknown)[:200]
+    if skipped:
+        return "skipped", f"sorry message check only on {', '.join(skipped)}; no sorry"
+    return "clean", f"no sorry on {len(versions)} pin(s)"
+
+# ---- final/harness/open_package.py :: audit_export (git blob 39da5a28687d)
+def audit_export(row: dict, cands: list, audit=None, timeout: int = AUDIT_TIMEOUT_S, deadline: float | None = None) -> tuple[int, dict]:
+    """Section S: index of the first candidate (in order) whose audit is not `sorry`, plus {"audit": status of the chosen one, "why",
+"""
+    from probe.verify_candidates import newest_first
+    versions = newest_first(row["version_info"])
+    seed_sorry: dict = {}; flagged = []
+    for i, (src, proof) in enumerate(cands):
+        if i == len(cands) - 1:
+            st, why = "seed", "the row's seed is never passed over"
+            if proof.rstrip() != (row["src"] or "").rstrip():
+                st, why = audit_proof(row, proof, versions, seed_sorry, audit, timeout, deadline=deadline)
+                if st == "sorry":
+                    st, why = "unknown", "last candidate flagged; kept (" + why + ")"
+            return i, {"audit": st, "why": why, "fallback": len(flagged), "flagged": flagged}
+        st, why = audit_proof(row, proof, versions, seed_sorry, audit, timeout, deadline=deadline)
+        if st != "sorry":
+            return i, {"audit": st, "why": why, "fallback": len(flagged), "flagged": flagged}
+        flagged.append(src)
+        log(f"export: {safe(row['name'])[:40]}: {src} proof passed over: {why}")
+    return len(cands) - 1, {"audit": "seed", "why": "all flagged", "fallback": len(flagged), "flagged": flagged}
+
+# ---- final/scorer/compile.py :: audit_axioms (git blob a8d81ca22b5b)
+def audit_axioms(row: dict, decl: str, version: str, *, axioms: bool = True, timeout: int = 900) -> AxiomAudit:
+    """Compile `decl` + `#print axioms <name>` (unmeasured, warn.sorry on) for the row at `version` and return the audit: the axiom list
+
+
+
+"""
+    name = decl_name(row["statement"], row.get("name"))
+    if row["source"] == "putnambench":
+        core, mods = row["header"].rstrip(), ""
+        run = lambda text: compile_putnam(row["header"], text, version, count=False, timeout=timeout)
+        skip = None
+    else:
+        core, mods = split_modifiers(file_prefix(row, version))
+        args = _with_warn_sorry(lakefile_options(row["source"], version))
+        run = lambda text: compile_project(row, text, version, count=False, timeout=timeout, lean_args=args)
+        skip = "module" if _MODULE_LINE.match(core) else None
+    first = _first_line(core)
+    skip = skip or (None if name else "no-name") or (None if axioms else "off")
+    if skip:
+        return AxiomAudit(name, None, skip, run(decl), first)
+    head = decl.rstrip() + "\n\n"
+    names = list(dict.fromkeys([name, qualified_name(name, current_namespace(core))]))
+    print_line = first + 1 + (mods + head).count("\n")
+    r = run(head + "".join(f"set_option pp.fullNames true in\n#print axioms {n}\n" for n in names))
+    return AxiomAudit(name, parse_axioms(r.messages, print_line), None, r, first, print_line)

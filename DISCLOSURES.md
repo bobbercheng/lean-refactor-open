@@ -90,8 +90,10 @@ Details are in `final/README.md` of the tag [`open-run3-post-final-sub43-2026110
   from their code (C). A text scan for the forms that register an elaborator, macro, parser or other hook (the hook test of a check
   not yet published) finds none in the 498 proof texts (414 distinct) of eight files (M): the tier C file, the upload `sub43`, tier
   B's input and the earlier tier B output (2026-11-24; [`RESULTS.md`](RESULTS.md), section "Tier B"), the held-out run's input and
-  output, and the reference proofs of the 60 final and the 66 held-out problems. So no reading or score reported for these files changes. A check that rejects such texts is not in this version
-  (tag `open-camready-20261125`) or in the release `open-camready-20261124`; until one is, a proof text that declares or runs metaprograms is not covered by these checks.
+  output, and the reference proofs of the 60 final and the 66 held-out problems. So no reading or score reported for these files changes. A check that rejects such texts is not in tag
+  `open-camready-20261125` or in the release `open-camready-20261124`. Since 2026-11-25 `main` has one, on by default: the hook
+  check of the finer sorry check and of the post stage's gate audit ([`final/README.md`](final/README.md), section "On `main` after
+  the camera-ready"). It reads text, so a hook form it does not know is not caught.
 - **No stored proofs in the official runs:** every row starts from the seed proof in the rows file; no proof from an earlier run is
   reused.
 - **Closed-model example pairs:** the opt-in style step and its 9 encoded closed-model example pairs (two from our internal development

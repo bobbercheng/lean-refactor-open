@@ -146,7 +146,7 @@ def _apply(L: list[str], sel: list[dict], comb: str) -> str | None:
 
 
 def raw_candidates(body: str) -> list[tuple[str, str, str]]:
-    if SC.unchecked(body):
+    if SC.sets_debug_option(body):
         return []
     L = body.split("\n")
     t0 = count_tokens(body)

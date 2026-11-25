@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 import sys
 sys.path.insert(0, str(ROOT))
 from scorer.tokenize import split_declaration, count_tokens, remove_comments              
-from harness.kernel_guard import check_forbidden              
+from harness.option_guard import check_forbidden              
 from scorer.compile import compile_putnam, compile_project, file_prefix, split_modifiers, MEASURE_ELAB, ELAN_BIN, env_dir, project_env_dir              
 from scorer.score import len_pct, hb_pct_local, compat_pct, problem_score              
 from probe.verify_candidates import newest_first              

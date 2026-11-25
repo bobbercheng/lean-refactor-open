@@ -604,8 +604,7 @@ class SpecBudget:
 
 
 def op_tasks(proof, statement, run, versions, exchange, compile_s, say, inc_hb, row_ctx):
-    """open_post.generate's per-op calls, one callable per op, in ORDER, with its lane-reserve rule (2026-11-24: the kernel-skip op
-    `kskip` is removed from open_post and from here)."""
+    """open_post.generate's per-op calls, one callable per op, in ORDER, with its lane-reserve rule."""
     I, Q, CP, MS = P._mods()
     from scorer.tokenize import split_declaration
     body = split_declaration(proof, statement)
@@ -939,7 +938,7 @@ class _NextBudget:
 def sn_parts(order, proof, statement, run, versions, exchange, compile_s, inc_hb, row_ctx, reserve_fn) -> list:
     """open_post.generate (a25416f5) split into parts that can run in parallel: [(name, fn -> {op: candidates})], the ops of `order`
     only, each op's calls and candidate post-processing exactly as generate() makes them, the lane reserve rule evaluated now
-    (generate() evaluates it when the op's turn comes). 2026-11-24: the kernel-skip op `kskip`, which ran in implied's part, is removed."""
+    (generate() evaluates it when the op's turn comes)."""
     I, Q, CP, MS = P._mods()
     from scorer.tokenize import split_declaration
     body = split_declaration(proof, statement)

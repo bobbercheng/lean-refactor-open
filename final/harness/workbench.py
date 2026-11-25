@@ -75,7 +75,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from scorer import compile as C              
-from harness.kernel_guard import check_forbidden
+from harness.option_guard import check_forbidden
 from scorer.forbidden import strip_lean_comments              
 from scorer.score import hb_pct_local, len_pct              
 from scorer.tokenize import count_tokens, split_declaration              

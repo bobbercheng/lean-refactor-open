@@ -27,7 +27,7 @@ from harness.post import d4_measure as MS  # noqa: E402
 from scorer.tokenize import count_tokens  # noqa: E402
 
 MARK = "LRAOPUS"
-UNCHECKED = "skipKernelTC"   # a kernel-unchecked closer: edits before it are not judged by Lean; no site (second line of defence: the kernel guard, harness/kernel_guard.py, lets no such proof in)
+DEBUG_OPTION = "set_option debug."   # a proof that sets a debug option has no site (debug options are not allowed; the option guard, harness/option_guard.py, admits no such proof)
 
 
 def selfref(statement: str, body: str, i: int) -> str:
@@ -44,8 +44,8 @@ def selfref(statement: str, body: str, i: int) -> str:
     return re.sub(r"(?<![\w'.!?])" + re.escape(short) + r"(?![\w'!?])", f"lraD4M{i}", body)
 
 
-def unchecked(body: str) -> bool:
-    return UNCHECKED in body
+def sets_debug_option(body: str) -> bool:
+    return DEBUG_OPTION in body
 
 
 def plain_text(statement: str, bodies: list[str]) -> str | None:

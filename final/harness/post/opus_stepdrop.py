@@ -13,12 +13,8 @@ no longer needs (a generalisation of opus_scaffold from `have` / `obtain` to eve
             stepdrop:del    one site removed (largest saving first)
   screen    query(): the single deletions (largest first) in at most 2 d4_measure files (the incumbent the control); only the ones
             predicted to read higher are proposed, and their joint first.
-  unchecked  a proof that contains `debug.skipKernelTC` has NO site by default: its `decide +kernel` is
-            not checked by the kernel, so dropping the steps before it "succeeds" without the goal being decided (MEASURED on
-            open_r2post PauliMatrix row: +12.37 row points from such a drop). Opt in: ALLOW_UNCHECKED = True.
-            2026-11-24: the kernel-skip op that wrote this closer is removed and the kernel guard (harness/kernel_guard.py) lets no
-            proof with a debug option into the step or through its gate, so this check is a second line of defence (the opt-in
-            could only propose candidates the gate rejects).
+  debug     a proof that sets a debug option has no site (debug options are not allowed; the option guard,
+            harness/option_guard.py, admits no such proof). Opt in: ALLOW_DEBUG_OPTION = True.
 Pure text plus the row's own environment. No row name, table or proof text."""
 from __future__ import annotations
 
@@ -45,14 +41,14 @@ PREP = re.compile(r"^(?:simp_all|simp|dsimp|norm_num|unfold|delta|rw|rewrite|erw
 NESTED = re.compile(r"(?<![\w'])by(?![\w'])|=>|^\s*·")
 
 
-UNCHECKED = "skipKernelTC"
-ALLOW_UNCHECKED = False
+DEBUG_OPTION = "set_option debug."
+ALLOW_DEBUG_OPTION = False
 
 
 def sites(body: str) -> list[tuple]:
     """[(first line, end line exclusive, bullet prefix or None)] of the droppable steps. A step on a bullet line `· T` hands its
     bullet to the next step of the bullet's block (prefix = the bullet line's text up to the tactic column)."""
-    if UNCHECKED in body and not ALLOW_UNCHECKED:
+    if DEBUG_OPTION in body and not ALLOW_DEBUG_OPTION:
         return []
     L = body.split("\n")
     recs = parse(body)

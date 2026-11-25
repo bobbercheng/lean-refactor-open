@@ -7,7 +7,7 @@ budget) keeps the last confirmed incumbent. So the proof a stop at time T would 
 (across the row's pipelined CLI passes), and its score is b. This reads, per host dir (pf_drive --out): START, rNN/pP.log; per row
 the export line otherwise. Scores are reported like the CLI's stored_score (rounded to 2 decimals).
 
-usage: snapshot.py export.jsonl T1,T2,...|inf host_dir [host_dir ...] [--target 82.556] [--windows windows.json] [--json out.json]
+usage: snapshot.py export.jsonl T1,T2,...|inf host_dir [host_dir ...] [--target 81.4367] [--windows windows.json] [--json out.json]
                    [--check] [--adopt-dir [--adopt-file adoptions.jsonl]] [--emit DIR]
   T in seconds from each host's own START ("inf" = everything logged). --windows: per-row T map {name: seconds} (overlap readout).
 Self-check (--check): at T=inf, every row that finished all its passes must equal its passes.jsonl final stored_score.
@@ -60,7 +60,7 @@ ap = argparse.ArgumentParser()
 ap.add_argument("export")
 ap.add_argument("times")
 ap.add_argument("hosts", nargs="+")
-ap.add_argument("--target", type=float, default=82.556)
+ap.add_argument("--target", type=float, default=81.4367)
 ap.add_argument("--windows", default=None)
 ap.add_argument("--json", default=None)
 ap.add_argument("--check", action="store_true")

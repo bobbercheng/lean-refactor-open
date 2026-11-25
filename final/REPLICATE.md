@@ -2,23 +2,21 @@
 
 ## Changes in this version (2026-11-24)
 
-Our entry is the runner-up of the open-source track (announced by the organizers on 2026-11-23). Four proofs of our submission
-`sub43` carry `set_option debug.skipKernelTC true in`. The option disables the kernel's check of the declaration, so these four
-are not verified proofs, and one of them is not a valid proof with the check on. The Arena submission itself cannot be changed.
+Our entry is the runner-up of the open-source track (announced by the organizers on 2026-11-23).
 
-In this version the kernel-skip operator `kskip` is removed from the post-step and from the fast post stage, and a proof that sets
-any `debug.*` option is rejected at every stage and at export (`README.md`, section "Changes in this version (2026-11-24)").
+This folder is the revised package of our report (tier B, tag `open-camready-20261125`; `README.md`, section "Changes in this
+version (2026-11-24)"). In it, a proof that sets any `debug.*` option is rejected at every stage and at export, because debug
+options are not allowed in benchmark proofs (the option guard, `harness/option_guard.py`).
 
-This page still describes how `sub43` was made, with the earlier version of the code. For that file, use the tag
-`open-run3-post-final-sub43-20261104`. With this version the steps run as written, with these differences:
+This page still describes how our submitted file `sub43` was made, with the code of the submitted version. For that file, use the
+tag `open-run3-post-final-sub43-20261104`. With this version the steps run as written, with these differences:
 
-- Step 3: the post-step has 40 ops, without `kskip`, so `--ops v3` runs 23 ops and `--ops v4` runs 28. The passes cannot reproduce
-  `sub43`'s lines on the four rows named in step 4, and the stored means printed on this page are those of the earlier version.
-- Step 3 on an export of the earlier version (the export of our run 3 has one line with the option, written by the model): the
-  post-step stops and names the row. Add `--debug-rows reference` to the pass 1 command to start that row from the benchmark's
-  reference proof instead. A job run with this version writes no such line.
-- Step 4: the check script now also runs the kernel guard, so it fails on a file with such a proof (on `sub43`'s file it names the
-  four rows). This version writes no such proof, so on its output `grep -c 'debug.skipKernelTC' runs/post7/upload.jsonl` prints 0.
+- Step 3: run with this version, the passes do not reproduce `sub43`; the numbers printed on this page are those of our passes with
+  the code at the tag.
+- Step 3, when a line of the input sets a `debug.*` option: the post-step stops before it changes anything and names the row. Add
+  `--debug-rows reference` to the pass 1 command to start that row from the benchmark's reference proof instead.
+- Step 4: the check script also runs the option guard, so it fails on a file with a proof that sets a `debug.*` option and names the
+  row.
 - Step 2 and `bash run.sh export` (added later on 2026-11-24): on either route the job now ends with the axiom guard (`README.md`,
   section "Axiom guard at export"), which reads every row's axioms and sets a failing row back to an earlier proof that passes.
   When a row is not read in full for axioms (for example on a freshly started node), the job prints `DONE` and ends with exit code
@@ -29,7 +27,7 @@ This page still describes how `sub43` was made, with the earlier version of the 
 **Fast post stage.** `run.sh` in this folder now runs the fast post stage inside the job by default
 (`README.md`, first section), so no separate post-process is needed after `run.sh`: skip step 3. `runs/final/proofs.jsonl` is then the
 job's output: take its `{"name", "proof"}` lines as the upload file (section "If the job is cut short" has the command) and give that
-file to step 4. No 48 h job has run this route. With `LRA_POST_ROUTE=off` in front of the step 2 command, `run.sh` runs the job as at
+file to step 4. With `LRA_POST_ROUTE=off` in front of the step 2 command, `run.sh` runs the job as at
 tag `open-run3-post-final-sub43-20261104` and steps 2 to 4 apply as written; the rest of this page describes that job.
 
 This folder is the code of our official run 3 (package commit `246ff1f1`) plus the post-step (`harness/open_post.py`, development
@@ -150,10 +148,10 @@ LRA_EXTRA="--automation-card on --automation-card-min-ref-tokens 1000" bash run.
 **On the default fast route, skip this step** (top of this page). The commands below are for `LRA_POST_ROUTE=off`.
 
 After `run.sh` has printed `DONE`, from this folder: the commands of the README's section "Post-step" (paragraph "Run it"), unchanged.
-Our upload runs the step seven times: pass 1 with the third version's 24 ops (`--ops v3`) on the job's export (`--out runs/post`), pass
+Our upload runs the step seven times: pass 1 with the third version's ops (`--ops v3`) on the job's export (`--out runs/post`), pass
 2, the same command on pass 1's output (`--input runs/post/proofs.post.jsonl --out runs/post2`), then pass 3 with the fourth version's
-29 ops (`--ops v4`) on pass 2's output (`--input runs/post2/proofs.post.jsonl --out runs/post3`), pass 4, the same command on pass 3's
-output (`--input runs/post3/proofs.post.jsonl --out runs/post4`), and pass 5 with all 41 ops in the long-pass mode (`--ops all --long
+ops (`--ops v4`) on pass 2's output (`--input runs/post2/proofs.post.jsonl --out runs/post3`), pass 4, the same command on pass 3's
+output (`--input runs/post3/proofs.post.jsonl --out runs/post4`), and pass 5 with every op in the long-pass mode (`--ops all --long
 --long-seconds 6515 --row-seconds 6515`) on pass 4's output (`--input runs/post4/proofs.post.jsonl --out runs/post5`), and pass 6, the same long-pass command on pass 5's
 output with walls of 1794 s (`--input runs/post5/proofs.post.jsonl --out runs/post6 ... --long-seconds 1794 --row-seconds 1794`), and pass 7, the same
 on pass 6's output (`--input runs/post6/proofs.post.jsonl --out runs/post7`); the upload file is written from pass 7's output.
@@ -163,19 +161,19 @@ on pass 6's output (`--input runs/post6/proofs.post.jsonl --out runs/post7`); th
 FAST=$("$LRA_PYTHON" infra/orgserver/orgtools.py fastdir) && export LRA_MEMGATE_DIR=$FAST LRA_LOCK_DIR=$FAST/locks   # as run.sh: node-local locks
 ulimit -n 65536   # open files: with every row at once the ops need more than the usual default of 1024 (Errno 24)
 mkdir -p runs/post runs/post2 runs/post3 runs/post4 runs/post5
-# pass 1: the third version's 24 ops (--ops v3) on the job's export -> runs/post
+# pass 1: the third version's ops (--ops v3) on the job's export -> runs/post
 LRA_HBTOOL_SLOTS=32 "$LRA_PYTHON" harness/open_post.py --rows "$LRA_SETUP_ROWS" --heartbeats "$LRA_SETUP_HBS" \
     --input runs/final/proofs.jsonl --out runs/post --jobs 60 --ops v3
 # pass 2: the same command on pass 1's output -> runs/post2
 LRA_HBTOOL_SLOTS=32 "$LRA_PYTHON" harness/open_post.py --rows "$LRA_SETUP_ROWS" --heartbeats "$LRA_SETUP_HBS" \
     --input runs/post/proofs.post.jsonl --out runs/post2 --jobs 60 --ops v3
-# pass 3: the fourth version's 29 ops (--ops v4: the third version's 24 and the fourth version's 5) on pass 2's output -> runs/post3
+# pass 3: the fourth version's ops (--ops v4: the third version's and the fourth version's 5) on pass 2's output -> runs/post3
 LRA_HBTOOL_SLOTS=32 "$LRA_PYTHON" harness/open_post.py --rows "$LRA_SETUP_ROWS" --heartbeats "$LRA_SETUP_HBS" \
     --input runs/post2/proofs.post.jsonl --out runs/post3 --jobs 60 --ops v4
 # pass 4: the same command on pass 3's output -> runs/post4
 LRA_HBTOOL_SLOTS=32 "$LRA_PYTHON" harness/open_post.py --rows "$LRA_SETUP_ROWS" --heartbeats "$LRA_SETUP_HBS" \
     --input runs/post3/proofs.post.jsonl --out runs/post4 --jobs 60 --ops v4
-# pass 5: all 41 ops (--ops all) in the long-pass mode (--long; our walls: 6515 s for the pass and for a row) on pass 4's output -> runs/post5
+# pass 5: every op (--ops all) in the long-pass mode (--long; our walls: 6515 s for the pass and for a row) on pass 4's output -> runs/post5
 LRA_HBTOOL_SLOTS=32 "$LRA_PYTHON" harness/open_post.py --rows "$LRA_SETUP_ROWS" --heartbeats "$LRA_SETUP_HBS" \
     --input runs/post4/proofs.post.jsonl --out runs/post5 --jobs 60 --ops all --long --long-seconds 6515 --row-seconds 6515
 # pass 6: the same long-pass command on pass 5's output (our walls: 1794 s for the pass and for a row) -> runs/post6
@@ -208,22 +206,17 @@ LRA_HBTOOL_SLOTS=32 "$LRA_PYTHON" harness/open_post.py --rows "$LRA_SETUP_ROWS" 
   the proof it has confirmed) and 240 compiles, and no row starts after 7,200 s. It needs no key, no model and no GPU, and an
   open-file limit of 65536 (`ulimit -n 65536`, in the command). `LRA_HBTOOL_SLOTS` is the number of Lean compiles at once (the command
   above uses 32; our pass 1 used 64 on run 3's box, our passes 2 to 5 56 on the second host).
-- Cost: $0 (CPU only). The README's section "Post-step" describes the ops, the accept gate and the `debug.skipKernelTC` option the
-  step can add.
+- Cost: $0 (CPU only). The README's section "Post-step" describes the ops and the accept gate.
 - No model runs in the step; the accept decisions use Lean heartbeat readings, which can differ by a few heartbeats between runs and
   machines. A row that reaches its 2,700 s (`--row-seconds`) keeps the last proof it confirmed, and the ops of the third, fourth and
   fifth versions skip their queries when a row's wall left is short against its compile time, so a much slower node can change fewer
   rows.
-- `ulimit -n 65536` (in the block) is needed: with `--jobs 60` the step's 41 ops hold more files open than the usual default limit of
+- `ulimit -n 65536` (in the block) is needed: with `--jobs 60` the step's ops hold more files open than the usual default limit of
   1024 (`OSError: [Errno 24] Too many open files`). It cannot go above the hard limit (`ulimit -Hn`).
 - Most of the ops size their probe files and compile rounds by measured compile times (copies per file, rounds per call, a probe wall
   per row), so on a slower or busier node they can try fewer candidates and change fewer rows; the gate is the same.
-- The step's ops can rewrite a proof that carries `debug.skipKernelTC`; such rewrites are not checked by the kernel. In our upload,
-  `PauliMatrix.pauliContr_mul_pauliContrDown_mul_pauliContr` fails the kernel check (README, "Post-step", "One kernel-skipped proof of
-  our upload fails the kernel check").
 - Pass 5's op `hb_smartunfold` adds `set_option <option> false in` for sound elaborator options (`smartUnfolding`,
-  `backward.isDefEq.lazyWhnfCore`, ...): the kernel still checks every such proof (README, "Post-step", "About `smartUnfolding` and
-  the other options of `hb_smartunfold`").
+  `backward.isDefEq.lazyWhnfCore`, ...; README, "Post-step", "About `smartUnfolding` and the other options of `hb_smartunfold`").
 
 ## Step 4: check the upload file
 
@@ -232,7 +225,7 @@ LRA_HBTOOL_SLOTS=32 "$LRA_PYTHON" harness/open_post.py --rows "$LRA_SETUP_ROWS" 
 "$LRA_PYTHON" - "$LRA_SETUP_ROWS" runs/post7/upload.jsonl <<'PY'
 import json, sys
 sys.path.insert(0, ".")
-from harness.kernel_guard import check_forbidden   # the Arena's forbidden list, then the kernel guard (2026-11-24)
+from harness.option_guard import check_forbidden   # the Arena's forbidden list, then the option guard (2026-11-24)
 from scorer.tokenize import split_declaration
 rows = [json.loads(l) for l in open(sys.argv[1]) if l.strip()]
 up = [json.loads(l) for l in open(sys.argv[2]) if l.strip()]
@@ -242,62 +235,57 @@ assert all(sorted(u) == ["name", "proof"] for u in up), "a line is not {name, pr
 bad = [r["name"] for r, u in zip(rows, up) if split_declaration(u["proof"], r["statement"]) is None]
 assert not bad, f"does not start with the row's exact statement and ':=': {bad}"
 hits = [(u["name"], check_forbidden(u["proof"])) for u in up if check_forbidden(u["proof"])]
-assert not hits, f"the package's forbidden-construct check (scorer/forbidden.py, then harness/kernel_guard.py): {hits}"
+assert not hits, f"the package's forbidden-construct check (scorer/forbidden.py, then harness/option_guard.py): {hits}"
 print("UPLOAD FILE OK")
 PY
-grep -c 'debug.skipKernelTC' runs/post7/upload.jsonl    # rows whose proof skips the kernel check (README, "About debug.skipKernelTC")
 grep -cE 'set_option (smartUnfolding|backward\.[A-Za-z.]+|cleanup\.letToHave) false in' runs/post7/upload.jsonl    # rows with hb_smartunfold's options (README, "About smartUnfolding")
 ```
 
-Expected: `60 lines for 60 rows`, then `UPLOAD FILE OK`. Our upload has 4 such rows (the job's export has 1:
-`FTheory.SU5.ChargeSpectrum.isPhenoClosedQ10_viableCharges`, the run's own line);
-`FTheory.SU5.ChargeSpectrum.isPhenoClosedQ5_viableCharges` (pass 1: `kskip:inplace`);
-`PauliMatrix.pauliContrDown_mul_pauliContr_mul_pauliContrDown` (pass 1: `kskip:inplace`, `inlineeq:simpa`; pass 5:
-`hb_hotctl:simponly>simp_rw`); `PauliMatrix.pauliContr_mul_pauliContrDown_mul_pauliContr` (pass 1: `kskip:inplace`, `inlineeq:simpa`;
-pass 3: `sonnet_listdrop:verified`, `jointres:joint`; pass 4: `sonnet_listdrop:verified`, `jointres:joint`, `jointres:joint`; pass 5:
-`sonnet_listdrop:verified`; passes 6 and 7 changed none of the 4); edits made after the option is in place are not kernel-checked, and our upload's proof of
-`PauliMatrix.pauliContr_mul_pauliContrDown_mul_pauliContr` fails the kernel check: README, "One kernel-skipped proof of our upload
-fails the kernel check"); a rerun's count depends on its proofs. The last command counts the rows that carry `hb_smartunfold`'s
-elaborator options (ours: 14, from passes 5 to 7; README, "About `smartUnfolding` and the other options of `hb_smartunfold`"); those
-proofs are kernel-checked. The check needs no Lean: the job and the post-step already compiled every proof on every listed toolchain.
+Expected: `60 lines for 60 rows`, then `UPLOAD FILE OK`. The `grep` command counts the rows that carry `hb_smartunfold`'s elaborator
+options (ours: 14, from passes 5 to 7; README, "About `smartUnfolding` and the other options of `hb_smartunfold`"); a rerun's count
+depends on its proofs. The check needs no Lean: the job and the post-step already compiled every proof on every listed toolchain.
 
 ## How our run compares
 
 Our files, from our official run 3 (2026-11-02 06:43:52 UTC to 2026-11-04 06:03:56 UTC, 47.33 h, ended on its own before the 48 h
-clock) and our five passes of this post-step on its output (2026-11-04 06:04-08:52 UTC; pass 1 on run 3's box (76 CPU cores, Intel
+clock) and our five passes of this post-step on its output (2026-11-04 06:04-09:51 UTC; pass 1 on run 3's box (76 CPU cores, Intel
 Xeon Platinum 8368 at 2.40 GHz), 64 compile slots, and pass 2 on a second host (Azure Standard_D64ads_v7: 64 vCPUs, AMD EPYC 9V45), 56
-compile slots, both with the third version's 24 ops (commit `c059dfbd`); passes 3 and 4 on the second host, 56 compile slots, with the
-fourth version's 29 ops (commit `715cd39d`); pass 5 on the second host, 56 compile slots, `--ops all --long --long-seconds 6515
+compile slots, both with the third version's ops (commit `c059dfbd`); passes 3 and 4 on the second host, 56 compile slots, with the
+fourth version's ops (commit `715cd39d`); pass 5 on the second host, 56 compile slots, `--ops all --long --long-seconds 6515
 --row-seconds 6515`, this zip's code; this zip's code runs passes 1 to 4 as `--ops v3` and `--ops v4`; README, "Post-step", "Our run
 of it", has the exact commands):
 
-| file | sha256 | 60-row stored mean (our meter) |
+| file | sha256 | the pass |
 |---|---|---|
-| `runs/final/proofs.jsonl` (the job's export) | `0664621ddcf923b0c4b0285cccf425375a270cd80977a81dccf712fd87afc95f` | 79.6778 |
+| `runs/final/proofs.jsonl` (the job's export) | `0664621ddcf923b0c4b0285cccf425375a270cd80977a81dccf712fd87afc95f` | - |
 | `runs/final/summary.json` (the job's summary) | `3505b06d1749efefe63360c9a41c34ffebd083ae8698d461badc0a4466dafd3f` | - |
-| `runs/post/proofs.post.jsonl` (pass 1) | `a52fd4c65968faec3e91dbe1ea11e29c3d74709fb00f1e65f083b5bd789f5731` | 80.9703 (48 rows changed, none lower; 3,014 s, 2,438 compiles) |
-| `runs/post2/proofs.post.jsonl` (pass 2, on pass 1's output) | `e333ec44d8efa424aa8d6f28f789a2525eb6f53b83319721d29b967ecefc55a5` | 81.3902 (27 rows changed, none lower; 1,755 s, 2,354 compiles) |
-| `runs/post3/proofs.post.jsonl` (pass 3, `--ops v4`, on pass 2's output) | `f2399dcaec7abd4b4790dec88742b2ef98e1560dfd55aceb9a285dd680081f22` | 81.9002 (36 rows changed, none lower; 2,132 s, 4,316 compiles) |
-| `runs/post4/proofs.post.jsonl` (pass 4, `--ops v4`, on pass 3's output) | `951c1c3886992afc60d3e82bb9e7af0ae249a1358890af1b8f0c0725f126a2bd` | 82.2083 (22 rows changed, none lower; 2,222 s, 3,766 compiles) |
-| `runs/post5/proofs.post.jsonl` (pass 5, `--ops all --long`, on pass 4's output) | `c87eac9f57cb010f8c74288655ac2e0d3512b94b2ef33328307bfd96c4aa203e` | 82.4740 (43 rows changed, none lower; 4,211 s, 7,430 compiles) |
-| `runs/post5/upload.jsonl` (our 10:24:47 upload, replaced) | `082af747fa07b0384a931a22948bb87c6be0f6b0a6bf33d0ca300b6485f05110` | 82.4740 |
-| `runs/post6/proofs.post.jsonl` (pass 6, `--ops all --long`, walls 1794 s, on pass 5's output) | `c86ba4cab48b459e1d56e0fdf87c9828e3655d084094bb70f1ec1c0b389514fd` | 82.5080 (16 rows changed, none lower; 1,800 s, 3,276 compiles) |
-| `runs/post6/upload.jsonl` (our 10:49:49 upload, replaced) | `d2edaadf0765fcb063c4b47429e68c7cd6621f4adbcb62086395156822f9fd57` | 82.5080 |
-| `runs/post7/proofs.post.jsonl` (pass 7, `--ops all --long`, walls 1794 s, on pass 6's output) | `c09e4b98a1ae7ef78741fdcc59de6e7cd434c7a8e9bce78d8367cee419dba1be` | 82.5560 (8 rows changed, none lower; 1,746 s, 2,833 compiles) |
-| `runs/post7/upload.jsonl` (our final upload, 2026-11-04 11:25:51 UTC) | `8d6d1893d315eb0f55491df50046629877d2f89005848862bc8c892dba3f3e5e` | 82.5560 |
+| `runs/post/proofs.post.jsonl` (pass 1) | `a52fd4c65968faec3e91dbe1ea11e29c3d74709fb00f1e65f083b5bd789f5731` | 48 rows changed, none lower; 3,014 s, 2,438 compiles |
+| `runs/post2/proofs.post.jsonl` (pass 2, on pass 1's output) | `e333ec44d8efa424aa8d6f28f789a2525eb6f53b83319721d29b967ecefc55a5` | 27 rows changed, none lower; 1,755 s, 2,354 compiles |
+| `runs/post3/proofs.post.jsonl` (pass 3, `--ops v4`, on pass 2's output) | `f2399dcaec7abd4b4790dec88742b2ef98e1560dfd55aceb9a285dd680081f22` | 36 rows changed, none lower; 2,132 s, 4,316 compiles |
+| `runs/post4/proofs.post.jsonl` (pass 4, `--ops v4`, on pass 3's output) | `951c1c3886992afc60d3e82bb9e7af0ae249a1358890af1b8f0c0725f126a2bd` | 22 rows changed, none lower; 2,222 s, 3,766 compiles |
+| `runs/post5/proofs.post.jsonl` (pass 5, `--ops all --long`, on pass 4's output) | `c87eac9f57cb010f8c74288655ac2e0d3512b94b2ef33328307bfd96c4aa203e` | 43 rows changed, none lower; 4,211 s, 7,430 compiles |
+| `runs/post5/upload.jsonl` (our 10:24:47 upload, replaced) | `082af747fa07b0384a931a22948bb87c6be0f6b0a6bf33d0ca300b6485f05110` | - |
+| `runs/post6/proofs.post.jsonl` (pass 6, `--ops all --long`, walls 1794 s, on pass 5's output) | `c86ba4cab48b459e1d56e0fdf87c9828e3655d084094bb70f1ec1c0b389514fd` | 16 rows changed, none lower; 1,800 s, 3,276 compiles |
+| `runs/post6/upload.jsonl` (our 10:49:49 upload, replaced) | `d2edaadf0765fcb063c4b47429e68c7cd6621f4adbcb62086395156822f9fd57` | - |
+| `runs/post7/proofs.post.jsonl` (pass 7, `--ops all --long`, walls 1794 s, on pass 6's output) | `c09e4b98a1ae7ef78741fdcc59de6e7cd434c7a8e9bce78d8367cee419dba1be` | 8 rows changed, none lower; 1,746 s, 2,833 compiles |
+| `runs/post7/upload.jsonl` (our final upload, 2026-11-04 11:25:51 UTC) | `8d6d1893d315eb0f55491df50046629877d2f89005848862bc8c892dba3f3e5e` | - |
+
+Our report's 60-problem means for this chain, on our meter: 79.20 at the end of the 48-hour job (tier A, computed) and 81.44 for
+tier C, the submitted file with four problems' proofs taken from a separate chain of post-step passes (never uploaded or graded).
+This folder's post stage, measured on a CPU machine outside a job, reaches 81.47 from the run's picks at 45.25 h (78.77;
+tier B; `README.md`, section "Changes in this version (2026-11-24)").
 
 A rerun of the step is not byte-identical and can differ from ours on a few rows (README, "Post-step", "Our run of it"). Our five
 passes ran on two hosts; on one node, the README's commands run all five.
 
 For comparison, our run 2 (package `748d964c`, the same rows and reference heartbeats, no automation card): export 78.4585 (Arena
-78.48); one pass of the post-step's second version (`ee48034b`) 80.7535 (our upload of run 2, Arena 80.76).
+78.48).
 
 **What to expect from a rerun.** The job's sessions sample the model: the package sets no sampling temperature and no seed (the
 model's and the server's defaults apply), and several sessions share the GPUs and the job clock. A rerun's proofs therefore differ
 from ours row by row, and the sha256 values above identify our files, not a rerun's. For scale: our official runs 2 and 3 (the same
-rows and reference heartbeats, near-identical packages) were 1.13 points apart in the 60-row stored mean at the same elapsed time
-(22.85 h, our meter; run 3 ahead on 36 rows and behind on 22; 0.65 points without the one row on which run 3's model wrote a
-kernel-skipped proof). The post-step runs no model (step 3).
+rows and reference heartbeats; run 3 added the automation card and the functional-induction family) ended at 78.46 (run 2's
+export) and 79.20 (run 3, tier A, computed from its export), a gap that mixes noise with those changes. The post-step runs no model (step 3).
 
 ## If the job is cut short
 

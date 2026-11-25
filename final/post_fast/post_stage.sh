@@ -2,9 +2,9 @@
 # post_stage.sh OUT ROWS HEARTBEATS WORK JOB_END: the fast post stage, started by run.sh once vLLM has stopped (POST-HOC 2026-11-06).
 # It is run_T0.sh, the runner of the measured run T0b, at launch_T0b.sh's values, with the /workspace paths as arguments, this run's picks
 # as the input and the stop from the job clock. New here: the guards and the merges into proofs.jsonl, every 5 min and at the end. It exits 0,
-# except 2 when the kernel guard refuses the input.
-# Kernel guard (2026-11-24; harness/kernel_guard.py): the stage keeps no proof that sets a `set_option debug.*` option (the option disables
-# kernel checking). When a row of OUT/proofs.jsonl sets one (an export of an earlier version), the stage does not start: it names the rows
+# except 2 when the option guard refuses the input.
+# Option guard (2026-11-24; harness/option_guard.py): the stage keeps no proof that sets a `set_option debug.*` option (debug options are
+# not allowed in benchmark proofs). When a row of OUT/proofs.jsonl sets one, the stage does not start: it names the rows
 # and exits 2, and proofs.jsonl is not changed. LRA_DEBUG_ROWS=reference (env) instead replaces each such row by the benchmark's reference
 # proof (stored score 33.33) in proofs.jsonl before the stage starts; the file as it was is kept as proofs.jsonl.debug-rows.
 set -u
@@ -20,8 +20,8 @@ save() {   # one merge of what the logs hold now; rows only rise, and a failure 
   [ -s "$E" ] || E=$O/proofs.post.jsonl
   python3 "$SC/merge_post.py" "$E" "$ROWS" "$OUT/proofs.jsonl"
 }
-python3 "$CODE/harness/kernel_guard.py" "$OUT/proofs.jsonl" --rows "$ROWS" --debug-rows "${LRA_DEBUG_ROWS:-fail}" \
-  || { echo "refused (kernel guard): $OUT/proofs.jsonl was not accepted as the input (see the line above); it is unchanged and the stage did not start. LRA_DEBUG_ROWS=reference replaces rows that set a debug option by the reference proof"; exit 2; }
+python3 "$CODE/harness/option_guard.py" "$OUT/proofs.jsonl" --rows "$ROWS" --debug-rows "${LRA_DEBUG_ROWS:-fail}" \
+  || { echo "refused (option guard): $OUT/proofs.jsonl was not accepted as the input (see the line above); it is unchanged and the stage did not start. LRA_DEBUG_ROWS=reference replaces rows that set a debug option by the reference proof"; exit 2; }
 [ ! -f "$OUT/proofs.merged.jsonl" ] || python3 "$SC/merge_post.py" "$OUT/proofs.merged.jsonl" "$ROWS" "$OUT/proofs.jsonl"   # a re-run's driver wrote the picks back: the saved gains return first
 [ $((JOB_END - 60 - $(date +%s))) -ge 60 ] || { echo "skipped: under 1 min to the stop; proofs.jsonl stays the picks"; exit 0; }
 mkdir -p "$O" && cp -f "$OUT/proofs.jsonl" "$PICKS" || exit 0

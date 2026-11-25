@@ -361,7 +361,7 @@ def tool_candidates(proof, statement, *, exchange=None, max_per_op=40, ctx=None,
     exchange and ctx are accepted and unused."""
     from collections import Counter
     from harness.normalize import apply
-    from harness.kernel_guard import check_forbidden
+    from harness.option_guard import check_forbidden
     from scorer.tokenize import split_declaration
     body = split_declaration(proof, statement)
     if body is None:

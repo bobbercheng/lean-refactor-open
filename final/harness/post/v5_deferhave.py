@@ -12,7 +12,8 @@ written (nor elaborated on its own).
             also `have : T := by ..` (the name `this`; no other anonymous `have` / `suffices` before its use). The header (`have` ..
             `by`) has no comment; between the name and `:` only explicit binders (`x`, `(x y : X)`; v2), not `haveI`. The step is a
             step of a tactic block (a bullet line, a line after a line ending in `by`, a sibling of a tactic-only step, or a sibling
-            of the use's exact / refine / apply step); the proof has no kernel-unchecked closer (debug.skipKernelTC: no site).
+            of the use's exact / refine / apply step); the proof sets no debug option (debug options are not allowed; the option
+            guard, harness/option_guard.py, admits no such proof).
   use       the name written exactly once in the rest of its block (identifier boundaries, comments and strings ignored), as a bare
             argument (not a dot head `h.x`, not applied `h a`, not before `▸` / `:=`, not after `@`), inside the term of a tactic step
             whose head is exact / refine / refine' / apply (final kind) or have / let / use / specialize / calc / obtain (mid kind),
@@ -464,7 +465,7 @@ def _scan_use(T: _Text, a: int, use: int, name_len: int):
 
 def sites(body: str) -> list[dict]:
     """The deferrable haves of `body` (the text after the statement's `:=`), in line order."""
-    if SC.unchecked(body):
+    if SC.sets_debug_option(body):
         return []
     T = _Text(body)
     out = []

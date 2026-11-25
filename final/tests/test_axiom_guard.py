@@ -20,14 +20,14 @@ os.environ.setdefault("LRA_ROWS_FILE", str(ROWS_FILE))
 os.environ.setdefault("LRA_HBS_FILE", str(ROOT / "data/official/heartbeats.jsonl"))
 
 from harness import axiom_guard as AG  # noqa: E402
-from harness import kernel_guard as KG  # noqa: E402
+from harness import option_guard as KG  # noqa: E402
 
 ENV = dict(os.environ, PYTHONDONTWRITEBYTECODE="1")
 STD = ["propext", "Classical.choice", "Quot.sound"]
 GOOD = {"axioms": STD}
 SORRY = {"axioms": ["sorryAx"]}
 MEASURED = ("post_stage.sh", "pf_drive.py", "pf_svc.py", "pf_worker.py", "prefix_backend.py", "snapshot.py", "merge_post.py")
-FINGERPRINT = "916734a742e664be"   # the seven post-stage scripts measured on 2026-11-24 (tier B, 81.466; held-out test)
+FINGERPRINT = "b4ac6d42002767a0"   # the seven post-stage scripts as measured for tier B on 2026-11-25
 
 
 def rows() -> list:
@@ -431,7 +431,7 @@ class Fallback(unittest.TestCase):
         cur = proof(r, "cur0")
         fb = [("proofs.picks.jsonl", {r["name"]: {"name": r["name"], "proof": cur}}),                          # the failing text itself
               ("a", {r["name"]: {"name": r["name"], "proof": "theorem other : True := trivial\n"}}),             # not the row's statement
-              ("b", {r["name"]: {"name": r["name"], "proof": proof(r, "dbg").replace("exact foo", "set_option debug.skipKernelTC true in decide")}}),
+              ("b", {r["name"]: {"name": r["name"], "proof": proof(r, "dbg").replace("exact foo", "set_option debug.example true in exact foo")}}),
               ("c", {r["name"]: {"name": r["name"], "proof": proof(r, "sry").replace("exact foo", "sorry")}}),    # the Arena's list
               ("d", {r["name"]: {"name": r["name"], "proof": proof(r, "ok")}}),
               ("e", {r["name"]: {"name": r["name"], "proof": proof(r, "ok")}})]                                  # the same text again
@@ -1131,13 +1131,13 @@ class RunScript(unittest.TestCase):
 
     def test_places_in_run_sh(self):
         sh = self.sh
-        # export: the export, its copy, the merge, the axiom guard, the kernel guard's check, exit code 5, exit
+        # export: the export, its copy, the merge, the axiom guard, the option guard's check, exit code 5, exit
         e0 = sh.index('if [ "$MODE" = export ]; then')
         seq = [sh.index(s, e0) for s in ("harness/open_package.py export", 'cp -f "$OUT/proofs.jsonl" "$OUT/proofs.export.jsonl"',
                                           "post_fast/merge_post.py", 'ag_file "$OUT/proofs.jsonl"', "kg_file \"$OUT/proofs.jsonl\"",
                                           "exit code 5 (axiom guard)", 'exit "$RC"')]
         self.assertEqual(seq, sorted(seq))
-        # the job: the copy before the post stage; the guard after it, before the kernel guard's last check; exit code 5 before exit
+        # the job: the copy before the post stage; the guard after it, before the option guard's last check; exit code 5 before exit
         seq = [sh.index(s) for s in ('cmp -s "$OUT/proofs.jsonl" "$OUT/proofs.merged.jsonl" || cp -f "$OUT/proofs.jsonl" "$OUT/proofs.export.jsonl"',
                                      "bash post_fast/post_stage.sh", 'then ag_file "$OUT/proofs.jsonl" ""',
                                      'else ag_file "$OUT/proofs.jsonl" $((AEND', "KRC=0;", "exit code 5 (axiom guard): $OUT/proofs.jsonl is the output")]
@@ -1164,7 +1164,7 @@ class RunScript(unittest.TestCase):
         self.assertEqual(out[1]["proof"], proof(self.rs[1], "picks1"))
         self.assertIn("REPLACED by the post stage's input", (self.out / "logs" / "axiom_guard.log").read_text())
         self.assertTrue((self.out / "logs" / "axiom_guard.json").exists())
-        self.assertIn("no row sets a debug option", (self.out / "logs" / "kernel_guard.log").read_text())   # the kernel guard ran after
+        self.assertIn("no row sets a debug option", (self.out / "logs" / "option_guard.log").read_text())   # the option guard ran after
         self.assertEqual(self.budget(0), "420")   # the default: the margin left (100 + 600 - 120 - 70 s) is larger
 
     def test_job_end_a_row_whose_reference_reads_sorryAx_too_is_kept_and_the_job_is_done(self):
@@ -1292,12 +1292,12 @@ class RunScript(unittest.TestCase):
         self.assertEqual(r.returncode, 5, r.stdout + r.stderr)
         self.assertIn("was not checked for axioms (rc 1", r.stdout)
 
-    def test_the_kernel_guard_code_stays_4(self):
-        write_jsonl(self.out / "proofs.jsonl", [dict(rec(r, f"cur{k}", 70.0), proof=r["statement"] + " := by\n  set_option debug.skipKernelTC true in decide\n")
+    def test_the_option_guard_code_stays_4(self):
+        write_jsonl(self.out / "proofs.jsonl", [dict(rec(r, f"cur{k}", 70.0), proof=r["statement"] + " := by\n  set_option debug.example true in exact foo\n")
                                                  for k, r in enumerate(self.rs)])
         r = self.run_lines(self.end(), JOB_END=str(int(time.time())), STUB_RC="1")
         self.assertEqual(r.returncode, 4, r.stdout + r.stderr)
-        self.assertIn("FAILED (kernel guard)", r.stdout)
+        self.assertIn("FAILED (option guard)", r.stdout)
 
     def test_no_proofs_file(self):
         r = self.run_lines(self.end(), JOB_END=str(int(time.time())))
@@ -1310,7 +1310,7 @@ class RunScript(unittest.TestCase):
 
     def test_export_mode(self):
         """run.sh export: the export writes the picks, the merge brings the post stage's rows back (one reads sorryAx), the guard
-        sets that row back to the post stage's input, the kernel guard checks the result."""
+        sets that row back to the post stage's input, the option guard checks the result."""
         picks = [rec(r, f"picks{k}", 60.0, "agent") for k, r in enumerate(self.rs)]
         write_jsonl(self.d / "export.jsonl", picks)
         write_jsonl(self.out / "proofs.picks.jsonl", picks)
@@ -1320,7 +1320,7 @@ class RunScript(unittest.TestCase):
         self.assertEqual((self.out / "proofs.export.jsonl").read_text(), (self.d / "export.jsonl").read_text())
         out = [json.loads(l) for l in (self.out / "proofs.jsonl").read_text().splitlines()]
         self.assertEqual([o["proof"] for o in out], [proof(self.rs[0], "post0"), proof(self.rs[1], "post1"), proof(self.rs[2], "picks2")])
-        self.assertIn("no row sets a debug option", (self.out / "logs" / "kernel_guard.log").read_text())
+        self.assertIn("no row sets a debug option", (self.out / "logs" / "option_guard.log").read_text())
         argv = json.loads(self.argv_log.read_text().splitlines()[0])
         self.assertEqual(argv[argv.index("--budget") + 1], "420")
         r = self.run_lines(self.export_block(), FAKE_EXPORT=str(self.d / "export.jsonl"), STUB_READINGS=json.dumps({"post0": "slow"}),
@@ -1378,7 +1378,7 @@ class RunScript(unittest.TestCase):
 # ---------------------------------------------------------------------------------------------------------- the measured code path
 class MeasuredScripts(unittest.TestCase):
     def test_fingerprint_of_the_seven_post_stage_scripts(self):
-        """The seven scripts that produced 81.466 (tier B) and ran the held-out test, unchanged: sha256 of each file, one per line, in
+        """The seven scripts as measured for tier B on 2026-11-25, unchanged: sha256 of each file, one per line, in
         this order, then sha256 of those lines, first 16 hex digits."""
         lines = "".join(hashlib.sha256((ROOT / "post_fast" / f).read_bytes()).hexdigest() + "\n" for f in MEASURED)
         self.assertEqual(hashlib.sha256(lines.encode()).hexdigest()[:16], FINGERPRINT)
@@ -1388,7 +1388,7 @@ class MeasuredScripts(unittest.TestCase):
             self.assertNotIn("axiom_guard", (ROOT / "post_fast" / f).read_text(), f)
 
     def test_target_is_a_reporting_field_only(self):
-        """pf_drive.py's and snapshot.py's --target (default 82.556) fill the summary's time-to-target and nothing else: no stop, no
+        """pf_drive.py's and snapshot.py's --target fill the summary's time-to-target and nothing else: no stop, no
         row decision reads it (README, "The fast post stage in run.sh")."""
         for f, uses in (("pf_drive.py", 2), ("snapshot.py", 2)):
             src = (ROOT / "post_fast" / f).read_text()

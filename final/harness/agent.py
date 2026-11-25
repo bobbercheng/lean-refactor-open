@@ -26,7 +26,7 @@ except ImportError:
                                       APIStatusError=type("APIStatusError", (Exception,), {}))                                                
     _key, BASE_URL = _no_sdk, None
 from scorer.tokenize import split_declaration, count_tokens              
-from harness.kernel_guard import check_forbidden              
+from harness.option_guard import check_forbidden              
 from scorer.compile import compile_putnam, compile_project, file_prefix              
 from scorer.score import len_pct, hb_pct_local, compat_pct, problem_score              
 from probe.verify_candidates import newest_first              

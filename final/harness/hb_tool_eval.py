@@ -19,7 +19,7 @@ import uuid
 
 from probe.verify_candidates import newest_first
 from scorer import compile as compiler
-from harness.kernel_guard import check_forbidden
+from harness.option_guard import check_forbidden
 from scorer.score import compat_pct, hb_pct_local, len_pct, problem_score
 from scorer.tokenize import count_tokens, split_declaration
 

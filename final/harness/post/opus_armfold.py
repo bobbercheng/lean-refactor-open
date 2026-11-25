@@ -285,7 +285,7 @@ def _mentions(tacs: list[list[str]], names: set[str]) -> bool:
 def raw_candidates(body: str) -> list[tuple[str, str, str]]:
     """[(variant, new body, note)] for every group, the likeliest first: the folded tactic X shortest first (a short arm body is a
     generic closer; a long one is specific to its own goal), arms over MAX_X tokens skipped."""
-    if SC.unchecked(body):
+    if SC.sets_debug_option(body):
         return []
     out = []
     t0 = count_tokens(body)

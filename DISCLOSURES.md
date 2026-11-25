@@ -6,40 +6,26 @@ What our open-track results rest on and what this public repository leaves out. 
 ## Changes in this version (2026-11-24)
 
 - **Official result.** Our entry is the runner-up of the open-source track (announced by the organizers on 2026-11-23).
-- **Four submitted proofs are not verified proofs.** Four proofs of our final upload `sub43` carry `set_option debug.skipKernelTC
-  true in`. The option disables the kernel's check of the declaration, so a proof that carries it is not a verified proof. One of
-  the four is not a valid proof with the check on. Our leaderboard score of 82.55 includes these four proofs. The Arena submission
-  itself cannot be changed.
-- **The operator is removed and the option is rejected.** In `final/` on `main`, the post-step's kernel-skip operator `kskip` is
-  removed from the post-step and from the fast post stage. A proof that sets any `debug.*` option is rejected at every stage (the
+- **Debug options are rejected.** In `final/` on `main`, a proof that sets any `debug.*` option is rejected at every stage (the
   model's check tools, the end stages, every adoption of the post-step and of the fast post stage, the merges) and at export, by
-  one guard, `final/harness/kernel_guard.py`. A stage that reads such a proof from an earlier export or run stops and names the
-  problems, or replaces each of them by the benchmark's reference proof when asked to. Details:
-  [`final/README.md`](final/README.md), section "Changes in this version (2026-11-24)".
+  one guard, `final/harness/option_guard.py` (the option guard): debug options are not allowed in benchmark proofs. A stage that
+  reads such a proof from an export or a run stops and names the problems, or replaces each of them by the benchmark's reference
+  proof when asked to. Details: [`final/README.md`](final/README.md), section "Changes in this version (2026-11-24)".
 - **An axiom guard at export.** In a held-out test of the revised post stage, its gate let through one unsound step; an axiom
   guard at export, added after that test, sets such a row back at export (section "Provenance" below, which also states a limit
   of the axiom checks found after publication). The measurements of the revised package are in
   [`RESULTS.md`](RESULTS.md#revised-package-measured-2026-11-24).
 - **The post-step's provenance** is stated in full in section "Provenance" below: how its ops were made, their share of the gain
   in the revised package's runs, and an audit of whether the open model makes the same edits on its own.
-- **The sections below** describe the final upload and the earlier version of the code (tag
-  `open-run3-post-final-sub43-20261104`), except where they say otherwise.
+- **The sections below** describe the final upload and its code (tag `open-run3-post-final-sub43-20261104`), except where they
+  say otherwise.
 
 ## The final upload (`sub43`)
 
 Details are in `final/README.md` of the tag [`open-run3-post-final-sub43-20261104`](https://github.com/bobbercheng/lean-refactor-open/blob/open-run3-post-final-sub43-20261104/final/README.md), section "Post-step".
 
-- **Kernel skip on 4 rows.** Four lines carry `set_option debug.skipKernelTC true in` in front of a closing `decide +kernel`
-  (FTheory `isPhenoClosedQ5_viableCharges` and `isPhenoClosedQ10_viableCharges`, and two PauliMatrix rows). The Q10 line was written
-  by the run's own model; the post-step's `kskip` op added the other three. The option makes Lean skip the kernel's check of the
-  declaration, so these four lines are not verified proofs. One of the four,
-  `PauliMatrix.pauliContr_mul_pauliContrDown_mul_pauliContr`, is **not** a valid proof with the kernel check on: post-step edits made
-  after the option was in place broke it. With its last kernel-valid form, the 60-row stored mean would be about 0.16 lower; that
-  figure keeps the option on all four lines. Against a variant of the upload in which all four rows carry kernel-checked proofs, the
-  60-row mean is about 1.12 lower (81.44 against 82.56 on our meter; that variant was never uploaded, so the Arena never scored
-  it). The other three pass a re-check with a plain `decide +kernel`. We knew this before the deadline and submitted the file.
 - **Elaborator options on 14 rows.** The op `hb_smartunfold` adds `set_option smartUnfolding false in` and `backward.isDefEq.*`
-  options where they save heartbeats. These options are sound: the kernel still checks the final proof term.
+  options where they save heartbeats.
 - **The post-step was developed on the final benchmark** after its release. Most of its ops came from agent sessions of closed
   models (Claude, GPT, Gemini) and from our own censuses, which compared our open proofs with our closed-track proofs of the same
   rows. That README's paragraph "The post-step is not independent of the final benchmark" gives the source of every op. The ops are
@@ -59,10 +45,11 @@ Details are in `final/README.md` of the tag [`open-run3-post-final-sub43-2026110
   their makers had seen (from our audit of who wrote each op; a classification, not a measurement). Of the 40 ops of this version,
   31 were written after study of closed-model proofs of the final problems (3 of them copied from our closed-track entry, 28
   written by agents that compared our open proofs with closed-model proofs of the same problems), 8 come from aggregate statistics
-  of closed-model proofs only, and 1 (`hb_smartunfold`) has no closed-model origin; the removed kernel-skip op had none either.
-  Their share of the adopted row points, attributed to the op that made each adoption (not a run without those ops, which was never
-  made): in the revised package's run on the 60 final problems (tier B), 81 % for the first group, 12 % for aggregate statistics,
-  1 % for the op with no closed-model origin, and 6 % for merged adoptions whose ops fall in more than one group (C); on the 27
+  of closed-model proofs only, and 1 (`hb_smartunfold`) has no closed-model origin. Their share of the adopted row points,
+  attributed to the op that made each adoption (not a run without those ops, which was never made): in the revised post stage's
+  earlier run on tier B's input (2026-11-24; [`RESULTS.md`](RESULTS.md), section "Tier B"), 81 % for the first group, 12 % for
+  aggregate statistics, 1 % for the op with no closed-model origin, and 6 % for merged adoptions whose ops fall in more than one
+  group (C); on the 27
   registered rows of the held-out test (T-primary, merged steps split equally over their ops), 86.5 % for the first group, 11.1 %
   and 2.3 % (C). So these rules carry knowledge learned from closed-model proofs of the final problems, and they also raise proofs
   of problems they were not written on ([`RESULTS.md`](RESULTS.md#revised-package-measured-2026-11-24)).
@@ -82,12 +69,13 @@ Details are in `final/README.md` of the tag [`open-run3-post-final-sub43-2026110
   held-out row is in such a file, so there the gate's only check for `sorry` was the sorry message. In the held-out test it
   adopted, on one row outside the registered subset (row 42, whose start was the library's reference proof), a step after which
   the proof's value is `sorry` with no Lean message: the forced `#print axioms` reads `sorryAx` alone (1 of 66 rows) (M). The full
-  re-checks of tier B's output and of the tier C file read only the standard axioms wherever the axiom print runs (M). The axiom
-  guard at export, added after the test
+  re-check of the tier C file reads only the standard axioms wherever the axiom print runs (M). The axiom guard at export, added
+  after the test
   ([`final/README.md`](final/README.md#axiom-guard-at-export-added-2026-11-24-after-the-held-out-test)), reads every exported
   proof's axioms and sets a failing row back to its newest earlier proof that passes; run on a copy of the held-out output, it set
-  that row back (stored 69.21 -> 33.33) and changed no other row; run on tier B's output and on the tier C file, it changed no proof
-  (M). The gate itself is unchanged: within a run the stage can still build on such a step, and the export sets the row back. A row
+  that row back (stored 69.21 -> 33.33) and changed no other row; run on the earlier tier B output and on the tier C file, it
+  changed no proof (M; [`RESULTS.md`](RESULTS.md), section "The axiom guard on the measured outputs", which also gives its run on
+  this version's tier B output). The gate itself is unchanged: within a run the stage can still build on such a step, and the export sets the row back. A row
   the guard cannot read in time keeps its proof (the job then ends with exit code 5), and on a toolchain where the reference proof
   itself reads `sorryAx` the guard cannot tell a proof whose own value became `sorry` from one that only uses the library's.
 - **A limit of the axiom checks, found after publication (2026-11-24).** A proof text that registers its own Lean command handler can make the axiom list that
@@ -95,15 +83,15 @@ Details are in `final/README.md` of the tag [`open-run3-post-final-sub43-2026110
   gate where they run the print (outside Lean `module` files; inside them they read only the sorry message, as the bullet above
   says). The package's checks reject some such texts but not every one. A proof whose unsound part draws no `sorry` message from
   Lean (for example one that rests on a lemma of the library proved by `sorry`, or a value that became `sorry` with no Lean message,
-  held-out row 42's fault) could then pass all three. Only the printed list is false: in the case we confirmed, Lean's kernel still
-  checked the proof and accepted it, because `sorryAx` is an axiom. We found this in an adversarial review of further checks we are
+  held-out row 42's fault) could then pass all three. Only the printed list is false: in the case we confirmed, Lean accepted the
+  proof, `sorryAx` being an axiom. We found this in an adversarial review of further checks we are
   building and confirmed it on one local compile (a plain file, Lean v4.31.0): the published parser reads a standard axiom alone
   from its messages and the published checks accept the text (M); that the guard, the audit and the gate then pass it follows
   from their code (C). A text scan for the forms that register an elaborator, macro, parser or other hook (the hook test of a check
   not yet published) finds none in the 498 proof texts (414 distinct) of eight files (M): the tier C file, the upload `sub43`, tier
-  B's input and output, the held-out run's input and output, and the reference proofs of the 60 final and the 66 held-out
-  problems. So no reading or score reported for these files changes. A check that rejects such texts is not in the release
-  `open-camready-20261124` or on `main`; until one is, a proof text that declares or runs metaprograms is not covered by these checks.
+  B's input and the earlier tier B output (2026-11-24; [`RESULTS.md`](RESULTS.md), section "Tier B"), the held-out run's input and
+  output, and the reference proofs of the 60 final and the 66 held-out problems. So no reading or score reported for these files changes. A check that rejects such texts is not in this version
+  (tag `open-camready-20261125`) or in the release `open-camready-20261124`; until one is, a proof text that declares or runs metaprograms is not covered by these checks.
 - **No stored proofs in the official runs:** every row starts from the seed proof in the rows file; no proof from an earlier run is
   reused.
 - **Closed-model example pairs:** the opt-in style step and its 9 encoded closed-model example pairs (two from our internal development

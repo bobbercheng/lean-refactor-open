@@ -3,8 +3,8 @@
 
 `set_option smartUnfolding false in` (default true) makes the elaborator's whnf / defeq unfold a structurally recursive definition through
 its compiled recursor form instead of the smart-unfolding auxiliary; on some goals (concrete `decide`, `rfl`, defeq-heavy `exact` / `simp`)
-that is cheaper. It is a plain elaboration option: the kernel still checks the final term (no `debug.*`, no heartbeat option, no kernel
-option; scorer/forbidden.py does not list it). Four tokens, so it only pays where it saves enough heartbeats.
+that is cheaper. It is a plain elaboration option (scorer/forbidden.py does not list it, and it is not a debug or heartbeat
+option). Four tokens, so it only pays where it saves enough heartbeats.
 
   candidates (each a single insertion into the proof body; the statement and `:=` untouched)
     whole     `by set_option smartUnfolding false in` + the original tactic block (term mode: `set_option smartUnfolding false in` + the
@@ -36,7 +36,7 @@ from harness.post import argon_hbelab as AH  # noqa: E402  (read-only reuse: mas
 
 FAMILY = "hb_smartunfold"
 SU = "smartUnfolding"
-# sound elaboration toggles whose default is true (defeq laziness, instance canonicity); never debug.*, heartbeat or kernel options
+# sound elaboration toggles whose default is true (defeq laziness, instance canonicity); never debug.* or heartbeat options
 TOGGLES = (SU, "backward.isDefEq.lazyWhnfCore", "backward.isDefEq.lazyProjDelta", "backward.synthInstance.canonInstances",
            # v5b (screen 2026-11-04 07:20): more true-by-default elaboration options (Lean's option table, v4.30.0): the dsimp / cleanup
            # pair exists on every pin (v4.25.0 .. v4.35.0-rc3); the last three from v4.29 on (an older pin fails the accept gate's pins)

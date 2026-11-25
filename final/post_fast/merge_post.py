@@ -2,14 +2,14 @@
 """merge_post.py EMITTED ROWS PROOFS (POST-HOC 2026-11-06): each row of PROOFS is replaced by its line in EMITTED when that line's
 stored score is at least the row's current one and its proof passes the export's own static check, so a row never goes down, whatever a read
 in mid-run offers. The names must equal the rows file's, in order. Every write is a rename: on any error or kill PROOFS stays whole.
-Kernel guard (2026-11-24; harness/kernel_guard.py): the static check is the Arena's forbidden list followed by the guard, so an emitted
+Option guard (2026-11-24; harness/option_guard.py): the static check is the Arena's forbidden list followed by the guard, so an emitted
 line that sets a `set_option debug.*` option is never taken; and when a line of PROOFS itself sets one, the merge is refused with the
-rows' names (PROOFS stays as it is: run post_fast/post_stage.sh with LRA_DEBUG_ROWS=reference, or harness/kernel_guard.py, first)."""
+rows' names (PROOFS stays as it is: run post_fast/post_stage.sh with LRA_DEBUG_ROWS=reference, or harness/option_guard.py, first)."""
 import json, os, statistics, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from harness.kernel_guard import check_forbidden, debug_rows
+from harness.option_guard import check_forbidden, debug_rows
 
 
 def lines(p):
@@ -41,8 +41,8 @@ def main(emitted, rows, proofs):
     keep = [n if good(n, c, r) else c for c, n, r in zip(cur, new, rs)]
     bad = debug_rows(keep)
     if bad:
-        sys.exit(f"merge refused (kernel guard): {len(bad)} row(s) carry a `set_option debug.*` option, which disables kernel checking "
-                 f"and is not allowed: {', '.join(map(str, bad))}; proofs.jsonl stays as it is")
+        sys.exit(f"merge refused (option guard): {len(bad)} row(s) carry a `set_option debug.*` option, which is not allowed in "
+                 f"benchmark proofs: {', '.join(map(str, bad))}; proofs.jsonl stays as it is")
     text = "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in keep)
     write(Path(proofs).with_name("proofs.merged.jsonl"), text)   # read back after a re-run or `run.sh export`, which write the picks
     write(Path(proofs), text)

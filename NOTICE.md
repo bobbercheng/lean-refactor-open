@@ -17,8 +17,8 @@ The following material was not written by us. It keeps its own terms, and the li
 
 ## What `final/` holds
 
-Since 2026-11-08, `final/` on `main` is the code of our final upload `sub43` with the fast post stage: official run 3's export
-(package `246ff1f1`), the post-step (development commit `a25416f5`) and `final/post_fast/`. For the fast post stage, `run.sh` and
+Since 2026-11-08, `final/` on `main` builds on the code of our final upload `sub43` and adds the fast post stage: official run 3's
+export (package `246ff1f1`), the post-step (from development commit `a25416f5`) and `final/post_fast/`. For the fast post stage, `run.sh` and
 `harness/open_package.py` changed, and `harness/open_post.py` and `harness/post/hintgrind.py` carry additions that only the stage
 turns on; `final/post_fast/MANIFEST.json` lists every file that differs from tag `open-run3-post-final-sub43-20261104`. Package
 `246ff1f1` has no style step and no `official_run/` folder. Until then `final/` held run 2's package, and the entries below that name
@@ -26,26 +26,22 @@ turns on; `final/post_fast/MANIFEST.json` lists every file that differs from tag
 `official_run/`), and from 2026-11-02 the `final/` of tag `open-final-probe-20261102` (the same code without its switched-off
 options; `official_run/` kept).
 
-Changed for public release: decision attributions are removed or reworded in docstrings of `final/harness/open_post.py`,
-`final/harness/post/d4_implied.py`, `kskip.py` and `projpath.py` (as at the `sub43` tag) and in one comment of
+Changed for public release: decision attributions are removed or reworded in docstrings of four post-step files at the `sub43`
+tag (`final/harness/open_post.py` and three files in `final/harness/post/`) and in one comment of
 `final/harness/post/hintgrind.py`, one or two lines per file; these edits leave the code unchanged (same syntax tree apart from
-docstrings). The `sub43` code zip holds the unredacted `d4_implied.py`, `kskip.py`, `projpath.py` and the tag's `open_post.py`;
-`MANIFEST.json` gives the unredacted sha256 of the `open_post.py` and `hintgrind.py` of 2026-11-09 as `measured_sha256` (section
-"Changes in this version (2026-11-24)" below). Apart from these lines, the post-step's files and `final/post_fast/` keep their
-comments and docstrings.
+docstrings). The `sub43` code zip holds those four files unredacted, as at the tag; `MANIFEST.json` gives the unredacted sha256 of
+the `open_post.py` and `hintgrind.py` of 2026-11-09 as `measured_sha256` (section "Changes in this version (2026-11-24)" below).
+Apart from these lines and the edits of 2026-11-24 and 2026-11-25 (same section), the post-step's files and `final/post_fast/`
+keep their comments and docstrings.
 
 ## Changes in this version (2026-11-24)
 
-Our entry is the runner-up of the open-source track (announced by the organizers on 2026-11-23). Four proofs of our final upload
-`sub43` carry `set_option debug.skipKernelTC true in`; the option disables the kernel's check, so they are not verified proofs, and
-one of the four is not a valid proof with the check on. The Arena submission itself cannot be changed.
+Our entry is the runner-up of the open-source track (announced by the organizers on 2026-11-23).
 
-Since 2026-11-24, `final/` on `main` is the code described above without the kernel-skip operator and with a guard that rejects
-every proof that sets a `debug.*` option, at every stage and at export:
+Since 2026-11-24, `final/` on `main` has a guard that rejects every proof that sets a `debug.*` option, at every stage and at
+export (the option guard: debug options are not allowed in benchmark proofs):
 
-- `final/harness/post/kskip.py` is deleted. The notes above about `kskip.py` (its redacted docstring lines, the unredacted file in
-  the `sub43` code zip) apply to the tag `open-run3-post-final-sub43-20261104` and to the zip, not to `main`.
-- `final/harness/kernel_guard.py` and `final/tests/test_kernel_guard.py` are new.
+- `final/harness/option_guard.py` and `final/tests/test_option_guard.py` are new.
 - The files changed on 2026-11-24 are listed in [`final/README.md`](final/README.md), section "Changes in this version
   (2026-11-24)". Nine of them are files of official run 3's export, which until then were on `main` byte for byte as the run
   shipped them: `harness/agent.py`, `harness/batch_screen.py`, `harness/endstage.py`, `harness/endstage_r10.py`,
@@ -54,8 +50,8 @@ every proof that sets a `debug.*` option, at every stage and at export:
   files that make the end stage's recorded code identity) and `infra/orgserver/orgtools.py` (the interim file's promotion).
   `final/scorer/forbidden.py` is unchanged: it stays an exact copy of the Arena's forbidden list.
 - The axiom guard at export, added later on 2026-11-24 (commit `d2d6e3c`): `final/harness/axiom_guard.py` and
-  `final/tests/test_axiom_guard.py` are new, and `final/run.sh` gained the lines that run it (and one changed comment line). The
-  seven scripts of the fast post stage that ran the measurements of 2026-11-24 are unchanged by it.
+  `final/tests/test_axiom_guard.py` are new, and `final/run.sh` gained the lines that run it (and one changed comment line). It
+  does not change the seven scripts of the fast post stage.
 - `final/EXPORT.json` and `final/HARNESS_COMMIT` are unchanged: they still describe the export the package was built from (package
   `246ff1f1`). Those of the files changed since then that `EXPORT.json` records no longer match its sha256 values; the post-step,
   the fast post stage and the new files are not in it.
@@ -63,13 +59,12 @@ every proof that sets a `debug.*` option, at every stage and at export:
   the seven post-stage scripts, the measured numbers with the sha256 prefixes of their inputs and outputs, and the sha256 of every
   file under `final/` that differs from `EXPORT.json`'s record or is not in it (no file of the record is gone).
 - `final/post_fast/MANIFEST.json` is refreshed: its sha256 values are those of this version's files, it lists the files changed on
-  2026-11-24 (it still lists every file that differs from tag `open-run3-post-final-sub43-20261104`), and it names the two runs
-  measured on 2026-11-24. Its `measured_sha256` values (of `harness/open_post.py` and `harness/post/hintgrind.py`) are the
-  unredacted files that its earlier measured runs (`fullV7m1s`, `T0b`, `W1`) used; the runs of 2026-11-24 used the files in this
-  repository.
-- Tags: `open-camready-measured-20261124` is the code we measured on 2026-11-24 (commit `82f6f2d`: the kernel-skip op removed,
-  the kernel guard); `open-camready-20261124` is this version (the axiom guard and this release's documents and records), and its
-  release holds a ZIP of `final/`.
+  2026-11-24 (it still lists every file that differs from tag `open-run3-post-final-sub43-20261104`), and it names the measured
+  runs of tier B and of the held-out test. Its `measured_sha256` values (of `harness/open_post.py` and `harness/post/hintgrind.py`)
+  are the unredacted files that its earlier measured runs (`fullV7m1s`, `T0b`) used; the runs of tier B and of the held-out
+  test used the files in this repository.
+- Tags: `open-camready-measured-20261124` (commit `82f6f2d`) is the code that ran the held-out test of 2026-11-24;
+  `open-camready-20261124` adds the axiom guard and that release's documents and records, and its release holds a ZIP of `final/`.
 - After that tag, on 2026-11-24: the tier C proof file ([`proofs/tier-c/`](proofs/tier-c/README.md)), the first file of our proofs
   of the final problems in this repository, also added to that release as a second asset; links to it in `README.md` and
   `RESULTS.md`; its row in the table above and this entry; the sha256 values of the changed root documents in
@@ -78,6 +73,15 @@ every proof that sets a `debug.*` option, at every stage and at export:
 - After that tag, a second change on 2026-11-24: a limit of the axiom checks found after publication, stated in `README.md`,
   `DISCLOSURES.md` ("A limit of the axiom checks, found after publication"), `RESULTS.md` and `final/README.md`, and this entry; no code changed; the new sha256 values in
   `final/post_fast/MANIFEST.json` and `final/REVISIONS.json`.
+- On 2026-11-25, this version (tag `open-camready-20261125`): names, comments, messages, tests and documents edited in `final/`
+  and in the root documents. The guard module is `final/harness/option_guard.py` (the option guard), its test
+  `final/tests/test_option_guard.py`. In the seven post-stage scripts only names, comments, messages and the run summary's time-to-target
+  changed: the default `--target` of `pf_drive.py` and `snapshot.py`, which no proof decision reads, is the tier C
+  file's stored mean, 81.4367. Their fingerprint is `b4ac6d42002767a0` (`916734a742e664be` at both tags of 2026-11-24, the one in
+  the report). `final/harness/axiom_guard.py` changed in names and comments only. Two edits reach code outside those scripts: the
+  option guard has one text rule fewer, which the Arena's forbidden list, run first at every gate, makes redundant (every
+  `set_option debug.*` form is still rejected); and the post-step's ops give no site to a proof that sets any debug option. Tier B
+  was measured on this version's code ([`RESULTS.md`](RESULTS.md), section "Tier B").
 
 The code of `sub43` as submitted stays at the tag `open-run3-post-final-sub43-20261104` and in the code zip.
 

@@ -26,7 +26,8 @@ whole chain is unneeded. rundrop tries the chains.
             rundrop:run    one run dropped (screen order: predicted gain first)
   screen    query(): the runs in up to MAX_FILES one-file screens (harness/post/opus_screen.py: measured, else plain); only the
             screen's OK runs are proposed.
-  unchecked a proof with `debug.skipKernelTC` has no site (see opus_stepdrop: kernel-unchecked closers judge nothing).
+  debug     a proof that sets a debug option has no site (debug options are not allowed; the option guard,
+            harness/option_guard.py, admits no such proof).
 Pure text plus the row's own environment. No row name, table or proof text."""
 from __future__ import annotations
 
@@ -160,7 +161,7 @@ def live_after(L: list[str], steps, i: int, j: int) -> bool:
 
 def runs(body: str) -> list[tuple[str, int, int, int]]:
     """[(kind, first line, end line exclusive, tokens saved)] ordered for the screen."""
-    if SC.unchecked(body):
+    if SC.sets_debug_option(body):
         return []
     L = body.split("\n")
     t0 = count_tokens(body)

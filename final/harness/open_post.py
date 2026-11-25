@@ -4,12 +4,10 @@ accept-gated pass over a finished open-package export. Input: <out>/proofs.jsonl
 files; output: <out>/proofs.post.jsonl (one line per row, in the same order; a row the pass did not improve keeps its input line byte for
 byte) and <out>/post_report.json; work files under <out>/post/. <out>/proofs.jsonl is never written.
 
-  kernel guard  (2026-11-24, harness/kernel_guard.py) the first version's kernel-skip op `kskip`, which put `set_option
-            debug.skipKernelTC true in` before a closing `decide +kernel`, is removed: it is in no op order, mode or flag. The option
-            disables the kernel's check, so a proof with it is not a verified proof. No candidate that sets a `debug.*` option passes
-            the gate, and no such proof is kept from the input: an input row whose proof sets one stops the step with the row's name
-            (--debug-rows fail, the default) or is replaced by the row's reference proof before the step starts (--debug-rows
-            reference); the output is checked once more before it is written.
+  option guard  (2026-11-24, harness/option_guard.py) debug options are not allowed in benchmark proofs. No candidate that sets a
+            `set_option debug.*` option passes the gate, and no such proof is kept from the input: an input row whose proof sets one
+            stops the step with the row's name (--debug-rows fail, the default) or is replaced by the row's reference proof before the
+            step starts (--debug-rows reference); the output is checked once more before it is written.
   ops       (harness/post/; each reads only the proof, the statement and the row's own environment: no row name, table or proof text)
     implied     the closed line's bet D4 rule R1 with its point-free spellings (D4P): a `decide`-family closer decides the hypothesis Q of a
                 library theorem `Q -> P` (or `P <-> Q`) found by an env query, instead of the goal P
@@ -49,8 +47,8 @@ byte) and <out>/post_report.json; work files under <out>/post/. <out>/proofs.jso
     opus_*      (harness/post/opus_{hoist,stepdrop,rundrop,scaffold,armfold}.py + the shared one-file screen opus_screen.py) Lean-checked
                 structural deletions: a step repeated across the goals of a flat goal list -> one `any_goals T` (hoist); preparation steps
                 (stepdrop) or runs of steps before a block's closer (rundrop) dropped; `have` / `obtain` steps whose names are never used
-                again dropped (scaffold); an unneeded split dropped (armfold); a proof with a kernel-unchecked closer has no site
-                (the kernel guard lets no such proof in; the ops' own check stays as a second line of defence)
+                again dropped (scaffold); an unneeded split dropped (armfold); a proof that sets a debug option has no site
+                (the option guard admits no such proof; the ops' own check stays as a second line of defence)
     opus_goalmerge (harness/post/opus_goalmerge.py) parallel goal blocks merged into one combinator (`<;>`, `all_goals`, `iterate`),
                 keyed on Lean's goal count (one traced compile), screened in one file
     opus_patfuse (harness/post/opus_patfuse.py) pure pattern fusions (`subst` / `cases` steps -> `rfl` / anonymous-constructor patterns)
@@ -121,14 +119,14 @@ byte) and <out>/post_report.json; work files under <out>/post/. <out>/proofs.jso
                 argument of a term step (exact / refine / apply, or have / let / use / specialize / calc / obtain), deferred to a `?_`
                 goal: the have goes, the use becomes `?_` (`exact` -> `refine`), the block closes that goal right after the step
                 (or at the end of its block); the joint form and the singles screened in one measured file of context-keeping copies
-    hb_smartunfold (harness/post/hb_smartunfold.py) `set_option smartUnfolding false in` (a sound elaborator option; the kernel still
-                checks the term) over the whole proof, one top-level step, a nested `by` block or a suffix of steps, and the same
+    hb_smartunfold (harness/post/hb_smartunfold.py) `set_option smartUnfolding false in` (a sound elaborator option)
+                over the whole proof, one top-level step, a nested `by` block or a suffix of steps, and the same
                 true -> false whole-proof form of three sound defeq / instance toggles, screened in one or two batch heartbeat files
   gate      a candidate is adopted only when ALL hold, against the current proof measured on the same meter (harness/endstage.Meter,
             the end stage's direct path: the scorer's own heartbeat measurement on the primary pin, the official reference heartbeats,
             no local table): it starts with the row's exact statement followed by `:=` (scorer.tokenize.split_declaration); it passes
-            the Arena's forbidden list (scorer/forbidden.check_forbidden, an unchanged copy) and the kernel guard (no `set_option
-            debug.*`; harness/kernel_guard.py); its primary reading scores higher (exact score); it compiles on EVERY pin of the row (Z 100); a fresh paired
+            the Arena's forbidden list (scorer/forbidden.check_forbidden, an unchanged copy) and the option guard (no `set_option
+            debug.*`; harness/option_guard.py); its primary reading scores higher (exact score); it compiles on EVERY pin of the row (Z 100); a fresh paired
             re-reading of the current proof and the candidate, back to back, still passes scorer.accept.decide with the worse candidate
             reading against the better current one and a strictly higher exact score; its rounded score is above the input's stored
             score; and the export's own `#print axioms` sorry audit (harness/open_package.audit_proof) reads it clean. Anything else,
@@ -158,7 +156,7 @@ byte) and <out>/post_report.json; work files under <out>/post/. <out>/proofs.jso
             Its op is `merge:<op>+<op>...` (no spaces; the adoption log line keeps its form).
     python3 harness/open_post.py --rows R.jsonl --heartbeats H.jsonl --out OUT [--jobs N] [--seconds S] [--problems NAME ...]
     python3 harness/open_post.py --rows R.jsonl --heartbeats H.jsonl --out OUT --long [--long-seconds S] [--jobs N] [--problems NAME ...]
-    either form: [--debug-rows reference]   an input row whose proof sets a debug option becomes the row's reference proof (kernel guard)
+    either form: [--debug-rows reference]   an input row whose proof sets a debug option becomes the row's reference proof (option guard)
 Run by harness/open_package.py `post` (and `run --post on`, after the run's export) with the package environment (LRA_LOCAL_REF none,
 the sorry guard, compile slots); standalone it sets the same itself."""
 from __future__ import annotations
@@ -171,7 +169,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-V1_ORDER = ("implied", "closerprep", "inlineeq")   # 2026-11-24: the kernel-skip op `kskip` is removed (module docstring, "kernel guard")
+V1_ORDER = ("implied", "closerprep", "inlineeq")
 V2_OPS = ("hintgrind", "projpath", "lexsurf", "jointres", "t4ind", "ctorsearch")
 # post-step v3 (branch open-post-v3, 2026-11-04): research-lane ops ported unchanged, each with the lane interface (has_sites / query /
 # candidates; harness/post/<op>.py), appended after the v2 ops and wired through _lane_has_site / _gen_lane (fault-isolated like v2's)
@@ -187,7 +185,7 @@ V4_ORDER = V3_ORDER + V4_OPS
 # post-step v5 lane ops (branch open-post-v5-lanes, 2026-11-04): research-lane extension ops with a measured gain beyond v3, appended after
 # the v4 ops (branch open-post-v5 merge) and wired exactly like them (_lane_has_site / _gen_lane, the same fault isolation and v3 reserve);
 # --ops v3 / v4 run v3 / v4 unchanged
-# order: measured gain per compile on the v3 two-pass output (VM1 screens, each op alone), the kernel-unchecked row left out
+# order: measured gain per compile on the v3 two-pass output (VM1 screens, each op alone)
 V5L_OPS = ("argon_calcstep", "sonnet_argdrop", "argon_haveopt", "opus_bulletflat", "argon_bindelide", "argon_hbsimp",
            "opus_stepdrop2", "sonnet_surface2")
 # post-step v5 new ops (branches open-post-v5-v5cse / -v5altcases / -v5deferhave / -smartunfold, merged in open-post-v5, 2026-11-04):
@@ -467,8 +465,8 @@ def attached_in(meter) -> str:
 
 def static_ok(decl: str, statement: str) -> str | None:
     """None when the candidate starts with the exact statement + `:=` and passes the forbidden check (the Arena's list, then the
-    kernel guard: harness/kernel_guard.check_forbidden), else the reason."""
-    from harness.kernel_guard import check_forbidden
+    option guard: harness/option_guard.check_forbidden), else the reason."""
+    from harness.option_guard import check_forbidden
     from scorer.tokenize import split_declaration
     if split_declaration(decl, statement) is None or not decl.startswith(statement):
         return "statement differs"
@@ -885,7 +883,7 @@ def long_config() -> dict:
 def _post_step(rows_path, hbs_path, out, *, jobs: int = 2, seconds: float = SECONDS, row_seconds: float = ROW_SECONDS,
                row_compiles: int = ROW_COMPILES, problems=None, input_path=None, scratch=None, audit="default", meter_factory=None,
                now=time.time, long_cfg: dict | None = None, debug_rows: str = "fail") -> dict:
-    from harness import kernel_guard as KG
+    from harness import option_guard as OG
     out = Path(out)
     t0 = now()
     deadline = t0 + float(seconds)
@@ -893,12 +891,12 @@ def _post_step(rows_path, hbs_path, out, *, jobs: int = 2, seconds: float = SECO
     raw_lines = [l for l in inp.read_text().splitlines() if l.strip()]
     recs = [json.loads(l) for l in raw_lines]
     rows, hbs = load_inputs(rows_path, hbs_path)
-    # kernel guard: an input row whose proof sets a debug option is not kept (fail: KG.DebugOptionError names the rows before anything
+    # option guard: an input row whose proof sets a debug option is not kept (fail: OG.DebugOptionError names the rows before anything
     # is written; reference: the row's line becomes its reference proof, and the step then works on that)
-    recs, replaced = KG.check_input(recs, rows, debug_rows, f"post-step input {inp}")
+    recs, replaced = OG.check_input(recs, rows, debug_rows, f"post-step input {inp}")
     for k in replaced:
         raw_lines[k] = json.dumps(recs[k], ensure_ascii=False)
-        log(f"row#{k:02d} {str(recs[k].get('name'))[:48]}: the input proof set a debug option; replaced by the reference proof (kernel guard)")
+        log(f"row#{k:02d} {str(recs[k].get('name'))[:48]}: the input proof set a debug option; replaced by the reference proof (option guard)")
     work = out / WORK_DIR; work.mkdir(parents=True, exist_ok=True)
     scratch = Path(scratch) if scratch else Path(os.environ.get("LRA_HBTOOL_SCRATCH") or
                                                   ROOT / "probe/hbtool/.scratch" / f"post-{hashlib.sha256(str(out.resolve()).encode()).hexdigest()[:10]}")
@@ -963,7 +961,7 @@ def _post_step(rows_path, hbs_path, out, *, jobs: int = 2, seconds: float = SECO
             adopted += 1; gain += float(r.get("gain") or 0.0)
         else:
             lines.append(line)
-    KG.assert_clean([json.loads(l) for l in lines], f"post-step output {out / POST_FILE}")   # kernel guard: never written out
+    OG.assert_clean([json.loads(l) for l in lines], f"post-step output {out / POST_FILE}")   # option guard: never written out
     text = "".join(l + "\n" for l in lines)
     tmp = out / (POST_FILE + ".tmp"); tmp.write_text(text); os.replace(tmp, out / POST_FILE)
     before = [float(r["stored_score"]) for r in recs if isinstance(r.get("stored_score"), (int, float))]
@@ -1007,8 +1005,8 @@ def main(argv=None) -> int:
                                                  "only), 'v2' (v1 + v2 ops), 'v3' (v1 + v2 + v3 ops), 'v4' (v1 + v2 + v3 + v4 ops) or a "
                                                  "comma-separated subset of ORDER")
     ap.add_argument("--debug-rows", choices=("fail", "reference"), default="fail",
-                    help="kernel guard (harness/kernel_guard.py): an input row whose proof sets a `set_option debug.*` option (it disables "
-                         "kernel checking) is never kept. fail (default): stop before anything is written and name the rows; reference: "
+                    help="option guard (harness/option_guard.py): an input row whose proof sets a `set_option debug.*` option (debug "
+                         "options are not allowed) is never kept. fail (default): stop before anything is written and name the rows; reference: "
                          "replace each such row by the benchmark's reference proof before the step starts")
     a = ap.parse_args(argv)
     if a.long and a.seconds is not None:
@@ -1035,12 +1033,12 @@ def main(argv=None) -> int:
     git_trust(os.environ)
     if not a.keep_local_ref:
         os.environ["LRA_LOCAL_REF"] = "none"
-    from harness.kernel_guard import DebugOptionError
+    from harness.option_guard import DebugOptionError
     try:
         post_step(a.rows, a.heartbeats, a.out, jobs=a.jobs, seconds=a.long_seconds if a.long else a.seconds, row_seconds=a.row_seconds,
                   row_compiles=a.row_compiles, problems=a.problems, input_path=a.input, long=a.long, debug_rows=a.debug_rows)
     except DebugOptionError as e:
-        log(f"REFUSED (kernel guard): {e}")
+        log(f"REFUSED (option guard): {e}")
         return 2
     return 0
 

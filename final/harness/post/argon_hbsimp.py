@@ -20,7 +20,7 @@ from harness import lint_delete as LD  # noqa: E402
 from harness.normalize import _mask, _pairs, apply as _norm_apply  # noqa: E402
 from harness.post import d4_kit as K  # noqa: E402
 from harness.post import d4_measure as MS  # noqa: E402
-from harness.kernel_guard import check_forbidden  # noqa: E402
+from harness.option_guard import check_forbidden  # noqa: E402
 from scorer.tokenize import count_tokens, split_declaration  # noqa: E402
 
 FAMILY = "argon_hbsimp"

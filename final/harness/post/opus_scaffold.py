@@ -193,7 +193,7 @@ def _apply(body: str, sel: list[dict]) -> str | None:
 
 
 def raw_candidates(body: str) -> list[tuple[str, str, str]]:
-    if SC.unchecked(body):
+    if SC.sets_debug_option(body):
         return []
     ss = sites(body)
     t0 = count_tokens(body)

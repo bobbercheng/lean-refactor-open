@@ -85,7 +85,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
-from harness.kernel_guard import SEED_SCORE, assert_clean, check_forbidden, debug_option  # noqa: E402
+from harness.option_guard import SEED_SCORE, assert_clean, check_forbidden, debug_option  # noqa: E402
 
 STD_AXIOMS = frozenset({"propext", "Classical.choice", "Quot.sound"})   # = scorer.compile.AXIOM_ALLOW
 OK, BAD, NOT_READ = "ok", "bad", "not read"                             # pin states
@@ -443,7 +443,7 @@ def reference_record(name: str, row: dict, note: str) -> dict:
 def candidates(name: str, row: dict | None, cur: str, fallbacks: list) -> list:
     """[(role, record)] to try, in order, for a row whose proof read BAD: each fallback file's line for the row, then the reference
     proof; a text equal to the current proof or to an earlier candidate, without the row's statement, or that fails the Arena's
-    forbidden list or the kernel guard, is left out (the reference only needs to set no debug option)."""
+    forbidden list or the option guard, is left out (the reference only needs to set no debug option)."""
     out, seen = [], {cur.rstrip()}
     for role, recs in fallbacks:
         rec = recs.get(name)
@@ -713,7 +713,7 @@ def guard_file(proofs_path, rows_path, fallback_paths=None, *, budget_s: float =
     rc = RC_NOT_READ if not_read or ref_floor or partial or missing or not recs else RC_OK
     written, merged_written, changed = False, False, None
     if replaced and write:
-        assert_clean(out, f"axiom guard {path}")   # the kernel guard: no proof with a debug option is written
+        assert_clean(out, f"axiom guard {path}")   # the option guard: no proof with a debug option is written
         text = "".join((raw[k] if k not in replaced else json.dumps(out[k], ensure_ascii=False)) + "\n" for k in range(len(recs)))
         try:
             write_if_unchanged(path, text, first)

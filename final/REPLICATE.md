@@ -2,8 +2,6 @@
 
 ## Changes in this version (2026-11-24)
 
-Our entry is the runner-up of the open-source track (announced by the organizers on 2026-11-23).
-
 This folder is the revised package of our report (tier B, tag `open-camready-20261125`; `README.md`, section "Changes in this
 version (2026-11-24)"). In it, a proof that sets any `debug.*` option is rejected at every stage and at export, because debug
 options are not allowed in benchmark proofs (the option guard, `harness/option_guard.py`).

@@ -5,7 +5,6 @@ What our open-track results rest on and what this public repository leaves out. 
 
 ## Changes in this version (2026-11-24)
 
-- **Official result.** Our entry is the runner-up of the open-source track (announced by the organizers on 2026-11-23).
 - **Debug options are rejected.** In `final/` on `main`, a proof that sets any `debug.*` option is rejected at every stage (the
   model's check tools, the end stages, every adoption of the post-step and of the fast post stage, the merges) and at export, by
   one guard, `final/harness/option_guard.py` (the option guard): debug options are not allowed in benchmark proofs. A stage that

@@ -13,7 +13,7 @@ listed toolchains than the current proof, and a higher score on our meter. A pro
 it has a limit found after publication, [`DISCLOSURES.md`](DISCLOSURES.md)). No
 hosted model is called during a run, and no model was trained or fine-tuned.
 
-**Official result:** runner-up of the open-source track (announced by the organizers on 2026-11-23). Our final upload is `sub43`.
+Our final upload is `sub43`.
 On our meter, the mean over the 60 final problems is 33.33 for the reference proofs, 79.20 at the end of the 48-hour job (tier A,
 computed), 81.47 with the revised package in [`final/`](final/README.md), which runs the post stage inside the job (tier B,
 measured on a CPU machine, not in a job), and 81.44, in sample, with the first version's post-step, which ended after the limit

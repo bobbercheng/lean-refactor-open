@@ -299,6 +299,33 @@
     "final/tests/test_finer_sorry.py": "a9b8467546d9e14c4e8479444f133f3a36888764174d96d854638ca9d275c005",
     "final/tests/test_post_audit.py": "6bb88d0b3e9e28ba0ccbe345124c14591f28285e15958d033c770a36d850ff93"
    }
+  },
+  {
+   "id": "no-rank-docs",
+   "commit": null,
+   "date": "2026-11-27",
+   "tag": null,
+   "release": null,
+   "what": "documents only, matching the camera-ready of 2026-11-27, which states no rank for this entry: the 'Official result' sentence is removed from README.md, RESULTS.md (twice), DISCLOSURES.md, NOTICE.md, final/README.md and final/REPLICATE.md. No code, number or test changed; the tag open-camready-20261125 and its release are unchanged",
+   "changed": [
+    "DISCLOSURES.md",
+    "NOTICE.md",
+    "README.md",
+    "RESULTS.md",
+    "final/README.md",
+    "final/REPLICATE.md",
+    "final/REVISIONS.json",
+    "final/post_fast/MANIFEST.json"
+   ],
+   "sha256": {
+    "DISCLOSURES.md": "aa540f41d2d64aa4863f0afd99ca0e73704e7a6b31db88d8bcb9db5f091bdade",
+    "NOTICE.md": "c26885532bb237fed09c73b602907f5d5b782c403478bfd38921dccc1938fd02",
+    "README.md": "a684ae4ea0a80c9ce512f833ebfc1334d40ee919de91f024f75678279c28006b",
+    "RESULTS.md": "03ad3f58da899ff6cfccb98350bf6c0e7df7d7fea00f5980f6cb4ac89bd8f9b1",
+    "final/README.md": "6c5a11631104964ab80120c1779afbdf7c0c7c88774f133b7c5fd8b7a8df3f3f",
+    "final/REPLICATE.md": "b6dce197e559ed51e3695dd8d02113e4548bc517d660f8389420fe800cfeca36",
+    "final/post_fast/MANIFEST.json": "0ce0461b2774ae37348c1eff1a5b4cb03c8263620a4bbb3e626087dad7520e30"
+   }
   }
  ],
  "seven_post_scripts": {
@@ -770,8 +797,8 @@
  "files": {
   "EXPORT.json": "e5768cd00e4587616c16f519d9e24f527fe5b2ce502b93e6cfbebb994c0c3b63",
   "HARNESS_COMMIT": "77f37d4b15fa1b2bf4dc846e77153cd24cb53feea0a02c28959b42e7319644e5",
-  "README.md": "8e80cc0d54351a1bd1cd5e8384b588623f344e6e141984a3dec92b9a0df0a23e",
-  "REPLICATE.md": "c1617f1db2a1eeabd78fa74e916165e48d06e4486fa5f2ea423c1a0145975cd4",
+  "README.md": "6c5a11631104964ab80120c1779afbdf7c0c7c88774f133b7c5fd8b7a8df3f3f",
+  "REPLICATE.md": "b6dce197e559ed51e3695dd8d02113e4548bc517d660f8389420fe800cfeca36",
   "data/official/heartbeats.jsonl": "2d777f145d0c4bf0fe66c4825b0fb590b57be75c0aa2ebec9e20f9ddcd56688b",
   "data/official/rows.jsonl": "d53690b057f9972f44643678ee6b5eee7a66f56e1a7d2678a2e5ff47fadbd682",
   "docs/open_package_readme.md": "54f7d85562af404def4a4971ebe58007d088b0513f45addb095bb9b6f9314f0d",
@@ -844,7 +871,7 @@
   "harness/post_audit.py": "c41fd655dabfbbae3260f5782da4f07ee12c7d292f2ff56a9d2cba36dca372f2",
   "harness/workbench.py": "e112a31ff99f7468faec2cc3b15487f97fbfe6802aee6f67116ecc44fad18d33",
   "infra/orgserver/orgtools.py": "11d89f08c586be295afffa894d563cd3e0230828343748c3ce4f7568d142865b",
-  "post_fast/MANIFEST.json": "bfe985bfbcf70749a8b14b2c669a27a04d0bfd93375b7b81da89ab6c7bed39a4",
+  "post_fast/MANIFEST.json": "0ce0461b2774ae37348c1eff1a5b4cb03c8263620a4bbb3e626087dad7520e30",
   "post_fast/merge_post.py": "bd7725fb10e48dd2ae49691b9aa15320b9b1cef41299ebe4e72594913b1734d7",
   "post_fast/merge_warm.py": "2c7a289dc75734b873b421e31db47295e09a6bda3130c4c1cc58fb1663285a4a",
   "post_fast/pf_drive.py": "9b860c0a9aa20552a7fb3a3cc96f5785998667b07d9aa1ebd436f0aeec049223",

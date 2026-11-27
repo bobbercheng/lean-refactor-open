@@ -45,8 +45,6 @@ of the tag. The checks change none of the reported outputs (above).
 
 ## Changes in this version (2026-11-24)
 
-**Official result.** Our entry is the runner-up of the open-source track (announced by the organizers on 2026-11-23).
-
 **What this version is.** This folder is the revised package of our report: the package of the submitted run with the fast post
 stage inside the job (section "The fast post stage in `run.sh`"), the option guard (below) and the axiom guard at export (section
 "Axiom guard at export"). The report's 60-problem means, on our meter: 33.33 for the reference proofs; 79.20 at the end of the

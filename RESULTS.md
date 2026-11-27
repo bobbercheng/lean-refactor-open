@@ -5,7 +5,6 @@ runs and our warm-up results. The disclosures for these results are in [`DISCLOS
 
 ## Changes in this version (2026-11-24)
 
-- **Official result.** Our entry is the runner-up of the open-source track (announced by the organizers on 2026-11-23).
 - **The code.** `final/` on `main` is the revised package (tag `open-camready-20261125`). A proof that sets any `debug.*` option is
   rejected at every stage and at export (the option guard: debug options are not allowed in benchmark proofs;
   [`final/README.md`](final/README.md), section "Changes in this version (2026-11-24)"), and an axiom guard at export, added after
@@ -196,7 +195,7 @@ with the guard and the gate of tag `open-camready-20261125`.
 
 ## Final result
 
-**Official result: runner-up of the open-source track (announced by the organizers on 2026-11-23).** Our final open-track upload is
+Our final open-track upload is
 `sub43` (2026-11-04 11:25:51 UTC).
 
 | | |

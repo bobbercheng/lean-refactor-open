@@ -36,8 +36,6 @@ keep their comments and docstrings.
 
 ## Changes in this version (2026-11-24)
 
-Our entry is the runner-up of the open-source track (announced by the organizers on 2026-11-23).
-
 Since 2026-11-24, `final/` on `main` has a guard that rejects every proof that sets a `debug.*` option, at every stage and at
 export (the option guard: debug options are not allowed in benchmark proofs):
 
